@@ -11,7 +11,25 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0A468D2A15B56548003AB8FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A468D2215B56548003AB8FD /* driver.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 32D94FD00562CBF700B6AF17 /* wjoy.kext */;
+			remoteInfo = wjoy;
+		};
+		0A468D2C15B56548003AB8FD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A468D2215B56548003AB8FD /* driver.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A1CB30A15B022140012FCC7 /* test_client */;
+			remoteInfo = test_client;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		0A468D2215B56548003AB8FD /* driver.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = driver.xcodeproj; path = driver/driver.xcodeproj; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -38,6 +56,15 @@
 			children = (
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		0A468D2315B56548003AB8FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A468D2B15B56548003AB8FD /* wjoy.kext */,
+				0A468D2D15B56548003AB8FD /* test_client */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -69,6 +96,7 @@
 		29B97314FDCFA39411CA2CEA /* WJoy */ = {
 			isa = PBXGroup;
 			children = (
+				0A468D2215B56548003AB8FD /* driver.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -141,12 +169,35 @@
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* WJoy */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0A468D2315B56548003AB8FD /* Products */;
+					ProjectRef = 0A468D2215B56548003AB8FD /* driver.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* WJoy */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0A468D2B15B56548003AB8FD /* wjoy.kext */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = wjoy.kext;
+			remoteRef = 0A468D2A15B56548003AB8FD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0A468D2D15B56548003AB8FD /* test_client */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = test_client;
+			remoteRef = 0A468D2C15B56548003AB8FD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
