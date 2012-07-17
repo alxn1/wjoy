@@ -120,4 +120,10 @@
     return [self doCommand:command argument:[self driverPath]];
 }
 
+- (id)init
+{
+    [[super init] release];
+    return nil;
+}
+
 @end
