@@ -16,14 +16,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A468D2215B56548003AB8FD /* driver.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 32D94FD00562CBF700B6AF17 /* wjoy.kext */;
+			remoteGlobalIDString = 32D94FD00562CBF700B6AF17;
 			remoteInfo = wjoy;
 		};
 		0A468D2C15B56548003AB8FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A468D2215B56548003AB8FD /* driver.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0A1CB30A15B022140012FCC7 /* test_client */;
+			remoteGlobalIDString = 0A1CB30A15B022140012FCC7;
 			remoteInfo = test_client;
 		};
 /* End PBXContainerItemProxy section */
