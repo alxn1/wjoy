@@ -8,7 +8,7 @@
  */
 
 #include "wirtual_joy_device.h"
-#include "debug.h"
+#include "wirtual_joy_debug.h"
 
 #include <IOKit/usb/IOUSBHIDDriver.h>
 

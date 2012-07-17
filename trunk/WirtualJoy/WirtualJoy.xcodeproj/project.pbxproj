@@ -64,8 +64,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A17A82915AF07480039EE64 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		0A17A82F15AF07C40039EE64 /* debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = debug.h; sourceTree = "<group>"; };
 		0A1CB29A15B00E7A0012FCC7 /* wirtual_joy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy.h; sourceTree = "<group>"; };
 		0A1CB29B15B00E7A0012FCC7 /* wirtual_joy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wirtual_joy.cpp; sourceTree = "<group>"; };
 		0A1CB2C015B015BA0012FCC7 /* wirtual_joy_user_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy_user_client.h; sourceTree = "<group>"; };
@@ -90,6 +88,8 @@
 		0A4696CE15B5953E003AB8FD /* Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A4696D015B5953E003AB8FD /* Test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Test-Info.plist"; sourceTree = "<group>"; };
 		0A4696F815B595F1003AB8FD /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
+		0A469B1115B5AD59003AB8FD /* wirtual_joy_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy_config.h; sourceTree = "<group>"; };
+		0A469B1215B5AD59003AB8FD /* wirtual_joy_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wirtual_joy_debug.h; sourceTree = "<group>"; };
 		32D94FCF0562CBF700B6AF17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32D94FD00562CBF700B6AF17 /* wjoy.kext */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wjoy.kext; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA8362C06AD9B9200E5AC22 /* Kernel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kernel.framework; path = /System/Library/Frameworks/Kernel.framework; sourceTree = "<absolute>"; };
@@ -162,8 +162,8 @@
 		0A4691BE15B568A7003AB8FD /* driver */ = {
 			isa = PBXGroup;
 			children = (
-				0A17A82915AF07480039EE64 /* config.h */,
-				0A17A82F15AF07C40039EE64 /* debug.h */,
+				0A469B1115B5AD59003AB8FD /* wirtual_joy_config.h */,
+				0A469B1215B5AD59003AB8FD /* wirtual_joy_debug.h */,
 				0A1CB50315B03FA10012FCC7 /* wirtual_joy_device.h */,
 				0A1CB50415B03FA10012FCC7 /* wirtual_joy_device.cpp */,
 				0A1CB2C015B015BA0012FCC7 /* wirtual_joy_user_client.h */,

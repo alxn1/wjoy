@@ -11,7 +11,7 @@
 #define WIRTUAL_JOY_H
 
 #include <IOKit/IOService.h>
-#include "config.h"
+#include "wirtual_joy_config.h"
 
 class WirtualJoy : public IOService
 {

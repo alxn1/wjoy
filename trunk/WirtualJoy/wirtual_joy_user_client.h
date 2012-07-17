@@ -11,7 +11,7 @@
 #define WIRTUAL_JOY_USER_CLIENT_H
 
 #include <IOKit/IOUserClient.h>
-#include "config.h"
+#include "wirtual_joy_config.h"
 
 class WirtualJoy;
 class WirtualJoyDevice;
