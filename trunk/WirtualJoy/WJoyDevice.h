@@ -17,6 +17,7 @@
 }
 
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor;
+- (void)dealloc;
 
 - (BOOL)updateHIDState:(NSData*)HIDState;
 
