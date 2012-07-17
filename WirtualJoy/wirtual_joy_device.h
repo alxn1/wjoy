@@ -11,7 +11,7 @@
 #define WIRTUAL_JOY_DEVICE_H
 
 #include <IOKit/hid/IOHIDDevice.h>
-#include "config.h"
+#include "wirtual_joy_config.h"
 
 class WirtualJoyDevice : public IOHIDDevice
 {

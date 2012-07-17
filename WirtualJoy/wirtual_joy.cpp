@@ -8,7 +8,7 @@
  */
 
 #include "wirtual_joy.h"
-#include "debug.h"
+#include "wirtual_joy_debug.h"
 
 #define super IOService
 

@@ -10,7 +10,7 @@
 #include "wirtual_joy.h"
 #include "wirtual_joy_user_client.h"
 #include "wirtual_joy_device.h"
-#include "debug.h"
+#include "wirtual_joy_debug.h"
 
 #define super IOUserClient
 
