@@ -10,8 +10,6 @@
 
 @class WJoyDeviceImpl;
 
-// TODO ;)
-
 @interface WJoyDevice : NSObject
 {
     @private
