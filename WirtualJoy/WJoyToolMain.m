@@ -37,7 +37,7 @@ static int repairRights(const char *path)
 
 static int doCommandWithPath(const char *cmd, const char *path)
 {
-    NSString *command = [NSString stringWithFormat:@"%@ %@",
+    NSString *command = [NSString stringWithFormat:@"%@ \"%@\"",
                                         [NSString stringWithUTF8String:cmd],
                                         [NSString stringWithUTF8String:path]];
 
