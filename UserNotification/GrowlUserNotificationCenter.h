@@ -11,7 +11,7 @@
 @interface GrowlUserNotificationCenter : UserNotificationCenter
 {
     @private
-        NSObject *growlDelegate;
+        NSObject *m_GrowlDelegate;
 }
 
 @end

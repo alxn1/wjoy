@@ -20,21 +20,21 @@
 @interface NotificationWindowView : NSView
 {
     @private
-        NSImage                             *icon;
-        NSString                            *title;
-        NSString                            *text;
+        NSImage                             *m_Icon;
+        NSString                            *m_Title;
+        NSString                            *m_Text;
 
-        NSTrackingRectTag                    trackingRectTag;
+        NSTrackingRectTag                    m_TrackingRectTag;
 
-        BOOL                                 isHowered;
-        BOOL                                 isCloseButtonDragged;
-        BOOL                                 isCloseButtonPressed;
-        BOOL                                 isAlreadyClicked;
+        BOOL                                 m_IsHowered;
+        BOOL                                 m_IsCloseButtonDragged;
+        BOOL                                 m_IsCloseButtonPressed;
+        BOOL                                 m_IsAlreadyClicked;
 
-        id                                   target;
-        SEL                                  action;
+        id                                   m_Target;
+        SEL                                  m_Action;
 
-        id<NotificationWindowViewDelegate>   delegate;
+        id<NotificationWindowViewDelegate>   m_Delegate;
 }
 
 + (NSRect)bestViewRectForTitle:(NSString*)title text:(NSString*)text;

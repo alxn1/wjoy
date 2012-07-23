@@ -11,8 +11,8 @@
 @interface AppleUserNotificationCenter : UserNotificationCenter
 {
     @private
-        Class notificationClass;
-        Class notificationCenterClass;
+        Class m_NotificationClass;
+        Class m_NotificationCenterClass;
 }
 
 @end

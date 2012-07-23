@@ -35,11 +35,11 @@
     if(self == nil)
         return nil;
 
-    screenCorner                = UserNotificationCenterScreenCornerRightTop;
-    isEnabled                   = YES;
-    underMouseScreenCorner      = -1;
-    draggedMouseScreenCorner    = -1;
-    clickedMouseScreenCorner    = -1;
+    m_ScreenCorner              = UserNotificationCenterScreenCornerRightTop;
+    m_IsEnabled                 = YES;
+    m_UnderMouseScreenCorner    = -1;
+    m_DraggedMouseScreenCorner  = -1;
+    m_ClickedMouseScreenCorner  = -1;
 
     [self updateTrackingRects];
 
@@ -52,11 +52,11 @@
     if(self == nil)
         return nil;
 
-    screenCorner                = UserNotificationCenterScreenCornerRightTop;
-    isEnabled                   = YES;
-    underMouseScreenCorner      = -1;
-    draggedMouseScreenCorner    = -1;
-    clickedMouseScreenCorner    = -1;
+    m_ScreenCorner              = UserNotificationCenterScreenCornerRightTop;
+    m_IsEnabled                 = YES;
+    m_UnderMouseScreenCorner    = -1;
+    m_DraggedMouseScreenCorner  = -1;
+    m_ClickedMouseScreenCorner  = -1;
 
     [self updateTrackingRects];
 
@@ -66,7 +66,7 @@
 - (void)dealloc
 {
     [self removeTrackingRects];
-    [bgImage release];
+    [m_BGImage release];
     [super dealloc];
 }
 
@@ -74,15 +74,15 @@
 {
     rect = [self bounds];
 
-    if(bgImage == nil) {
+    if(m_BGImage == nil) {
         NSString *path = [[NSBundle bundleForClass:[UserNotificationCenterScreenCornerView class]]
                                                                                         pathForResource:@"screen"
                                                                                                  ofType:@"jpg"];
 
-        bgImage = [[NSImage alloc] initWithContentsOfFile:path];
+        m_BGImage      = [[NSImage alloc] initWithContentsOfFile:path];
     }
 
-    [bgImage
+    [m_BGImage
         drawInRect:rect
           fromRect:NSZeroRect
          operation:NSCompositeSourceOver
@@ -123,44 +123,44 @@
     if(![self isEnabled])
         return;
 
-    draggedMouseScreenCorner = [self screenCornerFromEvent:event];
-    clickedMouseScreenCorner = draggedMouseScreenCorner;
+    m_DraggedMouseScreenCorner = [self screenCornerFromEvent:event];
+    m_ClickedMouseScreenCorner = m_DraggedMouseScreenCorner;
 
-    if(draggedMouseScreenCorner >= 0)
+    if(m_DraggedMouseScreenCorner >= 0)
         [self setNeedsDisplay:YES];
 }
 
 - (void)mouseDragged:(NSEvent*)event
 {
-    if(draggedMouseScreenCorner == -1)
+    if(m_DraggedMouseScreenCorner == -1)
         return;
 
     int corner = [self screenCornerFromEvent:event];
-    if(corner != draggedMouseScreenCorner)
+    if(corner != m_DraggedMouseScreenCorner)
         corner = -1;
 
-    if(clickedMouseScreenCorner != corner)
+    if(m_ClickedMouseScreenCorner != corner)
     {
-        clickedMouseScreenCorner = corner;
+        m_ClickedMouseScreenCorner = corner;
         [self setNeedsDisplay:YES];
     }
 }
 
 - (void)mouseUp:(NSEvent*)event
 {
-    if(draggedMouseScreenCorner == -1)
+    if(m_DraggedMouseScreenCorner == -1)
         return;
 
     [self mouseDragged:event];
-    draggedMouseScreenCorner = -1;
+    m_DraggedMouseScreenCorner = -1;
 
-    if(clickedMouseScreenCorner >= 0)
+    if(m_ClickedMouseScreenCorner >= 0)
     {
-        [self setScreenCorner:(UserNotificationCenterScreenCorner)clickedMouseScreenCorner];
-        if(target != nil && action != nil)
-            [target performSelector:action withObject:self];
+        [self setScreenCorner:(UserNotificationCenterScreenCorner)m_ClickedMouseScreenCorner];
+        if(m_Target != nil && m_Action != nil)
+            [m_Target performSelector:m_Action withObject:self];
 
-        clickedMouseScreenCorner = -1;
+        m_ClickedMouseScreenCorner = -1;
         [self setNeedsDisplay:YES];
     }
 }
@@ -171,73 +171,73 @@
         return;
 
     int corner = [self screenCornerFromEvent:event];
-    if(underMouseScreenCorner != corner)
+    if(m_UnderMouseScreenCorner != corner)
     {
-        underMouseScreenCorner = corner;
+        m_UnderMouseScreenCorner = corner;
         [self setNeedsDisplay:YES];
     }
 }
 
 - (void)mouseExited:(NSEvent*)event
 {
-    if(underMouseScreenCorner < 0)
+    if(m_UnderMouseScreenCorner < 0)
         return;
 
-    underMouseScreenCorner = -1;
+    m_UnderMouseScreenCorner = -1;
     [self setNeedsDisplay:YES];
 
 }
 
 - (BOOL)isEnabled
 {
-    return isEnabled;
+    return m_IsEnabled;
 }
 
 - (void)setEnabled:(BOOL)enabled
 {
-    if(isEnabled == enabled)
+    if(m_IsEnabled == enabled)
         return;
 
-    isEnabled                   = enabled;
-    underMouseScreenCorner      = -1;
-    draggedMouseScreenCorner    = -1;
-    clickedMouseScreenCorner    = -1;
+    m_IsEnabled                 = enabled;
+    m_UnderMouseScreenCorner    = -1;
+    m_DraggedMouseScreenCorner  = -1;
+    m_ClickedMouseScreenCorner  = -1;
 
     [self setNeedsDisplay:YES];
 }
 
 - (UserNotificationCenterScreenCorner)screenCorner
 {
-    return screenCorner;
+    return m_ScreenCorner;
 }
 
 - (void)setScreenCorner:(UserNotificationCenterScreenCorner)corner
 {
-    if(screenCorner == corner)
+    if(m_ScreenCorner == corner)
         return;
 
-    screenCorner = corner;
+    m_ScreenCorner = corner;
     [self setNeedsDisplay:YES];
 }
 
 - (id)target
 {
-    return target;
+    return m_Target;
 }
 
 - (void)setTarget:(id)obj
 {
-    target = obj;
+    m_Target = obj;
 }
 
 - (SEL)action
 {
-    return action;
+    return m_Action;
 }
 
 - (void)setAction:(SEL)sel
 {
-    action = sel;
+    m_Action = sel;
 }
 
 @end
@@ -249,7 +249,7 @@
     NSPoint point = NSZeroPoint;
     NSRect  rect  = [self bounds];
 
-    switch(screenCorner)
+    switch(m_ScreenCorner)
     {
         case UserNotificationCenterScreenCornerRightTop:
             point = NSMakePoint(rect.origin.x + rect.size.width - 8.0f, rect.origin.y + rect.size.height - 8.0f);
@@ -311,10 +311,10 @@
 {
     float alphaValue = 0.5f;
 
-    if(underMouseScreenCorner == corner)
+    if(m_UnderMouseScreenCorner == corner)
         alphaValue = 0.75f;
 
-    if(clickedMouseScreenCorner == corner)
+    if(m_ClickedMouseScreenCorner == corner)
         alphaValue = 0.6f;
 
     [[NSColor colorWithDeviceWhite:1.0f alpha:alphaValue] setFill];
@@ -329,38 +329,38 @@
                                       fromView:nil];
 
     NSBezierPath *path = [self pathForTriangle:UserNotificationCenterScreenCornerLeftTop];
-    trackingRectTags[0] = [self addTrackingRect:[path bounds]
-                                          owner:self
-                                       userData:nil
-                                   assumeInside:[path containsPoint:mousePosition]];
+    m_TrackingRectTags[0] = [self addTrackingRect:[path bounds]
+                                            owner:self
+                                         userData:nil
+                                     assumeInside:[path containsPoint:mousePosition]];
 
     path = [self pathForTriangle:UserNotificationCenterScreenCornerRightTop];
-    trackingRectTags[1] = [self addTrackingRect:[path bounds]
-                                          owner:self
-                                       userData:nil
-                                   assumeInside:[path containsPoint:mousePosition]];
+    m_TrackingRectTags[1] = [self addTrackingRect:[path bounds]
+                                            owner:self
+                                         userData:nil
+                                     assumeInside:[path containsPoint:mousePosition]];
 
     path = [self pathForTriangle:UserNotificationCenterScreenCornerRightBottom];
-    trackingRectTags[2] = [self addTrackingRect:[path bounds]
-                                          owner:self
-                                       userData:nil
-                                   assumeInside:[path containsPoint:mousePosition]];
+    m_TrackingRectTags[2] = [self addTrackingRect:[path bounds]
+                                            owner:self
+                                         userData:nil
+                                     assumeInside:[path containsPoint:mousePosition]];
 
     path = [self pathForTriangle:UserNotificationCenterScreenCornerLeftBottom];
-    trackingRectTags[3] = [self addTrackingRect:[path bounds]
-                                          owner:self
-                                       userData:nil
-                                   assumeInside:[path containsPoint:mousePosition]];
+    m_TrackingRectTags[3] = [self addTrackingRect:[path bounds]
+                                            owner:self
+                                         userData:nil
+                                     assumeInside:[path containsPoint:mousePosition]];
 }
 
 - (void)removeTrackingRects
 {
     for(int i = 0; i < 4; i++)
     {
-        if(trackingRectTags[i] != 0)
+        if(m_TrackingRectTags[i] != 0)
         {
-            [self removeTrackingRect:trackingRectTags[i]];
-            trackingRectTags[i] = 0;
+            [self removeTrackingRect:m_TrackingRectTags[i]];
+            m_TrackingRectTags[i] = 0;
         }
     }
 }

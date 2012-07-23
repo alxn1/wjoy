@@ -16,25 +16,25 @@
 
 @implementation UserNotification
 
-+ (UserNotification*)userNotificationWithTitle:(NSString*)aTitle text:(NSString*)aText
++ (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text
 {
-    return [[[UserNotification alloc] initWithTitle:aTitle text:aText userInfo:nil] autorelease];
+    return [[[UserNotification alloc] initWithTitle:title text:text userInfo:nil] autorelease];
 }
 
-+ (UserNotification*)userNotificationWithTitle:(NSString*)aTitle text:(NSString*)aText userInfo:(NSDictionary*)aUserInfo
++ (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo
 {
-    return [[[UserNotification alloc] initWithTitle:aTitle text:aText userInfo:aUserInfo] autorelease];
+    return [[[UserNotification alloc] initWithTitle:title text:text userInfo:userInfo] autorelease];
 }
 
-- (id)initWithTitle:(NSString*)aTitle text:(NSString*)aText userInfo:(NSDictionary*)aUserInfo
+- (id)initWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    title       = [aTitle copy];
-    text        = [aText copy];
-    userInfo    = [aUserInfo copy];
+    m_Title     = [title copy];
+    m_Text      = [text copy];
+    m_UserInfo  = [userInfo copy];
 
     [self checkFields];
 
@@ -47,9 +47,9 @@
     if(self == nil)
         return nil;
 
-    title       = [[dictionary objectForKey:@"title"] retain];
-    text        = [[dictionary objectForKey:@"text"] retain];
-    userInfo    = [[dictionary objectForKey:@"userInfo"] retain];
+    m_Title     = [[dictionary objectForKey:@"title"] retain];
+    m_Text      = [[dictionary objectForKey:@"text"] retain];
+    m_UserInfo  = [[dictionary objectForKey:@"userInfo"] retain];
 
     [self checkFields];
 
@@ -64,15 +64,15 @@
 
     if([decoder allowsKeyedCoding])
     {
-        title       = [[decoder decodeObjectForKey:@"title"] retain];
-        text        = [[decoder decodeObjectForKey:@"text"] retain];
-        userInfo    = [[decoder decodeObjectForKey:@"userInfo"] retain];
+        m_Title     = [[decoder decodeObjectForKey:@"title"] retain];
+        m_Text      = [[decoder decodeObjectForKey:@"text"] retain];
+        m_UserInfo  = [[decoder decodeObjectForKey:@"userInfo"] retain];
     }
     else
     {
-        title       = [[decoder decodeObject] retain];
-        text        = [[decoder decodeObject] retain];
-        userInfo    = [[decoder decodeObject] retain];
+        m_Title     = [[decoder decodeObject] retain];
+        m_Text      = [[decoder decodeObject] retain];
+        m_UserInfo  = [[decoder decodeObject] retain];
     }
 
     [self checkFields];
@@ -82,49 +82,49 @@
 
 - (void)dealloc
 {
-    [title release];
-    [text release];
-    [userInfo release];
+    [m_Title release];
+    [m_Text release];
+    [m_UserInfo release];
     [super dealloc];
 }
 
 - (NSString*)title
 {
-    return [[title retain] autorelease];
+    return [[m_Title retain] autorelease];
 }
 
 - (NSString*)text
 {
-    return [[text retain] autorelease];
+    return [[m_Text retain] autorelease];
 }
 
 - (NSDictionary*)userInfo
 {
-    return [[userInfo retain] autorelease];
+    return [[m_UserInfo retain] autorelease];
 }
 
 - (void)encodeWithCoder:(NSCoder*)coder
 {
     if([coder allowsKeyedCoding])
     {
-        [coder encodeObject:title forKey:@"title"];
-        [coder encodeObject:text forKey:@"text"];
-        [coder encodeObject:userInfo forKey:@"userInfo"];
+        [coder encodeObject:m_Title forKey:@"title"];
+        [coder encodeObject:m_Text forKey:@"text"];
+        [coder encodeObject:m_UserInfo forKey:@"userInfo"];
     }
     else
     {
-        [coder encodeObject:title];
-        [coder encodeObject:text];
-        [coder encodeObject:userInfo];
+        [coder encodeObject:m_Title];
+        [coder encodeObject:m_Text];
+        [coder encodeObject:m_UserInfo];
     }
 }
 
 - (NSDictionary*)asDictionary
 {
     return [NSDictionary dictionaryWithObjectsAndKeys:
-                                                title,      @"title",
-                                                text,       @"text",
-                                                userInfo,   @"userInfo",
+                                                m_Title,    @"title",
+                                                m_Text,     @"text",
+                                                m_UserInfo, @"userInfo",
                                                 nil];
 }
 
@@ -139,14 +139,14 @@
 
 - (void)checkFields
 {
-    if(title == nil)
-        title = @"";
+    if(m_Title == nil)
+        m_Title = @"";
 
-    if(text == nil)
-        text = @"";
+    if(m_Text == nil)
+        m_Text = @"";
 
-    if(userInfo == nil)
-        userInfo = [[NSDictionary alloc] init];
+    if(m_UserInfo == nil)
+        m_UserInfo = [[NSDictionary alloc] init];
 }
 
 @end

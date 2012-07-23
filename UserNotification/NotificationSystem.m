@@ -35,13 +35,13 @@
     if(self == nil)
         return nil;
 
-    layoutManager       = [[NotificationLayoutManager managerWithScreenCorner:
+    m_LayoutManager     = [[NotificationLayoutManager managerWithScreenCorner:
                                         UserNotificationCenterScreenCornerRightTop]
                                 retain];
 
-    notificationQueue   = [[NSMutableArray alloc] init];
-    activeNotifications = [[NSMutableArray alloc] init];
-    notificationTimeout = 5.0;
+    m_NotificationQueue     = [[NSMutableArray alloc] init];
+    m_ActiveNotifications   = [[NSMutableArray alloc] init];
+    m_NotificationTimeout   = 5.0;
 
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -56,25 +56,25 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 
-    [notificationQueue release];
-    [activeNotifications release];
-    [layoutManager release];
+    [m_NotificationQueue release];
+    [m_ActiveNotifications release];
+    [m_LayoutManager release];
     [super dealloc];
 }
 
 - (NSTimeInterval)notificationTimeout
 {
-    return notificationTimeout;
+    return m_NotificationTimeout;
 }
 
 - (void)setNotificationTimeout:(NSTimeInterval)timeout
 {
-    notificationTimeout = timeout;
+    m_NotificationTimeout = timeout;
 }
 
 - (UserNotificationCenterScreenCorner)screenCorner
 {
-    return [layoutManager screenCorner];
+    return [m_LayoutManager screenCorner];
 }
 
 - (void)setScreenCorner:(UserNotificationCenterScreenCorner)corner
@@ -82,20 +82,20 @@
     if([self screenCorner] == corner)
         return;
 
-    [layoutManager release];
-    layoutManager = [[NotificationLayoutManager managerWithScreenCorner:corner] retain];
+    [m_LayoutManager release];
+    m_LayoutManager = [[NotificationLayoutManager managerWithScreenCorner:corner] retain];
 
-    NSUInteger countOpenedWindows = [activeNotifications count];
+    NSUInteger countOpenedWindows = [m_ActiveNotifications count];
     for(NSUInteger i = 0; i < countOpenedWindows; i++)
     {
-        NotificationWindow *w = [activeNotifications objectAtIndex:i];
+        NotificationWindow *w = [m_ActiveNotifications objectAtIndex:i];
         [w setReleasedWhenClosed:YES];
         [w setDelegate:nil];
         [w retain];
         [w close];
     }
 
-    [activeNotifications removeAllObjects];
+    [m_ActiveNotifications removeAllObjects];
 }
 
 - (void)deliver:(UserNotification*)notification
@@ -106,61 +106,61 @@
     if([self hasSpaceForNotification:notification rect:&rect index:&index])
         [self showNotification:notification rect:rect index:index];
     else
-        [notificationQueue addObject:notification];
+        [m_NotificationQueue addObject:notification];
 }
 
 - (id<NotificationSystemDelegate>)delegate
 {
-    return delegate;
+    return m_Delegate;
 }
 
 - (void)setDelegate:(id<NotificationSystemDelegate>)obj
 {
-    delegate = obj;
+    m_Delegate = obj;
 }
 
 - (void)notificationClicked:(id)sender
 {
-    [delegate notificationSystem:self
-             notificationClicked:[(NotificationWindow*)sender notification]];
+    [m_Delegate notificationSystem:self
+               notificationClicked:[(NotificationWindow*)sender notification]];
 }
 
 // MARK: NSWindow delegate
 
 - (void)showNextNotificationFromQueue
 {
-    if([notificationQueue count] != 0)
+    if([m_NotificationQueue count] != 0)
     {
         NSRect               rect;
         NSUInteger           index;
-        UserNotification    *n = [notificationQueue objectAtIndex:0];
+        UserNotification    *n = [m_NotificationQueue objectAtIndex:0];
 
         if([self hasSpaceForNotification:n rect:&rect index:&index])
         {
             [self showNotification:n rect:rect index:index];
-            [notificationQueue removeObjectAtIndex:0];
+            [m_NotificationQueue removeObjectAtIndex:0];
         }
     }
 }
 
 - (void)windowWillClose:(NSNotification*)notification
 {
-    [activeNotifications removeObject:[notification object]];
+    [m_ActiveNotifications removeObject:[notification object]];
     [self showNextNotificationFromQueue];
 }
 
 - (void)applicationDidChangeScreenParametersNotification:(NSNotification*)notification
 {
-    NSUInteger countOpenedWindows = [activeNotifications count];
+    NSUInteger countOpenedWindows = [m_ActiveNotifications count];
     for(NSUInteger i = 0; i < countOpenedWindows; i++)
     {
-        NotificationWindow *w = [activeNotifications objectAtIndex:i];
+        NotificationWindow *w = [m_ActiveNotifications objectAtIndex:i];
         [w setAnimationEnabled:NO];
         [w setDelegate:nil];
         [w close];
     }
 
-    [activeNotifications removeAllObjects];
+    [m_ActiveNotifications removeAllObjects];
     [self showNextNotificationFromQueue];
 }
 
@@ -170,10 +170,10 @@
 
 - (BOOL)hasSpaceForNotification:(UserNotification*)notification rect:(NSRect*)resultRect index:(NSUInteger*)index
 {
-    return [layoutManager hasSpaceForNotification:notification
-                              activeNotifications:activeNotifications
-                                             rect:resultRect
-                                            index:index];
+    return [m_LayoutManager hasSpaceForNotification:notification
+                                activeNotifications:m_ActiveNotifications
+                                               rect:resultRect
+                                              index:index];
 }
 
 - (void)showNotification:(UserNotification*)notification rect:(NSRect)rect index:(NSUInteger)index
@@ -183,9 +183,9 @@
     [window setTarget:self];
     [window setAction:@selector(notificationClicked:)];
     [window setDelegate:(id)self];
-    [window showWithTimeout:notificationTimeout];
+    [window showWithTimeout:m_NotificationTimeout];
 
-    [activeNotifications insertObject:window atIndex:index];
+    [m_ActiveNotifications insertObject:window atIndex:index];
 }
 
 @end
