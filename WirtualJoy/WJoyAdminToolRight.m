@@ -37,7 +37,7 @@
     if([self isObtained])
         return YES;
 
-	AuthorizationItem   right       = {"com.alxn1.wjoy.adminRights", 0, NULL, 0};
+	AuthorizationItem   right       = { "com.alxn1.wjoy.adminRights", 0, NULL, 0 };
 	AuthorizationRights rightSet    = { 1, &right };
 
     if(AuthorizationCreate(
