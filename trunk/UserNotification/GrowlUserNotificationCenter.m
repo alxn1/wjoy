@@ -98,8 +98,8 @@
     if(self == nil)
         return nil;
 
-    growlDelegate = [[GrowlUserNotificationCenterGrowlDelegate alloc] initWithOwner:self];
-    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:growlDelegate];
+    m_GrowlDelegate = [[GrowlUserNotificationCenterGrowlDelegate alloc] initWithOwner:self];
+    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:m_GrowlDelegate];
 
     return self;
 }
@@ -107,7 +107,7 @@
 - (void)dealloc
 {
     [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:nil];
-    [growlDelegate release];
+    [m_GrowlDelegate release];
     [super dealloc];
 }
 

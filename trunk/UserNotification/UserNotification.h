@@ -11,15 +11,15 @@
 @interface UserNotification : NSObject<NSCoding>
 {
     @private
-        NSString     *title;
-        NSString     *text;
-        NSDictionary *userInfo;
+        NSString     *m_Title;
+        NSString     *m_Text;
+        NSDictionary *m_UserInfo;
 }
 
-+ (UserNotification*)userNotificationWithTitle:(NSString*)aTitle text:(NSString*)aText;
-+ (UserNotification*)userNotificationWithTitle:(NSString*)aTitle text:(NSString*)aText userInfo:(NSDictionary*)aUserInfo;
++ (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text;
++ (UserNotification*)userNotificationWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo;
 
-- (id)initWithTitle:(NSString*)aTitle text:(NSString*)aText userInfo:(NSDictionary*)aUserInfo;
+- (id)initWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo;
 - (id)initWithDictionary:(NSDictionary*)dictionary;
 - (id)initWithCoder:(NSCoder*)decoder;
 - (void)dealloc;

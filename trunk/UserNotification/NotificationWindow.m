@@ -16,23 +16,23 @@
 
 @implementation NotificationWindow
 
-+ (NSRect)bestRectForNotification:(UserNotification*)aNotification
++ (NSRect)bestRectForNotification:(UserNotification*)notification
 {
     return [NotificationWindowView
-                        bestViewRectForTitle:[aNotification title]
-                                        text:[aNotification text]];
+                        bestViewRectForTitle:[notification title]
+                                        text:[notification text]];
 }
 
-+ (NotificationWindow*)newWindowWithNotification:(UserNotification*)aNotification frame:(NSRect)aFrame
++ (NotificationWindow*)newWindowWithNotification:(UserNotification*)notification frame:(NSRect)frame
 {
     return [[[NotificationWindow alloc]
-                        initWithNotification:aNotification
-                                       frame:aFrame] autorelease];
+                        initWithNotification:notification
+                                       frame:frame] autorelease];
 }
 
-- (id)initWithNotification:(UserNotification*)aNotification frame:(NSRect)aFrame
+- (id)initWithNotification:(UserNotification*)notification frame:(NSRect)frame
 {
-    self = [super initWithContentRect:aFrame
+    self = [super initWithContentRect:frame
                             styleMask:NSBorderlessWindowMask
                               backing:NSBackingStoreBuffered
                                 defer:NO];
@@ -56,14 +56,14 @@
 
     [self setAnimationEnabled:YES];
 
-    NSRect contentViewFrame = aFrame;
+    NSRect contentViewFrame = frame;
     contentViewFrame.origin = NSZeroPoint;
 
     NotificationWindowView *contentView = [[NotificationWindowView alloc] initWithFrame:contentViewFrame];
 
     [contentView setIcon:[[NSApplication sharedApplication] applicationIconImage]];
-    [contentView setText:[aNotification text]];
-    [contentView setTitle:[aNotification title]];
+    [contentView setText:[notification text]];
+    [contentView setTitle:[notification title]];
     [contentView setDelegate:self];
     [contentView setTarget:self];
     [contentView setAction:@selector(contentViewClicked:)];
@@ -71,38 +71,38 @@
     [self setContentView:contentView];
     [contentView release];
 
-    notification            = [aNotification retain];
-    isMouseEntered          = NO;
-    isCloseOnMouseExited    = NO;
+    m_Notification          = [notification retain];
+    m_IsMouseEntered        = NO;
+    m_IsCloseOnMouseExited  = NO;
 
     return self;
 }
 
 - (void)dealloc
 {
-    [autocloseTimer invalidate];
-    [notification release];
+    [m_AutocloseTimer invalidate];
+    [m_Notification release];
     [super dealloc];
 }
 
 - (id)target
 {
-    return target;
+    return m_Target;
 }
 
 - (void)setTarget:(id)obj
 {
-    target = obj;
+    m_Target = obj;
 }
 
 - (SEL)action
 {
-    return action;
+    return m_Action;
 }
 
 - (void)setAction:(SEL)sel
 {
-    action = sel;
+    m_Action = sel;
 }
 
 - (void)showWithTimeout:(NSTimeInterval)timeout
@@ -113,14 +113,14 @@
 
 - (void)close
 {
-    [autocloseTimer invalidate];
-    autocloseTimer = nil;
+    [m_AutocloseTimer invalidate];
+    m_AutocloseTimer = nil;
     [super close];
 }
 
 - (UserNotification*)notification
 {
-    return [[notification retain] autorelease];
+    return [[m_Notification retain] autorelease];
 }
 
 - (BOOL)canBecomeKeyWindow
@@ -135,28 +135,28 @@
 
 - (void)autoclose:(id)sender
 {
-    autocloseTimer = nil;
-    if(!isMouseEntered)
+    m_AutocloseTimer = nil;
+    if(!m_IsMouseEntered)
         [self close];
     else
-        isCloseOnMouseExited = YES;
+        m_IsCloseOnMouseExited = YES;
 }
 
 - (void)contentViewClicked:(id)sender
 {
-    if(target != nil && action != nil)
-        [target performSelector:action withObject:self];
+    if(m_Target != nil && m_Action != nil)
+        [m_Target performSelector:m_Action withObject:self];
 }
 
 - (void)notificationWindowViewMouseEntered:(NotificationWindowView*)view
 {
-    isMouseEntered = YES;
+    m_IsMouseEntered = YES;
 }
 
 - (void)notificationWindowViewMouseExited:(NotificationWindowView*)view
 {
-    isMouseEntered = NO;
-    if(isCloseOnMouseExited)
+    m_IsMouseEntered = NO;
+    if(m_IsCloseOnMouseExited)
         [self close];
 }
 
@@ -166,16 +166,16 @@
 
 - (void)startAutocloseTimer:(NSTimeInterval)timeout
 {
-    if(autocloseTimer == nil)
+    if(m_AutocloseTimer == nil)
     {
-        autocloseTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
-                                                          target:self
-                                                        selector:@selector(autoclose:)
-                                                        userInfo:nil
-                                                         repeats:NO];
+        m_AutocloseTimer = [NSTimer scheduledTimerWithTimeInterval:timeout
+                                                            target:self
+                                                          selector:@selector(autoclose:)
+                                                          userInfo:nil
+                                                           repeats:NO];
 
-        [[NSRunLoop currentRunLoop] addTimer:autocloseTimer forMode:NSEventTrackingRunLoopMode];
-        [[NSRunLoop currentRunLoop] addTimer:autocloseTimer forMode:NSModalPanelRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:m_AutocloseTimer forMode:NSEventTrackingRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:m_AutocloseTimer forMode:NSModalPanelRunLoopMode];
     }
 }
 
