@@ -24,8 +24,6 @@
 
 @implementation UserNotificationCenterScreenCornerView
 
-// MARK: public
-
 + (NSSize)bestSize
 {
     return NSMakeSize(150.0f, 96.0f);

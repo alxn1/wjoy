@@ -24,8 +24,6 @@
     NSTrackingRectTag                   trackingRectTags[4];
 }
 
-// MARK: public
-
 + (NSSize)bestSize;
 
 - (BOOL)isEnabled;
