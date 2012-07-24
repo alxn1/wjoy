@@ -15,9 +15,6 @@
         AuthorizationRef m_AuthRef;
 }
 
-- (id)init;
-- (void)dealloc;
-
 - (BOOL)isObtained;
 - (BOOL)obtain;
 - (void)discard;
