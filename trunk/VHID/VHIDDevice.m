@@ -201,7 +201,7 @@
 
     if(isMouse)
     {
-        *data = 0x09; data++; *data = 0x01; data++; // USAGE (Pointer)
+        *data = 0x09; data++; *data = 0x01; data++;  // USAGE (Pointer)
     }
 
     *data = 0xA1; data++; *data = 0x00; data++;      // COLLECTION (Physical)
