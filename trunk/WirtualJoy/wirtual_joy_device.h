@@ -19,11 +19,13 @@ class WirtualJoyDevice : public IOHIDDevice
     public:
         static WirtualJoyDevice *withHidDescriptor(
                                         const void *hidDescriptorData,
-                                        size_t hidDescriptorDataSize);
+                                        size_t hidDescriptorDataSize,
+                                        OSString *productString);
 
         virtual bool init(
                         const void *hidDescriptorData,
                         size_t hidDescriptorDataSize,
+                        OSString *productString,
                         OSDictionary *dictionary = 0);
 
         virtual IOReturn newReportDescriptor(IOMemoryDescriptor **descriptor) const;
@@ -42,6 +44,7 @@ class WirtualJoyDevice : public IOHIDDevice
     private:
         static const uint32_t locationIdBase = 0xFAFAFAFA;
 
+        OSString *m_ProductString;
         HIDCapabilities m_Capabilities;
         IOBufferMemoryDescriptor *m_HIDReportDescriptor;
         IOBufferMemoryDescriptor *m_StateBuffer;

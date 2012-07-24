@@ -11,9 +11,10 @@
 
 typedef enum
 {
-    WJoyDeviceMethodSelectorEnable        = 0,
-    WJoyDeviceMethodSelectorDisable       = 1,
-    WJoyDeviceMethodSelectorUpdateState   = 2
+    WJoyDeviceMethodSelectorEnable                  = 0,
+    WJoyDeviceMethodSelectorDisable                 = 1,
+    WJoyDeviceMethodSelectorUpdateState             = 2,
+    WJoyDeviceMethodSelectorSetDeviceProductString  = 3
 } WJoyDeviceMethodSelector;
 
 @interface WJoyDeviceImpl : NSObject

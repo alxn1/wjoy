@@ -38,16 +38,22 @@ class WirtualJoyUserClient : public IOUserClient
 									IOExternalMethodDispatch *dispatch,
                                     OSObject *target,
                                     void *reference);
+
+    protected:
+        virtual void free();
+
     private:
-        static const size_t                     externalMethodCount = 3;
+        static const size_t                     externalMethodCount = 4;
         static const IOExternalMethodDispatch   externalMethodDispatchTable[externalMethodCount];
 
         WirtualJoy *m_Owner;
         WirtualJoyDevice *m_Device;
+        OSString *m_DeviceProductString;
 
         static IOReturn _enableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _disableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _updateDeviceState(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
+        static IOReturn _setDeviceProductString(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
 
         bool openOwner(WirtualJoy *owner);
         bool closeOwner();
@@ -55,6 +61,7 @@ class WirtualJoyUserClient : public IOUserClient
         IOReturn enableDevice(const void *hidDescriptorData, uint32_t hidDescriptorDataSize);
         IOReturn disableDevice();
         IOReturn updateDeviceState(const void *hidData, uint32_t hidDataSize);
+        IOReturn setDeviceProductString(const void *productString, uint32_t productStringSize);
 };
 
 #endif /* WIRTUAL_JOY_USER_CLIENT_H */

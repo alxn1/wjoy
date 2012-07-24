@@ -31,8 +31,27 @@ const IOExternalMethodDispatch WirtualJoyUserClient::externalMethodDispatchTable
     {
         (IOExternalMethodAction) WirtualJoyUserClient::_updateDeviceState,
         0, kIOUCVariableStructureSize, 0, 0
+    },
+
+    {
+        (IOExternalMethodAction) WirtualJoyUserClient::_setDeviceProductString,
+        0, kIOUCVariableStructureSize, 0, 0
     }
 };
+
+static bool checkString(const char *str, size_t maxLength)
+{
+    while(maxLength > 0)
+    {
+        if(*str == 0)
+            return true;
+
+        maxLength--;
+        str++;
+    }
+
+    return false;
+}
 
 IOReturn WirtualJoyUserClient::_enableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args)
 {
@@ -47,6 +66,11 @@ IOReturn WirtualJoyUserClient::_disableDevice(WirtualJoyUserClient *target, void
 IOReturn WirtualJoyUserClient::_updateDeviceState(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args)
 {
     return target->updateDeviceState(args->structureInput, args->structureInputSize);
+}
+
+IOReturn WirtualJoyUserClient::_setDeviceProductString(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args)
+{
+    return target->setDeviceProductString(args->structureInput, args->structureInputSize);
 }
 
 bool WirtualJoyUserClient::openOwner(WirtualJoy *owner)
@@ -86,8 +110,19 @@ bool WirtualJoyUserClient::initWithTask(
 
     m_Owner = 0;
     m_Device = 0;
+    m_DeviceProductString = OSString::withCString("WJoy Virtual HID Device");
+
     dmsg("initWithTask");
     return true;
+}
+
+void WirtualJoyUserClient::free()
+{
+    if(m_DeviceProductString != 0)
+        m_DeviceProductString->release();
+
+    dmsg("free");
+    super::free();
 }
 
 bool WirtualJoyUserClient::start(IOService *provider)
@@ -154,6 +189,7 @@ IOReturn WirtualJoyUserClient::externalMethod(
 IOReturn WirtualJoyUserClient::enableDevice(const void *hidDescriptorData, uint32_t hidDescriptorDataSize)
 {
     dmsgf("enableDevice, param size = %d", hidDescriptorDataSize);
+
     if(m_Device != 0)
     {
         IOReturn result = disableDevice();
@@ -161,7 +197,11 @@ IOReturn WirtualJoyUserClient::enableDevice(const void *hidDescriptorData, uint3
             return result;
     }
 
-    m_Device = WirtualJoyDevice::withHidDescriptor(hidDescriptorData, hidDescriptorDataSize);
+    m_Device = WirtualJoyDevice::withHidDescriptor(
+                                            hidDescriptorData,
+                                            hidDescriptorDataSize,
+                                            m_DeviceProductString);
+
     if(m_Device == 0)
         return kIOReturnDeviceError;
 
@@ -207,5 +247,28 @@ IOReturn WirtualJoyUserClient::updateDeviceState(const void *hidData, uint32_t h
     if(!m_Device->updateState(hidData, hidDataSize))
         return kIOReturnDeviceError;
 
+    return kIOReturnSuccess;
+}
+
+IOReturn WirtualJoyUserClient::setDeviceProductString(const void *productString, uint32_t productStringSize)
+{
+    dmsgf("setDeviceProductString, productString size = %d", productStringSize);
+
+    if(m_Device != 0)
+        return kIOReturnBusy;
+
+    if(!checkString(static_cast< const char* >(productString), productStringSize))
+        return kIOReturnInvalid;
+
+    OSString *newStr = OSString::withCString(static_cast< const char* >(productString));
+    if(newStr == 0)
+        return kIOReturnNoMemory;
+
+    if(m_DeviceProductString != 0)
+        m_DeviceProductString->release();
+
+    m_DeviceProductString = newStr;
+
+    dmsgf("newProductString = %s", newStr->getCStringNoCopy());
     return kIOReturnSuccess;
 }

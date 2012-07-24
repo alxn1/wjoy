@@ -37,13 +37,14 @@ bool WirtualJoyDevice::parseHidDescriptor(
 
 WirtualJoyDevice *WirtualJoyDevice::withHidDescriptor(
                                 const void *hidDescriptorData,
-                                size_t hidDescriptorDataSize)
+                                size_t hidDescriptorDataSize,
+                                OSString *productString)
 {
     WirtualJoyDevice *result = new WirtualJoyDevice();
 
     if(result != 0)
     {
-        if(!result->init(hidDescriptorData, hidDescriptorDataSize))
+        if(!result->init(hidDescriptorData, hidDescriptorDataSize, productString))
         {
             result->release();
             result = 0;
@@ -56,10 +57,18 @@ WirtualJoyDevice *WirtualJoyDevice::withHidDescriptor(
 bool WirtualJoyDevice::init(
                 const void *hidDescriptorData,
                 size_t hidDescriptorDataSize,
+                OSString *productString,
                 OSDictionary *dictionary)
 {
+    m_ProductString = 0;
     m_HIDReportDescriptor = 0;
     m_StateBuffer = 0;
+
+    if(productString     == 0 ||
+       hidDescriptorData == 0)
+    {
+        return false;
+    }
 
     if(!super::init(dictionary))
         return false;
@@ -69,6 +78,20 @@ bool WirtualJoyDevice::init(
 
     if(m_Capabilities.inputReportByteLength > kMaxHIDReportSize)
         return false;
+
+    if(m_Capabilities.usagePage == kHIDPage_GenericDesktop &&
+       m_Capabilities.usage     == kHIDUsage_GD_Mouse)
+    {
+        // hack for Apple HID subsystem
+        OSString *str = OSString::withCString("Mouse");
+        if(str == NULL)
+            return false;
+
+        if(!setProperty("HIDDefaultBehavior", str))
+            return false;
+
+        str->release();
+    }
 
     m_HIDReportDescriptor = IOBufferMemoryDescriptor::withBytes(
                                                 hidDescriptorData,
@@ -93,6 +116,9 @@ bool WirtualJoyDevice::init(
         lastId++;
         m_LocationID = lastId;
     }
+
+    m_ProductString = productString;
+    m_ProductString->retain();
 
     dmsg("init");
     return true;
@@ -119,7 +145,7 @@ OSString *WirtualJoyDevice::newManufacturerString() const
 
 OSString *WirtualJoyDevice::newProductString() const
 {
-    return OSString::withCString("WJoy Virtual HID Device");
+    return OSString::withString(m_ProductString);
 }
 
 OSString *WirtualJoyDevice::newTransportString() const
@@ -153,6 +179,9 @@ bool WirtualJoyDevice::updateState(const void *hidData, size_t hidDataSize)
 
 void WirtualJoyDevice::free()
 {
+    if(m_ProductString != 0)
+        m_ProductString->release();
+
     if(m_HIDReportDescriptor != 0)
         m_HIDReportDescriptor->release();
 
