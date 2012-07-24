@@ -33,7 +33,8 @@
 
 + (BOOL)unloadDriver
 {
-    return [self doLoadOrUnloadCommand:WJoyToolUnloadDriverCommand];
+	return YES;
+	// return [self doLoadOrUnloadCommand:WJoyToolUnloadDriverCommand];
 }
 
 @end
