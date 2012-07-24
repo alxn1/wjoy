@@ -20,6 +20,11 @@
 
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
 {
+    return [self initWithHIDDescriptor:HIDDescriptor productString:nil];
+}
+
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString
+{
     self = [super init];
     if(self == nil)
         return nil;
@@ -29,6 +34,19 @@
     {
         [self release];
         return nil;
+    }
+
+    if(productString != nil)
+    {
+        const char *str     = [productString UTF8String];
+        size_t      strSize = strlen(str) + 1; // zero-terminator
+        NSData     *data    = [NSData dataWithBytes:str length:strSize];
+
+        if(![m_Impl call:WJoyDeviceMethodSelectorSetDeviceProductString data:data])
+        {
+            [self release];
+            return nil;
+        }
     }
 
     if(![m_Impl call:WJoyDeviceMethodSelectorEnable data:HIDDescriptor])
