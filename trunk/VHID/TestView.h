@@ -10,7 +10,8 @@
 
 @class TestView;
 
-typedef enum {
+typedef enum
+{
     TestViewKeyUp,
     TestViewKeyDown,
     TestViewKeyLeft,
