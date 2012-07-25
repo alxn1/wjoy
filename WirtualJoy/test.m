@@ -82,7 +82,8 @@ static const unsigned char hidDescriptorData[] = {
 
 /*
 
-typedef enum {
+typedef enum
+{
 	WiiRemoteOneButton,
 	WiiRemoteTwoButton,
 	WiiRemoteAButton,
@@ -118,7 +119,8 @@ typedef enum {
 	WiiNumberOfButtons
 } WiiButtonType;
 
-typedef enum {
+typedef enum
+{
 	hid_button    = 0,
 	hid_XYZ       = WiiNumberOfButtons,
 	hid_rXYZ      = WiiNumberOfButtons + 1,

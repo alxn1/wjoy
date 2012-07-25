@@ -10,7 +10,8 @@
 
 @class UserNotificationCenter;
 
-typedef enum {
+typedef enum
+{
     UserNotificationCenterScreenCornerRightTop,
     UserNotificationCenterScreenCornerRightBottom,
     UserNotificationCenterScreenCornerLeftBottom,

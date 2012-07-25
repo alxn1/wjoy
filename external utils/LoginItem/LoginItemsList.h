@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
+typedef enum
+{
     LoginItemsListDomainUser,
     LoginItemsListDomainSystem
 } LoginItemsListDomain;
