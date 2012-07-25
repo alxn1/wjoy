@@ -135,7 +135,7 @@ static void onApplicationExit(void)
 + (BOOL)isDriverLoaded
 {
     io_service_t service = [WJoyDeviceImpl findService];
-    BOOL         result = (service != IO_OBJECT_NULL);
+    BOOL         result  = (service != IO_OBJECT_NULL);
 
     IOObjectRelease(service);
     return result;
