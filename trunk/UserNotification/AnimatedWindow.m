@@ -125,7 +125,7 @@
     {
         if(m_CurrentAnimation == nil ||
          ![m_CurrentAnimation isAnimating] ||
-          [m_CurrentAnimation delegate] != ((id<NSAnimationDelegate>)self))
+          ((id)[m_CurrentAnimation delegate]) != self)
         {
             [self fadeOut];
         }
