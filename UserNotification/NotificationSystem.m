@@ -125,8 +125,6 @@
                notificationClicked:[(NotificationWindow*)sender notification]];
 }
 
-// MARK: NSWindow delegate
-
 - (void)showNextNotificationFromQueue
 {
     if([m_NotificationQueue count] != 0)

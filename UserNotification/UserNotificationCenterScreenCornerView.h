@@ -8,20 +8,21 @@
 
 #import "UserNotificationCenter.h"
 
-@interface UserNotificationCenterScreenCornerView : NSView {
-@private
-    NSImage                            *m_BGImage;
+@interface UserNotificationCenterScreenCornerView : NSView
+{
+    @private
+        NSImage                            *m_BGImage;
 
-    UserNotificationCenterScreenCorner  m_ScreenCorner;
-    int                                 m_UnderMouseScreenCorner;
-    int                                 m_DraggedMouseScreenCorner;
-    int                                 m_ClickedMouseScreenCorner;
-    BOOL                                m_IsEnabled;
+        UserNotificationCenterScreenCorner  m_ScreenCorner;
+        int                                 m_UnderMouseScreenCorner;
+        int                                 m_DraggedMouseScreenCorner;
+        int                                 m_ClickedMouseScreenCorner;
+        BOOL                                m_IsEnabled;
 
-    id                                  m_Target;
-    SEL                                 m_Action;
+        id                                  m_Target;
+        SEL                                 m_Action;
 
-    NSTrackingRectTag                   m_TrackingRectTags[4];
+        NSTrackingRectTag                   m_TrackingRectTags[4];
 }
 
 + (NSSize)bestSize;

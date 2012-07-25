@@ -21,9 +21,10 @@
 
 @end
 
-@interface GrowlUserNotificationCenterGrowlDelegate : NSObject<GrowlApplicationBridgeDelegate> {
-@private
-    GrowlUserNotificationCenter *owner;
+@interface GrowlUserNotificationCenterGrowlDelegate : NSObject<GrowlApplicationBridgeDelegate>
+{
+    @private
+        GrowlUserNotificationCenter *m_Owner;
 }
 
 - (id)initWithOwner:(GrowlUserNotificationCenter*)obj;
@@ -41,7 +42,7 @@
     if(self == nil)
         return nil;
 
-    owner = obj;
+    m_Owner = obj;
 
     return self;
 }
@@ -69,7 +70,7 @@
 - (void)growlNotificationWasClicked:(id)clickContext
 {
     UserNotification *notification = [[UserNotification alloc] initWithDictionary:clickContext];
-    [owner notificationClicked:notification];
+    [m_Owner notificationClicked:notification];
     [notification release];
 }
 
