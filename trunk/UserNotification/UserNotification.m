@@ -26,6 +26,12 @@
     return [[[UserNotification alloc] initWithTitle:title text:text userInfo:userInfo] autorelease];
 }
 
+- (id)init
+{
+    [[super init] release];
+    return nil;
+}
+
 - (id)initWithTitle:(NSString*)title text:(NSString*)text userInfo:(NSDictionary*)userInfo
 {
     self = [super init];
