@@ -8,6 +8,12 @@
 
 #import "NotificationWindow.h"
 
+@interface NSWindow (Additions)
+
+- (void)setMovable:(BOOL)flag;
+
+@end
+
 @interface NotificationWindow (PrivatePart)
 
 - (void)startAutocloseTimer:(NSTimeInterval)timeout;
@@ -39,9 +45,11 @@
 
     if(self == nil) return nil;
 
+    if([self respondsToSelector:@selector(setMovable:)])
+        [self setMovable:NO];
+
     [self setOpaque:NO];
     [self setOneShot:NO];
-    [self setMovable:NO];
     [self setHasShadow:YES];
     [self setLevel:kCGMaximumWindowLevel];
     [self setAcceptsMouseMovedEvents:YES];
@@ -49,10 +57,7 @@
     [self setBackgroundColor:[NSColor clearColor]];
     [self setReleasedWhenClosed:NO];
     [self setExcludedFromWindowsMenu:YES];
-    [self setCollectionBehavior:
-            NSWindowCollectionBehaviorCanJoinAllSpaces |
-            NSWindowCollectionBehaviorTransient |
-            NSWindowCollectionBehaviorIgnoresCycle];
+    [self setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
 
     [self setAnimationEnabled:YES];
 
