@@ -49,14 +49,13 @@
 @interface AppleUserNotificationCenter (PrivatePart)
 
 + (BOOL)isAvailable;
+
 - (void)userNotificationCenter:(id)center didActivateNotification:(id)notification;
 - (void)applicationWillTerminateNotification:(NSNotification*)notification;
 
 @end
 
 @implementation AppleUserNotificationCenter
-
-// MARK: public
 
 + (void)load
 {

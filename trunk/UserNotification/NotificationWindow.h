@@ -23,8 +23,6 @@
         SEL                  m_Action;
 }
 
-// MARK: public
-
 + (NSRect)bestRectForNotification:(UserNotification*)notification;
 
 + (NotificationWindow*)newWindowWithNotification:(UserNotification*)notification frame:(NSRect)frame;

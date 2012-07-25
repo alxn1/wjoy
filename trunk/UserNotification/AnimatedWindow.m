@@ -134,8 +134,6 @@
         [super close];
 }
 
-// MARK: public
-
 - (BOOL)isAnimationEnabled
 {
     return m_IsAnimationEnabled;
