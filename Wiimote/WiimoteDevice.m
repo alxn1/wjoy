@@ -69,9 +69,6 @@ NSString *WiimoteDeviceIsBatteryLevelLowKey                     = @"WiimoteDevic
     if(![self isConnected])
         return;
 
-    [self setVibrationEnabled:NO];
-    [self setHighlightedLEDMask:0];
-
     [m_ControlChannel setDelegate:nil];
 	[m_DataChannel setDelegate:nil];
 
