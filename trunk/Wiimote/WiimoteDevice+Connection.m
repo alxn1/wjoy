@@ -37,6 +37,7 @@
     m_BatteryLevel          = -1.0;
     m_IsBatteryLevelLow     = NO;
     m_IsUpdateStateStarted  = NO;
+    m_UserInfo              = nil;
     m_IsStateChangeNotificationsEnabled = YES;
 
     memset(m_ButtonState, 0, sizeof(m_ButtonState));
@@ -68,6 +69,7 @@
 
 - (void)dealloc
 {
+    [m_UserInfo release];
     [self disconnect];
     [super dealloc];
 }

@@ -84,6 +84,8 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
         BOOL                         m_IsBatteryLevelLow;
         BOOL                         m_IsUpdateStateStarted;
 
+        NSDictionary                *m_UserInfo;
+
         id<WiimoteDeviceDelegate>    m_Delegate;
 }
 
@@ -116,6 +118,9 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
 // disable all notifications, except begin/end discovery and connect/disconnect
 - (BOOL)isStateChangeNotificationsEnabled;
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled;
+
+- (NSDictionary*)userInfo;
+- (void)setUserInfo:(NSDictionary*)userInfo;
 
 - (id<WiimoteDeviceDelegate>)delegate;
 - (void)setDelegate:(id<WiimoteDeviceDelegate>)delegate;
