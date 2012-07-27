@@ -17,7 +17,7 @@
         return nil;
 
     m_MouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
-                                          pointerCount:0
+                                          pointerCount:1
                                            buttonCount:2
                                             isRelative:YES];
 
