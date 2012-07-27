@@ -115,7 +115,7 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
 - (BOOL)isBatteryLevelLow;
 - (void)updateState;
 
-// disable all notifications, except begin/end discovery and connect/disconnect
+// disable all notifications, except begin/end discovery, battery level and connect/disconnect
 - (BOOL)isStateChangeNotificationsEnabled;
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled;
 

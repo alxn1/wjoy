@@ -105,19 +105,15 @@
           batteryLevelUpdated:batteryLevel
                         isLow:isLow];
 
-    if(m_IsStateChangeNotificationsEnabled)
-    {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        [NSNumber numberWithDouble:batteryLevel],   WiimoteDeviceBatteryLevelKey,
-                                        [NSNumber numberWithBool:isLow],            WiimoteDeviceIsBatteryLevelLowKey,
-                                        nil];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithDouble:batteryLevel],   WiimoteDeviceBatteryLevelKey,
+                                    [NSNumber numberWithBool:isLow],            WiimoteDeviceIsBatteryLevelLowKey,
+                                    nil];
 
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteDeviceBatteryLevelUpdatedNotification
-                                              object:self
-                                            userInfo:userInfo];
-
-    }
+    [[NSNotificationCenter defaultCenter]
+                            postNotificationName:WiimoteDeviceBatteryLevelUpdatedNotification
+                                          object:self
+                                        userInfo:userInfo];
 }
 
 - (void)onDisconnected
