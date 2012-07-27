@@ -552,8 +552,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = WJoy_Prefix.pch;
 				HEADER_SEARCH_PATHS = (
 					../WirtualJoy,
 					../VHID,
