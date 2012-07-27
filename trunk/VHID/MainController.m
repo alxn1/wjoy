@@ -17,7 +17,7 @@
         return nil;
 
     m_MouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
-                                          pointerCount:1
+                                          pointerCount:0
                                            buttonCount:2
                                             isRelative:YES];
 
@@ -25,6 +25,8 @@
                                                   productString:@"Virtual Alxn1 Mouse"];
 
     [m_MouseState setDelegate:self];
+    if(m_VirtualMouse == nil || m_MouseState == nil)
+        NSLog(@"error");
 
     return self;
 }
