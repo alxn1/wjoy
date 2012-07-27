@@ -197,6 +197,20 @@ NSString *WiimoteDeviceIsBatteryLevelLowKey                     = @"WiimoteDevic
     m_IsStateChangeNotificationsEnabled = enabled;
 }
 
+- (NSDictionary*)userInfo
+{
+    return [[m_UserInfo retain] autorelease];
+}
+
+- (void)setUserInfo:(NSDictionary*)userInfo
+{
+    if(m_UserInfo == userInfo)
+        return;
+
+    [m_UserInfo release];
+    m_UserInfo = [userInfo retain];
+}
+
 - (id<WiimoteDeviceDelegate>)delegate
 {
     return m_Delegate;
