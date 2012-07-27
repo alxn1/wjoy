@@ -54,7 +54,7 @@
                                     [[m_Buttons state] length] +
                                     [[m_Pointers state] length]];
 
-    if(m_Buttons  == nil ||
+    if(m_Buttons  == nil &&
        m_Pointers == nil)
     {
         [self release];
@@ -82,6 +82,9 @@
 
 - (BOOL)isRelative
 {
+    if(m_Pointers == nil)
+        return NO;
+
     return [m_Pointers isRelative];
 }
 
@@ -116,6 +119,9 @@
 
 - (NSPoint)pointerPosition:(NSUInteger)pointerIndex
 {
+    if(m_Pointers == nil)
+        return NSZeroPoint;
+
     return [m_Pointers pointerPosition:pointerIndex];
 }
 
@@ -153,15 +159,21 @@
     NSData          *buttonState    = [m_Buttons state];
     NSData          *pointerState   = [m_Pointers state];
 
-    memcpy(
-        data,
-        [buttonState bytes],
-        [buttonState length]);
+    if(buttonState != nil)
+    {
+        memcpy(
+            data,
+            [buttonState bytes],
+            [buttonState length]);
+    }
 
-    memcpy(
-        data + [buttonState length],
-        [pointerState bytes],
-        [pointerState length]);
+    if(pointerState != nil)
+    {
+        memcpy(
+            data + [buttonState length],
+            [pointerState bytes],
+            [pointerState length]);
+    }
 
     return [[m_State retain] autorelease];
 }
@@ -206,11 +218,17 @@
 
     *data = 0xA1; data++; *data = 0x00; data++;      // COLLECTION (Physical)
 
-    memcpy(data, [buttonsHID bytes], [buttonsHID length]);
-    data += [buttonsHID length];
+    if(buttonsHID != nil)
+    {
+        memcpy(data, [buttonsHID bytes], [buttonsHID length]);
+        data += [buttonsHID length];
+    }
 
-    memcpy(data, [pointersHID bytes], [pointersHID length]);
-    data += [pointersHID length];
+    if(pointersHID != nil)
+    {
+        memcpy(data, [pointersHID bytes], [pointersHID length]);
+        data += [pointersHID length];
+    }
 
     *data = 0xC0; data++; // END_COLLECTION
     *data = 0xC0; data++; // END_COLLECTION
