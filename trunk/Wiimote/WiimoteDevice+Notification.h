@@ -19,6 +19,8 @@
 - (void)onHighlightedLEDMaskChanged:(NSUInteger)mask;
 - (void)onVibrationStateChanged:(BOOL)isVibrationEnabled;
 - (void)onBatteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow;
+- (void)onExtensionConnected:(WiimoteDeviceExtension*)extension;
+- (void)onExtensionDisconnected:(WiimoteDeviceExtension*)extension;
 - (void)onDisconnected;
 
 - (void)setButton:(WiimoteButtonType)button pressed:(BOOL)pressed;

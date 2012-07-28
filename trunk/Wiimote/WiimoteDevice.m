@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteDevice+Hardware.h"
+#import "WiimoteDevice+Extension.h"
 #import "WiimoteDevice+Notification.h"
 #import "WiimoteDevice+ConnectedTracking.h"
 
@@ -21,6 +22,8 @@ NSString *WiimoteDeviceButtonReleasedNotification               = @"WiimoteDevic
 NSString *WiimoteDeviceHighlightedLEDMaskChangedNotification    = @"WiimoteDeviceHighlightedLEDMaskChangedNotification";
 NSString *WiimoteDeviceVibrationStateChangedNotification        = @"WiimoteDeviceVibrationStateChangedNotification";
 NSString *WiimoteDeviceBatteryLevelUpdatedNotification          = @"WiimoteDeviceBatteryLevelUpdatedNotification";
+NSString *WiimoteDeviceExtensionConnectedNotification			= @"WiimoteDeviceExtensionConnectedNotification";
+NSString *WiimoteDeviceExtensionDisconnectedNotification			= @"WiimoteDeviceExtensionDisconnectedNotification";
 NSString *WiimoteDeviceDisconnectedNotification                 = @"WiimoteDeviceDisconnectedNotification";
 
 NSString *WiimoteDeviceButtonKey                                = @"WiimoteDeviceButtonKey";
@@ -28,6 +31,7 @@ NSString *WiimoteDeviceHighlightedLEDMaskKey                    = @"WiimoteDevic
 NSString *WiimoteDeviceVibrationStateKey                        = @"WiimoteDeviceVibrationStateKey";
 NSString *WiimoteDeviceBatteryLevelKey                          = @"WiimoteDeviceBatteryLevelKey";
 NSString *WiimoteDeviceIsBatteryLevelLowKey                     = @"WiimoteDeviceIsBatteryLevelLowKey";
+NSString *WiimoteDeviceExtensionKey								= @"WiimoteDeviceExtensionKey";
 
 @implementation WiimoteDevice
 
@@ -94,6 +98,7 @@ NSString *WiimoteDeviceIsBatteryLevelLowKey                     = @"WiimoteDevic
 
     if(m_IsInitialiased)
     {
+		[self releaseExtensionDevice];
         [self onDisconnected];
         [WiimoteDevice removeConnectedDevice:self];
     }

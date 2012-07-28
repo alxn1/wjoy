@@ -12,6 +12,9 @@
 
 - (BOOL)handleReport:(const unsigned char*)data length:(NSUInteger)length;
 - (BOOL)handleCoreButtonReport:(const unsigned char*)data length:(NSUInteger)length;
+- (BOOL)handleCoreButtonAndExtStat:(const unsigned char*)data length:(NSUInteger)length;
+- (BOOL)handleReadMemoryReport:(const unsigned char*)data length:(NSUInteger)length;
+- (BOOL)handleAcknowledgeReport:(const unsigned char*)data length:(NSUInteger)length;
 - (BOOL)handleStatusReport:(const unsigned char*)data length:(NSUInteger)length;
 
 @end

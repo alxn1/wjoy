@@ -99,12 +99,61 @@
                       length:sizeof(data)];
 }
 
+- (BOOL)writeData:(const unsigned char*)data
+		   length:(NSUInteger)length
+		  address:(NSUInteger)address
+{
+	if(length > WiimoteDeviceWriteMemotyDataSize)
+		return NO;
+
+	uint32_t addr	= OSSwapHostToBigInt32(address);
+	uint8_t  len	= length;
+
+	unsigned char buffer[WiimoteDeviceWriteMemotyDataSize + 5];
+
+	memcpy(buffer, &addr, sizeof(addr));
+	memcpy(buffer + sizeof(addr), &len, sizeof(len));
+	memset(buffer + sizeof(addr) + sizeof(len), 0, WiimoteDeviceWriteMemotyDataSize);
+	memcpy(buffer + sizeof(addr) + sizeof(len), data, length);
+
+	if(m_IsVibrationEnabled)
+        buffer[0] |= WiimoteDeviceCommandFlagVibraEnabled;
+
+	return [self postCommand:WiimoteDeviceCommandTypeWriteMemory
+						data:buffer
+					  length:sizeof(buffer)];
+}
+
+- (BOOL)beginReadFromMemory:(NSRange)range
+{
+	uint32_t address	= range.location;
+	uint16_t length		= range.length;
+
+	OSSwapHostToBigInt32(address);
+	OSSwapHostToBigInt16(length);
+
+	unsigned char data[6];
+
+	memcpy(data, &address, sizeof(address));
+	memcpy(data + sizeof(address), &length, sizeof(length));
+
+	if(m_IsVibrationEnabled)
+        data[0] |= WiimoteDeviceCommandFlagVibraEnabled;
+
+	return [self postCommand:WiimoteDeviceCommandTypeReadMemory
+						data:data
+					  length:sizeof(data)];
+}
+
 - (BOOL)enableButtonReport
 {
     unsigned char data[2];
 
     data[0] = 0;
     data[1] = WiimoteDeviceReportTypeCoreButtons;
+
+	if(m_IsExtensionInitialized)
+		data[1] = WiimoteDeviceReportTypeCoreButtonsAndExtStat;
 
     if(m_IsVibrationEnabled)
         data[0] |= WiimoteDeviceCommandFlagVibraEnabled;

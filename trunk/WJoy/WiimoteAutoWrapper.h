@@ -7,18 +7,24 @@
 //
 
 #import "WiimoteDevice.h"
+#import "WiimoteDeviceNunchuck.h"
 #import "WJoyDevice.h"
 #import "VHIDDevice.h"
 
 @interface WiimoteAutoWrapper : NSObject<
                                     WiimoteDeviceDelegate,
+									WiimoteDeviceNunchuckDelegate,
                                     VHIDDeviceDelegate>
                                     
 {
     @private
         WiimoteDevice   *m_Device;
+
         VHIDDevice      *m_HIDState;
         WJoyDevice      *m_WJoy;
+
+		VHIDDevice		*m_NunchuckHIDState;
+		WJoyDevice		*m_WJoyNunchuck;
 }
 
 // 0 = infinite, default = infinite, if currently connected too many, disconnect last connected
