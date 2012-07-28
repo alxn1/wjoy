@@ -172,7 +172,7 @@
     [m_Menu addItem:item];
     [item release];
 
-    item = [[NSMenuItem alloc] initWithTitle:@"Exit" action:@selector(terminate:) keyEquivalent:@""];
+    item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
     [item setTarget:[NSApplication sharedApplication]];
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];

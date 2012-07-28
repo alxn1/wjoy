@@ -31,20 +31,23 @@
         return nil;
     }
 
-    m_IsInitialiased        = NO;
-    m_HighlightedLEDMask    = 0;
-    m_IsVibrationEnabled    = NO;
-    m_BatteryLevel          = -1.0;
-    m_IsBatteryLevelLow     = NO;
-    m_IsUpdateStateStarted  = NO;
-    m_UserInfo              = nil;
-    m_IsStateChangeNotificationsEnabled = YES;
+    m_IsInitialiased			= NO;
+    m_HighlightedLEDMask		= 0;
+    m_IsVibrationEnabled		= NO;
+    m_BatteryLevel				= -1.0;
+    m_IsBatteryLevelLow			= NO;
+    m_IsUpdateStateStarted		= NO;
+    m_UserInfo					= nil;
+	m_Extension					= nil;
+	m_IsExtensionConnected		= NO;
+	m_IsExtensionInitialized	= NO;
+	m_IsStateChangeNotificationsEnabled = YES;
 
     memset(m_ButtonState, 0, sizeof(m_ButtonState));
 
-    m_Device                = [device retain];
-	m_ControlChannel        = [[self openChannel:kBluetoothL2CAPPSMHIDControl] retain];
-	m_DataChannel           = [[self openChannel:kBluetoothL2CAPPSMHIDInterrupt] retain];
+    m_Device					= [device retain];
+	m_ControlChannel			= [[self openChannel:kBluetoothL2CAPPSMHIDControl] retain];
+	m_DataChannel				= [[self openChannel:kBluetoothL2CAPPSMHIDInterrupt] retain];
 
 	if(m_ControlChannel == nil ||
        m_DataChannel    == nil)

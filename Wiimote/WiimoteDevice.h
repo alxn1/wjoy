@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "WiimoteDeviceExtension.h"
 
 #define WiimoteButtonCount 11
 
@@ -42,6 +42,8 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceButtonReleasedNotification;
 FOUNDATION_EXPORT NSString *WiimoteDeviceHighlightedLEDMaskChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteDeviceVibrationStateChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteDeviceBatteryLevelUpdatedNotification;
+FOUNDATION_EXPORT NSString *WiimoteDeviceExtensionConnectedNotification;
+FOUNDATION_EXPORT NSString *WiimoteDeviceExtensionDisconnectedNotification;
 FOUNDATION_EXPORT NSString *WiimoteDeviceDisconnectedNotification;
 
 FOUNDATION_EXPORT NSString *WiimoteDeviceButtonKey;
@@ -49,6 +51,7 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceHighlightedLEDMaskKey;
 FOUNDATION_EXPORT NSString *WiimoteDeviceVibrationStateKey;
 FOUNDATION_EXPORT NSString *WiimoteDeviceBatteryLevelKey;
 FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
+FOUNDATION_EXPORT NSString *WiimoteDeviceExtensionKey;
 
 @class IOBluetoothDevice;
 @class IOBluetoothL2CAPChannel;
@@ -61,6 +64,8 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
 - (void)wiimoteDevice:(WiimoteDevice*)device highlightedLEDMaskChanged:(NSUInteger)mask;
 - (void)wiimoteDevice:(WiimoteDevice*)device vibrationStateChanged:(BOOL)isVibrationEnabled;
 - (void)wiimoteDevice:(WiimoteDevice*)device batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow;
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionConnected:(WiimoteDeviceExtension*)extension;
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionDisconnected:(WiimoteDeviceExtension*)extension;
 - (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device;
 
 @end
@@ -83,6 +88,12 @@ FOUNDATION_EXPORT NSString *WiimoteDeviceIsBatteryLevelLowKey;
         double                       m_BatteryLevel;
         BOOL                         m_IsBatteryLevelLow;
         BOOL                         m_IsUpdateStateStarted;
+
+		BOOL						 m_IsExtensionConnected;
+		BOOL						 m_IsExtensionInitialized;
+		Class						 m_ExtensionClass;
+		NSMutableData				*m_CalibrationData;
+		WiimoteDeviceExtension		*m_Extension;
 
         NSDictionary                *m_UserInfo;
 

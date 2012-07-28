@@ -11,6 +11,7 @@
 @interface WiimoteAutoWrapper (PrivatePart)
 
 + (NSString*)wjoyNameFromWiimoteDevice:(WiimoteDevice*)device;
++ (NSString*)nunchuckNameFromWiimoteDevice:(WiimoteDevice*)device;
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification;
 
@@ -74,14 +75,62 @@ static NSUInteger maxConnectedDevices = 0;
 {
 }
 
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionConnected:(WiimoteDeviceExtension*)extension
+{
+	if([extension type] != WiimoteExtensionTypeNunchuck)
+		return;
+
+	m_NunchuckHIDState  = [[VHIDDevice alloc]
+									initWithType:VHIDDeviceTypeJoystick
+									pointerCount:WiimoteNunchuckStickCount
+									 buttonCount:WiimoteNunchuckButtonCount
+									  isRelative:NO];
+
+	m_WJoyNunchuck		= [[WJoyDevice alloc]
+									initWithHIDDescriptor:[m_NunchuckHIDState descriptor]
+											productString:[WiimoteAutoWrapper nunchuckNameFromWiimoteDevice:
+																[extension device]]];
+
+	[m_NunchuckHIDState setDelegate:self];
+	[(WiimoteDeviceNunchuck*)extension setDelegate:self];
+	[(WiimoteDeviceNunchuck*)extension setStateChangeNotificationsEnabled:NO];
+}
+
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionDisconnected:(WiimoteDeviceExtension*)extension
+{
+	[m_NunchuckHIDState release];
+	[m_WJoyNunchuck release];
+
+	m_NunchuckHIDState = nil;
+	m_WJoyNunchuck = nil;
+}
+
 - (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
 {
     [self release];
 }
 
+- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
+{
+	[m_NunchuckHIDState setButton:button pressed:YES];
+}
+
+- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
+{
+	[m_NunchuckHIDState setButton:button pressed:NO];
+}
+
+- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck stickPositionChanged:(NSPoint)position
+{
+	[m_NunchuckHIDState setPointer:0 position:position];
+}
+
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
-    [m_WJoy updateHIDState:state];
+    if(device == m_HIDState)
+		[m_WJoy updateHIDState:state];
+	else
+		[m_WJoyNunchuck updateHIDState:state];
 }
 
 @end
@@ -92,6 +141,13 @@ static NSUInteger maxConnectedDevices = 0;
 {
     return [NSString stringWithFormat:
                             @"Nintendo Wii Remote Controller (%@)",
+                            [device addressString]];
+}
+
++ (NSString*)nunchuckNameFromWiimoteDevice:(WiimoteDevice*)device
+{
+	return [NSString stringWithFormat:
+                            @"Nintendo Wii Remote Nunchuck (%@)",
                             [device addressString]];
 }
 

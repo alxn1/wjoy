@@ -116,6 +116,34 @@
                                         userInfo:userInfo];
 }
 
+- (void)onExtensionConnected:(WiimoteDeviceExtension*)extension
+{
+	[m_Delegate wiimoteDevice:self extensionConnected:extension];
+
+	NSDictionary *userInfo = [NSDictionary
+								dictionaryWithObject:extension
+											  forKey:WiimoteDeviceExtensionKey];
+
+	[[NSNotificationCenter defaultCenter]
+                            postNotificationName:WiimoteDeviceExtensionConnectedNotification
+                                          object:self
+                                        userInfo:userInfo];
+}
+
+- (void)onExtensionDisconnected:(WiimoteDeviceExtension*)extension
+{
+	[m_Delegate wiimoteDevice:self extensionDisconnected:extension];
+
+	NSDictionary *userInfo = [NSDictionary
+								dictionaryWithObject:extension
+											  forKey:WiimoteDeviceExtensionKey];
+
+	[[NSNotificationCenter defaultCenter]
+                            postNotificationName:WiimoteDeviceExtensionDisconnectedNotification
+                                          object:self
+                                        userInfo:userInfo];
+}
+
 - (void)onDisconnected
 {
     [m_Delegate wiimoteDeviceDisconnected:self];

@@ -23,6 +23,13 @@
 
 - (BOOL)updateLEDStates;
 - (BOOL)beginUpdateState;
+
+- (BOOL)writeData:(const unsigned char*)data
+		   length:(NSUInteger)length
+		  address:(NSUInteger)address;
+
+- (BOOL)beginReadFromMemory:(NSRange)range;
+
 - (BOOL)enableButtonReport;
 
 @end
