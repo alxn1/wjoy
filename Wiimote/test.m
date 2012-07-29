@@ -84,6 +84,16 @@
             batteryLevel, ((isLow)?(@"YES"):(@"NO")));
 }
 
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionConnected:(WiimoteDeviceExtension*)extension
+{
+	NSLog(@"Connected");
+}
+
+- (void)wiimoteDevice:(WiimoteDevice*)device extensionDisconnected:(WiimoteDeviceExtension*)extension
+{
+	NSLog(@"Disconnected");
+}
+
 - (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
 {
     m_Device = nil;
