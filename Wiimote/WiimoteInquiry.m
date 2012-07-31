@@ -80,7 +80,7 @@ static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
 	[m_Inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
 	[m_Inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
                 majorDeviceClass:kBluetoothDeviceClassMajorPeripheral
-                minorDeviceClass:kBluetoothDeviceClassMinorPeripheral2Joystick];
+                minorDeviceClass:kBluetoothDeviceClassMinorAny];
 
 	[m_Inquiry setUpdateNewDeviceNames:YES];
 
