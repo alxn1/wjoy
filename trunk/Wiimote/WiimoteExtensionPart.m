@@ -123,7 +123,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     BOOL isExtensionConnected = ((state->flagsAndLEDState &
                         WiimoteDeviceStateReportFlagExtensionConnected) != 0);
 
-    if(m_IsExtensionConnected != isExtensionConnected)
+    if(m_IsExtensionConnected == isExtensionConnected)
         return;
 
     m_IsExtensionConnected = isExtensionConnected;
