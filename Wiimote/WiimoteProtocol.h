@@ -144,10 +144,10 @@ typedef struct
     uint8_t                     data[WiimoteDeviceButtonAndExtensionStateDataSize];
 } WiimoteDeviceButtonAndExtensionStateReport;
 
-#define WiimoteRoutineProbeAddress                  0x4A400FA
+#define WiimoteRoutineProbeAddress                  0x04A400FA
 
-#define WiimoteRoutineInitAddress1                  0x4A400F0
-#define WiimoteRoutineInitAddress2                  0x4A400FB
+#define WiimoteRoutineInitAddress1                  0x04A400F0
+#define WiimoteRoutineInitAddress2                  0x04A400FB
 #define WiimoteRoutineInitValue1                    0x55
 #define WiimoteRoutineInitValue2                    0x00
 

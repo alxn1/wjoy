@@ -142,6 +142,7 @@
     if(m_IsStarted)
         return;
 
+	[self beginProbe];
     [self probeNextClass];
 }
 

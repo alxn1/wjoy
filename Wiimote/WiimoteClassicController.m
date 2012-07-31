@@ -62,6 +62,7 @@
 - (void)handleReport:(NSData*)extensionData
 {
     // ???
+	NSLog(@"%@", extensionData);
 }
 
 @end

@@ -62,7 +62,7 @@
     params.address = OSSwapHostToBigConstInt32((uint32_t)m_MemoryRange.location);
     params.length  = OSSwapHostToBigConstInt16((uint16_t)m_MemoryRange.length);
 
-	NSMutableData *commandData = [NSMutableData dataWithBytesNoCopy:&params length:sizeof(params)];
+	NSData *commandData = [NSData dataWithBytes:&params length:sizeof(params)];
 
 	if(![device postCommand:WiimoteDeviceCommandTypeReadMemory
                        data:commandData
