@@ -8,7 +8,7 @@
 
 #import "NotificationCenter.h"
 #import "UserNotificationCenter.h"
-#import "WiimoteDevice.h"
+#import "Wiimote.h"
 
 @interface NotificationCenter (PrivatePart)
 
@@ -48,31 +48,31 @@
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(onDiscoveryBegin)
-                                           name:WiimoteDeviceBeginDiscoveryNotification
+                                           name:WiimoteBeginDiscoveryNotification
                                          object:nil];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(onDiscoveryEnd)
-                                           name:WiimoteDeviceEndDiscoveryNotification
+                                           name:WiimoteEndDiscoveryNotification
                                          object:nil];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(onDeviceConnected)
-                                           name:WiimoteDeviceConnectedNotification
+                                           name:WiimoteConnectedNotification
                                          object:nil];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(onDeviceBatteryStateChanged:)
-                                           name:WiimoteDeviceBatteryLevelUpdatedNotification
+                                           name:WiimoteBatteryLevelUpdatedNotification
                                          object:nil];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(onDeviceDisconnected)
-                                           name:WiimoteDeviceDisconnectedNotification
+                                           name:WiimoteDisconnectedNotification
                                          object:nil];
 
     [UserNotificationCenter
@@ -115,7 +115,7 @@
 
 - (void)onDeviceBatteryStateChanged:(NSNotification*)notification
 {
-    WiimoteDevice *device = [notification object];
+    Wiimote *device = [notification object];
 
     if([device userInfo] != nil ||
       ![device isBatteryLevelLow])
