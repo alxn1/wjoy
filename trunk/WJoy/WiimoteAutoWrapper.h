@@ -6,19 +6,16 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteDevice.h"
-#import "WiimoteDeviceNunchuck.h"
+#import "Wiimote.h"
 #import "WJoyDevice.h"
 #import "VHIDDevice.h"
 
 @interface WiimoteAutoWrapper : NSObject<
-                                    WiimoteDeviceDelegate,
-									WiimoteDeviceNunchuckDelegate,
                                     VHIDDeviceDelegate>
                                     
 {
     @private
-        WiimoteDevice   *m_Device;
+        Wiimote         *m_Device;
 
         VHIDDevice      *m_HIDState;
         WJoyDevice      *m_WJoy;

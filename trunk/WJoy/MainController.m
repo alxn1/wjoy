@@ -11,7 +11,6 @@
 #import "StatusBarItemController.h"
 #import "NotificationCenter.h"
 #import "WiimoteLEDsController.h"
-#import "WiimoteDevicesWatchdog.h"
 
 @implementation MainController
 
@@ -23,8 +22,8 @@
     [WiimoteAutoWrapper setMaxConnectedDevices:4];
     [WiimoteAutoWrapper start];
 
-    [[WiimoteDevicesWatchdog sharedWatchdog] setEnabled:YES];
-    [WiimoteDevice beginDiscovery];
+    [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
+    [Wiimote beginDiscovery];
 }
 
 @end

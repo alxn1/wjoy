@@ -8,7 +8,7 @@
 
 #import "StatusBarItemController.h"
 #import "LoginItemsList.h"
-#import "WiimoteDevice.h"
+#import "Wiimote.h"
 
 @interface StatusBarItemController (PrivatePart)
 
@@ -50,8 +50,8 @@
                                            action:@selector(beginDiscovery)
                                     keyEquivalent:@""];
 
-    [m_DiscoveryMenuItem setTarget:[WiimoteDevice class]];
-    [m_DiscoveryMenuItem setEnabled:![WiimoteDevice isDiscovering]];
+    [m_DiscoveryMenuItem setTarget:[Wiimote class]];
+    [m_DiscoveryMenuItem setEnabled:![Wiimote isDiscovering]];
     [m_Menu addItem:m_DiscoveryMenuItem];
     [m_Menu setAutoenablesItems:NO];
     [m_Menu setDelegate:self];
@@ -94,11 +94,11 @@
     while([m_Menu numberOfItems] > 1)
         [m_Menu removeItemAtIndex:1];
 
-    if([WiimoteDevice isBluetoothEnabled])
+    if([Wiimote isBluetoothEnabled])
     {
         [m_DiscoveryMenuItem setImage:nil];
 
-        if([WiimoteDevice isDiscovering])
+        if([Wiimote isDiscovering])
         {
             [m_DiscoveryMenuItem setEnabled:NO];
             [m_DiscoveryMenuItem setTitle:@"Dicovering..."];
@@ -118,7 +118,7 @@
         [m_DiscoveryMenuItem setTitle:@"Bluetooth is disabled!"];
     }
 
-    NSArray     *connectedDevices   = [WiimoteDevice connectedDevices];
+    NSArray     *connectedDevices   = [Wiimote connectedDevices];
     NSUInteger   countConnected     = [connectedDevices count];
 
     if(countConnected > 0)
@@ -126,7 +126,7 @@
 
     for(NSUInteger i = 0; i < countConnected; i++)
     {
-        WiimoteDevice   *device       = [connectedDevices objectAtIndex:i];
+        Wiimote         *device       = [connectedDevices objectAtIndex:i];
         NSString        *batteryLevel = @"-";
 
         if([device batteryLevel] >= 0.0)

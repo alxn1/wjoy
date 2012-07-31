@@ -10,12 +10,12 @@
 
 @interface WiimoteAutoWrapper (PrivatePart)
 
-+ (NSString*)wjoyNameFromWiimoteDevice:(WiimoteDevice*)device;
-+ (NSString*)nunchuckNameFromWiimoteDevice:(WiimoteDevice*)device;
++ (NSString*)wjoyNameFromWiimote:(Wiimote*)device;
++ (NSString*)nunchuckNameFromWiimote:(Wiimote*)device;
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification;
 
-- (id)initWithWiimoteDevice:(WiimoteDevice*)device;
+- (id)initWithWiimote:(Wiimote*)device;
 
 @end
 
@@ -35,10 +35,10 @@ static NSUInteger maxConnectedDevices = 0;
 
     maxConnectedDevices = count;
 
-    while([[WiimoteDevice connectedDevices] count] > count)
+    while([[Wiimote connectedDevices] count] > count)
     {
-        NSArray         *connectedDevices   = [WiimoteDevice connectedDevices];
-        WiimoteDevice   *device             = [connectedDevices objectAtIndex:[connectedDevices count] - 1];
+        NSArray  *connectedDevices   = [Wiimote connectedDevices];
+        Wiimote  *device             = [connectedDevices objectAtIndex:[connectedDevices count] - 1];
 
         [device disconnect];
     }
@@ -49,36 +49,24 @@ static NSUInteger maxConnectedDevices = 0;
     [[NSNotificationCenter defaultCenter]
                             addObserver:self
                                selector:@selector(newWiimoteDeviceNotification:)
-                                   name:WiimoteDeviceConnectedNotification
+                                   name:WiimoteConnectedNotification
                                  object:nil];
 }
 
-- (void)wiimoteDevice:(WiimoteDevice*)device buttonPressed:(WiimoteButtonType)button
+- (void)wiimote:(Wiimote*)wiimote buttonPressed:(WiimoteButtonType)button
 {
     [m_HIDState setButton:button pressed:YES];
 }
 
-- (void)wiimoteDevice:(WiimoteDevice*)device buttonReleased:(WiimoteButtonType)button
+- (void)wiimote:(Wiimote*)wiimote buttonReleased:(WiimoteButtonType)button
 {
     [m_HIDState setButton:button pressed:NO];
 }
 
-- (void)wiimoteDevice:(WiimoteDevice*)device highlightedLEDMaskChanged:(NSUInteger)mask
+- (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
-}
-
-- (void)wiimoteDevice:(WiimoteDevice*)device vibrationStateChanged:(BOOL)isVibrationEnabled
-{
-}
-
-- (void)wiimoteDevice:(WiimoteDevice*)device batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow
-{
-}
-
-- (void)wiimoteDevice:(WiimoteDevice*)device extensionConnected:(WiimoteDeviceExtension*)extension
-{
-	if([extension type] != WiimoteExtensionTypeNunchuck)
-		return;
+    if(![extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
+        return;
 
 	m_NunchuckHIDState  = [[VHIDDevice alloc]
 									initWithType:VHIDDeviceTypeJoystick
@@ -88,41 +76,38 @@ static NSUInteger maxConnectedDevices = 0;
 
 	m_WJoyNunchuck		= [[WJoyDevice alloc]
 									initWithHIDDescriptor:[m_NunchuckHIDState descriptor]
-											productString:[WiimoteAutoWrapper nunchuckNameFromWiimoteDevice:
-																[extension device]]];
+											productString:[WiimoteAutoWrapper nunchuckNameFromWiimote:[extension owner]]];
 
 	[m_NunchuckHIDState setDelegate:self];
-	[(WiimoteDeviceNunchuck*)extension setDelegate:self];
-	[(WiimoteDeviceNunchuck*)extension setStateChangeNotificationsEnabled:NO];
 }
 
-- (void)wiimoteDevice:(WiimoteDevice*)device extensionDisconnected:(WiimoteDeviceExtension*)extension
+- (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
 {
-	[m_NunchuckHIDState release];
+    [m_NunchuckHIDState release];
 	[m_WJoyNunchuck release];
 
 	m_NunchuckHIDState = nil;
 	m_WJoyNunchuck = nil;
 }
 
-- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
+- (void)wiimoteDisconnected:(Wiimote*)wiimote
 {
     [self release];
 }
 
-- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
 {
-	[m_NunchuckHIDState setButton:button pressed:YES];
+    [m_NunchuckHIDState setButton:button pressed:YES];
 }
 
-- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
 {
-	[m_NunchuckHIDState setButton:button pressed:NO];
+    [m_NunchuckHIDState setButton:button pressed:NO];
 }
 
-- (void)wiimoteNunchuck:(WiimoteDeviceNunchuck*)nunchuck stickPositionChanged:(NSPoint)position
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-	[m_NunchuckHIDState setPointer:0 position:position];
+    [m_NunchuckHIDState setPointer:0 position:position];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
@@ -137,14 +122,14 @@ static NSUInteger maxConnectedDevices = 0;
 
 @implementation WiimoteAutoWrapper (PrivatePart)
 
-+ (NSString*)wjoyNameFromWiimoteDevice:(WiimoteDevice*)device
++ (NSString*)wjoyNameFromWiimote:(Wiimote*)device
 {
     return [NSString stringWithFormat:
                             @"Nintendo Wii Remote Controller (%@)",
                             [device addressString]];
 }
 
-+ (NSString*)nunchuckNameFromWiimoteDevice:(WiimoteDevice*)device
++ (NSString*)nunchuckNameFromWiimote:(Wiimote*)device
 {
 	return [NSString stringWithFormat:
                             @"Nintendo Wii Remote Nunchuck (%@)",
@@ -154,8 +139,7 @@ static NSUInteger maxConnectedDevices = 0;
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification
 {
     [[WiimoteAutoWrapper alloc]
-        initWithWiimoteDevice:
-            (WiimoteDevice*)[notification object]];
+        initWithWiimote:(Wiimote*)[notification object]];
 }
 
 - (id)init
@@ -164,13 +148,13 @@ static NSUInteger maxConnectedDevices = 0;
     return nil;
 }
 
-- (id)initWithWiimoteDevice:(WiimoteDevice*)device
+- (id)initWithWiimote:(Wiimote*)device
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    if([[WiimoteDevice connectedDevices] count] >
+    if([[Wiimote connectedDevices] count] >
        [WiimoteAutoWrapper maxConnectedDevices])
     {
         [device disconnect];
@@ -186,7 +170,7 @@ static NSUInteger maxConnectedDevices = 0;
 
     m_WJoy      = [[WJoyDevice alloc]
                              initWithHIDDescriptor:[m_HIDState descriptor]
-                                     productString:[WiimoteAutoWrapper wjoyNameFromWiimoteDevice:device]];
+                                     productString:[WiimoteAutoWrapper wjoyNameFromWiimote:device]];
 
     if(m_HIDState   == nil ||
        m_WJoy       == nil)
@@ -198,7 +182,6 @@ static NSUInteger maxConnectedDevices = 0;
 
     [m_Device setDelegate:self];
     [m_HIDState setDelegate:self];
-    [m_Device setStateChangeNotificationsEnabled:NO];
 
     return self;
 }
