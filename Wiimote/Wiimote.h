@@ -13,17 +13,32 @@
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
+// internal classes
 @class WiimotePart;
+@class WiimoteLEDPart;
+@class WiimoteButtonPart;
+@class WiimoteBatteryPart;
+@class WiimoteVibrationPart;
+@class WiimoteExtensionPart;
 @class WiimotePartSet;
 @class WiimoteDevice;
 
 @interface Wiimote : NSObject
 {
 	@private
-		WiimoteDevice		*m_Device;
-        WiimotePartSet      *m_Parts;
-		NSDictionary		*m_UserInfo;
+		WiimoteDevice           *m_Device;
+        WiimotePartSet          *m_PartSet;
+
+        WiimoteLEDPart          *m_LEDPart;
+        WiimoteButtonPart       *m_ButtonPart;
+        WiimoteBatteryPart      *m_BatteryPart;
+        WiimoteVibrationPart    *m_VibrationPart;
+        WiimoteExtensionPart    *m_ExtensionPart;
+
+		NSDictionary            *m_UserInfo;
 }
+
++ (NSNotificationCenter*)notificationCenter;
 
 + (BOOL)isBluetoothEnabled;
 
@@ -49,7 +64,8 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 
-- (double)batteryLevel; // 0.0 - 100.0 %, or -1 if undefined
+// 0.0 - 100.0 %, or -1 if undefined
+- (double)batteryLevel;
 - (BOOL)isBatteryLevelLow;
 
 - (WiimoteExtension*)connectedExtension;
@@ -57,7 +73,8 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (void)requestUpdateState;
 - (void)deviceConfigurationChanged;
 
-// disable all notifications, except begin/end discovery, battery level and connect/disconnect
+// disable all notifications, except begin/end discovery,
+// battery level, extensions connect/disconnec and wiimote connect/disconnect
 - (BOOL)isStateChangeNotificationsEnabled;
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled;
 

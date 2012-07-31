@@ -16,15 +16,9 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                    dictionaryWithObject:[NSNumber numberWithInteger:button]
-                                                  forKey:WiimoteButtonKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteButtonPresedNotification
-                                              object:[self owner]
-                                            userInfo:userInfo];
-
+        [self postNotification:WiimoteButtonPresedNotification
+                         param:[NSNumber numberWithInteger:button]
+                           key:WiimoteButtonKey];
     }
 }
 
@@ -34,15 +28,9 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                    dictionaryWithObject:[NSNumber numberWithInteger:button]
-                                                  forKey:WiimoteButtonKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteButtonReleasedNotification
-                                              object:[self owner]
-                                            userInfo:userInfo];
-
+        [self postNotification:WiimoteButtonReleasedNotification
+                         param:[NSNumber numberWithInteger:button]
+                           key:WiimoteButtonKey];
     }
 }
 

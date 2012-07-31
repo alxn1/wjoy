@@ -10,11 +10,9 @@
 
 @implementation WiimoteEventDispatcher
 
-+ (void)postConnectedNotification:(Wiimote*)wiimote
++ (NSNotificationCenter*)notificationCenter
 {
-    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:WiimoteConnectedNotification
-                                      object:wiimote];
+    return [NSNotificationCenter defaultCenter];
 }
 
 - (Wiimote*)owner
@@ -22,14 +20,54 @@
     return m_Owner;
 }
 
-- (id)delegate
-{
-    return m_Delegate;
-}
-
 - (BOOL)isStateNotificationsEnabled
 {
     return m_IsStateNotificationsEnabled;
+}
+
+- (void)postNotification:(NSString*)notification
+{
+    [self postNotification:notification sender:[self owner]];
+}
+
+- (void)postNotification:(NSString*)notification sender:(id)sender
+{
+    [self postNotification:notification params:nil sender:[self owner]];
+}
+
+- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key
+{
+    [self postNotification:notification param:param key:key sender:[self owner]];
+}
+
+- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key sender:(id)sender
+{
+    NSDictionary *params = nil;
+
+    if(param != nil && key != nil)
+        params = [NSDictionary dictionaryWithObject:param forKey:key];
+
+    [self postNotification:notification
+                    params:params
+                    sender:sender];
+}
+
+- (void)postNotification:(NSString*)notification params:(NSDictionary*)params
+{
+    [self postNotification:notification params:params sender:[self owner]];
+}
+
+- (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender
+{
+    [[WiimoteEventDispatcher notificationCenter]
+                                postNotificationName:notification
+                                              object:sender
+                                            userInfo:params];
+}
+
+- (id)delegate
+{
+    return m_Delegate;
 }
 
 @end

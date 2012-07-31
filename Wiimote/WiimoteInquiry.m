@@ -77,12 +77,12 @@ static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
         return NO;
 
 	m_Inquiry = [[IOBluetoothDeviceInquiry inquiryWithDelegate:self] retain];
+
+    [m_Inquiry setUpdateNewDeviceNames:YES];
 	[m_Inquiry setInquiryLength:WIIMOTE_INQUIRY_TIME_IN_SECONDS];
 	[m_Inquiry setSearchCriteria:kBluetoothServiceClassMajorAny
-                majorDeviceClass:kBluetoothDeviceClassMajorPeripheral
+                majorDeviceClass:kBluetoothDeviceClassMajorAny
                 minorDeviceClass:kBluetoothDeviceClassMinorAny];
-
-	[m_Inquiry setUpdateNewDeviceNames:YES];
 
 	if([m_Inquiry start] != kIOReturnSuccess)
     {

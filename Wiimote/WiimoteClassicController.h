@@ -10,7 +10,7 @@
 #import "WiimoteEventDispatcher+ClassicController.h"
 
 @interface WiimoteClassicController : WiimoteGenericExtension<
-                                                WiimoteClassicControlerProtocol>
+                                                WiimoteClassicControllerProtocol>
 {
     @private
 }

@@ -12,12 +12,21 @@
 
 + (NSUInteger)merit
 {
-    static NSUInteger result = 0;
+    static NSMutableDictionary *results = nil;
 
-    if(result == 0)
-        result = [WiimoteExtension nextFreedomMeritInClass:[self meritClass]];
+    if(results == nil)
+        results = [[NSMutableDictionary alloc] init];
 
-    return result;
+    NSNumber *merit = [results objectForKey:[self class]];
+    if(merit == nil)
+    {
+        merit = [NSNumber numberWithInteger:
+                    [WiimoteExtension nextFreedomMeritInClass:[self meritClass]]];
+
+        [results setObject:merit forKey:[self class]];
+    }
+
+    return [merit integerValue];
 }
 
 + (NSData*)extensionSignature

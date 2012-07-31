@@ -16,14 +16,9 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                    dictionaryWithObject:[NSNumber numberWithBool:state]
-                                                  forKey:WiimoteVibrationStateKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteVibrationStateChangedNotification
-                                              object:[self owner]
-                                            userInfo:userInfo];
+        [self postNotification:WiimoteVibrationStateChangedNotification
+                         param:[NSNumber numberWithBool:state]
+                           key:WiimoteVibrationStateKey];
     }
 }
 

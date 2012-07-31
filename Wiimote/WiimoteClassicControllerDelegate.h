@@ -11,11 +11,11 @@
 @class Wiimote;
 @class WiimoteExtension;
 
-@protocol WiimoteClassicControlerProtocol
+@protocol WiimoteClassicControllerProtocol
 
 @end
 
-typedef WiimoteExtension<WiimoteClassicControlerProtocol> WiimoteClassicControlExtension;
+typedef WiimoteExtension<WiimoteClassicControllerProtocol> WiimoteClassicControllerExtension;
 
 @interface NSObject (WiimoteClassicControllerDelegate)
 

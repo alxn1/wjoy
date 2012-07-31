@@ -12,11 +12,10 @@
 
 - (id)initWithOwner:(Wiimote*)owner;
 
-- (void)setStateNotificationsEnabled:(BOOL)flag;
-
 - (void)postConnectedNotification;
 - (void)postDisconnectNotification;
 
+- (void)setStateNotificationsEnabled:(BOOL)flag;
 - (void)setDelegate:(id)delegate;
 
 @end

@@ -28,25 +28,20 @@
     return self;
 }
 
-- (void)setStateNotificationsEnabled:(BOOL)flag
-{
-    m_IsStateNotificationsEnabled = flag;
-}
-
 - (void)postConnectedNotification
 {
-    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:WiimoteConnectedNotification
-                                      object:[self owner]];
+    [self postNotification:WiimoteConnectedNotification];
 }
 
 - (void)postDisconnectNotification
 {
     [[self delegate] wiimoteDisconnected:[self owner]];
+    [self postNotification:WiimoteDisconnectedNotification];
+}
 
-    [[NSNotificationCenter defaultCenter]
-                        postNotificationName:WiimoteDisconnectedNotification
-                                      object:[self owner]];
+- (void)setStateNotificationsEnabled:(BOOL)flag
+{
+    m_IsStateNotificationsEnabled = flag;
 }
 
 - (void)setDelegate:(id)delegate

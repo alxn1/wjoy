@@ -44,7 +44,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[Wiimote notificationCenter] removeObserver:self];
     [m_Timer invalidate];
     [super dealloc];
 }
@@ -70,22 +70,22 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
         [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSEventTrackingRunLoopMode];
         [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSModalPanelRunLoopMode];
 
-        [[NSNotificationCenter defaultCenter]
-                                        addObserver:self
-                                           selector:@selector(applicationWillTerminateNotification:)
-                                               name:NSApplicationWillTerminateNotification
-                                             object:nil];
+        [[Wiimote notificationCenter]
+                                addObserver:self
+                                   selector:@selector(applicationWillTerminateNotification:)
+                                       name:NSApplicationWillTerminateNotification
+                                     object:nil];
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        [[Wiimote notificationCenter] removeObserver:self];
         [m_Timer invalidate];
         m_Timer = nil;
     }
 
     if(m_IsPingNotificationEnabled)
     {
-        [[NSNotificationCenter defaultCenter]
+        [[Wiimote notificationCenter]
                                 postNotificationName:WiimoteWatchdogEnabledChangedNotification
                                               object:self];
     }
@@ -128,7 +128,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
         [device requestUpdateState];
     }
 
-    [[NSNotificationCenter defaultCenter]
+    [[Wiimote notificationCenter]
                             postNotificationName:WiimoteWatchdogPingNotification
                                           object:self];
 }

@@ -60,13 +60,13 @@ typedef enum
               target:(id)target
               action:(SEL)action;
 
-+ (void)probeFinished:(BOOL)result
-               target:(id)target
-               action:(SEL)action;
-
 + (void)routineInit:(WiimoteIOManager*)ioManager
              target:(id)target
              action:(SEL)action;
+
++ (void)probeFinished:(BOOL)result
+               target:(id)target
+               action:(SEL)action;
 
 + (void)initFinished:(BOOL)result
               target:(id)target
