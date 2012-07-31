@@ -122,11 +122,11 @@
 
     [self setButton:WiimoteNunchuckButtonTypeZ
             pressed:((nunchuckReport->acceleromererXYZAndButtonState &
-                                    WiimoteDeviceNunchuckReportButtonMaskZ) != 0)];
+                                    WiimoteDeviceNunchuckReportButtonMaskZ) == 0)];
 
     [self setButton:WiimoteNunchuckButtonTypeC
             pressed:((nunchuckReport->acceleromererXYZAndButtonState &
-                                    WiimoteDeviceNunchuckReportButtonMaskC) != 0)];
+                                    WiimoteDeviceNunchuckReportButtonMaskC) == 0)];
 }
 
 @end

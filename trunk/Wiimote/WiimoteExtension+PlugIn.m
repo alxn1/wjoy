@@ -148,29 +148,6 @@
                                           action:action];
 }
 
-+ (void)routineInit:(WiimoteIOManager*)ioManager
-             target:(id)target
-             action:(SEL)action
-{
-    NSMutableData *data = [NSMutableData dataWithLength:1];
-
-    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue1;
-    if(![ioManager writeMemory:WiimoteRoutineInitAddress1 data:data])
-    {
-        [WiimoteExtension initFinished:NO target:target action:action];
-        return;
-    }
-
-    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue2;
-    if(![ioManager writeMemory:WiimoteRoutineInitAddress2 data:data])
-    {
-        [WiimoteExtension initFinished:NO target:target action:action];
-        return;
-    }
-
-    [WiimoteExtension initFinished:YES target:target action:action];
-}
-
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action

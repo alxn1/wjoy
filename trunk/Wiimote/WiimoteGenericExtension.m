@@ -64,9 +64,7 @@
             target:(id)target
             action:(SEL)action
 {
-    [WiimoteExtension routineInit:ioManager
-                           target:target
-                           action:action];
+	[super initialize:ioManager target:target action:action];
 
     NSRange calibrationMemoryRange = [[self class] calibrationDataMemoryRange];
 

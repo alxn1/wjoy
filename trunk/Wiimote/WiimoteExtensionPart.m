@@ -173,19 +173,37 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [m_Extension handleReport:extensionReportPart];
 }
 
+- (void)initExtension
+{
+    NSMutableData *data = [NSMutableData dataWithLength:1];
+
+    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue1;
+    [[self ioManager] writeMemory:WiimoteRoutineInitAddress1 data:data];
+	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+
+    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue2;
+    [[self ioManager] writeMemory:WiimoteRoutineInitAddress2 data:data];
+	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
+}
+
 - (void)extensionInitialized:(WiimoteExtension*)extension
 {
     m_Extension = [extension retain];
-    if(m_Extension != nil)
-    {
-        [[self owner] deviceConfigurationChanged];
+
+	if(m_Extension != nil)
+	{
+		[[self owner] deviceConfigurationChanged];
         [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
-    }
+	}
+
+	[m_ProbeHelper release];
+	m_ProbeHelper = nil;
 }
 
 - (void)extensionConnected
 {
     [self extensionDisconnected];
+	[self initExtension];
 
     m_ProbeHelper = [[WiimoteExtensionHelper alloc]
                                           initWithWiimote:[self owner]

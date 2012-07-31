@@ -93,6 +93,11 @@
               target:(id)target
               action:(SEL)action
 {
+	[[WiimoteExtensionRoutineProbeHandler alloc]
+										initWithIOManager:manager
+												signature:signature
+												   target:target
+												   action:action];
 }
 
 - (id)init
