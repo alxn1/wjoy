@@ -17,9 +17,19 @@
         id       m_Delegate;
 }
 
++ (NSNotificationCenter*)notificationCenter;
+
 - (Wiimote*)owner;
-- (id)delegate;
 
 - (BOOL)isStateNotificationsEnabled;
+
+- (void)postNotification:(NSString*)notification;
+- (void)postNotification:(NSString*)notification sender:(id)sender;
+- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key;
+- (void)postNotification:(NSString*)notification param:(id)param key:(NSString*)key sender:(id)sender;
+- (void)postNotification:(NSString*)notification params:(NSDictionary*)params;
+- (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender;
+
+- (id)delegate;
 
 @end

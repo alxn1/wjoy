@@ -45,35 +45,35 @@
     if(self == nil)
         return nil;
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(onDiscoveryBegin)
-                                           name:WiimoteBeginDiscoveryNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(onDiscoveryBegin)
+                                   name:WiimoteBeginDiscoveryNotification
+                                 object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(onDiscoveryEnd)
-                                           name:WiimoteEndDiscoveryNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(onDiscoveryEnd)
+                                   name:WiimoteEndDiscoveryNotification
+                                 object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(onDeviceConnected)
-                                           name:WiimoteConnectedNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(onDeviceConnected)
+                                   name:WiimoteConnectedNotification
+                                 object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(onDeviceBatteryStateChanged:)
-                                           name:WiimoteBatteryLevelUpdatedNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(onDeviceBatteryStateChanged:)
+                                   name:WiimoteBatteryLevelUpdatedNotification
+                                 object:nil];
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(onDeviceDisconnected)
-                                           name:WiimoteDisconnectedNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(onDeviceDisconnected)
+                                   name:WiimoteDisconnectedNotification
+                                 object:nil];
 
     [UserNotificationCenter
         deliver:[UserNotification
@@ -85,7 +85,7 @@
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[Wiimote notificationCenter] removeObserver:self];
     [super dealloc];
 }
 

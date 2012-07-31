@@ -10,6 +10,13 @@
 #import "Wiimote+Tracking.h"
 
 #import "WiimoteDevice.h"
+
+#import "WiimoteLEDPart.h"
+#import "WiimoteButtonPart.h"
+#import "WiimoteBatteryPart.h"
+#import "WiimoteVibrationPart.h"
+#import "WiimoteExtensionPart.h"
+
 #import "WiimotePartSet.h"
 
 @implementation Wiimote (Create)
@@ -18,6 +25,15 @@
 {
     [self requestUpdateState];
     [self deviceConfigurationChanged];
+}
+
+- (void)initParts
+{
+    m_LEDPart       = (WiimoteLEDPart*)         [self partWithClass:[WiimoteLEDPart class]];
+    m_ButtonPart    = (WiimoteButtonPart*)      [self partWithClass:[WiimoteButtonPart class]];
+    m_BatteryPart   = (WiimoteBatteryPart*)     [self partWithClass:[WiimoteBatteryPart class]];
+    m_VibrationPart = (WiimoteVibrationPart*)   [self partWithClass:[WiimoteVibrationPart class]];
+    m_ExtensionPart = (WiimoteExtensionPart*)   [self partWithClass:[WiimoteExtensionPart class]];
 }
 
 - (id)init
@@ -33,7 +49,9 @@
         return nil;
 
     m_Device    = [[WiimoteDevice alloc] initWithBluetoothDevice:device];
-    m_Parts     = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
+    m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
+
+    [self initParts];
 
     if(m_Device == nil ||
      ![m_Device connect])
@@ -45,7 +63,7 @@
 	[m_Device addDisconnectHandler:self action:@selector(disconnected)];
     [self initialize];
     [Wiimote wiimoteConnected:self];
-	[[m_Parts eventDispatcher] postConnectedNotification];
+	[[m_PartSet eventDispatcher] postConnectedNotification];
 
     return self;
 }
@@ -53,7 +71,7 @@
 - (void)dealloc
 {
     [m_Device disconnect];
-    [m_Parts release];
+    [m_PartSet release];
     [m_Device release];
     [m_UserInfo release];
     [super dealloc];
@@ -63,7 +81,7 @@
 {
     [[self retain] autorelease];
     [Wiimote wiimoteDisconnected:self];
-	[[m_Parts eventDispatcher] postDisconnectNotification];
+	[[m_PartSet eventDispatcher] postDisconnectNotification];
 }
 
 + (void)connectToBluetoothDevice:(IOBluetoothDevice*)device

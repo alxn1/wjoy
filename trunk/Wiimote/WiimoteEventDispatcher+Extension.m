@@ -14,28 +14,18 @@
 {
     [[self delegate] wiimote:[self owner] extensionConnected:extension];
 
-    NSDictionary *userInfo = [NSDictionary
-                                dictionaryWithObject:extension
-                                              forKey:WiimoteExtensionKey];
-
-    [[NSNotificationCenter defaultCenter]
-                            postNotificationName:WiimoteExtensionConnectedNotification
-                                          object:[self owner]
-                                        userInfo:userInfo];
+    [self postNotification:WiimoteExtensionConnectedNotification
+                     param:extension
+                       key:WiimoteExtensionKey];
 }
 
 - (void)postExtensionDisconnectedNotification:(WiimoteExtension*)extension
 {
     [[self delegate] wiimote:[self owner] extensionDisconnected:extension];
 
-    NSDictionary *userInfo = [NSDictionary
-                                dictionaryWithObject:extension
-                                              forKey:WiimoteExtensionKey];
-
-    [[NSNotificationCenter defaultCenter]
-                            postNotificationName:WiimoteExtensionDisconnectedNotification
-                                          object:[self owner]
-                                        userInfo:userInfo];
+    [self postNotification:WiimoteExtensionDisconnectedNotification
+                     param:extension
+                       key:WiimoteExtensionKey];
 }
 
 @end

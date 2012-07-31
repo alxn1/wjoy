@@ -148,18 +148,6 @@
                                           action:action];
 }
 
-+ (void)probeFinished:(BOOL)result
-               target:(id)target
-               action:(SEL)action
-{
-    if(target == nil || action == nil)
-        return;
-
-    [target performSelector:action
-                 withObject:[NSNumber numberWithBool:result]
-                 afterDelay:0.0];
-}
-
 + (void)routineInit:(WiimoteIOManager*)ioManager
              target:(id)target
              action:(SEL)action
@@ -181,6 +169,18 @@
     }
 
     [WiimoteExtension initFinished:YES target:target action:action];
+}
+
++ (void)probeFinished:(BOOL)result
+               target:(id)target
+               action:(SEL)action
+{
+    if(target == nil || action == nil)
+        return;
+
+    [target performSelector:action
+                 withObject:[NSNumber numberWithBool:result]
+                 afterDelay:0.0];
 }
 
 + (void)initFinished:(BOOL)result

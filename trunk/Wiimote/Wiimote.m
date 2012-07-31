@@ -23,6 +23,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 @implementation Wiimote
 
++ (NSNotificationCenter*)notificationCenter
+{
+    return [WiimoteEventDispatcher notificationCenter];
+}
+
 + (BOOL)isBluetoothEnabled
 {
     return [WiimoteInquiry isBluetoothEnabled];
@@ -42,7 +47,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
         return NO;
     }
 
-    [[NSNotificationCenter defaultCenter]
+    [[Wiimote notificationCenter]
                             postNotificationName:WiimoteBeginDiscoveryNotification
                                           object:self];
 
@@ -51,7 +56,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 + (void)discoveryFinished
 {
-    [[NSNotificationCenter defaultCenter]
+    [[Wiimote notificationCenter]
                             postNotificationName:WiimoteEndDiscoveryNotification
                                           object:self];
 }
@@ -90,58 +95,42 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 - (NSUInteger)highlightedLEDMask
 {
-    return [(WiimoteLEDPart*)
-                [self partWithClass:[WiimoteLEDPart class]]
-                                                highlightedLEDMask];
+    return [m_LEDPart highlightedLEDMask];
 }
 
 - (void)setHighlightedLEDMask:(NSUInteger)mask
 {
-    [(WiimoteLEDPart*)
-        [self partWithClass:[WiimoteLEDPart class]]
-                                        setHighlightedLEDMask:mask];
+    [m_LEDPart setHighlightedLEDMask:mask];
 }
 
 - (BOOL)isVibrationEnabled
 {
-    return [(WiimoteVibrationPart*)
-                [self partWithClass:[WiimoteVibrationPart class]]
-                                                isVibrationEnabled];
+    return [m_VibrationPart isVibrationEnabled];
 }
 
 - (void)setVibrationEnabled:(BOOL)enabled
 {
-    [(WiimoteVibrationPart*)
-        [self partWithClass:[WiimoteVibrationPart class]]
-                                        setVibrationEnabled:enabled];
+    [m_VibrationPart setVibrationEnabled:enabled];
 }
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button
 {
-    return [(WiimoteButtonPart*)
-                [self partWithClass:[WiimoteButtonPart class]]
-                                                isButtonPressed:button];
+    return [m_ButtonPart isButtonPressed:button];
 }
 
 - (double)batteryLevel
 {
-    return [(WiimoteBatteryPart*)
-                [self partWithClass:[WiimoteBatteryPart class]]
-                                                batteryLevel];
+    return [m_BatteryPart batteryLevel];
 }
 
 - (BOOL)isBatteryLevelLow
 {
-    return [(WiimoteBatteryPart*)
-                [self partWithClass:[WiimoteBatteryPart class]]
-                                                isBatteryLevelLow];
+    return [m_BatteryPart isBatteryLevelLow];
 }
 
 - (WiimoteExtension*)connectedExtension
 {
-    return [(WiimoteExtensionPart*)
-                [self partWithClass:[WiimoteExtensionPart class]]
-                                                connectedExtension];
+    return [m_ExtensionPart connectedExtension];
 }
 
 - (void)requestUpdateState
@@ -154,7 +143,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     WiimoteDeviceSetReportTypeParams params;
 
     params.flags        = 0;
-    params.reportType   = [m_Parts bestReportType];
+    params.reportType   = [m_PartSet bestReportType];
 
     [m_Device postCommand:WiimoteDeviceCommandTypeSetReportType
                      data:[NSData dataWithBytes:&params length:sizeof(params)]
@@ -163,12 +152,12 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 - (BOOL)isStateChangeNotificationsEnabled
 {
-    return [[m_Parts eventDispatcher] isStateNotificationsEnabled];
+    return [[m_PartSet eventDispatcher] isStateNotificationsEnabled];
 }
 
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled
 {
-    [[m_Parts eventDispatcher] setStateNotificationsEnabled:enabled];
+    [[m_PartSet eventDispatcher] setStateNotificationsEnabled:enabled];
 }
 
 - (NSDictionary*)userInfo
@@ -187,17 +176,17 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 - (id)delegate
 {
-    return [[m_Parts eventDispatcher] delegate];
+    return [[m_PartSet eventDispatcher] delegate];
 }
 
 - (void)setDelegate:(id)delegate
 {
-    [[m_Parts eventDispatcher] setDelegate:delegate];
+    [[m_PartSet eventDispatcher] setDelegate:delegate];
 }
 
 - (WiimotePart*)partWithClass:(Class)cls
 {
-    return [m_Parts partWithClass:cls];
+    return [m_PartSet partWithClass:cls];
 }
 
 @end

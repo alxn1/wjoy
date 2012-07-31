@@ -127,11 +127,11 @@ static NSString *nunchuckButtonName(WiimoteNunchuckButtonType button)
 
 + (void)run
 {
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(newDeviceConnected:)
-                                           name:WiimoteConnectedNotification
-                                         object:nil];
+    [[Wiimote notificationCenter]
+                            addObserver:self
+                               selector:@selector(newDeviceConnected:)
+                                   name:WiimoteConnectedNotification
+                                 object:nil];
 
     [Wiimote beginDiscovery];
     [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];

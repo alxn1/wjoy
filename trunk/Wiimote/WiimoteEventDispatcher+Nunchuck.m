@@ -16,14 +16,10 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                        dictionaryWithObject:[NSNumber numberWithInteger:button]
-                                                      forKey:WiimoteNunchuckButtonKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteNunchuckButtonPressedNotification
-                                              object:nunchuck
-                                            userInfo:userInfo];
+        [self postNotification:WiimoteNunchuckButtonPressedNotification
+                         param:[NSNumber numberWithInteger:button]
+                           key:WiimoteNunchuckButtonKey
+                        sender:nunchuck];
     }
 }
 
@@ -33,14 +29,10 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                        dictionaryWithObject:[NSNumber numberWithInteger:button]
-                                                      forKey:WiimoteNunchuckButtonKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteNunchuckButtonReleasedNotification
-                                              object:nunchuck
-                                            userInfo:userInfo];
+        [self postNotification:WiimoteNunchuckButtonReleasedNotification
+                         param:[NSNumber numberWithInteger:button]
+                           key:WiimoteNunchuckButtonKey
+                        sender:nunchuck];
     }
 }
 
@@ -50,14 +42,10 @@
 
     if([self isStateNotificationsEnabled])
     {
-        NSDictionary *userInfo = [NSDictionary
-                                        dictionaryWithObject:[NSValue valueWithPoint:position]
-                                                      forKey:WiimoteNunchuckStickPositionKey];
-
-        [[NSNotificationCenter defaultCenter]
-                                postNotificationName:WiimoteNunchuckStickPositionChangedNotification
-                                              object:nunchuck
-                                            userInfo:userInfo];
+        [self postNotification:WiimoteNunchuckStickPositionChangedNotification
+                         param:[NSValue valueWithPoint:position]
+                           key:WiimoteNunchuckStickPositionKey
+                        sender:nunchuck];
     }
 }
 
