@@ -133,6 +133,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     return [m_ExtensionPart connectedExtension];
 }
 
+- (void)disconnectExtension
+{
+    [m_ExtensionPart disconnectExtension];
+}
+
 - (void)requestUpdateState
 {
     [m_Device requestStateReportWithVibrationState:[self isVibrationEnabled]];

@@ -97,6 +97,12 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     return [[m_Extension retain] autorelease];
 }
 
+- (void)disconnectExtension
+{
+    [self extensionDisconnected];
+    [[self owner] deviceConfigurationChanged];
+}
+
 - (NSSet*)allowedReportTypeSet
 {
     if(m_Extension == nil)
@@ -173,7 +179,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [m_Extension handleReport:extensionReportPart];
 }
 
-- (void)initExtension
+- (void)initializeExtensionPort
 {
     NSMutableData *data = [NSMutableData dataWithLength:1];
 
@@ -186,24 +192,10 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 }
 
-- (void)extensionInitialized:(WiimoteExtension*)extension
-{
-    m_Extension = [extension retain];
-
-	if(m_Extension != nil)
-	{
-		[[self owner] deviceConfigurationChanged];
-        [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
-	}
-
-	[m_ProbeHelper release];
-	m_ProbeHelper = nil;
-}
-
 - (void)extensionConnected
 {
     [self extensionDisconnected];
-	[self initExtension];
+    [self initializeExtensionPort];
 
     m_ProbeHelper = [[WiimoteExtensionHelper alloc]
                                           initWithWiimote:[self owner]
@@ -211,9 +203,22 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
                                                 ioManager:[self ioManager]
                                          extensionClasses:[WiimoteExtensionPart registredExtensionClasses]
                                                    target:self
-                                                   action:@selector(extensionInitialized:)];
+                                                   action:@selector(extensionCreated:)];
 
     [m_ProbeHelper start];
+}
+
+- (void)extensionCreated:(WiimoteExtension*)extension
+{
+    m_Extension = [extension retain];
+    [m_ProbeHelper release];
+	m_ProbeHelper = nil;
+
+	if(m_Extension != nil)
+	{
+        [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
+        [[self owner] deviceConfigurationChanged];
+    }
 }
 
 - (void)extensionDisconnected

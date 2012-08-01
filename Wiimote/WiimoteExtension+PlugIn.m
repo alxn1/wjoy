@@ -10,14 +10,8 @@
 
 #import "Wiimote.h"
 #import "WiimoteExtensionPart.h"
-#import "WiimoteExtensionProbeHandler.h"
 
 @implementation WiimoteExtension (PlugIn)
-
-+ (void)load
-{
-    [WiimoteExtension registerExtensionClass:[WiimoteExtension class]];
-}
 
 + (NSUInteger)merit
 {
@@ -33,11 +27,15 @@
     return result;
 }
 
++ (void)initialize:(WiimoteIOManager*)ioManager
+{
+}
+
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action
 {
-    [WiimoteExtension probeFinished:YES target:target action:action];
+    [WiimoteExtension probeFinished:NO target:target action:action];
 }
 
 - (id)init
@@ -64,11 +62,8 @@
     return m_EventDispatcher;
 }
 
-- (void)initialize:(WiimoteIOManager*)ioManager
-            target:(id)target
-            action:(SEL)action
+- (void)calibrate:(WiimoteIOManager*)ioManager
 {
-    [WiimoteExtension initFinished:YES target:target action:action];
 }
 
 - (void)handleReport:(NSData*)extensionData
@@ -136,33 +131,9 @@
     return [merit integerValue];
 }
 
-+ (void)routineProbe:(WiimoteIOManager*)manager
-           signature:(NSData*)signature
-              target:(id)target
-              action:(SEL)action
-{
-    return [WiimoteExtensionProbeHandler
-                                    routineProbe:manager
-                                       signature:signature
-                                          target:target
-                                          action:action];
-}
-
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action
-{
-    if(target == nil || action == nil)
-        return;
-
-    [target performSelector:action
-                 withObject:[NSNumber numberWithBool:result]
-                 afterDelay:0.0];
-}
-
-+ (void)initFinished:(BOOL)result
-              target:(id)target
-              action:(SEL)action
 {
     if(target == nil || action == nil)
         return;

@@ -23,6 +23,8 @@ typedef enum
 
 + (NSUInteger)merit;
 
++ (void)initialize:(WiimoteIOManager*)ioManager;
+
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action;
@@ -32,10 +34,7 @@ typedef enum
 
 - (WiimoteEventDispatcher*)eventDispatcher;
 
-- (void)initialize:(WiimoteIOManager*)ioManager
-            target:(id)target
-            action:(SEL)action;
-
+- (void)calibrate:(WiimoteIOManager*)ioManager;
 - (void)handleReport:(NSData*)extensionData;
 
 @end
@@ -55,17 +54,8 @@ typedef enum
 
 + (NSUInteger)nextFreedomMeritInClass:(WiimoteExtensionMeritClass)meritClass;
 
-+ (void)routineProbe:(WiimoteIOManager*)manager
-           signature:(NSData*)signature
-              target:(id)target
-              action:(SEL)action;
-
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action;
-
-+ (void)initFinished:(BOOL)result
-              target:(id)target
-              action:(SEL)action;
 
 @end

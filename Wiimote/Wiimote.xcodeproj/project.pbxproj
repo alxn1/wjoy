@@ -64,6 +64,7 @@
 		0A48910D15C7FA4500207478 /* WiimoteVibrationPart.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4890C015C7FA4500207478 /* WiimoteVibrationPart.m */; };
 		0A48910E15C7FA4500207478 /* WiimoteWatchdog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A4890C115C7FA4500207478 /* WiimoteWatchdog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A48910F15C7FA4500207478 /* WiimoteWatchdog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4890C215C7FA4500207478 /* WiimoteWatchdog.m */; };
+		0A6901C515C90EB8000D988D /* WiimoteUnknownExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6901C315C90EB8000D988D /* WiimoteUnknownExtension.m */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +179,8 @@
 		0A4890C015C7FA4500207478 /* WiimoteVibrationPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteVibrationPart.m; sourceTree = "<group>"; };
 		0A4890C115C7FA4500207478 /* WiimoteWatchdog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteWatchdog.h; sourceTree = "<group>"; };
 		0A4890C215C7FA4500207478 /* WiimoteWatchdog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteWatchdog.m; sourceTree = "<group>"; };
+		0A6901C215C90EB8000D988D /* WiimoteUnknownExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteUnknownExtension.h; sourceTree = "<group>"; };
+		0A6901C315C90EB8000D988D /* WiimoteUnknownExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteUnknownExtension.m; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* Wiimote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wiimote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,7 +291,6 @@
 				0A48908D15C7FA4500207478 /* WiimoteDeviceReport.m */,
 				0A48911115C7FB4400207478 /* device (internal) */,
 				0A48911215C7FB4B00207478 /* wiimote part */,
-				0A48911315C7FB5300207478 /* standart parts (internal) */,
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -311,18 +313,18 @@
 		0A48911215C7FB4B00207478 /* wiimote part */ = {
 			isa = PBXGroup;
 			children = (
-				0A48911415C7FB6C00207478 /* internal */,
 				0A48909015C7FA4500207478 /* WiimoteEventDispatcher.h */,
 				0A48909115C7FA4500207478 /* WiimoteEventDispatcher.m */,
 				0A4890B015C7FA4500207478 /* WiimoteIOManager.h */,
 				0A4890B115C7FA4500207478 /* WiimoteIOManager.m */,
 				0A4890BA15C7FA4500207478 /* WiimotePart.h */,
 				0A4890BB15C7FA4500207478 /* WiimotePart.m */,
+				0A48911415C7FB6C00207478 /* internal */,
 			);
 			name = "wiimote part";
 			sourceTree = "<group>";
 		};
-		0A48911315C7FB5300207478 /* standart parts (internal) */ = {
+		0A48911315C7FB5300207478 /* standart parts */ = {
 			isa = PBXGroup;
 			children = (
 				0A48911515C7FC1500207478 /* vibration */,
@@ -331,12 +333,13 @@
 				0A48911815C7FC5500207478 /* battery */,
 				0A48911915C7FC7100207478 /* extension port */,
 			);
-			name = "standart parts (internal)";
+			name = "standart parts";
 			sourceTree = "<group>";
 		};
 		0A48911415C7FB6C00207478 /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				0A48911315C7FB5300207478 /* standart parts */,
 				0A48909E15C7FA4500207478 /* WiimoteEventDispatcher+Private.h */,
 				0A48909F15C7FA4500207478 /* WiimoteEventDispatcher+Private.m */,
 				0A4890B215C7FA4500207478 /* WiimoteIOManager+Private.h */,
@@ -454,6 +457,7 @@
 			children = (
 				0A48911F15C7FCF800207478 /* nunchuck */,
 				0A48912115C7FD0F00207478 /* classic controller */,
+				0A6901C115C90E9C000D988D /* unknown */,
 			);
 			name = "standart extensions";
 			sourceTree = "<group>";
@@ -500,6 +504,15 @@
 			name = internal;
 			sourceTree = "<group>";
 		};
+		0A6901C115C90E9C000D988D /* unknown */ = {
+			isa = PBXGroup;
+			children = (
+				0A6901C215C90EB8000D988D /* WiimoteUnknownExtension.h */,
+				0A6901C315C90EB8000D988D /* WiimoteUnknownExtension.m */,
+			);
+			name = unknown;
+			sourceTree = "<group>";
+		};
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -522,14 +535,14 @@
 				0A4890FD15C7FA4500207478 /* WiimoteIOManager.h in Headers */,
 				0A48910715C7FA4500207478 /* WiimotePart.h in Headers */,
 				0A4890EF15C7FA4500207478 /* WiimoteExtension.h in Headers */,
-				0A4890F715C7FA4500207478 /* WiimoteExtensionProbeHandler.h in Headers */,
 				0A4890F115C7FA4500207478 /* WiimoteExtension+PlugIn.h in Headers */,
+				0A4890F715C7FA4500207478 /* WiimoteExtensionProbeHandler.h in Headers */,
 				0A4890F915C7FA4500207478 /* WiimoteGenericExtension.h in Headers */,
 				0A48910515C7FA4500207478 /* WiimoteNunchuckDelegate.h in Headers */,
 				0A4890CF15C7FA4500207478 /* WiimoteClassicControllerDelegate.h in Headers */,
 				0A4890D115C7FA4500207478 /* WiimoteDelegate.h in Headers */,
-				0A4890C315C7FA4500207478 /* Wiimote.h in Headers */,
 				0A48910E15C7FA4500207478 /* WiimoteWatchdog.h in Headers */,
+				0A4890C315C7FA4500207478 /* Wiimote.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +681,7 @@
 				0A48910A15C7FA4500207478 /* WiimotePartSet.m in Sources */,
 				0A48910D15C7FA4500207478 /* WiimoteVibrationPart.m in Sources */,
 				0A48910F15C7FA4500207478 /* WiimoteWatchdog.m in Sources */,
+				0A6901C515C90EB8000D988D /* WiimoteUnknownExtension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,7 +789,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
@@ -787,7 +801,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};

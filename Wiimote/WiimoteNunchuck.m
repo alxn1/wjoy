@@ -115,8 +115,8 @@
 
     NSPoint stickPostion;
 
-    stickPostion.x = [self calcStickPosition:nunchuckReport->stickX min:m_StickMinX max:m_StickMaxX center:m_StickCenterX];
-    stickPostion.y = [self calcStickPosition:nunchuckReport->stickY min:m_StickMinY max:m_StickMaxY center:m_StickCenterY];
+    stickPostion.x =  [self calcStickPosition:nunchuckReport->stickX min:m_StickMinX max:m_StickMaxX center:m_StickCenterX];
+    stickPostion.y = -[self calcStickPosition:nunchuckReport->stickY min:m_StickMinY max:m_StickMaxY center:m_StickCenterY];
 
     [self setStickPosition:stickPostion];
 

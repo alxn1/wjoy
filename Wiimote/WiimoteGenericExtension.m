@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteGenericExtension.h"
+#import "WiimoteExtensionProbeHandler.h"
 
 @implementation WiimoteGenericExtension
 
@@ -48,10 +49,11 @@
        target:(id)target
        action:(SEL)action
 {
-    [WiimoteExtension routineProbe:ioManager
-                         signature:[self extensionSignature]
-                            target:target
-                            action:action];
+    [WiimoteExtensionProbeHandler
+                            routineProbe:ioManager
+                               signature:[self extensionSignature]
+                                  target:target
+                                  action:action];
 }
 
 - (id)initWithOwner:(Wiimote*)owner
@@ -60,12 +62,8 @@
     return [super initWithOwner:owner eventDispatcher:dispatcher];
 }
 
-- (void)initialize:(WiimoteIOManager*)ioManager
-            target:(id)target
-            action:(SEL)action
+- (void)calibrate:(WiimoteIOManager*)ioManager
 {
-	[super initialize:ioManager target:target action:action];
-
     NSRange calibrationMemoryRange = [[self class] calibrationDataMemoryRange];
 
     if(calibrationMemoryRange.length != 0)
