@@ -14,6 +14,10 @@
 								 length:(NSUInteger)length
 								 device:(WiimoteDevice*)device;
 
++ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
+                                        data:(NSData*)data
+                                      device:(WiimoteDevice*)device;
+
 - (WiimoteDevice*)device;
 
 - (void)setWiimote:(Wiimote*)wiimote;

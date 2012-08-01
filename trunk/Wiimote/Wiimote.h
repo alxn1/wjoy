@@ -69,6 +69,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (BOOL)isBatteryLevelLow;
 
 - (WiimoteExtension*)connectedExtension;
+- (void)disconnectExtension;
 
 - (void)requestUpdateState;
 - (void)deviceConfigurationChanged;

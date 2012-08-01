@@ -23,4 +23,6 @@
 
 - (WiimoteExtension*)connectedExtension;
 
+- (void)disconnectExtension;
+
 @end

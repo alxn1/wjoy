@@ -47,6 +47,29 @@
 	return self;
 }
 
+- (id)initWithType:(NSUInteger)type
+              data:(NSData*)data
+            device:(WiimoteDevice*)device
+{
+    self = [super init];
+    if(self == nil)
+        return nil;
+
+    if(device       == nil ||
+      [data length] == 0)
+    {
+        [self release];
+        return nil;
+    }
+
+    m_Device    = [device retain];
+    m_Wiimote   = nil;
+    m_Type      = type;
+    m_Data      = [data copy];
+
+    return self;
+}
+
 - (void)dealloc
 {
 	[m_Data release];
@@ -74,9 +97,19 @@
 								 device:(WiimoteDevice*)device
 {
 	return [[[WiimoteDeviceReport alloc]
-							initWithReportData:data
-										length:length
-										device:device] autorelease];
+                                initWithReportData:data
+                                            length:length
+                                            device:device] autorelease];
+}
+
++ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
+                                        data:(NSData*)data
+                                      device:(WiimoteDevice*)device
+{
+    return [[[WiimoteDeviceReport alloc]
+                                initWithType:type
+                                        data:data
+                                      device:device] autorelease];
 }
 
 @end

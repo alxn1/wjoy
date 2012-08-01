@@ -220,6 +220,24 @@
 	return YES;
 }
 
+- (BOOL)injectReport:(NSUInteger)type
+                data:(NSData*)data
+{
+    if(![self isConnected])
+        return NO;
+
+    WiimoteDeviceReport *report = [WiimoteDeviceReport
+                                            deviceReportWithType:type
+                                                            data:data
+                                                          device:self];
+
+    if(report == nil)
+        return NO;
+
+    [self handleReport:report];
+    return YES;
+}
+
 - (BOOL)requestStateReportWithVibrationState:(BOOL)vibrationState
 {
     uint8_t param = 0;

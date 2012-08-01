@@ -47,6 +47,9 @@
 			target:(id)target
 			action:(SEL)action;
 
+- (BOOL)injectReport:(NSUInteger)type
+                data:(NSData*)data;
+
 - (BOOL)requestStateReportWithVibrationState:(BOOL)vibrationState;
 
 @end

@@ -39,4 +39,10 @@
                          action:action];
 }
 
+- (BOOL)injectReport:(NSUInteger)type
+                data:(NSData*)data
+{
+    return [m_Device injectReport:type data:data];
+}
+
 @end

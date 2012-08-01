@@ -28,4 +28,7 @@
 			target:(id)target
 			action:(SEL)action;
 
+- (BOOL)injectReport:(NSUInteger)type
+                data:(NSData*)data;
+
 @end

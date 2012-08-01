@@ -85,6 +85,7 @@
     m_CurrentClass = [m_ExtensionClasses objectAtIndex:0];
     [m_ExtensionClasses removeObjectAtIndex:0];
 
+    [m_CurrentClass initialize:m_IOManager];
     [m_CurrentClass probe:m_IOManager
                    target:self
                    action:@selector(currentClassProbeFinished:)];
@@ -113,27 +114,7 @@
         return;
     }
 
-    [m_Extension initialize:m_IOManager
-                     target:self
-                     action:@selector(extensionInitialized:)];
-}
-
-- (void)extensionInitialized:(NSNumber*)result
-{
-    if(m_IsCanceled)
-    {
-        [self endProbe];
-        return;
-    }
-
-    if(![result boolValue])
-    {
-        [m_Extension release];
-        m_Extension = nil;
-
-        [self probeNextClass];
-    }
-
+    [m_Extension calibrate:m_IOManager];
     [self probeFinished:m_Extension];
 }
 
