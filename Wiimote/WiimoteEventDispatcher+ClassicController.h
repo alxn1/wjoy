@@ -11,4 +11,18 @@
 
 @interface WiimoteEventDispatcher (ClassicController)
 
+- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+                buttonPressed:(WiimoteClassicControllerButtonType)button;
+
+- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+               buttonReleased:(WiimoteClassicControllerButtonType)button;
+
+- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+                        stick:(WiimoteClassicControllerStickType)stick
+              positionChanged:(NSPoint)position;
+
+- (void)postClassicController:(WiimoteClassicControllerExtension*)classic
+                  analogShift:(WiimoteClassicControllerAnalogShiftType)shift
+              positionChanged:(float)position;
+
 @end

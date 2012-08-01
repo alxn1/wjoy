@@ -15,14 +15,6 @@
     @private
         BOOL    m_ButtonState[WiimoteNunchuckButtonCount];
 		NSPoint m_StickPosition;
-
-        uint8_t m_StickMinX;
-		uint8_t m_StickCenterX;
-		uint8_t m_StickMaxX;
-
-		uint8_t m_StickMinY;
-		uint8_t m_StickCenterY;
-		uint8_t m_StickMaxY;
 }
 
 @end
