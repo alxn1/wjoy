@@ -83,6 +83,112 @@ static NSString *nunchuckButtonName(WiimoteNunchuckButtonType button)
     return result;
 }
 
+static NSString *classicButtonName(WiimoteClassicControllerButtonType button)
+{
+    NSString *result = @"unknown";
+
+    switch(button)
+    {
+        case WiimoteClassicControllerButtonTypeA:
+            result = @"A";
+            break;
+
+        case WiimoteClassicControllerButtonTypeB:
+            result = @"B";
+            break;
+
+        case WiimoteClassicControllerButtonTypeMinus:
+            result = @"minus";
+            break;
+
+        case WiimoteClassicControllerButtonTypeHome:
+            result = @"home";
+            break;
+
+        case WiimoteClassicControllerButtonTypePlus:
+            result = @"plus";
+            break;
+
+        case WiimoteClassicControllerButtonTypeX:
+            result = @"X";
+            break;
+
+        case WiimoteClassicControllerButtonTypeY:
+            result = @"Y";
+            break;
+
+        case WiimoteClassicControllerButtonTypeUp:
+            result = @"Up";
+            break;
+
+        case WiimoteClassicControllerButtonTypeDown:
+            result = @"Down";
+            break;
+
+        case WiimoteClassicControllerButtonTypeLeft:
+            result = @"Left";
+            break;
+
+        case WiimoteClassicControllerButtonTypeRight:
+            result = @"Right";
+            break;
+
+        case WiimoteClassicControllerButtonTypeL:
+            result = @"L";
+            break;
+
+        case WiimoteClassicControllerButtonTypeR:
+            result = @"R";
+            break;
+
+        case WiimoteClassicControllerButtonTypeZL:
+            result = @"ZL";
+            break;
+
+        case WiimoteClassicControllerButtonTypeZR:
+            result = @"ZR";
+            break;
+    }
+
+    return result;
+}
+
+static NSString *classicStickName(WiimoteClassicControllerStickType stick)
+{
+    NSString *result = @"unknown";
+
+    switch(stick)
+    {
+        case WiimoteClassicControllerStickTypeLeft:
+            result = @"left";
+            break;
+
+        case WiimoteClassicControllerStickTypeRight:
+            result = @"right";
+            break;
+    }
+
+    return result;
+}
+
+static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
+{
+    NSString *result = @"unknown";
+
+    switch(shift)
+    {
+        case WiimoteClassicControllerAnalogShiftTypeLeft:
+            result = @"left";
+            break;
+
+        case WiimoteClassicControllerAnalogShiftTypeRight:
+            result = @"right";
+            break;
+    }
+
+    return result;
+}
+
 @interface WiimoteWrapper : NSObject
 {
     @private
@@ -185,7 +291,37 @@ static NSString *nunchuckButtonName(WiimoteNunchuckButtonType button)
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    NSLog(@"Nunchuck position changed: %.0f %.0f", position.x, position.y);
+    NSLog(@"Nunchuck position changed: %.02f %.02f", position.x, position.y);
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+        buttonPressed:(WiimoteClassicControllerButtonType)button
+{
+    NSLog(@"Classic Controller button pressed: %@", classicButtonName(button));
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+       buttonReleased:(WiimoteClassicControllerButtonType)button
+{
+    NSLog(@"Classic Controller button released: %@", classicButtonName(button));
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+                stick:(WiimoteClassicControllerStickType)stick
+      positionChanged:(NSPoint)position
+{
+    NSLog(@"Classic Controller stick (%@) position changed: %.02f %.02f", classicStickName(stick), position.x, position.y);
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+          analogShift:(WiimoteClassicControllerAnalogShiftType)shift
+      positionChanged:(float)position
+{
+    NSLog(@"Classic Controller analog shift (%@) position changed: %.02f", classicShiftName(shift), position);
 }
 
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
