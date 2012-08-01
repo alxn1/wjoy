@@ -167,4 +167,65 @@ typedef enum
 	WiimoteDeviceNunchuckReportButtonMaskZ          = 0x1
 } WiimoteDeviceNunchuckReportButtonMask;
 
+#define WiimoteDeviceClassicControllerAnalogDataSize 4
+
+typedef uint16_t WiimoteDeviceClassicControllerButtonState;
+
+typedef struct
+{
+    uint8_t                                     analogData[WiimoteDeviceClassicControllerAnalogDataSize];
+    WiimoteDeviceClassicControllerButtonState   buttonState;
+} WiimoteDeviceClassicControllerReport;
+
+typedef enum
+{
+    WiimoteDeviceClassicControllerReportButtonMaskR     = 0x0001,
+    WiimoteDeviceClassicControllerReportButtonMaskPlus  = 0x0004,
+    WiimoteDeviceClassicControllerReportButtonMaskHome  = 0x0008,
+    WiimoteDeviceClassicControllerReportButtonMaskMinus = 0x0010,
+    WiimoteDeviceClassicControllerReportButtonMaskL     = 0x0020,
+    WiimoteDeviceClassicControllerReportButtonMaskDown  = 0x0040,
+    WiimoteDeviceClassicControllerReportButtonMaskRight = 0x0080,
+    WiimoteDeviceClassicControllerReportButtonMaskUp    = 0x0100,
+    WiimoteDeviceClassicControllerReportButtonMaskLeft  = 0x0200,
+    WiimoteDeviceClassicControllerReportButtonMaskZR    = 0x0400,
+    WiimoteDeviceClassicControllerReportButtonMaskX     = 0x0800,
+    WiimoteDeviceClassicControllerReportButtonMaskA     = 0x1000,
+    WiimoteDeviceClassicControllerReportButtonMaskY     = 0x2000,
+    WiimoteDeviceClassicControllerReportButtonMaskB     = 0x4000,
+    WiimoteDeviceClassicControllerReportButtonMaskZL    = 0x8000
+} WiimoteDeviceClassicControllerReportButtonMask;
+
+#define WiimoteDeviceFloatEpsilon       0.01f
+#define WiimoteDeviceIsFloatEqual(a, b) (fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
+#define WiimoteDeviceIsPointEqual(a, b) (WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
+                                         WiimoteDeviceIsFloatEqual((a).y, (b).y))
+
+#define WiimoteDeviceNormalizeStickCoordinateEx(value, min, center, max, result) \
+            { \
+                float wiimote_device_norm_value_; \
+            \
+                if((value) <= (center)) \
+                { \
+                    wiimote_device_norm_value_ = ((float)(value) - (float)(min)) / \
+                                                 ((float)(center) - (float)(min)) - 1.0f; \
+                } \
+                else \
+                { \
+                    wiimote_device_norm_value_ = ((float)(value) - (float)(center)) / \
+                                                 ((float)(max) - (float)(center)); \
+                } \
+            \
+                if(wiimote_device_norm_value_ < -1.0f) \
+                    wiimote_device_norm_value_ = -1.0f; \
+            \
+                if(wiimote_device_norm_value_ > 1.0f) \
+                    wiimote_device_norm_value_ = 1.0f; \
+            \
+                result = wiimote_device_norm_value_; \
+            }
+
+#define WiimoteDeviceNormalizeStickCoordinate(value, result) \
+                WiimoteDeviceNormalizeStickCoordinateEx((value), 0, 127, 255, (result))
+
 #pragma pop(pack)

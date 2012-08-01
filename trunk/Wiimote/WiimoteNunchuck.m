@@ -12,11 +12,6 @@
 
 - (void)reset;
 
-- (float)calcStickPosition:(float)value
-					   min:(float)min
-					   max:(float)max
-					center:(float)center;
-
 @end
 
 @implementation WiimoteNunchuck
@@ -76,11 +71,8 @@
 
 - (void)setStickPosition:(NSPoint)newPosition
 {
-	if(fabs(m_StickPosition.x - newPosition.x) < 0.01 &&
-	   fabs(m_StickPosition.y - newPosition.y) < 0.01)
-	{
-		return;
-	}
+    if(WiimoteDeviceIsPointEqual(m_StickPosition, newPosition))
+        return;
 
 	m_StickPosition = newPosition;
 
@@ -115,8 +107,9 @@
 
     NSPoint stickPostion;
 
-    stickPostion.x =  [self calcStickPosition:nunchuckReport->stickX min:m_StickMinX max:m_StickMaxX center:m_StickCenterX];
-    stickPostion.y = -[self calcStickPosition:nunchuckReport->stickY min:m_StickMinY max:m_StickMaxY center:m_StickCenterY];
+    WiimoteDeviceNormalizeStickCoordinate(nunchuckReport->stickX, stickPostion.x);
+    WiimoteDeviceNormalizeStickCoordinate(nunchuckReport->stickY, stickPostion.y);
+    stickPostion.y = -stickPostion.y;
 
     [self setStickPosition:stickPostion];
 
@@ -137,37 +130,7 @@
 {
 	m_ButtonState[WiimoteNunchuckButtonTypeC]	= NO;
 	m_ButtonState[WiimoteNunchuckButtonTypeZ]	= NO;
-
-	m_StickMinX									= 0;
-	m_StickCenterX								= 0x7F;
-	m_StickMaxX									= 0xFF;
-
-	m_StickMinY									= 0;
-	m_StickCenterY								= 0x7F;
-	m_StickMaxY									= 0xFF;
-
 	m_StickPosition								= NSZeroPoint;
-}
-
-- (float)calcStickPosition:(float)value
-					   min:(float)min
-					   max:(float)max
-					center:(float)center
-{
-	float result = 0.0f;
-
-	if(value <= center)
-		result = ((value - min) / (center - min)) - 1.0f;
-	else
-		result = ((value - center) / (max - center));
-
-	if(result < -1.0f)
-		result = -1.0f;
-
-	if(result > 1.0f)
-		result = 1.0f;
-
-	return result;
 }
 
 @end
