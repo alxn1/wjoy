@@ -204,9 +204,11 @@
     float analogShiftPosition;
 
     WiimoteDeviceNormalizeStickCoordinateEx(leftShift, 0, 15, 31, analogShiftPosition);
+	analogShiftPosition = (analogShiftPosition + 1.0f) * 0.5f;
     [self setAnalogShift:WiimoteClassicControllerAnalogShiftTypeLeft position:analogShiftPosition];
 
     WiimoteDeviceNormalizeStickCoordinateEx(rightShift, 0, 15, 31, analogShiftPosition);
+	analogShiftPosition = (analogShiftPosition + 1.0f) * 0.5f;
     [self setAnalogShift:WiimoteClassicControllerAnalogShiftTypeRight position:analogShiftPosition];
 }
 

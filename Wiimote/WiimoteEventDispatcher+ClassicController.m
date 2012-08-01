@@ -31,7 +31,7 @@
 {
     [[self delegate] wiimote:[self owner]
            classicController:classic
-               buttonPressed:button];
+			  buttonReleased:button];
 
     if([self isStateNotificationsEnabled])
     {

@@ -262,7 +262,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 
 - (void)wiimote:(Wiimote*)wiimote highlightedLEDMaskChanged:(NSUInteger)mask
 {
-    NSLog(@"highlightedLEDMaskChanged: %X", mask);
+    NSLog(@"highlightedLEDMaskChanged: %lX", mask);
 }
 
 - (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow
@@ -322,7 +322,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
           analogShift:(WiimoteClassicControllerAnalogShiftType)shift
       positionChanged:(float)position
 {
-    NSLog(@"Classic Controller analog shift (%@) position changed: %.02f", classicShiftName(shift), position);
+	NSLog(@"Classic Controller analog shift (%@) position changed: %.02f", classicShiftName(shift), position);
 }
 
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
