@@ -19,6 +19,8 @@
 
 #import "WiimotePartSet.h"
 
+#import <IOBluetooth/IOBluetooth.h>
+
 @implementation Wiimote (Create)
 
 - (void)initialize
@@ -50,6 +52,7 @@
 
     m_Device    = [[WiimoteDevice alloc] initWithBluetoothDevice:device];
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
+    m_ModelName = [[device getName] copy];
 
     [self initParts];
 
@@ -73,6 +76,7 @@
     [m_Device disconnect];
     [m_PartSet release];
     [m_Device release];
+    [m_ModelName release];
     [m_UserInfo release];
     [super dealloc];
 }
