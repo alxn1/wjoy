@@ -195,12 +195,12 @@
 
     WiimoteDeviceNormalizeStickCoordinateEx(leftStickX, 0, 31, 63, stickPosition.x);
     WiimoteDeviceNormalizeStickCoordinateEx(leftStickY, 0, 31, 63, stickPosition.y);
-	leftStickY = -leftStickY;
+	stickPosition.y = -stickPosition.y;
     [self setStick:WiimoteClassicControllerStickTypeLeft position:stickPosition];
 
     WiimoteDeviceNormalizeStickCoordinateEx(rightStickX, 0, 15, 31, stickPosition.x);
     WiimoteDeviceNormalizeStickCoordinateEx(rightStickY, 0, 15, 31, stickPosition.y);
-	rightStickY = -rightStickY;
+	stickPosition.y = -stickPosition.y;
     [self setStick:WiimoteClassicControllerStickTypeRight position:stickPosition];
 
     float analogShiftPosition;
