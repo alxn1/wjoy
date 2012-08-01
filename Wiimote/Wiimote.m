@@ -33,6 +33,16 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     return [WiimoteInquiry isBluetoothEnabled];
 }
 
++ (NSArray*)supportedModelNames
+{
+    return [WiimoteInquiry supportedModelNames];
+}
+
++ (void)registerSupportedModelName:(NSString*)name
+{
+    [WiimoteInquiry registerSupportedModelName:name];
+}
+
 + (BOOL)isDiscovering
 {
     return [[WiimoteInquiry sharedInquiry] isStarted];
@@ -84,6 +94,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (NSString*)addressString
 {
     return [m_Device addressString];
+}
+
+- (NSString*)modelName
+{
+    return [[m_ModelName retain] autorelease];
 }
 
 - (void)playConnectEffect

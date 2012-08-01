@@ -10,6 +10,9 @@
 
 @class IOBluetoothDeviceInquiry;
 
+FOUNDATION_EXPORT NSString *WiimoteDeviceName;
+FOUNDATION_EXPORT NSString *WiimoteDeviceNameTR;
+
 @interface WiimoteInquiry : NSObject
 {
     @private
@@ -21,6 +24,9 @@
 + (BOOL)isBluetoothEnabled;
 
 + (WiimoteInquiry*)sharedInquiry;
+
++ (NSArray*)supportedModelNames;
++ (void)registerSupportedModelName:(NSString*)name;
 
 - (BOOL)isStarted;
 - (BOOL)startWithTarget:(id)target didEndAction:(SEL)action;

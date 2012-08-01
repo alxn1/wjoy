@@ -28,6 +28,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 	@private
 		WiimoteDevice           *m_Device;
         WiimotePartSet          *m_PartSet;
+        NSString                *m_ModelName;
 
         WiimoteLEDPart          *m_LEDPart;
         WiimoteButtonPart       *m_ButtonPart;
@@ -42,6 +43,9 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 + (BOOL)isBluetoothEnabled;
 
++ (NSArray*)supportedModelNames;
++ (void)registerSupportedModelName:(NSString*)name;
+
 + (BOOL)isDiscovering;
 + (BOOL)beginDiscovery;
 
@@ -52,6 +56,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 - (NSData*)address;
 - (NSString*)addressString;
+- (NSString*)modelName;
 
 - (void)playConnectEffect;
 

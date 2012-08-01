@@ -13,7 +13,8 @@
 
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 20
 
-static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceName              = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
 
 @interface WiimoteInquiry (PrivatePart)
 
@@ -36,6 +37,12 @@ static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
 
 @implementation WiimoteInquiry
 
++ (void)load
+{
+    [WiimoteInquiry registerSupportedModelName:WiimoteDeviceName];
+    [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameTR];
+}
+
 + (BOOL)isBluetoothEnabled
 {
     return IOBluetoothLocalDeviceAvailable();
@@ -49,6 +56,32 @@ static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
         result = [[WiimoteInquiry alloc] initInternal];
 
     return result;
+}
+
++ (NSMutableArray*)mutableSupportedModelNames
+{
+    static NSMutableArray *result = nil;
+
+    if(result == nil)
+        result = [[NSMutableArray alloc] init];
+
+    return result;
+}
+
++ (NSArray*)supportedModelNames
+{
+    return [WiimoteInquiry mutableSupportedModelNames];
+}
+
++ (void)registerSupportedModelName:(NSString*)name
+{
+    if(![[WiimoteInquiry mutableSupportedModelNames] containsObject:name])
+        [[WiimoteInquiry mutableSupportedModelNames] addObject:name];
+}
+
++ (BOOL)isModelSupported:(NSString*)name
+{
+    return [[self supportedModelNames] containsObject:name];
 }
 
 - (id)init
@@ -130,7 +163,7 @@ static NSString *WiimoteDeviceName = @"Nintendo RVL-CNT-01";
     {
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
-        if([[device getName] rangeOfString:WiimoteDeviceName].length != 0)
+        if([WiimoteInquiry isModelSupported:[device getName]])
             [Wiimote connectToBluetoothDevice:device];
     }
 }
