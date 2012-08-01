@@ -11,7 +11,6 @@
 @interface WiimoteAutoWrapper (PrivatePart)
 
 + (NSString*)wjoyNameFromWiimote:(Wiimote*)device;
-+ (NSString*)nunchuckNameFromWiimote:(Wiimote*)device;
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification;
 
@@ -63,33 +62,6 @@ static NSUInteger maxConnectedDevices = 0;
     [m_HIDState setButton:button pressed:NO];
 }
 
-- (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
-{
-    if(![extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
-        return;
-
-	m_NunchuckHIDState  = [[VHIDDevice alloc]
-									initWithType:VHIDDeviceTypeJoystick
-									pointerCount:WiimoteNunchuckStickCount
-									 buttonCount:WiimoteNunchuckButtonCount
-									  isRelative:NO];
-
-	m_WJoyNunchuck		= [[WJoyDevice alloc]
-									initWithHIDDescriptor:[m_NunchuckHIDState descriptor]
-											productString:[WiimoteAutoWrapper nunchuckNameFromWiimote:[extension owner]]];
-
-	[m_NunchuckHIDState setDelegate:self];
-}
-
-- (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
-{
-    [m_NunchuckHIDState release];
-	[m_WJoyNunchuck release];
-
-	m_NunchuckHIDState = nil;
-	m_WJoyNunchuck = nil;
-}
-
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
 {
     [self release];
@@ -97,25 +69,44 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
 {
-    [m_NunchuckHIDState setButton:button pressed:YES];
+    [m_HIDState setButton:WiimoteButtonCount + button pressed:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button
 {
-    [m_NunchuckHIDState setButton:button pressed:NO];
+    [m_HIDState setButton:WiimoteButtonCount + button pressed:NO];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    [m_NunchuckHIDState setPointer:0 position:position];
+    [m_HIDState setPointer:0 position:position];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+        buttonPressed:(WiimoteClassicControllerButtonType)button
+{
+    [m_HIDState setButton:WiimoteButtonCount + WiimoteNunchuckButtonCount + button pressed:YES];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+       buttonReleased:(WiimoteClassicControllerButtonType)button
+{
+    [m_HIDState setButton:WiimoteButtonCount + WiimoteNunchuckButtonCount + button pressed:NO];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+                stick:(WiimoteClassicControllerStickType)stick
+      positionChanged:(NSPoint)position
+{
+    [m_HIDState setPointer:WiimoteNunchuckStickCount + stick position:position];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
-    if(device == m_HIDState)
-		[m_WJoy updateHIDState:state];
-	else
-		[m_WJoyNunchuck updateHIDState:state];
+    [m_WJoy updateHIDState:state];
 }
 
 @end
@@ -125,14 +116,7 @@ static NSUInteger maxConnectedDevices = 0;
 + (NSString*)wjoyNameFromWiimote:(Wiimote*)device
 {
     return [NSString stringWithFormat:
-                            @"Nintendo Wii Remote Controller (%@)",
-                            [device addressString]];
-}
-
-+ (NSString*)nunchuckNameFromWiimote:(Wiimote*)device
-{
-	return [NSString stringWithFormat:
-                            @"Nintendo Wii Remote Nunchuck (%@)",
+                            @"Wiimote (%@)",
                             [device addressString]];
 }
 
@@ -164,8 +148,8 @@ static NSUInteger maxConnectedDevices = 0;
 
     m_Device    = device;
     m_HIDState  = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeJoystick
-                                      pointerCount:0
-                                       buttonCount:WiimoteButtonCount
+                                      pointerCount:WiimoteNunchuckStickCount + WiimoteClassicControllerStickCount
+                                       buttonCount:WiimoteButtonCount + WiimoteNunchuckButtonCount + WiimoteClassicControllerButtonCount
                                         isRelative:NO];
 
     m_WJoy      = [[WJoyDevice alloc]
