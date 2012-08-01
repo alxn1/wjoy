@@ -179,24 +179,24 @@ typedef struct
 
 typedef enum
 {
-    WiimoteDeviceClassicControllerReportButtonMaskR     = 0x0001,
-    WiimoteDeviceClassicControllerReportButtonMaskPlus  = 0x0004,
-    WiimoteDeviceClassicControllerReportButtonMaskHome  = 0x0008,
-    WiimoteDeviceClassicControllerReportButtonMaskMinus = 0x0010,
-    WiimoteDeviceClassicControllerReportButtonMaskL     = 0x0020,
-    WiimoteDeviceClassicControllerReportButtonMaskDown  = 0x0040,
-    WiimoteDeviceClassicControllerReportButtonMaskRight = 0x0080,
-    WiimoteDeviceClassicControllerReportButtonMaskUp    = 0x0100,
-    WiimoteDeviceClassicControllerReportButtonMaskLeft  = 0x0200,
-    WiimoteDeviceClassicControllerReportButtonMaskZR    = 0x0400,
-    WiimoteDeviceClassicControllerReportButtonMaskX     = 0x0800,
-    WiimoteDeviceClassicControllerReportButtonMaskA     = 0x1000,
-    WiimoteDeviceClassicControllerReportButtonMaskY     = 0x2000,
-    WiimoteDeviceClassicControllerReportButtonMaskB     = 0x4000,
-    WiimoteDeviceClassicControllerReportButtonMaskZL    = 0x8000
+	WiimoteDeviceClassicControllerReportButtonMaskUp    = 0x0001,
+    WiimoteDeviceClassicControllerReportButtonMaskLeft  = 0x0002,
+    WiimoteDeviceClassicControllerReportButtonMaskZR    = 0x0004,
+    WiimoteDeviceClassicControllerReportButtonMaskX     = 0x0008,
+    WiimoteDeviceClassicControllerReportButtonMaskA     = 0x0010,
+    WiimoteDeviceClassicControllerReportButtonMaskY     = 0x0020,
+    WiimoteDeviceClassicControllerReportButtonMaskB     = 0x0040,
+    WiimoteDeviceClassicControllerReportButtonMaskZL    = 0x0080,
+    WiimoteDeviceClassicControllerReportButtonMaskR     = 0x0200,
+    WiimoteDeviceClassicControllerReportButtonMaskPlus  = 0x0400,
+    WiimoteDeviceClassicControllerReportButtonMaskHome  = 0x0800,
+    WiimoteDeviceClassicControllerReportButtonMaskMinus = 0x1000,
+    WiimoteDeviceClassicControllerReportButtonMaskL     = 0x2000,
+    WiimoteDeviceClassicControllerReportButtonMaskDown  = 0x4000,
+    WiimoteDeviceClassicControllerReportButtonMaskRight = 0x8000
 } WiimoteDeviceClassicControllerReportButtonMask;
 
-#define WiimoteDeviceFloatEpsilon       0.01f
+#define WiimoteDeviceFloatEpsilon       0.075f
 #define WiimoteDeviceIsFloatEqual(a, b) (fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
 #define WiimoteDeviceIsPointEqual(a, b) (WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
                                          WiimoteDeviceIsFloatEqual((a).y, (b).y))
