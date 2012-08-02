@@ -108,9 +108,40 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     if(m_Extension == nil)
         return nil;
 
-    return [NSSet setWithObject:
-                    [NSNumber numberWithInteger:
-                                    WiimoteDeviceReportTypeButtonAndExtensionState]];
+    NSUInteger       minReportDataSize  = [[m_Extension class] minReportDataSize];
+    NSMutableSet    *result             = [NSMutableSet set];
+
+    if(minReportDataSize <= 6)
+    {
+        [result addObject:[NSNumber numberWithInteger:
+            WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes]];
+    }
+
+    if(minReportDataSize <= 8)
+    {
+        [result addObject:[NSNumber numberWithInteger:
+            WiimoteDeviceReportTypeButtonAndExtension8BytesState]];
+    }
+
+    if(minReportDataSize <= 9)
+    {
+        [result addObject:[NSNumber numberWithInteger:
+            WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState]];
+    }
+
+    if(minReportDataSize <= 16)
+    {
+        [result addObject:[NSNumber numberWithInteger:
+            WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState]];
+    }
+
+    if(minReportDataSize <= 19)
+    {
+        [result addObject:[NSNumber numberWithInteger:
+            WiimoteDeviceReportTypeButtonAndExtension19BytesState]];
+    }
+
+    return result;
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
@@ -153,17 +184,46 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (NSData*)extractExtensionReportPart:(WiimoteDeviceReport*)report
 {
-    if([report type] != WiimoteDeviceReportTypeButtonAndExtensionState)
+    WiimoteDeviceReportType reportType              = [report type];
+    NSUInteger              extensionBytesOffset    = 0;
+    NSUInteger              extensionBytesSize      = 0;
+
+    switch(reportType)
+    {
+        case WiimoteDeviceReportTypeButtonAndExtension8BytesState:
+            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState);
+            extensionBytesSize      = 8;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndExtension19BytesState:
+            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState);
+            extensionBytesSize      = 19;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes:
+            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize + 10;
+            extensionBytesSize      = 6;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState:
+            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize;
+            extensionBytesSize      = 16;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState:
+            extensionBytesOffset    = sizeof(WiimoteDeviceButtonState) + 10;
+            extensionBytesSize      = 9;
+            break;
+        
+        default:
+            return nil;
+    }
+
+    if([[report data] length] < (extensionBytesOffset + extensionBytesSize))
         return nil;
 
-    if([[report data] length] < sizeof(WiimoteDeviceButtonAndExtensionStateReport))
-        return nil;
-
-    const WiimoteDeviceButtonAndExtensionStateReport *stateReport =
-            (const WiimoteDeviceButtonAndExtensionStateReport*)[[report data] bytes];
-
-    return [NSData dataWithBytes:stateReport->data
-                          length:sizeof(stateReport->data)];
+    return [NSData dataWithBytes:((const uint8_t*)[[report data] bytes]) + extensionBytesOffset
+                          length:extensionBytesSize];
 }
 
 - (void)processExtensionReport:(WiimoteDeviceReport*)report

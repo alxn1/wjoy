@@ -48,11 +48,17 @@ typedef enum
 
 typedef enum
 {
-    WiimoteDeviceReportTypeState                    = 0x20,
-	WiimoteDeviceReportTypeReadMemory               = 0x21,
-	WiimoteDeviceReportTypeAcknowledge              = 0x22,
-    WiimoteDeviceReportTypeButtonState              = 0x30,
-	WiimoteDeviceReportTypeButtonAndExtensionState  = 0x32
+    WiimoteDeviceReportTypeState                                                    = 0x20,
+	WiimoteDeviceReportTypeReadMemory                                               = 0x21,
+	WiimoteDeviceReportTypeAcknowledge                                              = 0x22,
+    WiimoteDeviceReportTypeButtonState                                              = 0x30,
+    WiimoteDeviceReportTypeButtonAndAccelerometerState                              = 0x31,
+	WiimoteDeviceReportTypeButtonAndExtension8BytesState                            = 0x32,
+    WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState                  = 0x33,
+    WiimoteDeviceReportTypeButtonAndExtension19BytesState                           = 0x34,
+    WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState           = 0x35,
+    WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState                = 0x36,
+    WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes     = 0x37
 } WiimoteDeviceReportType;
 
 typedef struct {
@@ -136,14 +142,6 @@ typedef struct
     uint8_t                  batteryLevel;
 } WiimoteDeviceStateReport;
 
-#define WiimoteDeviceButtonAndExtensionStateDataSize 8
-
-typedef struct
-{
-    WiimoteDeviceButtonState    buttonState;
-    uint8_t                     data[WiimoteDeviceButtonAndExtensionStateDataSize];
-} WiimoteDeviceButtonAndExtensionStateReport;
-
 #define WiimoteDeviceRoutineProbeAddress            0x04A400FA
 #define WiimoteDeviceRoutineCalibrationDataAddress  0x04A40020
 #define WiimoteDeviceRoutineCalibrationDataSize     16
@@ -151,6 +149,8 @@ typedef struct
 #define WiimoteDeviceRoutineInitAddress2            0x04A400FB
 #define WiimoteDeviceRoutineInitValue1              0x55
 #define WiimoteDeviceRoutineInitValue2              0x00
+
+#define WiimoteDeviceAccelerometerDataSize          3
 
 typedef struct
 {

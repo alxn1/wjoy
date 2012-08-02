@@ -101,7 +101,13 @@
     NSUInteger    countParts  = [m_PartArray count];
     NSMutableSet *reportTypes = [NSMutableSet setWithObjects:
                                     [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonState],
-                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndExtensionState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndExtension8BytesState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndExtension19BytesState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState],
+                                    [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
                                     nil];
 
     for(NSUInteger i = 0; i < countParts; i++)
