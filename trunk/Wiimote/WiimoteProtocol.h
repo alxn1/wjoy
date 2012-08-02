@@ -144,12 +144,52 @@ typedef struct
     uint8_t                     data[WiimoteDeviceButtonAndExtensionStateDataSize];
 } WiimoteDeviceButtonAndExtensionStateReport;
 
-#define WiimoteRoutineProbeAddress                  0x04A400FA
+#define WiimoteDeviceRoutineProbeAddress            0x04A400FA
+#define WiimoteDeviceRoutineCalibrationDataAddress  0x04A40020
+#define WiimoteDeviceRoutineCalibrationDataSize     16
+#define WiimoteDeviceRoutineInitAddress1            0x04A400F0
+#define WiimoteDeviceRoutineInitAddress2            0x04A400FB
+#define WiimoteDeviceRoutineInitValue1              0x55
+#define WiimoteDeviceRoutineInitValue2              0x00
 
-#define WiimoteRoutineInitAddress1                  0x04A400F0
-#define WiimoteRoutineInitAddress2                  0x04A400FB
-#define WiimoteRoutineInitValue1                    0x55
-#define WiimoteRoutineInitValue2                    0x00
+typedef struct
+{
+    uint8_t x;
+    uint8_t y;
+    uint8_t z;
+    uint8_t unknown;
+} WiimoteDeviceAccelerometerValue;
+
+typedef struct
+{
+    WiimoteDeviceAccelerometerValue zero;
+    WiimoteDeviceAccelerometerValue oneG;
+} WiimoteDeviceAccelerometerCalibrationData;
+
+typedef struct
+{
+    uint8_t max;
+    uint8_t min;
+    uint8_t center;
+} WiimoteDeviceStickCoordinateCalibrationData;
+
+typedef struct
+{
+    WiimoteDeviceStickCoordinateCalibrationData x;
+    WiimoteDeviceStickCoordinateCalibrationData y;
+} WiimoteDeviceStickCalibrationData;
+
+typedef struct
+{
+    WiimoteDeviceAccelerometerCalibrationData   accelerometer;
+    WiimoteDeviceStickCalibrationData           stick;
+} WiimoteDeviceNunchuckCalibrationData;
+
+typedef struct
+{
+    WiimoteDeviceStickCalibrationData leftStick;
+    WiimoteDeviceStickCalibrationData rightStick;
+} WiimoteDeviceClassicControllerCalibrationData;
 
 typedef struct
 {
@@ -201,6 +241,21 @@ typedef enum
 #define WiimoteDeviceIsPointEqual(a, b) (WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
                                          WiimoteDeviceIsFloatEqual((a).y, (b).y))
 
+#define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
+            { \
+                if((stickCalibration).x.center == 0) \
+                    (stickCalibration).x.center == (centerValue); \
+            \
+                if((stickCalibration).y.center == 0) \
+                    (stickCalibration).y.center == (centerValue); \
+            \
+                if((stickCalibration).x.max == 0) \
+                    (stickCalibration).x.max == (maxValue); \
+            \
+                if((stickCalibration).y.max == 0) \
+                    (stickCalibration).y.max == (maxValue); \
+            }
+
 #define WiimoteDeviceNormalizeStickCoordinateEx(value, min, center, max, result) \
             { \
                 float wiimote_device_norm_value_; \
@@ -227,5 +282,26 @@ typedef enum
 
 #define WiimoteDeviceNormalizeStickCoordinate(value, result) \
                 WiimoteDeviceNormalizeStickCoordinateEx((value), 0, 127, 255, (result))
+
+#define WiimoteDeviceNormalizeStick(pointX, pointY, stickCalibrationData, resultPoint) \
+            { \
+                WiimoteDeviceNormalizeStickCoordinateEx( \
+                                                (pointX), \
+                                                (stickCalibrationData).x.min, \
+                                                (stickCalibrationData).x.center, \
+                                                (stickCalibrationData).x.max, \
+                                                (resultPoint).x); \
+            \
+                WiimoteDeviceNormalizeStickCoordinateEx( \
+                                                (pointY), \
+                                                (stickCalibrationData).y.min, \
+                                                (stickCalibrationData).y.center, \
+                                                (stickCalibrationData).y.max, \
+                                                (resultPoint).y); \
+            }
+
+#define WiimoteDeviceNormilizeShift(shiftValue, min, center, max, result) \
+            WiimoteDeviceNormalizeStickCoordinateEx((shiftValue), (min), (center), (max), (result)); \
+            (result) = ((result) + 1.0f) * 0.5f
 
 #pragma pop(pack)

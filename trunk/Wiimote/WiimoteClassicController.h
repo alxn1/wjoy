@@ -13,9 +13,10 @@
                                                 WiimoteClassicControllerProtocol>
 {
     @private
-        BOOL    m_ButtonState[WiimoteClassicControllerButtonCount];
-        NSPoint m_StickPositions[WiimoteClassicControllerStickCount];
-        float   m_AnalogShiftPositions[WiimoteClassicControllerAnalogShiftCount];
+        BOOL                                            m_ButtonState[WiimoteClassicControllerButtonCount];
+        NSPoint                                         m_StickPositions[WiimoteClassicControllerStickCount];
+        float                                           m_AnalogShiftPositions[WiimoteClassicControllerAnalogShiftCount];
+        WiimoteDeviceClassicControllerCalibrationData   m_CalibrationData;
 }
 
 @end

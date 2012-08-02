@@ -45,6 +45,11 @@
     return WiimoteExtensionMeritClassUnknown;
 }
 
++ (NSUInteger)minReportDataSize
+{
+    return 0;
+}
+
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action

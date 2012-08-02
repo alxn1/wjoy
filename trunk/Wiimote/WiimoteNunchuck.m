@@ -11,6 +11,7 @@
 @interface WiimoteNunchuck (PrivatePart)
 
 - (void)reset;
+- (void)checkCalibrationData;
 
 @end
 
@@ -34,13 +35,19 @@
 
 + (NSRange)calibrationDataMemoryRange
 {
-    // TODO: add support for calibration
-    return NSMakeRange(0, 0);
+    return NSMakeRange(
+                WiimoteDeviceRoutineCalibrationDataAddress,
+                WiimoteDeviceRoutineCalibrationDataSize);
 }
 
 + (WiimoteExtensionMeritClass)meritClass
 {
     return WiimoteExtensionMeritClassSystem;
+}
+
++ (NSUInteger)minReportDataSize
+{
+    return sizeof(WiimoteDeviceNunchuckReport);
 }
 
 - (id)initWithOwner:(Wiimote*)owner
@@ -94,7 +101,11 @@
 
 - (void)handleCalibrationData:(NSData*)data
 {
-    // TODO: add support for calibration
+    if([data length] < sizeof(m_CalibrationData))
+        return;
+
+    memcpy(&m_CalibrationData, [data bytes], sizeof(m_CalibrationData));
+    [self checkCalibrationData];
 }
 
 - (void)handleReport:(NSData*)extensionData
@@ -107,9 +118,11 @@
 
     NSPoint stickPostion;
 
-    WiimoteDeviceNormalizeStickCoordinate(nunchuckReport->stickX, stickPostion.x);
-    WiimoteDeviceNormalizeStickCoordinate(nunchuckReport->stickY, stickPostion.y);
-    stickPostion.y = -stickPostion.y;
+    WiimoteDeviceNormalizeStick(
+                        nunchuckReport->stickX,
+                        nunchuckReport->stickY,
+                        m_CalibrationData.stick,
+                        stickPostion);
 
     [self setStickPosition:stickPostion];
 
@@ -128,9 +141,19 @@
 
 - (void)reset
 {
-	m_ButtonState[WiimoteNunchuckButtonTypeC]	= NO;
-	m_ButtonState[WiimoteNunchuckButtonTypeZ]	= NO;
-	m_StickPosition								= NSZeroPoint;
+	m_ButtonState[WiimoteNunchuckButtonTypeC]       = NO;
+	m_ButtonState[WiimoteNunchuckButtonTypeZ]       = NO;
+	m_StickPosition                                 = NSZeroPoint;
+
+    memset(&m_CalibrationData, 0, sizeof(m_CalibrationData));
+    [self checkCalibrationData];
+}
+
+- (void)checkCalibrationData
+{
+    // TODO: add accelerometer default values
+
+    WiimoteDeviceCheckStickCalibration(m_CalibrationData.stick, 0, 127, 255);
 }
 
 @end

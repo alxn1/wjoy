@@ -50,11 +50,11 @@
     switch(key)
     {
         case TestViewKeyUp:
-            newPosition.y -= 0.05f;
+            newPosition.y += 0.05f;
             break;
 
         case TestViewKeyDown:
-            newPosition.y += 0.05f;
+            newPosition.y -= 0.05f;
             break;
 
         case TestViewKeyLeft:
