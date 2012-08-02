@@ -136,8 +136,8 @@
     char *data = (char*)[m_State mutableBytes] + pointerIndex * HIDStatePointerSize;
 
     return NSMakePoint(
-                [VHIDPointerCollection clipCoordinateFrom:*data],
-                [VHIDPointerCollection clipCoordinateFrom:*(data + 1)]);
+                 [VHIDPointerCollection clipCoordinateFrom:*data],
+                -[VHIDPointerCollection clipCoordinateFrom:*(data + 1)]);
 }
 
 - (void)setPointer:(NSUInteger)pointerIndex position:(NSPoint)position
@@ -147,8 +147,8 @@
 
     char *data = (char*)[m_State mutableBytes] + pointerIndex * HIDStatePointerSize;
 
-    *data       = [VHIDPointerCollection clipCoordinateTo:position.x];
-    *(data + 1) = [VHIDPointerCollection clipCoordinateTo:position.y];
+    *data       =  [VHIDPointerCollection clipCoordinateTo:position.x];
+    *(data + 1) = -[VHIDPointerCollection clipCoordinateTo:position.y];
 }
 
 - (void)reset

@@ -27,6 +27,11 @@
     return result;
 }
 
++ (NSUInteger)minReportDataSize
+{
+    return 0;
+}
+
 + (void)initialize:(WiimoteIOManager*)ioManager
 {
 }

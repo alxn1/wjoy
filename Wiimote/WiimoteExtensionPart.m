@@ -183,12 +183,12 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 {
     NSMutableData *data = [NSMutableData dataWithLength:1];
 
-    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue1;
-    [[self ioManager] writeMemory:WiimoteRoutineInitAddress1 data:data];
+    *((uint8_t*)[data mutableBytes]) = WiimoteDeviceRoutineInitValue1;
+    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress1 data:data];
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 
-    *((uint8_t*)[data mutableBytes]) = WiimoteRoutineInitValue2;
-    [[self ioManager] writeMemory:WiimoteRoutineInitAddress2 data:data];
+    *((uint8_t*)[data mutableBytes]) = WiimoteDeviceRoutineInitValue2;
+    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress2 data:data];
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 }
 

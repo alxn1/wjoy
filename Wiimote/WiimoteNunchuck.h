@@ -13,8 +13,9 @@
                                             WiimoteNunchuckProtocol>
 {
     @private
-        BOOL    m_ButtonState[WiimoteNunchuckButtonCount];
-		NSPoint m_StickPosition;
+        BOOL                                    m_ButtonState[WiimoteNunchuckButtonCount];
+		NSPoint                                 m_StickPosition;
+        WiimoteDeviceNunchuckCalibrationData    m_CalibrationData;
 }
 
 @end

@@ -15,6 +15,7 @@
 + (NSData*)extensionSignature;
 + (NSRange)calibrationDataMemoryRange;
 + (WiimoteExtensionMeritClass)meritClass;
++ (NSUInteger)minReportDataSize;
 
 - (id)initWithOwner:(Wiimote*)owner
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher;

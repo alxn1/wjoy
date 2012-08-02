@@ -11,6 +11,7 @@
 @interface WiimoteClassicController (PrivatePart)
 
 - (void)reset;
+- (void)checkCalibrationData;
 
 @end
 
@@ -34,13 +35,19 @@
 
 + (NSRange)calibrationDataMemoryRange
 {
-    // TODO: add support for calibration
-    return NSMakeRange(0, 0);
+    return NSMakeRange(
+                WiimoteDeviceRoutineCalibrationDataAddress,
+                WiimoteDeviceRoutineCalibrationDataSize);
 }
 
 + (WiimoteExtensionMeritClass)meritClass
 {
     return WiimoteExtensionMeritClassSystem;
+}
+
++ (NSUInteger)minReportDataSize
+{
+    return sizeof(WiimoteDeviceClassicControllerReport);
 }
 
 - (id)initWithOwner:(Wiimote*)owner
@@ -123,55 +130,54 @@
 
 - (void)handleCalibrationData:(NSData*)data
 {
-    // TODO: add support for calibration
+    if([data length] < sizeof(m_CalibrationData))
+        return;
+
+    memcpy(&m_CalibrationData, [data bytes], sizeof(m_CalibrationData));
+
+    m_CalibrationData.leftStick.x.max       /= 4;
+    m_CalibrationData.leftStick.x.min       /= 4;
+    m_CalibrationData.leftStick.x.center    /= 4;
+    m_CalibrationData.leftStick.y.max       /= 4;
+    m_CalibrationData.leftStick.y.min       /= 4;
+    m_CalibrationData.leftStick.y.center    /= 4;
+
+    m_CalibrationData.rightStick.x.max      /= 8;
+    m_CalibrationData.rightStick.x.min      /= 8;
+    m_CalibrationData.rightStick.x.center   /= 8;
+    m_CalibrationData.rightStick.y.max      /= 8;
+    m_CalibrationData.rightStick.y.min      /= 8;
+    m_CalibrationData.rightStick.y.center   /= 8;
+
+    [self checkCalibrationData];
 }
 
 - (void)handleButtonState:(WiimoteDeviceClassicControllerButtonState)state
 {
-    [self setButton:WiimoteClassicControllerButtonTypeA
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskA) == 0)];
+    static const struct
+    {
+        WiimoteClassicControllerButtonType              type;
+        WiimoteDeviceClassicControllerReportButtonMask  mask;
+    } buttonMasks[] = {
+        { WiimoteClassicControllerButtonTypeA,      WiimoteDeviceClassicControllerReportButtonMaskA },
+        { WiimoteClassicControllerButtonTypeB,      WiimoteDeviceClassicControllerReportButtonMaskB },
+        { WiimoteClassicControllerButtonTypeMinus,  WiimoteDeviceClassicControllerReportButtonMaskMinus },
+        { WiimoteClassicControllerButtonTypeHome,   WiimoteDeviceClassicControllerReportButtonMaskHome },
+        { WiimoteClassicControllerButtonTypePlus,   WiimoteDeviceClassicControllerReportButtonMaskPlus },
+        { WiimoteClassicControllerButtonTypeX,      WiimoteDeviceClassicControllerReportButtonMaskX },
+        { WiimoteClassicControllerButtonTypeY,      WiimoteDeviceClassicControllerReportButtonMaskY },
+        { WiimoteClassicControllerButtonTypeUp,     WiimoteDeviceClassicControllerReportButtonMaskUp },
+        { WiimoteClassicControllerButtonTypeDown,   WiimoteDeviceClassicControllerReportButtonMaskDown },
+        { WiimoteClassicControllerButtonTypeLeft,   WiimoteDeviceClassicControllerReportButtonMaskLeft },
+        { WiimoteClassicControllerButtonTypeRight,  WiimoteDeviceClassicControllerReportButtonMaskRight },
+        { WiimoteClassicControllerButtonTypeL,      WiimoteDeviceClassicControllerReportButtonMaskL },
+        { WiimoteClassicControllerButtonTypeR,      WiimoteDeviceClassicControllerReportButtonMaskR },
+        { WiimoteClassicControllerButtonTypeZL,     WiimoteDeviceClassicControllerReportButtonMaskZL },
+        { WiimoteClassicControllerButtonTypeZR,     WiimoteDeviceClassicControllerReportButtonMaskZR }
+    };
 
-    [self setButton:WiimoteClassicControllerButtonTypeB
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskB) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeMinus
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskMinus) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeHome
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskHome) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypePlus
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskPlus) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeX
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskX) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeY
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskY) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeUp
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskUp) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeDown
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskDown) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeLeft
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskLeft) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeRight
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskRight) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeL
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskL) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeR
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskR) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeZL
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskZL) == 0)];
-
-    [self setButton:WiimoteClassicControllerButtonTypeZR
-            pressed:((state & WiimoteDeviceClassicControllerReportButtonMaskZR) == 0)];
+    for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)
+        [self setButton:buttonMasks[i].type pressed:((state & buttonMasks[i].mask) == 0)];
 }
 
 - (void)handleAnalogData:(const uint8_t*)analogData
@@ -184,33 +190,26 @@
     uint8_t rightStickX = (analogData[2] >> 7) & 0x01;
     uint8_t rightStickY = (analogData[2] >> 0) & 0x1F;
 
-    uint8_t leftShift   = (analogData[3] >> 5) & 0x07;
-    uint8_t rightShift  = (analogData[3] >> 0) & 0x1F;
+    uint8_t leftShift   = ((analogData[3] >> 5) & 0x07) |
+                          ((analogData[2] & 0x60) >> 2);
 
-    leftShift   |= ((analogData[2] & 0x60) >> 2);
-    rightStickX |= ((analogData[1] & 0xC0) >> 5);
-    rightStickX |= ((analogData[0] & 0xC0) >> 3);
+    uint8_t rightShift  = ((analogData[3] >> 0) & 0x1F) |
+                          ((analogData[1] & 0xC0) >> 5) |
+                          ((analogData[0] & 0xC0) >> 3);
 
     NSPoint stickPosition;
+    float   analogShiftPosition;
 
-    WiimoteDeviceNormalizeStickCoordinateEx(leftStickX, 0, 31, 63, stickPosition.x);
-    WiimoteDeviceNormalizeStickCoordinateEx(leftStickY, 0, 31, 63, stickPosition.y);
-	stickPosition.y = -stickPosition.y;
+    WiimoteDeviceNormalizeStick(leftStickX, leftStickY, m_CalibrationData.leftStick, stickPosition);
     [self setStick:WiimoteClassicControllerStickTypeLeft position:stickPosition];
 
-    WiimoteDeviceNormalizeStickCoordinateEx(rightStickX, 0, 15, 31, stickPosition.x);
-    WiimoteDeviceNormalizeStickCoordinateEx(rightStickY, 0, 15, 31, stickPosition.y);
-	stickPosition.y = -stickPosition.y;
+    WiimoteDeviceNormalizeStick(rightStickX, rightStickY, m_CalibrationData.rightStick, stickPosition);
     [self setStick:WiimoteClassicControllerStickTypeRight position:stickPosition];
 
-    float analogShiftPosition;
-
-    WiimoteDeviceNormalizeStickCoordinateEx(leftShift, 0, 15, 31, analogShiftPosition);
-	analogShiftPosition = (analogShiftPosition + 1.0f) * 0.5f;
+    WiimoteDeviceNormilizeShift(leftShift, 0, 15, 31, analogShiftPosition);
     [self setAnalogShift:WiimoteClassicControllerAnalogShiftTypeLeft position:analogShiftPosition];
 
-    WiimoteDeviceNormalizeStickCoordinateEx(rightShift, 0, 15, 31, analogShiftPosition);
-	analogShiftPosition = (analogShiftPosition + 1.0f) * 0.5f;
+    WiimoteDeviceNormilizeShift(rightShift, 0, 15, 31, analogShiftPosition);
     [self setAnalogShift:WiimoteClassicControllerAnalogShiftTypeRight position:analogShiftPosition];
 }
 
@@ -242,6 +241,15 @@
 
     for(NSUInteger i = 0; i < WiimoteClassicControllerAnalogShiftCount; i++)
         m_AnalogShiftPositions[i] = 0.0f;
+
+    memset(&m_CalibrationData, 0, sizeof(m_CalibrationData));
+    [self checkCalibrationData];
+}
+
+- (void)checkCalibrationData
+{
+    WiimoteDeviceCheckStickCalibration(m_CalibrationData.leftStick,  0, 31, 63);
+    WiimoteDeviceCheckStickCalibration(m_CalibrationData.rightStick, 0, 15, 31);
 }
 
 @end

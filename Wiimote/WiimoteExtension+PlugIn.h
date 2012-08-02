@@ -22,6 +22,7 @@ typedef enum
 @interface WiimoteExtension (PlugIn)
 
 + (NSUInteger)merit;
++ (NSUInteger)minReportDataSize;
 
 + (void)initialize:(WiimoteIOManager*)ioManager;
 
