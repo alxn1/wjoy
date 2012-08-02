@@ -16,25 +16,25 @@
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
 			   data:(NSData*)data
 {
+    [m_Device setVibrationEnabled:[m_Owner isVibrationEnabled]];
     return [m_Device postCommand:command
-                            data:data
-                  vibrationState:[m_Owner isVibrationEnabled]];
+                            data:data];
 }
 
 - (BOOL)writeMemory:(NSUInteger)address
 			   data:(NSData*)data
 {
+    [m_Device setVibrationEnabled:[m_Owner isVibrationEnabled]];
     return [m_Device writeMemory:address
-                            data:data
-                  vibrationState:[m_Owner isVibrationEnabled]];
+                            data:data];
 }
 
 - (BOOL)readMemory:(NSRange)memoryRange
 			target:(id)target
 			action:(SEL)action
 {
+    [m_Device setVibrationEnabled:[m_Owner isVibrationEnabled]];
     return [m_Device readMemory:memoryRange
-                 vibrationState:[m_Owner isVibrationEnabled]
                          target:target
                          action:action];
 }
