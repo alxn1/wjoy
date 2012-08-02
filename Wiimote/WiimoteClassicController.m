@@ -184,18 +184,17 @@
 {
     // TODO: remove all magic constants ;)
 
-    uint8_t leftStickX  = (analogData[0] >> 0) & 0x3F;
-    uint8_t leftStickY  = (analogData[1] >> 0) & 0x3F;
+	uint8_t leftStickY  = ((analogData[1] >> 0) & 0x3F);
+	uint8_t leftStickX  = ((analogData[0] >> 0) & 0x3F);
 
-    uint8_t rightStickX = (analogData[2] >> 7) & 0x01;
-    uint8_t rightStickY = (analogData[2] >> 0) & 0x1F;
+	uint8_t rightStickY = ((analogData[2] >> 0) & 0x1F);
+    uint8_t rightStickX = ((analogData[2] >> 7) & 0x01) |
+						  ((analogData[1] & 0xC0) >> 5) |
+						  ((analogData[0] & 0xC0) >> 3);
 
+	uint8_t rightShift  = ((analogData[3] >> 0) & 0x1F);
     uint8_t leftShift   = ((analogData[3] >> 5) & 0x07) |
-                          ((analogData[2] & 0x60) >> 2);
-
-    uint8_t rightShift  = ((analogData[3] >> 0) & 0x1F) |
-                          ((analogData[1] & 0xC0) >> 5) |
-                          ((analogData[0] & 0xC0) >> 3);
+						  ((analogData[2] & 0x60) >> 2);
 
     NSPoint stickPosition;
     float   analogShiftPosition;

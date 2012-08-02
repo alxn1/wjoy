@@ -155,20 +155,12 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 - (void)requestUpdateState
 {
-    [m_Device setVibrationEnabled:[self isVibrationEnabled]];
     [m_Device requestStateReport];
 }
 
 - (void)deviceConfigurationChanged
 {
-    WiimoteDeviceSetReportTypeParams params;
-
-    params.flags        = 0;
-    params.reportType   = [m_PartSet bestReportType];
-
-    [m_Device setVibrationEnabled:[self isVibrationEnabled]];
-    [m_Device postCommand:WiimoteDeviceCommandTypeSetReportType
-                     data:[NSData dataWithBytes:&params length:sizeof(params)]];
+	[m_Device setReportType:[m_PartSet bestReportType]];
 }
 
 - (BOOL)isStateChangeNotificationsEnabled

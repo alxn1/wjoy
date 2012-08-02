@@ -61,15 +61,16 @@
     return m_MemoryRange;
 }
 
-- (BOOL)handleData:(NSData*)data
+- (BOOL)isAllDataReaded
+{
+	return ([m_ReadedData length] >= m_MemoryRange.length);
+}
+
+- (void)handleData:(NSData*)data
 {
     [m_ReadedData appendData:data];
     if([m_ReadedData length] >= m_MemoryRange.length)
-    {
 		[self dataReadFinished];
-        return NO;
-    }
-    return YES;
 }
 
 - (void)errorOccured

@@ -11,23 +11,23 @@
 
 @class IOBluetoothDevice;
 @class IOBluetoothL2CAPChannel;
-@class WiimoteDeviceReadMemHandler;
+
+@class WiimoteDeviceReadMemQueue;
+@class WiimoteDeviceEventDispatcher;
 
 @interface WiimoteDevice : NSObject
 {
 	@private
-		BOOL						 m_IsConnected;
-		IOBluetoothDevice			*m_Device;
-		IOBluetoothL2CAPChannel     *m_DataChannel;
-        IOBluetoothL2CAPChannel     *m_ControlChannel;
+		BOOL							 m_IsConnected;
 
-		NSMutableArray				*m_ReportHandlers;
-		NSMutableArray				*m_DisconnectHandlers;
+		IOBluetoothDevice				*m_Device;
+		IOBluetoothL2CAPChannel			*m_DataChannel;
+        IOBluetoothL2CAPChannel			*m_ControlChannel;
 
-        BOOL                         m_IsVibrationEnabled;
+		WiimoteDeviceEventDispatcher		*m_EventDispatcher;
+		WiimoteDeviceReadMemQueue		*m_ReadMemQueue;
 
-        NSMutableArray              *m_ReadMemHandlersQueue;
-        WiimoteDeviceReadMemHandler *m_CurrentMemHandler;
+        BOOL							 m_IsVibrationEnabled;
 }
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
@@ -51,6 +51,7 @@
 - (BOOL)injectReport:(NSUInteger)type data:(NSData*)data;
 
 - (BOOL)requestStateReport;
+- (BOOL)setReportType:(WiimoteDeviceReportType)type;
 
 @end
 

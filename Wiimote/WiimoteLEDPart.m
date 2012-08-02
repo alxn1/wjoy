@@ -38,33 +38,37 @@
     if(m_Mask == mask)
         return;
 
-    uint8_t     commandData         = 0;
-    BOOL        isVibrationEnabled  = [[self owner] isVibrationEnabled];
+	NSUInteger oldMask = m_Mask;
 
-    if(isVibrationEnabled)
-        commandData |= WiimoteDeviceCommandFlagVibrationEnabled;
+	m_Mask = mask;
+	if(![self updateHadwareLEDState])
+	{
+		m_Mask = oldMask;
+		return;
+	}
 
-    if((mask & WiimoteLEDFlagOne) != 0)
+    [[self eventDispatcher] postHighlightedLEDMaskChangedNotification:mask];
+}
+
+- (BOOL)updateHadwareLEDState
+{
+	uint8_t commandData = 0;
+
+    if((m_Mask & WiimoteLEDFlagOne) != 0)
         commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDOne;
 
-    if((mask & WiimoteLEDFlagTwo) != 0)
+    if((m_Mask & WiimoteLEDFlagTwo) != 0)
         commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDTwo;
 
-    if((mask & WiimoteLEDFlagThree) != 0)
+    if((m_Mask & WiimoteLEDFlagThree) != 0)
         commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDThree;
 
-    if((mask & WiimoteLEDFlagFour) != 0)
+    if((m_Mask & WiimoteLEDFlagFour) != 0)
         commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDFour;
 
-    if(![[self ioManager]
+    return [[self ioManager]
                 postCommand:WiimoteDeviceCommandTypeSetLEDState
-                       data:[NSData dataWithBytes:&commandData length:sizeof(commandData)]])
-    {
-        return;
-    }
-
-    m_Mask = mask;
-    [[self eventDispatcher] postHighlightedLEDMaskChangedNotification:mask];
+                       data:[NSData dataWithBytes:&commandData length:sizeof(commandData)]];
 }
 
 - (void)disconnected

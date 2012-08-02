@@ -17,4 +17,6 @@
 - (NSUInteger)highlightedLEDMask;
 - (void)setHighlightedLEDMask:(NSUInteger)mask;
 
+- (BOOL)updateHadwareLEDState;
+
 @end

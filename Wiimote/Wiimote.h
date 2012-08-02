@@ -33,7 +33,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
         WiimoteLEDPart          *m_LEDPart;
         WiimoteButtonPart       *m_ButtonPart;
         WiimoteBatteryPart      *m_BatteryPart;
-        WiimoteVibrationPart    *m_VibrationPart;
+        WiimoteVibrationPart	*m_VibrationPart;
         WiimoteExtensionPart    *m_ExtensionPart;
 
 		NSDictionary            *m_UserInfo;
