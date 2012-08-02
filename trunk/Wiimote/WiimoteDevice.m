@@ -7,9 +7,10 @@
 //
 
 #import "WiimoteDevice.h"
-#import "WiimoteDeviceEventHandler.h"
-#import "WiimoteDeviceReadMemHandler.h"
 #import "WiimoteDeviceReport+Private.h"
+#import "WiimoteDeviceEventDispatcher.h"
+#import "WiimoteDeviceReadMemQueue.h"
+
 #import <IOBluetooth/IOBluetooth.h>
 
 @interface WiimoteDevice (PrivatePart)
@@ -18,11 +19,6 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report;
 - (void)handleDisconnect;
-
-- (BOOL)isReadMemHandlersQueueEmpty;
-- (void)addReadMemHandlerToQueue:(WiimoteDeviceReadMemHandler*)handler;
-- (WiimoteDeviceReadMemHandler*)nextReadMemHandlerFromQueue;
-- (BOOL)runReadMemHandler:(WiimoteDeviceReadMemHandler*)handler;
 
 @end
 
@@ -59,10 +55,8 @@
 	m_Device				= [device retain];
 	m_DataChannel			= nil;
 	m_ControlChannel		= nil;
-	m_ReportHandlers		= [[NSMutableArray alloc] init];
-	m_DisconnectHandlers	= [[NSMutableArray alloc] init];
-    m_ReadMemHandlersQueue  = [[NSMutableArray alloc] init];
-    m_CurrentMemHandler     = nil;
+	m_EventDispatcher		= [[WiimoteDeviceEventDispatcher alloc] init];
+    m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
     m_IsVibrationEnabled    = NO;
 
@@ -72,10 +66,8 @@
 - (void)dealloc
 {
 	[self disconnect];
-    [m_CurrentMemHandler release];
-    [m_ReadMemHandlersQueue release];
-	[m_DisconnectHandlers release];
-	[m_ReportHandlers release];
+    [m_ReadMemQueue release];
+	[m_EventDispatcher release];
 	[m_ControlChannel release];
 	[m_DataChannel release];
 	[m_Device release];
@@ -216,17 +208,9 @@
 	if(![self isConnected])
 		return NO;
 
-	WiimoteDeviceReadMemHandler *handler =
-			[[[WiimoteDeviceReadMemHandler alloc]
-									initWithMemoryRange:memoryRange
-												 target:target
-												 action:action] autorelease];
-
-    if([self isReadMemHandlersQueueEmpty])
-        return [self runReadMemHandler:handler];
-
-    [self addReadMemHandlerToQueue:handler];
-    return YES;
+	return [m_ReadMemQueue readMemory:memoryRange
+							   target:target
+							   action:action];
 }
 
 - (BOOL)injectReport:(NSUInteger)type data:(NSData*)data
@@ -253,104 +237,59 @@
                         data:[NSData dataWithBytes:&param length:sizeof(param)]];
 }
 
+- (BOOL)setReportType:(WiimoteDeviceReportType)type
+{
+	WiimoteDeviceSetReportTypeParams params;
+
+    params.flags        = 0;
+    params.reportType   = type;
+
+    return [self postCommand:WiimoteDeviceCommandTypeSetReportType
+						data:[NSData dataWithBytes:&params length:sizeof(params)]];
+}
+
 @end
 
 @implementation WiimoteDevice (ReportHandling)
 
 - (void)addReportHandler:(id)target action:(SEL)action
 {
-	[m_ReportHandlers addObject:
-		[WiimoteDeviceEventHandler
-                    newHandlerWithTarget:target action:action]];
+	[m_EventDispatcher addReportHandler:target action:action];
 }
 
 - (void)removeReportHandler:(id)target action:(SEL)action
 {
-	NSUInteger countHandlers = [m_ReportHandlers count];
-
-	for(NSUInteger i = 0; i < countHandlers; i++)
-	{
-		WiimoteDeviceEventHandler *handler = [m_ReportHandlers objectAtIndex:i];
-
-		if([handler target] == target &&
-		   [handler action] == action)
-		{
-			[m_ReportHandlers removeObjectAtIndex:i];
-			countHandlers--;
-			i--;
-		}
-	}
+	[m_EventDispatcher removeReportHandler:target action:action];
 }
 
 - (void)removeReportHandler:(id)target
 {
-	NSUInteger countHandlers = [m_ReportHandlers count];
-
-	for(NSUInteger i = 0; i < countHandlers; i++)
-	{
-		WiimoteDeviceEventHandler *handler = [m_ReportHandlers objectAtIndex:i];
-
-		if([handler target] == target)
-		{
-			[m_ReportHandlers removeObjectAtIndex:i];
-			countHandlers--;
-			i--;
-		}
-	}
+	[m_EventDispatcher removeReportHandler:target];
 }
 
 - (void)addDisconnectHandler:(id)target action:(SEL)action
 {
-	[m_DisconnectHandlers addObject:
-		[WiimoteDeviceEventHandler
-                    newHandlerWithTarget:target action:action]];
+	[m_EventDispatcher addDisconnectHandler:target action:action];
 }
 
 - (void)removeDisconnectHandler:(id)target action:(SEL)action
 {
-	NSUInteger countHandlers = [m_DisconnectHandlers count];
-
-	for(NSUInteger i = 0; i < countHandlers; i++)
-	{
-		WiimoteDeviceEventHandler *handler = [m_DisconnectHandlers objectAtIndex:i];
-
-		if([handler target] == target &&
-		   [handler action] == action)
-		{
-			[m_DisconnectHandlers removeObjectAtIndex:i];
-			countHandlers--;
-			i--;
-		}
-	}
+	[m_EventDispatcher removeDisconnectHandler:target action:action];
 }
 
 - (void)removeDisconnectHandler:(id)target
 {
-	NSUInteger countHandlers = [m_DisconnectHandlers count];
-
-	for(NSUInteger i = 0; i < countHandlers; i++)
-	{
-		WiimoteDeviceEventHandler *handler = [m_DisconnectHandlers objectAtIndex:i];
-
-		if([handler target] == target)
-		{
-			[m_DisconnectHandlers removeObjectAtIndex:i];
-			countHandlers--;
-			i--;
-		}
-	}
+	[m_EventDispatcher removeDisconnectHandler:target];
 }
 
 - (void)removeHandler:(id)target
 {
-    [self removeReportHandler:target];
-    [self removeDisconnectHandler:target];
+    [m_EventDispatcher removeHandler:target];
 }
 
 - (void)removeAllHandlers
 {
-	[m_DisconnectHandlers removeAllObjects];
-	[m_ReportHandlers removeAllObjects];
+	[m_EventDispatcher removeAllHandlers];
 }
 
 @end
@@ -371,148 +310,16 @@
 	return result;
 }
 
-- (void)handleReadMemoryReport:(WiimoteDeviceReport*)report
-{
-    NSData                              *data         = [report data];
-    const WiimoteDeviceReadMemoryReport *memoryReport =
-                                            (const WiimoteDeviceReadMemoryReport*)[data bytes];
-
-    if([report type] != WiimoteDeviceReportTypeReadMemory ||
-       [data length] < sizeof(WiimoteDeviceReadMemoryReport))
-    {
-        return;
-    }
-
-    if(((memoryReport->errorAndDataSize &
-            WiimoteDeviceReadMemoryReportErrorMask) >>
-                WiimoteDeviceReadMemoryReportErrorOffset) !=
-                                        WiimoteDeviceReadMemoryReportErrorOk)
-    {
-        [m_CurrentMemHandler errorOccured];
-        [m_CurrentMemHandler release];
-        m_CurrentMemHandler = nil;
-        return;
-    }
-
-    NSUInteger dataSize = ((memoryReport->errorAndDataSize &
-                                WiimoteDeviceReadMemoryReportDataSizeMask) >>
-                                    WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
-
-    if(![m_CurrentMemHandler handleData:
-                                    [NSData dataWithBytes:memoryReport->data
-                                                   length:dataSize]])
-    {
-        [m_CurrentMemHandler release];
-        m_CurrentMemHandler = nil;
-    }
-}
-
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    if(m_CurrentMemHandler != nil)
-    {
-        [self handleReadMemoryReport:report];
-
-        if(m_CurrentMemHandler == nil)
-            [self runReadMemHandler:[self nextReadMemHandlerFromQueue]];
-    }
-
-    for(NSUInteger i = 0; i < [m_ReportHandlers count]; i++)
-    {
-        WiimoteDeviceEventHandler *handler = [m_ReportHandlers objectAtIndex:i];
-
-        [handler perform:report];
-
-        if(i >= [m_ReportHandlers count])
-            break;
-
-        if([m_ReportHandlers objectAtIndex:i] != handler)
-        {
-            i--;
-            continue;
-        }
-    }
+    [m_ReadMemQueue handleReport:report];
+	[m_EventDispatcher handleReport:report];
 }
 
 - (void)handleDisconnect
 {
-    if(m_CurrentMemHandler != 0)
-    {
-        [m_CurrentMemHandler disconnected];
-        [m_CurrentMemHandler release];
-        m_CurrentMemHandler = nil;
-    }
-
-    while([m_ReadMemHandlersQueue count] != 0)
-    {
-        [[m_ReadMemHandlersQueue objectAtIndex:0] disconnected];
-        [m_ReadMemHandlersQueue removeObjectAtIndex:0];
-    }
-
-	for(NSUInteger i = 0; i < [m_DisconnectHandlers count]; i++)
-	{
-		WiimoteDeviceEventHandler *handler = [m_DisconnectHandlers objectAtIndex:i];
-
-		[handler perform:self];
-
-        if(i >= [m_DisconnectHandlers count])
-            break;
-
-        if([m_DisconnectHandlers objectAtIndex:i] != handler)
-        {
-            i--;
-            continue;
-        }
-    }
-}
-
-- (BOOL)isReadMemHandlersQueueEmpty
-{
-    return ([m_ReadMemHandlersQueue count] == 0);
-}
-
-- (void)addReadMemHandlerToQueue:(WiimoteDeviceReadMemHandler*)handler
-{
-    [m_ReadMemHandlersQueue addObject:handler];
-}
-
-- (WiimoteDeviceReadMemHandler*)nextReadMemHandlerFromQueue
-{
-    if([m_ReadMemHandlersQueue count] == 0)
-        return nil;
-
-    WiimoteDeviceReadMemHandler *result =
-        [[[m_ReadMemHandlersQueue objectAtIndex:0] retain] autorelease];
-
-    [m_ReadMemHandlersQueue removeObjectAtIndex:0];
-    return result;
-}
-
-- (BOOL)runReadMemHandler:(WiimoteDeviceReadMemHandler*)handler
-{
-    if(handler == nil)
-        return NO;
-
-    WiimoteDeviceReadMemoryParams params;
-    NSRange                       memoryRange = [handler memoryRange];
-
-    if(memoryRange.length == 0)
-        return YES;
-
-    params.address = OSSwapHostToBigConstInt32((uint32_t)memoryRange.location);
-    params.length  = OSSwapHostToBigConstInt16((uint16_t)memoryRange.length);
-
-	NSData *commandData = [NSData dataWithBytes:&params length:sizeof(params)];
-
-	if([self postCommand:WiimoteDeviceCommandTypeReadMemory
-                    data:commandData])
-    {
-        m_CurrentMemHandler = [handler retain];
-        return YES;
-    }
-
-    [m_CurrentMemHandler errorOccured];
-    return NO;
+    [m_ReadMemQueue handleDisconnect];
+	[m_EventDispatcher handleDisconnect];
 }
 
 @end

@@ -36,6 +36,8 @@
     m_BatteryPart   = (WiimoteBatteryPart*)     [self partWithClass:[WiimoteBatteryPart class]];
     m_VibrationPart = (WiimoteVibrationPart*)   [self partWithClass:[WiimoteVibrationPart class]];
     m_ExtensionPart = (WiimoteExtensionPart*)   [self partWithClass:[WiimoteExtensionPart class]];
+
+	[m_VibrationPart setDevice:m_Device LEDPart:m_LEDPart];
 }
 
 - (id)init

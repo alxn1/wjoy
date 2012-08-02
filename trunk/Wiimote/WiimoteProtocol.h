@@ -244,16 +244,16 @@ typedef enum
 #define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
             { \
                 if((stickCalibration).x.center == 0) \
-                    (stickCalibration).x.center == (centerValue); \
+                    (stickCalibration).x.center = (centerValue); \
             \
                 if((stickCalibration).y.center == 0) \
-                    (stickCalibration).y.center == (centerValue); \
+                    (stickCalibration).y.center = (centerValue); \
             \
                 if((stickCalibration).x.max == 0) \
-                    (stickCalibration).x.max == (maxValue); \
+                    (stickCalibration).x.max = (maxValue); \
             \
                 if((stickCalibration).y.max == 0) \
-                    (stickCalibration).y.max == (maxValue); \
+                    (stickCalibration).y.max = (maxValue); \
             }
 
 #define WiimoteDeviceNormalizeStickCoordinateEx(value, min, center, max, result) \

@@ -8,13 +8,19 @@
 
 #import "WiimotePart.h"
 
+@class WiimoteDevice;
+@class WiimoteLEDPart;
+
 @interface WiimoteVibrationPart : WiimotePart
 {
     @private
-        BOOL m_IsVibrationEnabled;
+        WiimoteDevice	*m_Device;
+		WiimoteLEDPart	*m_LEDPart;
 }
 
 - (BOOL)isVibrationEnabled;
 - (void)setVibrationEnabled:(BOOL)enabled;
+
+- (void)setDevice:(WiimoteDevice*)device LEDPart:(WiimoteLEDPart*)LEDPart;
 
 @end

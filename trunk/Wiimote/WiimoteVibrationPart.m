@@ -8,6 +8,8 @@
 
 #import "WiimoteVibrationPart.h"
 #import "WiimoteEventDispatcher+Vibration.h"
+#import "WiimoteLEDPart.h"
+#import "WiimoteDevice.h"
 
 @implementation WiimoteVibrationPart
 
@@ -16,61 +18,30 @@
     [WiimotePart registerPartClass:[WiimoteVibrationPart class]];
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-          ioManager:(WiimoteIOManager*)ioManager
-{
-    self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
-    if(self == nil)
-        return nil;
-
-    m_IsVibrationEnabled = NO;
-    return self;
-}
-
 - (BOOL)isVibrationEnabled
 {
-    return m_IsVibrationEnabled;
+    return [m_Device isVibrationEnabled];
 }
 
 - (void)setVibrationEnabled:(BOOL)enabled
 {
-    if(m_IsVibrationEnabled == enabled)
+    if([self isVibrationEnabled] == enabled)
         return;
 
-    uint8_t     commandData         = 0;
-    NSUInteger  highlightedLEDMask  = [[self owner] highlightedLEDMask];
-
-    if(enabled)
-        commandData |= WiimoteDeviceCommandFlagVibrationEnabled;
-
-    if((highlightedLEDMask & WiimoteLEDFlagOne) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDOne;
-
-    if((highlightedLEDMask & WiimoteLEDFlagTwo) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDTwo;
-
-    if((highlightedLEDMask & WiimoteLEDFlagThree) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDThree;
-
-    if((highlightedLEDMask & WiimoteLEDFlagFour) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDFour;
-
-    m_IsVibrationEnabled = enabled;
-    if(![[self ioManager]
-                postCommand:WiimoteDeviceCommandTypeSetLEDState
-                       data:[NSData dataWithBytes:&commandData length:sizeof(commandData)]])
+	[m_Device setVibrationEnabled:enabled];
+    if(![m_LEDPart updateHadwareLEDState])
     {
-        m_IsVibrationEnabled = !enabled;
+        [m_Device setVibrationEnabled:!enabled];
         return;
     }
 
     [[self eventDispatcher] postVibrationStateChangedNotification:enabled];
 }
 
-- (void)disconnected
+- (void)setDevice:(WiimoteDevice*)device LEDPart:(WiimoteLEDPart*)LEDPart
 {
-    m_IsVibrationEnabled = NO;
+	m_Device	= device;
+	m_LEDPart	= LEDPart;
 }
 
 @end
