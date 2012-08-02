@@ -11,6 +11,7 @@
 
 @class IOBluetoothDevice;
 @class IOBluetoothL2CAPChannel;
+@class WiimoteDeviceReadMemHandler;
 
 @interface WiimoteDevice : NSObject
 {
@@ -22,6 +23,11 @@
 
 		NSMutableArray				*m_ReportHandlers;
 		NSMutableArray				*m_DisconnectHandlers;
+
+        BOOL                         m_IsVibrationEnabled;
+
+        NSMutableArray              *m_ReadMemHandlersQueue;
+        WiimoteDeviceReadMemHandler *m_CurrentMemHandler;
 }
 
 - (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
@@ -34,23 +40,17 @@
 - (NSData*)address;
 - (NSString*)addressString;
 
-- (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(NSData*)data
-     vibrationState:(BOOL)vibrationState;
+- (BOOL)isVibrationEnabled;
+- (void)setVibrationEnabled:(BOOL)enabled;
 
-- (BOOL)writeMemory:(NSUInteger)address
-			   data:(NSData*)data
-	 vibrationState:(BOOL)vibrationState;
+- (BOOL)postCommand:(WiimoteDeviceCommandType)command data:(NSData*)data;
 
-- (BOOL)readMemory:(NSRange)memoryRange
-	vibrationState:(BOOL)vibrationState
-			target:(id)target
-			action:(SEL)action;
+- (BOOL)writeMemory:(NSUInteger)address data:(NSData*)data;
+- (BOOL)readMemory:(NSRange)memoryRange target:(id)target action:(SEL)action;
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(NSData*)data;
+- (BOOL)injectReport:(NSUInteger)type data:(NSData*)data;
 
-- (BOOL)requestStateReportWithVibrationState:(BOOL)vibrationState;
+- (BOOL)requestStateReport;
 
 @end
 

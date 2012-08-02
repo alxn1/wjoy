@@ -13,10 +13,8 @@
 @interface WiimoteDeviceReadMemHandler : NSObject
 {
 	@private
-		WiimoteDevice	*m_Device;
 		NSRange			 m_MemoryRange;
 		NSMutableData	*m_ReadedData;
-		BOOL			 m_IsAutorelease;
 		id				 m_Target;
 		SEL				 m_Action;
 }
@@ -25,10 +23,11 @@
 				   target:(id)target
 				   action:(SEL)action;
 
-- (BOOL)startWithDevice:(WiimoteDevice*)device
-		 vibrationState:(BOOL)vibrationState;
+- (NSRange)memoryRange;
 
-- (BOOL)isAutorelease;
-- (void)setAutorelease:(BOOL)flag;
+- (BOOL)handleData:(NSData*)data;
+
+- (void)errorOccured;
+- (void)disconnected;
 
 @end

@@ -19,6 +19,11 @@
 - (void)handleReport:(WiimoteDeviceReport*)report;
 - (void)handleDisconnect;
 
+- (BOOL)isReadMemHandlersQueueEmpty;
+- (void)addReadMemHandlerToQueue:(WiimoteDeviceReadMemHandler*)handler;
+- (WiimoteDeviceReadMemHandler*)nextReadMemHandlerFromQueue;
+- (BOOL)runReadMemHandler:(WiimoteDeviceReadMemHandler*)handler;
+
 @end
 
 @interface WiimoteDevice (IOBluetoothL2CAPChannelDelegate)
@@ -56,7 +61,10 @@
 	m_ControlChannel		= nil;
 	m_ReportHandlers		= [[NSMutableArray alloc] init];
 	m_DisconnectHandlers	= [[NSMutableArray alloc] init];
+    m_ReadMemHandlersQueue  = [[NSMutableArray alloc] init];
+    m_CurrentMemHandler     = nil;
 	m_IsConnected			= NO;
+    m_IsVibrationEnabled    = NO;
 
 	return self;
 }
@@ -64,6 +72,8 @@
 - (void)dealloc
 {
 	[self disconnect];
+    [m_CurrentMemHandler release];
+    [m_ReadMemHandlersQueue release];
 	[m_DisconnectHandlers release];
 	[m_ReportHandlers release];
 	[m_ControlChannel release];
@@ -136,9 +146,17 @@
 	return [m_Device getAddressString];
 }
 
-- (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(NSData*)data
-     vibrationState:(BOOL)vibrationState
+- (BOOL)isVibrationEnabled
+{
+    return m_IsVibrationEnabled;
+}
+
+- (void)setVibrationEnabled:(BOOL)enabled
+{
+    m_IsVibrationEnabled = enabled;
+}
+
+- (BOOL)postCommand:(WiimoteDeviceCommandType)command data:(NSData*)data
 {
 	if(![self isConnected] ||
         [data length] == 0)
@@ -153,7 +171,7 @@
     header->commandType = command;
     memcpy(buffer + sizeof(WiimoteDeviceCommandHeader), [data bytes], [data length]);
 
-    if(vibrationState)
+    if(m_IsVibrationEnabled)
     {
         buffer[sizeof(WiimoteDeviceCommandHeader)] |=
                         WiimoteDeviceCommandFlagVibrationEnabled;
@@ -169,9 +187,7 @@
                        length:sizeof(buffer)] == kIOReturnSuccess);
 }
 
-- (BOOL)writeMemory:(NSUInteger)address
-			   data:(NSData*)data
-	 vibrationState:(BOOL)vibrationState
+- (BOOL)writeMemory:(NSUInteger)address data:(NSData*)data
 {
     if(![self isConnected] ||
 		[data length] > WiimoteDeviceWriteMemoryReportMaxDataSize)
@@ -192,36 +208,28 @@
     memcpy(params->data, [data bytes], [data length]);
 
     return [self postCommand:WiimoteDeviceCommandTypeWriteMemory
-						data:commandData
-              vibrationState:vibrationState];
+						data:commandData];
 }
 
-- (BOOL)readMemory:(NSRange)memoryRange
-	vibrationState:(BOOL)vibrationState
-			target:(id)target
-			action:(SEL)action
+- (BOOL)readMemory:(NSRange)memoryRange target:(id)target action:(SEL)action
 {
 	if(![self isConnected])
 		return NO;
 
 	WiimoteDeviceReadMemHandler *handler =
-			[[WiimoteDeviceReadMemHandler alloc]
+			[[[WiimoteDeviceReadMemHandler alloc]
 									initWithMemoryRange:memoryRange
 												 target:target
-												 action:action];
+												 action:action] autorelease];
 
-	[handler setAutorelease:YES];
-	if(![handler startWithDevice:self vibrationState:vibrationState])
-	{
-		[handler release];
-		return NO;
-	}
+    if([self isReadMemHandlersQueueEmpty])
+        return [self runReadMemHandler:handler];
 
-	return YES;
+    [self addReadMemHandlerToQueue:handler];
+    return YES;
 }
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(NSData*)data
+- (BOOL)injectReport:(NSUInteger)type data:(NSData*)data
 {
     if(![self isConnected])
         return NO;
@@ -238,12 +246,11 @@
     return YES;
 }
 
-- (BOOL)requestStateReportWithVibrationState:(BOOL)vibrationState
+- (BOOL)requestStateReport
 {
     uint8_t param = 0;
     return [self postCommand:WiimoteDeviceCommandTypeGetState
-                        data:[NSData dataWithBytes:&param length:sizeof(param)]
-              vibrationState:vibrationState];
+                        data:[NSData dataWithBytes:&param length:sizeof(param)]];
 }
 
 @end
@@ -364,8 +371,52 @@
 	return result;
 }
 
+- (void)handleReadMemoryReport:(WiimoteDeviceReport*)report
+{
+    NSData                              *data         = [report data];
+    const WiimoteDeviceReadMemoryReport *memoryReport =
+                                            (const WiimoteDeviceReadMemoryReport*)[data bytes];
+
+    if([report type] != WiimoteDeviceReportTypeReadMemory ||
+       [data length] < sizeof(WiimoteDeviceReadMemoryReport))
+    {
+        return;
+    }
+
+    if(((memoryReport->errorAndDataSize &
+            WiimoteDeviceReadMemoryReportErrorMask) >>
+                WiimoteDeviceReadMemoryReportErrorOffset) !=
+                                        WiimoteDeviceReadMemoryReportErrorOk)
+    {
+        [m_CurrentMemHandler errorOccured];
+        [m_CurrentMemHandler release];
+        m_CurrentMemHandler = nil;
+        return;
+    }
+
+    NSUInteger dataSize = ((memoryReport->errorAndDataSize &
+                                WiimoteDeviceReadMemoryReportDataSizeMask) >>
+                                    WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
+
+    if(![m_CurrentMemHandler handleData:
+                                    [NSData dataWithBytes:memoryReport->data
+                                                   length:dataSize]])
+    {
+        [m_CurrentMemHandler release];
+        m_CurrentMemHandler = nil;
+    }
+}
+
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
+    if(m_CurrentMemHandler != nil)
+    {
+        [self handleReadMemoryReport:report];
+
+        if(m_CurrentMemHandler == nil)
+            [self runReadMemHandler:[self nextReadMemHandlerFromQueue]];
+    }
+
     for(NSUInteger i = 0; i < [m_ReportHandlers count]; i++)
     {
         WiimoteDeviceEventHandler *handler = [m_ReportHandlers objectAtIndex:i];
@@ -385,6 +436,19 @@
 
 - (void)handleDisconnect
 {
+    if(m_CurrentMemHandler != 0)
+    {
+        [m_CurrentMemHandler disconnected];
+        [m_CurrentMemHandler release];
+        m_CurrentMemHandler = nil;
+    }
+
+    while([m_ReadMemHandlersQueue count] != 0)
+    {
+        [[m_ReadMemHandlersQueue objectAtIndex:0] disconnected];
+        [m_ReadMemHandlersQueue removeObjectAtIndex:0];
+    }
+
 	for(NSUInteger i = 0; i < [m_DisconnectHandlers count]; i++)
 	{
 		WiimoteDeviceEventHandler *handler = [m_DisconnectHandlers objectAtIndex:i];
@@ -400,6 +464,55 @@
             continue;
         }
     }
+}
+
+- (BOOL)isReadMemHandlersQueueEmpty
+{
+    return ([m_ReadMemHandlersQueue count] == 0);
+}
+
+- (void)addReadMemHandlerToQueue:(WiimoteDeviceReadMemHandler*)handler
+{
+    [m_ReadMemHandlersQueue addObject:handler];
+}
+
+- (WiimoteDeviceReadMemHandler*)nextReadMemHandlerFromQueue
+{
+    if([m_ReadMemHandlersQueue count] == 0)
+        return nil;
+
+    WiimoteDeviceReadMemHandler *result =
+        [[[m_ReadMemHandlersQueue objectAtIndex:0] retain] autorelease];
+
+    [m_ReadMemHandlersQueue removeObjectAtIndex:0];
+    return result;
+}
+
+- (BOOL)runReadMemHandler:(WiimoteDeviceReadMemHandler*)handler
+{
+    if(handler == nil)
+        return NO;
+
+    WiimoteDeviceReadMemoryParams params;
+    NSRange                       memoryRange = [handler memoryRange];
+
+    if(memoryRange.length == 0)
+        return YES;
+
+    params.address = OSSwapHostToBigConstInt32((uint32_t)memoryRange.location);
+    params.length  = OSSwapHostToBigConstInt16((uint16_t)memoryRange.length);
+
+	NSData *commandData = [NSData dataWithBytes:&params length:sizeof(params)];
+
+	if([self postCommand:WiimoteDeviceCommandTypeReadMemory
+                    data:commandData])
+    {
+        m_CurrentMemHandler = [handler retain];
+        return YES;
+    }
+
+    [m_CurrentMemHandler errorOccured];
+    return NO;
 }
 
 @end
