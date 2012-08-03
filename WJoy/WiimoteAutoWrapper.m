@@ -8,6 +8,8 @@
 
 #import "WiimoteAutoWrapper.h"
 
+#import <Cocoa/Cocoa.h>
+
 @interface WiimoteAutoWrapper (PrivatePart)
 
 + (NSString*)wjoyNameFromWiimote:(Wiimote*)device;
@@ -45,6 +47,12 @@ static NSUInteger maxConnectedDevices = 0;
 
 + (void)start
 {
+    if(![WJoyDevice prepare])
+    {
+        [[NSApplication sharedApplication] terminate:self];
+        return;
+    }
+
     [[Wiimote notificationCenter]
                             addObserver:self
                                selector:@selector(newWiimoteDeviceNotification:)
@@ -115,9 +123,7 @@ static NSUInteger maxConnectedDevices = 0;
 
 + (NSString*)wjoyNameFromWiimote:(Wiimote*)device
 {
-    return [NSString stringWithFormat:
-                            @"Wiimote (%@)",
-                            [device addressString]];
+    return [NSString stringWithFormat:@"Wiimote (%@)", [device addressString]];
 }
 
 + (void)newWiimoteDeviceNotification:(NSNotification*)notification
