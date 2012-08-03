@@ -78,11 +78,6 @@
     }
 }
 
-- (WiimoteEventDispatcher*)eventDispatcher
-{
-    return [super eventDispatcher];
-}
-
 - (void)handleCalibrationData:(NSData*)data
 {
 }

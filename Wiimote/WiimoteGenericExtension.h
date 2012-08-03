@@ -20,8 +20,6 @@
 - (id)initWithOwner:(Wiimote*)owner
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher;
 
-- (WiimoteEventDispatcher*)eventDispatcher;
-
 - (void)handleCalibrationData:(NSData*)data;
 - (void)handleReport:(NSData*)extensionData;
 
