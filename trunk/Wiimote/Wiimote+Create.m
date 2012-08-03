@@ -37,7 +37,8 @@
     m_VibrationPart = (WiimoteVibrationPart*)   [self partWithClass:[WiimoteVibrationPart class]];
     m_ExtensionPart = (WiimoteExtensionPart*)   [self partWithClass:[WiimoteExtensionPart class]];
 
-	[m_VibrationPart setDevice:m_Device LEDPart:m_LEDPart];
+    [m_LEDPart setDevice:m_Device];
+	[m_VibrationPart setDevice:m_Device];
 }
 
 - (id)init
@@ -65,7 +66,7 @@
         return nil;
     }
 
-	[m_Device addDisconnectHandler:self action:@selector(disconnected)];
+    [[m_Device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
     [self initialize];
     [Wiimote wiimoteConnected:self];
 	[[m_PartSet eventDispatcher] postConnectedNotification];

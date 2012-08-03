@@ -8,7 +8,7 @@
 
 #import "WiimoteDevice.h"
 #import "WiimoteDeviceReport+Private.h"
-#import "WiimoteDeviceEventDispatcher.h"
+#import "WiimoteDeviceEventDispatcher+Private.h"
 #import "WiimoteDeviceReadMemQueue.h"
 
 #import <IOBluetooth/IOBluetooth.h>
@@ -59,6 +59,7 @@
     m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
     m_IsVibrationEnabled    = NO;
+    m_LEDsState             = 0;
 
 	return self;
 }
@@ -114,7 +115,7 @@
 	m_IsConnected = NO;
 
 	[self handleDisconnect];
-	[self removeAllHandlers];
+	[m_EventDispatcher removeAllHandlers];
 }
 
 - (NSData*)address
@@ -136,16 +137,6 @@
 		return nil;
 
 	return [m_Device getAddressString];
-}
-
-- (BOOL)isVibrationEnabled
-{
-    return m_IsVibrationEnabled;
-}
-
-- (void)setVibrationEnabled:(BOOL)enabled
-{
-    m_IsVibrationEnabled = enabled;
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command data:(NSData*)data
@@ -237,7 +228,7 @@
                         data:[NSData dataWithBytes:&param length:sizeof(param)]];
 }
 
-- (BOOL)setReportType:(WiimoteDeviceReportType)type
+- (BOOL)requestReportType:(WiimoteDeviceReportType)type
 {
 	WiimoteDeviceSetReportTypeParams params;
 
@@ -245,51 +236,59 @@
     params.reportType   = type;
 
     return [self postCommand:WiimoteDeviceCommandTypeSetReportType
-						data:[NSData dataWithBytes:&params length:sizeof(params)]];
+						data:[NSData dataWithBytes:&params
+                                            length:sizeof(params)]];
 }
 
-@end
-
-@implementation WiimoteDevice (ReportHandling)
-
-- (void)addReportHandler:(id)target action:(SEL)action
+- (BOOL)postVibrationAndLEDStates
 {
-	[m_EventDispatcher addReportHandler:target action:action];
+    return [self postCommand:WiimoteDeviceCommandTypeSetLEDState
+                        data:[NSData dataWithBytes:&m_LEDsState
+                                            length:sizeof(m_LEDsState)]];
 }
 
-- (void)removeReportHandler:(id)target action:(SEL)action
+- (BOOL)isVibrationEnabled
 {
-	[m_EventDispatcher removeReportHandler:target action:action];
+    return m_IsVibrationEnabled;
 }
 
-- (void)removeReportHandler:(id)target
+- (BOOL)setVibrationEnabled:(BOOL)enabled
 {
-	[m_EventDispatcher removeReportHandler:target];
+    if(m_IsVibrationEnabled == enabled)
+        return YES;
+
+    m_IsVibrationEnabled = enabled;
+    if(![self postVibrationAndLEDStates])
+    {
+        m_IsVibrationEnabled = !enabled;
+        return NO;
+    }
+
+    return YES;
 }
 
-- (void)addDisconnectHandler:(id)target action:(SEL)action
+- (uint8_t)LEDsState
 {
-	[m_EventDispatcher addDisconnectHandler:target action:action];
+    return m_LEDsState;
 }
 
-- (void)removeDisconnectHandler:(id)target action:(SEL)action
+- (BOOL)setLEDsState:(uint8_t)state
 {
-	[m_EventDispatcher removeDisconnectHandler:target action:action];
+    uint8_t oldState = m_LEDsState;
+
+    m_LEDsState = state;
+    if(![self postVibrationAndLEDStates])
+    {
+        m_LEDsState = oldState;
+        return NO;
+    }
+
+    return YES;
 }
 
-- (void)removeDisconnectHandler:(id)target
+- (WiimoteDeviceEventDispatcher*)eventDispatcher
 {
-	[m_EventDispatcher removeDisconnectHandler:target];
-}
-
-- (void)removeHandler:(id)target
-{
-    [m_EventDispatcher removeHandler:target];
-}
-
-- (void)removeAllHandlers
-{
-	[m_EventDispatcher removeAllHandlers];
+    return [[m_EventDispatcher retain] autorelease];
 }
 
 @end
