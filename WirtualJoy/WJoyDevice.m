@@ -12,6 +12,11 @@
 
 @implementation WJoyDevice
 
++ (BOOL)prepare
+{
+    return [WJoyDeviceImpl prepare];
+}
+
 - (id)init
 {
     [[super init] release];

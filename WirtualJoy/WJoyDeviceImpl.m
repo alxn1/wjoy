@@ -26,19 +26,27 @@
 
 @implementation WJoyDeviceImpl
 
++ (BOOL)prepare
+{
+    if(![WJoyDeviceImpl loadDriver])
+        return NO;
+
+    [WJoyDeviceImpl registerAtExitCallback];
+    return YES;
+}
+
 - (id)init
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    if(![WJoyDeviceImpl loadDriver])
+    if(![WJoyDeviceImpl prepare])
     {
         [self release];
         return nil;
     }
 
-    [WJoyDeviceImpl registerAtExitCallback];
     m_Connection = [WJoyDeviceImpl createNewConnection];
     if(m_Connection == IO_OBJECT_NULL)
     {
