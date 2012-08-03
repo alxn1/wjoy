@@ -23,6 +23,8 @@ typedef enum
         io_connect_t m_Connection;
 }
 
++ (BOOL)prepare;
+
 - (BOOL)call:(WJoyDeviceMethodSelector)selector;
 - (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData*)data;
 

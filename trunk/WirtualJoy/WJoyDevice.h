@@ -16,6 +16,8 @@
         WJoyDeviceImpl *m_Impl;
 }
 
++ (BOOL)prepare;
+
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor;
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString;
 

@@ -189,6 +189,7 @@
 		0A4691EB15B56A2A003AB8FD /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				0A4691BE15B568A7003AB8FD /* driver */,
 				0A46928315B578A5003AB8FD /* tool */,
 				0A4691EE15B56A51003AB8FD /* WJoyDeviceImpl.h */,
 				0A4691EF15B56A51003AB8FD /* WJoyDeviceImpl.m */,
@@ -223,7 +224,6 @@
 		247142CAFF3F8F9811CA285C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				0A4691BE15B568A7003AB8FD /* driver */,
 				0A4691D915B5693B003AB8FD /* framework */,
 				0A1CB31015B0221F0012FCC7 /* test */,
 			);
