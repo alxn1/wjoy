@@ -60,19 +60,24 @@
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
     m_ModelName = [[device getName] copy];
 
-    [self initParts];
-
-    if(m_Device == nil ||
-     ![m_Device connect])
+    if(m_Device == nil || ![m_Device connect])
     {
         [self release];
         return nil;
     }
 
-    [[m_Device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
+	[[m_Device eventDispatcher] addReportHandler:self action:@selector(handleReport:)];
+	[[m_Device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
+
+	[self initParts];
     [self initialize];
+
     [Wiimote wiimoteConnected:self];
 	[[m_PartSet eventDispatcher] postConnectedNotification];
+
+	[m_PartSet performSelector:@selector(connected)
+					withObject:nil
+					afterDelay:0.0];
 
     return self;
 }
@@ -87,9 +92,16 @@
     [super dealloc];
 }
 
+- (void)handleReport:(WiimoteDeviceReport*)report
+{
+	[m_PartSet handleReport:report];
+}
+
 - (void)disconnected
 {
     [[self retain] autorelease];
+
+	[m_PartSet disconnected];
     [Wiimote wiimoteDisconnected:self];
 	[[m_PartSet eventDispatcher] postDisconnectNotification];
 }

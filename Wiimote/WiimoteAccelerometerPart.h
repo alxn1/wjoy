@@ -8,9 +8,6 @@
 
 #import "WiimotePart.h"
 
-// enabled event,
-// data changed event
-
 @interface WiimoteAccelerometerPart : WiimotePart
 {
     @private

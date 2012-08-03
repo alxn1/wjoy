@@ -24,7 +24,7 @@
 		IOBluetoothL2CAPChannel			*m_DataChannel;
         IOBluetoothL2CAPChannel			*m_ControlChannel;
 
-		WiimoteDeviceEventDispatcher	*m_EventDispatcher;
+		WiimoteDeviceEventDispatcher		*m_EventDispatcher;
 		WiimoteDeviceReadMemQueue		*m_ReadMemQueue;
 
         BOOL							 m_IsVibrationEnabled;

@@ -12,14 +12,16 @@
 
 typedef enum
 {
-    WiimoteExtensionMeritClassSystemHigh    =     1000,
-    WiimoteExtensionMeritClassUserHigh      =    10000,
-    WiimoteExtensionMeritClassSystem        =   100000,
-    WiimoteExtensionMeritClassUser          =  1000000,
+    WiimoteExtensionMeritClassSystemHigh    = 1000,
+    WiimoteExtensionMeritClassUserHigh      = 10000,
+    WiimoteExtensionMeritClassSystem        = 100000,
+    WiimoteExtensionMeritClassUser          = 1000000,
     WiimoteExtensionMeritClassUnknown       = 10000000
 } WiimoteExtensionMeritClass;
 
 @interface WiimoteExtension (PlugIn)
+
++ (void)registerExtensionClass:(Class)cls;
 
 + (NSUInteger)merit;
 + (NSUInteger)minReportDataSize;
@@ -50,8 +52,6 @@ typedef enum
 @end
 
 @interface WiimoteExtension (PlugInUtils)
-
-+ (void)registerExtensionClass:(Class)cls;
 
 + (NSUInteger)nextFreedomMeritInClass:(WiimoteExtensionMeritClass)meritClass;
 

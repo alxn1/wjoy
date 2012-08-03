@@ -36,4 +36,8 @@
 
 - (WiimoteDeviceReportType)bestReportType;
 
+- (void)connected;
+- (void)handleReport:(WiimoteDeviceReport*)report;
+- (void)disconnected;
+
 @end

@@ -31,4 +31,6 @@
 - (BOOL)injectReport:(NSUInteger)type
                 data:(NSData*)data;
 
+- (Wiimote*)owner;
+
 @end

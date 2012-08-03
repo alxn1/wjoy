@@ -159,6 +159,8 @@ typedef struct
 #define WiimoteDeviceRoutineInitValue1              0x55
 #define WiimoteDeviceRoutineInitValue2              0x00
 
+#define WiimoteDeviceAccelerometerCalibrationDataAddress 0x0020
+
 #define WiimoteDeviceAccelerometerDataSize          3
 
 typedef struct
@@ -246,9 +248,16 @@ typedef enum
 } WiimoteDeviceClassicControllerReportButtonMask;
 
 #define WiimoteDeviceFloatEpsilon       0.075f
-#define WiimoteDeviceIsFloatEqual(a, b) (fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
-#define WiimoteDeviceIsPointEqual(a, b) (WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
-                                         WiimoteDeviceIsFloatEqual((a).y, (b).y))
+
+#define WiimoteDeviceIsFloatEqual(a, b) \
+			(fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
+
+#define WiimoteDeviceIsFloatEqualEx(a, b, epsilon) \
+			(fabs(((a) - (b))) <= (epsilon))
+
+#define WiimoteDeviceIsPointEqual(a, b) \
+			(WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
+			 WiimoteDeviceIsFloatEqual((a).y, (b).y))
 
 #define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
             { \

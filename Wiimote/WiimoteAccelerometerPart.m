@@ -30,15 +30,13 @@
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher
           ioManager:(WiimoteIOManager*)ioManager
 {
-    self = [super init];
+    self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
     if(self == nil)
         return nil;
 
     [self reset];
     m_IsCalibrationDataReaded   = NO;
     m_IsEnabled                 = NO;
-
-    [self beginReadCalibrationData];
 
     return self;
 }
@@ -103,8 +101,8 @@
 
 - (void)setPitch:(double)pitch roll:(double)roll
 {
-    if(WiimoteDeviceIsFloatEqual(m_Pitch, pitch) &&
-       WiimoteDeviceIsFloatEqual(m_Roll, roll))
+    if(WiimoteDeviceIsFloatEqualEx(m_Pitch, pitch, 2.5) &&
+       WiimoteDeviceIsFloatEqualEx(m_Roll, roll, 2.5))
     {
         return;
     }
@@ -124,15 +122,20 @@
 
     if(result == nil)
     {
-        result = [NSSet setWithObjects:
+        result = [[NSSet alloc] initWithObjects:
                             [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerState],
                             [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
                             [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndExtension16BytesState],
                             [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
-                            nil];
+                            nil] ;
     }
 
     return result;
+}
+
+- (void)connected
+{
+	[self beginReadCalibrationData];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
@@ -145,7 +148,7 @@
 
     WiimoteDeviceReportType                               reportType  = [report type];
     const WiimoteDeviceButtonAndAccelerometerStateReport *stateReport =
-            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[[report data] length];
+            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[[report data] bytes];
 
     switch(reportType)
     {
@@ -215,7 +218,7 @@
 - (void)beginReadCalibrationData
 {
     NSRange memRange = NSMakeRange(
-                                0x0020,
+                                WiimoteDeviceAccelerometerCalibrationDataAddress,
                                 sizeof(WiimoteDeviceAccelerometerCalibrationData));
 
     if(![[self ioManager] readMemory:memRange

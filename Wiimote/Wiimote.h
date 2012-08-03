@@ -13,7 +13,6 @@
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
-// internal classes
 @class WiimoteDevice;
 @class WiimotePartSet;
 @class WiimoteLEDPart;

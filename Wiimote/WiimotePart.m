@@ -56,6 +56,10 @@
     return nil;
 }
 
+- (void)connected
+{
+}
+
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
 }
