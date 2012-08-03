@@ -9,6 +9,7 @@
 #import "WiimoteExtensionPart.h"
 #import "WiimoteEventDispatcher+Extension.h"
 #import "WiimoteExtensionHelper.h"
+#import "Wiimote+PlugIn.h"
 
 @interface WiimoteExtensionPart (PrivatePart)
 

@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteEventDispatcher.h"
+#import "WiimoteDelegate.h"
 
 @interface WiimoteEventDispatcher (Button)
 

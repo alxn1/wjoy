@@ -8,22 +8,31 @@
 
 #import "WiimoteDelegate.h"
 
-NSString *WiimoteConnectedNotification                  = @"WiimoteConnectedNotification";
-NSString *WiimoteDisconnectedNotification               = @"WiimoteDisconnectedNotification";
-NSString *WiimoteButtonPresedNotification               = @"WiimoteButtonPresedNotification";
-NSString *WiimoteButtonReleasedNotification             = @"WiimoteButtonReleasedNotification";
-NSString *WiimoteVibrationStateChangedNotification      = @"WiimoteVibrationStateChangedNotification";
-NSString *WiimoteHighlightedLEDMaskChangedNotification  = @"WiimoteHighlightedLEDMaskChangedNotification";
-NSString *WiimoteExtensionConnectedNotification         = @"WiimoteExtensionConnectedNotification";
-NSString *WiimoteExtensionDisconnectedNotification      = @"WiimoteExtensionDisconnectedNotification";
-NSString *WiimoteBatteryLevelUpdatedNotification        = @"WiimoteBatteryLevelUpdatedNotification";
+NSString *WiimoteConnectedNotification                              = @"WiimoteConnectedNotification";
+NSString *WiimoteDisconnectedNotification                           = @"WiimoteDisconnectedNotification";
+NSString *WiimoteButtonPresedNotification                           = @"WiimoteButtonPresedNotification";
+NSString *WiimoteButtonReleasedNotification                         = @"WiimoteButtonReleasedNotification";
+NSString *WiimoteVibrationStateChangedNotification                  = @"WiimoteVibrationStateChangedNotification";
+NSString *WiimoteHighlightedLEDMaskChangedNotification              = @"WiimoteHighlightedLEDMaskChangedNotification";
+NSString *WiimoteAccelerometerEnabledStateChangedNotification       = @"WiimoteAccelerometerEnabledStateChangedNotification";
+NSString *WiimoteAccelerometerXYZValuesChangedNotification          = @"WiimoteAccelerometerXYZValuesChangedNotification";
+NSString *WiimoteAccelerometerPitchRollValuesChangedNotification    = @"WiimoteAccelerometerPitchRollValuesChangedNotification";
+NSString *WiimoteExtensionConnectedNotification                     = @"WiimoteExtensionConnectedNotification";
+NSString *WiimoteExtensionDisconnectedNotification                  = @"WiimoteExtensionDisconnectedNotification";
+NSString *WiimoteBatteryLevelUpdatedNotification                    = @"WiimoteBatteryLevelUpdatedNotification";
 
-NSString *WiimoteButtonKey                              = @"WiimoteButtonKey";
-NSString *WiimoteVibrationStateKey                      = @"WiimoteVibrationStateKey";
-NSString *WiimoteHighlightedLEDMaskKey                  = @"WiimoteHighlightedLEDMaskKey";
-NSString *WiimoteBatteryLevelKey                        = @"WiimoteBatteryLevelKey";
-NSString *WiimoteIsBatteryLevelLowKey                   = @"WiimoteIsBatteryLevelLowKey";
-NSString *WiimoteExtensionKey                           = @"WiimoteExtensionKey";
+NSString *WiimoteButtonKey                                          = @"WiimoteButtonKey";
+NSString *WiimoteVibrationStateKey                                  = @"WiimoteVibrationStateKey";
+NSString *WiimoteHighlightedLEDMaskKey                              = @"WiimoteHighlightedLEDMaskKey";
+NSString *WiimoteBatteryLevelKey                                    = @"WiimoteBatteryLevelKey";
+NSString *WiimoteIsBatteryLevelLowKey                               = @"WiimoteIsBatteryLevelLowKey";
+NSString *WiimoteAccelerometerEnabledStateKey                       = @"WiimoteAccelerometerEnabledStateKey";
+NSString *WiimoteAccelerometerValueXKey                             = @"WiimoteAccelerometerValueXKey";
+NSString *WiimoteAccelerometerValueYKey                             = @"WiimoteAccelerometerValueYKey";
+NSString *WiimoteAccelerometerValueZKey                             = @"WiimoteAccelerometerValueZKey";
+NSString *WiimoteAccelerometerValuePitch                            = @"WiimoteAccelerometerValuePitch";
+NSString *WiimoteAccelerometerValueRoll                             = @"WiimoteAccelerometerValueRoll";
+NSString *WiimoteExtensionKey                                       = @"WiimoteExtensionKey";
 
 @implementation NSObject (WiimoteDelegate)
 
@@ -44,6 +53,18 @@ NSString *WiimoteExtensionKey                           = @"WiimoteExtensionKey"
 }
 
 - (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerEnabledStateChanged:(BOOL)enabled
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedX:(double)x Y:(double)y Z:(double)z
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(double)pitch roll:(double)roll
 {
 }
 

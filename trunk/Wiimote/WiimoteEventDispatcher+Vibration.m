@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteEventDispatcher+Vibration.h"
+#import "WiimoteDelegate.h"
 
 @implementation WiimoteEventDispatcher (Vibration)
 

@@ -142,6 +142,15 @@ typedef struct
     uint8_t                  batteryLevel;
 } WiimoteDeviceStateReport;
 
+typedef struct
+{
+    uint8_t accelerometerAdditionalX;
+    uint8_t accelerometerAdditionalYZ;
+    uint8_t accelerometerX;
+    uint8_t accelerometerY;
+    uint8_t accelerometerZ;
+} WiimoteDeviceButtonAndAccelerometerStateReport;
+
 #define WiimoteDeviceRoutineProbeAddress            0x04A400FA
 #define WiimoteDeviceRoutineCalibrationDataAddress  0x04A40020
 #define WiimoteDeviceRoutineCalibrationDataSize     16
@@ -157,7 +166,7 @@ typedef struct
     uint8_t x;
     uint8_t y;
     uint8_t z;
-    uint8_t unknown;
+    uint8_t additionalXYZ;
 } WiimoteDeviceAccelerometerValue;
 
 typedef struct

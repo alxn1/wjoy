@@ -8,6 +8,7 @@
 
 #import "Wiimote+Create.h"
 #import "Wiimote+Tracking.h"
+#import "Wiimote+PlugIn.h"
 
 #import "WiimoteDevice.h"
 
@@ -15,6 +16,7 @@
 #import "WiimoteButtonPart.h"
 #import "WiimoteBatteryPart.h"
 #import "WiimoteVibrationPart.h"
+#import "WiimoteAccelerometerPart.h"
 #import "WiimoteExtensionPart.h"
 
 #import "WiimotePartSet.h"
@@ -31,11 +33,12 @@
 
 - (void)initParts
 {
-    m_LEDPart       = (WiimoteLEDPart*)         [self partWithClass:[WiimoteLEDPart class]];
-    m_ButtonPart    = (WiimoteButtonPart*)      [self partWithClass:[WiimoteButtonPart class]];
-    m_BatteryPart   = (WiimoteBatteryPart*)     [self partWithClass:[WiimoteBatteryPart class]];
-    m_VibrationPart = (WiimoteVibrationPart*)   [self partWithClass:[WiimoteVibrationPart class]];
-    m_ExtensionPart = (WiimoteExtensionPart*)   [self partWithClass:[WiimoteExtensionPart class]];
+    m_LEDPart           = (WiimoteLEDPart*)             [self partWithClass:[WiimoteLEDPart class]];
+    m_ButtonPart        = (WiimoteButtonPart*)          [self partWithClass:[WiimoteButtonPart class]];
+    m_BatteryPart       = (WiimoteBatteryPart*)         [self partWithClass:[WiimoteBatteryPart class]];
+    m_VibrationPart     = (WiimoteVibrationPart*)       [self partWithClass:[WiimoteVibrationPart class]];
+    m_AccelerometerPart = (WiimoteAccelerometerPart*)   [self partWithClass:[WiimoteAccelerometerPart class]];
+    m_ExtensionPart     = (WiimoteExtensionPart*)       [self partWithClass:[WiimoteExtensionPart class]];
 
     [m_LEDPart setDevice:m_Device];
 	[m_VibrationPart setDevice:m_Device];

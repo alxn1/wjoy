@@ -14,29 +14,30 @@ FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 // internal classes
-@class WiimotePart;
+@class WiimoteDevice;
+@class WiimotePartSet;
 @class WiimoteLEDPart;
 @class WiimoteButtonPart;
 @class WiimoteBatteryPart;
 @class WiimoteVibrationPart;
+@class WiimoteAccelerometerPart;
 @class WiimoteExtensionPart;
-@class WiimotePartSet;
-@class WiimoteDevice;
 
 @interface Wiimote : NSObject
 {
 	@private
-		WiimoteDevice           *m_Device;
-        WiimotePartSet          *m_PartSet;
-        NSString                *m_ModelName;
+		WiimoteDevice               *m_Device;
+        WiimotePartSet              *m_PartSet;
+        NSString                    *m_ModelName;
 
-        WiimoteLEDPart          *m_LEDPart;
-        WiimoteButtonPart       *m_ButtonPart;
-        WiimoteBatteryPart      *m_BatteryPart;
-        WiimoteVibrationPart	*m_VibrationPart;
-        WiimoteExtensionPart    *m_ExtensionPart;
+        WiimoteLEDPart              *m_LEDPart;
+        WiimoteButtonPart           *m_ButtonPart;
+        WiimoteBatteryPart          *m_BatteryPart;
+        WiimoteVibrationPart        *m_VibrationPart;
+        WiimoteAccelerometerPart    *m_AccelerometerPart;
+        WiimoteExtensionPart        *m_ExtensionPart;
 
-		NSDictionary            *m_UserInfo;
+		NSDictionary                *m_UserInfo;
 }
 
 + (NSNotificationCenter*)notificationCenter;
@@ -44,7 +45,6 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 + (BOOL)isBluetoothEnabled;
 
 + (NSArray*)supportedModelNames;
-+ (void)registerSupportedModelName:(NSString*)name;
 
 + (BOOL)isDiscovering;
 + (BOOL)beginDiscovery;
@@ -67,6 +67,16 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (BOOL)isVibrationEnabled;
 - (void)setVibrationEnabled:(BOOL)enabled;
 
+- (BOOL)isAccelerometerEnabled;
+- (void)setAccelerometerEnabled:(BOOL)enabled;
+
+- (double)accelerometerX;
+- (double)accelerometerY;
+- (double)accelerometerZ;
+
+- (double)accelerometerPitch;
+- (double)accelerometerRoll;
+
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 
 // 0.0 - 100.0 %, or -1 if undefined
@@ -77,7 +87,6 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (void)disconnectExtension;
 
 - (void)requestUpdateState;
-- (void)deviceConfigurationChanged;
 
 // disable all notifications, except begin/end discovery,
 // battery level, extensions connect/disconnec and wiimote connect/disconnect
@@ -89,7 +98,5 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
-
-- (WiimotePart*)partWithClass:(Class)cls;
 
 @end
