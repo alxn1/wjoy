@@ -211,6 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device setDelegate:self];
     [m_Device setHighlightedLEDMask:WiimoteLEDFlagOne];
     [m_Device playConnectEffect];
+	[m_Device setAccelerometerEnabled:YES];
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
 	NSLog(@"%@", [Wiimote connectedDevices]);

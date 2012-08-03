@@ -30,6 +30,7 @@
 
 - (NSSet*)allowedReportTypeSet;
 
+- (void)connected;
 - (void)handleReport:(WiimoteDeviceReport*)report;
 - (void)disconnected;
 

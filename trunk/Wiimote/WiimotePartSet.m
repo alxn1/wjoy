@@ -61,9 +61,6 @@
         [part release];
     }
 
-    [[device eventDispatcher] addReportHandler:self action:@selector(handleReport:)];
-    [[device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
-
     return self;
 }
 
@@ -128,6 +125,14 @@
 
     return ((WiimoteDeviceReportType)
                     [[reportTypes anyObject] integerValue]);
+}
+
+- (void)connected
+{
+	NSUInteger countParts = [m_PartArray count];
+
+    for(NSUInteger i = 0; i < countParts; i++)
+        [[m_PartArray objectAtIndex:i] connected];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report

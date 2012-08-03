@@ -13,6 +13,11 @@
 
 @implementation WiimoteExtension (PlugIn)
 
++ (void)registerExtensionClass:(Class)cls
+{
+    [WiimoteExtensionPart registerExtensionClass:cls];
+}
+
 + (NSUInteger)merit
 {
     static NSUInteger result = 0;
@@ -110,11 +115,6 @@
 @end
 
 @implementation WiimoteExtension (PlugInUtils)
-
-+ (void)registerExtensionClass:(Class)cls
-{
-    [WiimoteExtensionPart registerExtensionClass:cls];
-}
 
 + (NSUInteger)nextFreedomMeritInClass:(WiimoteExtensionMeritClass)meritClass
 {

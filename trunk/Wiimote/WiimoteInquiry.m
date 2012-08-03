@@ -11,7 +11,7 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
-#define WIIMOTE_INQUIRY_TIME_IN_SECONDS 20
+#define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
 NSString *WiimoteDeviceName              = @"Nintendo RVL-CNT-01";
 NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
@@ -175,7 +175,8 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
 - (void)deviceInquiryDeviceFound:(IOBluetoothDeviceInquiry*)sender
 						  device:(IOBluetoothDevice*)device
 {
-	[m_Inquiry stop];
+	if([WiimoteInquiry isModelSupported:[device getName]])
+		[m_Inquiry stop];
 }
 
 - (void)deviceInquiryComplete:(IOBluetoothDeviceInquiry*)sender 

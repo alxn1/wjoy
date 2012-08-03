@@ -42,4 +42,9 @@
     return [m_Device injectReport:type data:data];
 }
 
+- (Wiimote*)owner
+{
+	return m_Owner;
+}
+
 @end
