@@ -8,15 +8,17 @@
 
 #import "WiimotePart.h"
 
+@class WiimoteDevice;
+
 @interface WiimoteLEDPart : WiimotePart
 {
     @private
-        NSUInteger m_Mask;
+        WiimoteDevice *m_Device;
 }
 
 - (NSUInteger)highlightedLEDMask;
 - (void)setHighlightedLEDMask:(NSUInteger)mask;
 
-- (BOOL)updateHadwareLEDState;
+- (void)setDevice:(WiimoteDevice*)device;
 
 @end

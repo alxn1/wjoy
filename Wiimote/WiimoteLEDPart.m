@@ -8,6 +8,7 @@
 
 #import "WiimoteLEDPart.h"
 #import "WiimoteEventDispatcher+LED.h"
+#import "WiimoteDevice.h"
 
 @implementation WiimoteLEDPart
 
@@ -16,64 +17,54 @@
     [WiimotePart registerPartClass:[WiimoteLEDPart class]];
 }
 
-- (id)initWithOwner:(Wiimote*)owner
-    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
-          ioManager:(WiimoteIOManager*)ioManager
-{
-    self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
-    if(self == nil)
-        return nil;
-
-    m_Mask = 0;
-    return self;
-}
-
 - (NSUInteger)highlightedLEDMask
 {
-    return m_Mask;
+    uint8_t     hardwareState = [m_Device LEDsState];
+    NSUInteger  result        = 0;
+
+    if((hardwareState & WiimoteDeviceSetLEDStateCommandFlagLEDOne) != 0)
+        result |= WiimoteLEDFlagOne;
+
+    if((hardwareState & WiimoteDeviceSetLEDStateCommandFlagLEDTwo) != 0)
+        result |= WiimoteLEDFlagTwo;
+
+    if((hardwareState & WiimoteDeviceSetLEDStateCommandFlagLEDThree) != 0)
+        result |= WiimoteLEDFlagThree;
+
+    if((hardwareState & WiimoteDeviceSetLEDStateCommandFlagLEDFour) != 0)
+        result |= WiimoteLEDFlagFour;
+
+    return result;
 }
 
 - (void)setHighlightedLEDMask:(NSUInteger)mask
 {
-    if(m_Mask == mask)
+    if([self highlightedLEDMask] == mask)
         return;
 
-	NSUInteger oldMask = m_Mask;
+	uint8_t hardwareState = 0;
 
-	m_Mask = mask;
-	if(![self updateHadwareLEDState])
-	{
-		m_Mask = oldMask;
-		return;
-	}
+    if((mask & WiimoteLEDFlagOne) != 0)
+        hardwareState |= WiimoteDeviceSetLEDStateCommandFlagLEDOne;
+
+    if((mask & WiimoteLEDFlagTwo) != 0)
+        hardwareState |= WiimoteDeviceSetLEDStateCommandFlagLEDTwo;
+
+    if((mask & WiimoteLEDFlagThree) != 0)
+        hardwareState |= WiimoteDeviceSetLEDStateCommandFlagLEDThree;
+
+    if((mask & WiimoteLEDFlagFour) != 0)
+        hardwareState |= WiimoteDeviceSetLEDStateCommandFlagLEDFour;
+
+    if(![m_Device setLEDsState:hardwareState])
+        return;
 
     [[self eventDispatcher] postHighlightedLEDMaskChangedNotification:mask];
 }
 
-- (BOOL)updateHadwareLEDState
+- (void)setDevice:(WiimoteDevice*)device
 {
-	uint8_t commandData = 0;
-
-    if((m_Mask & WiimoteLEDFlagOne) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDOne;
-
-    if((m_Mask & WiimoteLEDFlagTwo) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDTwo;
-
-    if((m_Mask & WiimoteLEDFlagThree) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDThree;
-
-    if((m_Mask & WiimoteLEDFlagFour) != 0)
-        commandData |= WiimoteDeviceSetLEDStateCommandFlagLEDFour;
-
-    return [[self ioManager]
-                postCommand:WiimoteDeviceCommandTypeSetLEDState
-                       data:[NSData dataWithBytes:&commandData length:sizeof(commandData)]];
-}
-
-- (void)disconnected
-{
-    m_Mask = 0;
+    m_Device = device;
 }
 
 @end

@@ -160,7 +160,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 - (void)deviceConfigurationChanged
 {
-	[m_Device setReportType:[m_PartSet bestReportType]];
+	[m_Device requestReportType:[m_PartSet bestReportType]];
 }
 
 - (BOOL)isStateChangeNotificationsEnabled

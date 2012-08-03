@@ -29,7 +29,4 @@
 
 - (void)removeAllHandlers;
 
-- (void)handleReport:(WiimoteDeviceReport*)report;
-- (void)handleDisconnect;
-
 @end

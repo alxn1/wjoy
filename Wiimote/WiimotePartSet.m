@@ -61,8 +61,8 @@
         [part release];
     }
 
-    [device addReportHandler:self action:@selector(handleReport:)];
-    [device addDisconnectHandler:self action:@selector(disconnected)];
+    [[device eventDispatcher] addReportHandler:self action:@selector(handleReport:)];
+    [[device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
 
     return self;
 }

@@ -28,20 +28,15 @@
     if([self isVibrationEnabled] == enabled)
         return;
 
-	[m_Device setVibrationEnabled:enabled];
-    if(![m_LEDPart updateHadwareLEDState])
-    {
-        [m_Device setVibrationEnabled:!enabled];
+	if(![m_Device setVibrationEnabled:enabled])
         return;
-    }
 
     [[self eventDispatcher] postVibrationStateChangedNotification:enabled];
 }
 
-- (void)setDevice:(WiimoteDevice*)device LEDPart:(WiimoteLEDPart*)LEDPart
+- (void)setDevice:(WiimoteDevice*)device
 {
-	m_Device	= device;
-	m_LEDPart	= LEDPart;
+	m_Device = device;
 }
 
 @end
