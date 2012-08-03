@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteEventDispatcher+LED.h"
+#import "WiimoteDelegate.h"
 
 @implementation WiimoteEventDispatcher (LED)
 

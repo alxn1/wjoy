@@ -8,6 +8,7 @@
 
 #import "WiimoteLEDPart.h"
 #import "WiimoteEventDispatcher+LED.h"
+#import "WiimoteDelegate.h"
 #import "WiimoteDevice.h"
 
 @implementation WiimoteLEDPart

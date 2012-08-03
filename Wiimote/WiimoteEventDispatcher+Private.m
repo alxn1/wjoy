@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteEventDispatcher+Private.h"
+#import "WiimoteDelegate.h"
 
 @implementation WiimoteEventDispatcher (Private)
 

@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteEventDispatcher+Battery.h"
+#import "WiimoteDelegate.h"
 
 @implementation WiimoteEventDispatcher (Battery)
 

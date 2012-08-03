@@ -7,6 +7,7 @@
 //
 
 #import "WiimotePart.h"
+#import "WiimoteDelegate.h"
 
 @interface WiimoteButtonPart : WiimotePart
 {

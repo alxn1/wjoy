@@ -13,8 +13,8 @@
 
 typedef enum
 {
-	WiimoteNunchuckButtonTypeC      = 0,
-	WiimoteNunchuckButtonTypeZ      = 1
+	WiimoteNunchuckButtonTypeC = 0,
+	WiimoteNunchuckButtonTypeZ = 1
 } WiimoteNunchuckButtonType;
 
 FOUNDATION_EXPORT NSString *WiimoteNunchuckButtonPressedNotification;

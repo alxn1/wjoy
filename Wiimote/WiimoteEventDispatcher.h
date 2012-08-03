@@ -6,7 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "Wiimote.h"
+#import <Foundation/Foundation.h>
+
+@class Wiimote;
 
 @interface WiimoteEventDispatcher : NSObject
 {

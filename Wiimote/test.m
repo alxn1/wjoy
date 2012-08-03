@@ -331,6 +331,21 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [self autorelease];
 }
 
+- (void)wiimote:(Wiimote*)wiimote accelerometerEnabledStateChanged:(BOOL)enabled
+{
+    NSLog(@"Accelerometer %@", ((enabled)?(@"enabled"):(@"disabled")));
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedX:(double)x Y:(double)y Z:(double)z
+{
+    NSLog(@"Accelerometer position (x-y-z) changed: %.02f %.02f %.02f", x, y, z);
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(double)pitch roll:(double)roll
+{
+    NSLog(@"Accelerometer position (pitch-roll) changed: %.02f %.02f", pitch, roll);
+}
+
 @end
 
 int main(int argc, const char * argv[])

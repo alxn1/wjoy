@@ -16,6 +16,7 @@
 #import "WiimoteButtonPart.h"
 #import "WiimoteBatteryPart.h"
 #import "WiimoteVibrationPart.h"
+#import "WiimoteAccelerometerPart.h"
 #import "WiimoteExtensionPart.h"
 
 NSString *WiimoteBeginDiscoveryNotification     = @"WiimoteBeginDiscoveryNotification";
@@ -36,11 +37,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 + (NSArray*)supportedModelNames
 {
     return [WiimoteInquiry supportedModelNames];
-}
-
-+ (void)registerSupportedModelName:(NSString*)name
-{
-    [WiimoteInquiry registerSupportedModelName:name];
 }
 
 + (BOOL)isDiscovering
@@ -128,6 +124,41 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     [m_VibrationPart setVibrationEnabled:enabled];
 }
 
+- (BOOL)isAccelerometerEnabled
+{
+    return [m_AccelerometerPart isEnabled];
+}
+
+- (void)setAccelerometerEnabled:(BOOL)enabled
+{
+    [m_AccelerometerPart setEnabled:enabled];
+}
+
+- (double)accelerometerX
+{
+    return [m_AccelerometerPart x];
+}
+
+- (double)accelerometerY
+{
+    return [m_AccelerometerPart y];
+}
+
+- (double)accelerometerZ
+{
+    return [m_AccelerometerPart z];
+}
+
+- (double)accelerometerPitch
+{
+    return [m_AccelerometerPart pitch];
+}
+
+- (double)accelerometerRoll
+{
+    return [m_AccelerometerPart roll];
+}
+
 - (BOOL)isButtonPressed:(WiimoteButtonType)button
 {
     return [m_ButtonPart isButtonPressed:button];
@@ -156,11 +187,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (void)requestUpdateState
 {
     [m_Device requestStateReport];
-}
-
-- (void)deviceConfigurationChanged
-{
-	[m_Device requestReportType:[m_PartSet bestReportType]];
 }
 
 - (BOOL)isStateChangeNotificationsEnabled
@@ -195,11 +221,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (void)setDelegate:(id)delegate
 {
     [[m_PartSet eventDispatcher] setDelegate:delegate];
-}
-
-- (WiimotePart*)partWithClass:(Class)cls
-{
-    return [m_PartSet partWithClass:cls];
 }
 
 @end
