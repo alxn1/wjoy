@@ -485,8 +485,6 @@
 		0A66C59315CBBDFB00096DDA /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				0A48908E15C7FA4500207478 /* WiimoteDeviceReport+Private.h */,
-				0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */,
 				0A48908A15C7FA4500207478 /* WiimoteDeviceReadMemHandler.h */,
 				0A48908B15C7FA4500207478 /* WiimoteDeviceReadMemHandler.m */,
 				0ACC5D2D15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.h */,
@@ -540,6 +538,8 @@
 		0A66C8A015CC0E2900096DDA /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				0A48908E15C7FA4500207478 /* WiimoteDeviceReport+Private.h */,
+				0A48908F15C7FA4500207478 /* WiimoteDeviceReport+Private.m */,
 				0A48909E15C7FA4500207478 /* WiimoteEventDispatcher+Private.h */,
 				0A48909F15C7FA4500207478 /* WiimoteEventDispatcher+Private.m */,
 				0A4890B215C7FA4500207478 /* WiimoteIOManager+Private.h */,

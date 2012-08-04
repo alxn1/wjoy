@@ -178,7 +178,7 @@
     if([data length] == 0)
 		return YES;
 
-    NSMutableData                   *commandData	= [NSMutableData dataWithLength:sizeof(WiimoteDeviceWriteMemoryParams)];
+    NSMutableData                   *commandData		= [NSMutableData dataWithLength:sizeof(WiimoteDeviceWriteMemoryParams)];
 	uint8_t                         *buffer         = [commandData mutableBytes];
     WiimoteDeviceWriteMemoryParams  *params         = (WiimoteDeviceWriteMemoryParams*)buffer;
 
