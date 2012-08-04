@@ -134,21 +134,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     [m_AccelerometerPart setEnabled:enabled];
 }
 
-- (double)accelerometerX
-{
-    return [m_AccelerometerPart x];
-}
-
-- (double)accelerometerY
-{
-    return [m_AccelerometerPart y];
-}
-
-- (double)accelerometerZ
-{
-    return [m_AccelerometerPart z];
-}
-
 - (double)accelerometerPitch
 {
     return [m_AccelerometerPart pitch];

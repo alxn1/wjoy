@@ -11,7 +11,6 @@
 @interface WiimoteEventDispatcher (Accelerometer)
 
 - (void)postAccelerometerEnabledNotification:(BOOL)enabled;
-- (void)postAccelerometerValueChangedNotificationX:(double)x Y:(double)y Z:(double)z;
 - (void)postAccelerometerValueChangedNotificationPitch:(double)pitch roll:(double)roll;
 
 @end

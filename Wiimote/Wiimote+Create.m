@@ -23,6 +23,13 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
+@interface Wiimote (WiimoteDeviceDelegate)
+
+- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report;
+- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device;
+
+@end
+
 @implementation Wiimote (Create)
 
 - (void)initialize
@@ -66,8 +73,7 @@
         return nil;
     }
 
-	[[m_Device eventDispatcher] addReportHandler:self action:@selector(handleReport:)];
-	[[m_Device eventDispatcher] addDisconnectHandler:self action:@selector(disconnected)];
+	[m_Device setDelegate:self];
 
 	[self initParts];
     [self initialize];
@@ -92,23 +98,27 @@
     [super dealloc];
 }
 
-- (void)handleReport:(WiimoteDeviceReport*)report
++ (void)connectToBluetoothDevice:(IOBluetoothDevice*)device
+{
+    [[[Wiimote alloc] initWithBluetoothDevice:device] autorelease];
+}
+
+@end
+
+@implementation Wiimote (WiimoteDeviceDelegate)
+
+- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report
 {
 	[m_PartSet handleReport:report];
 }
 
-- (void)disconnected
+- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
 {
-    [[self retain] autorelease];
+	[[self retain] autorelease];
 
 	[m_PartSet disconnected];
     [Wiimote wiimoteDisconnected:self];
 	[[m_PartSet eventDispatcher] postDisconnectNotification];
-}
-
-+ (void)connectToBluetoothDevice:(IOBluetoothDevice*)device
-{
-    [[[Wiimote alloc] initWithBluetoothDevice:device] autorelease];
 }
 
 @end

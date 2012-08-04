@@ -58,21 +58,6 @@
     [[self eventDispatcher] postAccelerometerEnabledNotification:enabled];
 }
 
-- (double)x
-{
-    return m_Z;
-}
-
-- (double)y
-{
-    return m_Y;
-}
-
-- (double)z
-{
-    return m_Z;
-}
-
 - (double)pitch
 {
     return m_Roll;
@@ -83,26 +68,10 @@
     return m_Pitch;
 }
 
-- (void)setX:(double)x Y:(double)y Z:(double)z
-{
-    if(WiimoteDeviceIsFloatEqual(m_X, x) &&
-       WiimoteDeviceIsFloatEqual(m_Y, y) &&
-       WiimoteDeviceIsFloatEqual(m_Z, z))
-    {
-        return;
-    }
-
-    m_X = x;
-    m_Y = y;
-    m_Z = z;
-
-    [[self eventDispatcher] postAccelerometerValueChangedNotificationX:x Y:y Z:z];
-}
-
 - (void)setPitch:(double)pitch roll:(double)roll
 {
     if(WiimoteDeviceIsFloatEqualEx(m_Pitch, pitch, 2.5) &&
-       WiimoteDeviceIsFloatEqualEx(m_Roll, roll, 2.5))
+       WiimoteDeviceIsFloatEqualEx(m_Roll,	roll,  2.5))
     {
         return;
     }
@@ -146,9 +115,7 @@
     if([[report data] length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
         return;
 
-    WiimoteDeviceReportType                               reportType  = [report type];
-    const WiimoteDeviceButtonAndAccelerometerStateReport *stateReport =
-            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[[report data] bytes];
+    WiimoteDeviceReportType reportType = [report type];
 
     switch(reportType)
     {
@@ -162,37 +129,33 @@
             return;
     }
 
-    uint16_t x = (((uint16_t)stateReport->accelerometerX) << 2);
-    uint16_t y = (((uint16_t)stateReport->accelerometerY) << 2);
-    uint16_t z = (((uint16_t)stateReport->accelerometerZ) << 2);
+	const WiimoteDeviceButtonAndAccelerometerStateReport *stateReport =
+            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[[report data] bytes];
 
-    x |= (stateReport->accelerometerAdditionalX >> 5) & 0x3;
-    y |= ((stateReport->accelerometerAdditionalYZ >> 5) & 0x1) << 1;
-    z |= ((stateReport->accelerometerAdditionalYZ >> 6) & 0x1) << 1;
+    uint16_t hardwareX	= (((uint16_t)stateReport->accelerometerX) << 2) | (((stateReport->accelerometerAdditionalX  >> 5) & 0x3) << 0);
+    uint16_t hardwareY	= (((uint16_t)stateReport->accelerometerY) << 2) | (((stateReport->accelerometerAdditionalYZ >> 5) & 0x1) << 1);
+    uint16_t hardwareZ	= (((uint16_t)stateReport->accelerometerZ) << 2) | (((stateReport->accelerometerAdditionalYZ >> 6) & 0x1) << 1);
+    double	 x			= (((double)hardwareX) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
+    double	 y			= (((double)hardwareY) - ((double)m_ZeroY)) / (((double)m_1gY) - ((double)m_ZeroY));
+    double	 z			= (((double)hardwareZ) - ((double)m_ZeroZ)) / (((double)m_1gZ) - ((double)m_ZeroZ));
 
-    double newX = (((double)x) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
-    double newY = (((double)y) - ((double)m_ZeroY)) / (((double)m_1gY) - ((double)m_ZeroY));
-    double newZ = (((double)z) - ((double)m_ZeroZ)) / (((double)m_1gZ) - ((double)m_ZeroZ));
+    if(x < -1.0) x = 1.0; else
+    if(x >  1.0) x = 1.0;
 
-    [self setX:newX Y:newY Z:newZ];
+    if(y < -1.0) y = 1.0; else
+    if(y >  1.0) y = 1.0;
 
-    if(newX < -1.0) newX = 1.0; else
-    if(newX >  1.0) newX = 1.0;
-
-    if(newY < -1.0) newY = 1.0; else
-    if(newY >  1.0) newY = 1.0;
-
-    if(newZ < -1.0) newZ = 1.0; else
-    if(newZ >  1.0) newZ = 1.0;
+    if(z < -1.0) z = 1.0; else
+    if(z >  1.0) z = 1.0;
 
     double newPitch = m_Pitch;
     double newRoll  = m_Roll;
 
-    if(abs(x - m_ZeroX) <= (m_1gX - m_ZeroX))
-        newRoll  = (atan2(newX, newZ) * 180.0) / M_PI;
+    if(abs(hardwareX - m_ZeroX) <= (m_1gX - m_ZeroX))
+        newRoll  = (atan2(x, z) * 180.0) / M_PI;
 
-    if(abs(y - m_ZeroY) <= (m_1gY - m_ZeroY))
-        newPitch = (atan2(newY, newZ) * 180.0) / M_PI;
+    if(abs(hardwareY - m_ZeroY) <= (m_1gY - m_ZeroY))
+        newPitch = (atan2(y, z) * 180.0) / M_PI;
 
     [self setPitch:newPitch roll:newRoll];
 }
@@ -208,9 +171,6 @@
 
 - (void)reset
 {
-    m_X     = 0.0;
-    m_Y     = 0.0;
-    m_Z     = 0.0;
     m_Pitch = 0.0;
     m_Roll  = 0.0;
 }

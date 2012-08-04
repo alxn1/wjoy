@@ -13,10 +13,6 @@
     @private
         BOOL        m_IsCalibrationDataReaded;
 
-        double      m_X;
-        double      m_Y;
-        double      m_Z;
-
         double      m_Pitch;
         double      m_Roll;
 
@@ -33,10 +29,6 @@
 
 - (BOOL)isEnabled;
 - (void)setEnabled:(BOOL)enabled;
-
-- (double)x;
-- (double)y;
-- (double)z;
 
 - (double)pitch;
 - (double)roll;

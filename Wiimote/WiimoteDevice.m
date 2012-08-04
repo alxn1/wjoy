@@ -8,7 +8,6 @@
 
 #import "WiimoteDevice.h"
 #import "WiimoteDeviceReport+Private.h"
-#import "WiimoteDeviceEventDispatcher+Private.h"
 #import "WiimoteDeviceReadMemQueue.h"
 
 #import <IOBluetooth/IOBluetooth.h>
@@ -55,11 +54,11 @@
 	m_Device				= [device retain];
 	m_DataChannel			= nil;
 	m_ControlChannel		= nil;
-	m_EventDispatcher		= [[WiimoteDeviceEventDispatcher alloc] init];
     m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
     m_IsVibrationEnabled    = NO;
     m_LEDsState             = 0;
+	m_Delegate				= nil;
 
 	return self;
 }
@@ -68,7 +67,6 @@
 {
 	[self disconnect];
     [m_ReadMemQueue release];
-	[m_EventDispatcher release];
 	[m_ControlChannel release];
 	[m_DataChannel release];
 	[m_Device release];
@@ -115,7 +113,6 @@
 	m_IsConnected = NO;
 
 	[self handleDisconnect];
-	[m_EventDispatcher removeAllHandlers];
 }
 
 - (NSData*)address
@@ -286,9 +283,14 @@
     return YES;
 }
 
-- (WiimoteDeviceEventDispatcher*)eventDispatcher
+- (id)delegate
 {
-    return [[m_EventDispatcher retain] autorelease];
+	return m_Delegate;
+}
+
+- (void)setDelegate:(id)delegate
+{
+	m_Delegate = delegate;
 }
 
 @end
@@ -312,13 +314,13 @@
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
     [m_ReadMemQueue handleReport:report];
-	[m_EventDispatcher handleReport:report];
+	[m_Delegate wiimoteDevice:self handleReport:report];
 }
 
 - (void)handleDisconnect
 {
     [m_ReadMemQueue handleDisconnect];
-	[m_EventDispatcher handleDisconnect];
+	[m_Delegate wiimoteDeviceDisconnected:self];
 }
 
 @end
