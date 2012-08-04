@@ -69,10 +69,6 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (BOOL)isAccelerometerEnabled;
 - (void)setAccelerometerEnabled:(BOOL)enabled;
 
-- (double)accelerometerX;
-- (double)accelerometerY;
-- (double)accelerometerZ;
-
 - (double)accelerometerPitch;
 - (double)accelerometerRoll;
 

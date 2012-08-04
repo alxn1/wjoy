@@ -20,26 +20,6 @@
                        key:WiimoteAccelerometerEnabledStateKey];
 }
 
-- (void)postAccelerometerValueChangedNotificationX:(double)x Y:(double)y Z:(double)z
-{
-    [[self delegate] wiimote:[self owner] accelerometerChangedX:x Y:y Z:z];
-
-    if([self isStateNotificationsEnabled])
-    {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithDouble:x],
-                                        WiimoteAccelerometerValueXKey,
-                                    [NSNumber numberWithDouble:y],
-                                        WiimoteAccelerometerValueYKey,
-                                    [NSNumber numberWithDouble:z],
-                                        WiimoteAccelerometerValueZKey,
-                                    nil];
-
-        [self postNotification:WiimoteAccelerometerXYZValuesChangedNotification
-                        params:params];
-    }
-}
-
 - (void)postAccelerometerValueChangedNotificationPitch:(double)pitch roll:(double)roll
 {
     [[self delegate] wiimote:[self owner] accelerometerChangedPitch:pitch roll:roll];
@@ -53,7 +33,7 @@
                                         WiimoteAccelerometerValueRoll,
                                     nil];
 
-        [self postNotification:WiimoteAccelerometerPitchRollValuesChangedNotification
+        [self postNotification:WiimoteAccelerometerValuesChangedNotification
                         params:params];
     }
 }
