@@ -14,6 +14,7 @@
         Wiimote                 *m_Wiimote;
         WiimoteEventDispatcher  *m_EventDispatcher;
         WiimoteIOManager        *m_IOManager;
+
         NSMutableArray          *m_ExtensionClasses;
         Class                    m_CurrentClass;
         WiimoteExtension        *m_Extension;
