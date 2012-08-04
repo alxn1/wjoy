@@ -343,3 +343,15 @@
 }
 
 @end
+
+@implementation NSObject (WiimoteDeviceDelegate)
+
+- (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report
+{
+}
+
+- (void)wiimoteDeviceDisconnected:(WiimoteDevice*)device
+{
+}
+
+@end
