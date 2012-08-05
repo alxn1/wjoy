@@ -11,7 +11,6 @@
 @interface WiimoteNunchuck (PrivatePart)
 
 - (void)reset;
-- (void)checkCalibrationData;
 
 @end
 
@@ -57,6 +56,9 @@
     if(self == nil)
         return nil;
 
+	m_IsCalibrationDataReaded	= NO;
+	m_IsAccelerometerEnabled	= NO;
+
     [self reset];
     return self;
 }
@@ -101,11 +103,15 @@
 
 - (void)handleCalibrationData:(NSData*)data
 {
-    if([data length] < sizeof(m_CalibrationData))
+    if([data length] < sizeof(WiimoteDeviceNunchuckCalibrationData))
         return;
 
-    memcpy(&m_CalibrationData, [data bytes], sizeof(m_CalibrationData));
-    [self checkCalibrationData];
+	const WiimoteDeviceNunchuckCalibrationData *calibrationData =
+			(const WiimoteDeviceNunchuckCalibrationData*)[data bytes];
+
+	m_StickCalibrationData = calibrationData->stick;
+    WiimoteDeviceCheckStickCalibration(m_StickCalibrationData, 0, 127, 255);
+	m_IsCalibrationDataReaded = YES;
 }
 
 - (void)handleReport:(NSData*)extensionData
@@ -116,15 +122,18 @@
     const WiimoteDeviceNunchuckReport *nunchuckReport =
                 (const WiimoteDeviceNunchuckReport*)([extensionData bytes]);
 
-    NSPoint stickPostion;
+	if(m_IsCalibrationDataReaded)
+	{
+		NSPoint stickPostion;
 
-    WiimoteDeviceNormalizeStick(
-                        nunchuckReport->stickX,
-                        nunchuckReport->stickY,
-                        m_CalibrationData.stick,
-                        stickPostion);
+		WiimoteDeviceNormalizeStick(
+							nunchuckReport->stickX,
+							nunchuckReport->stickY,
+							m_StickCalibrationData,
+							stickPostion);
 
-    [self setStickPosition:stickPostion];
+		[self setStickPosition:stickPostion];
+	}
 
     [self setButton:WiimoteNunchuckButtonTypeZ
             pressed:((nunchuckReport->acceleromererXYZAndButtonState &
@@ -144,16 +153,8 @@
 	m_ButtonState[WiimoteNunchuckButtonTypeC]       = NO;
 	m_ButtonState[WiimoteNunchuckButtonTypeZ]       = NO;
 	m_StickPosition                                 = NSZeroPoint;
-
-    memset(&m_CalibrationData, 0, sizeof(m_CalibrationData));
-    [self checkCalibrationData];
-}
-
-- (void)checkCalibrationData
-{
-    // TODO: add accelerometer default values
-
-    WiimoteDeviceCheckStickCalibration(m_CalibrationData.stick, 0, 127, 255);
+	m_AccelerometerPitch							= 0.0;
+	m_AccelerometerRoll								= 0.0;
 }
 
 @end
