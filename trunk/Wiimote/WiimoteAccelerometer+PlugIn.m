@@ -17,6 +17,36 @@
 
 @implementation WiimoteAccelerometer (PlugIn)
 
+- (uint16_t)zeroX
+{
+	return m_ZeroX;
+}
+
+- (uint16_t)zeroY
+{
+	return m_ZeroY;
+}
+
+- (uint16_t)zeroZ
+{
+	return m_ZeroZ;
+}
+
+- (uint16_t)gX
+{
+	return m_1gX;
+}
+
+- (uint16_t)gY
+{
+	return m_1gY;
+}
+
+- (uint16_t)gZ
+{
+	return m_1gZ;
+}
+
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
     double newX = (((double)x) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
@@ -120,8 +150,8 @@
 
 - (void)setPitch:(double)pitch roll:(double)roll
 {
-    m_Pitch = (((double)((long long)(m_Pitch / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
-    m_Roll  = (((double)((long long)(m_Roll  / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
+    pitch = (((double)((long long)(pitch / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
+    roll  = (((double)((long long)(roll  / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
 
     if(WiimoteDeviceIsFloatEqualEx(m_Pitch, pitch, m_AnglesSmoothQuant) &&
        WiimoteDeviceIsFloatEqualEx(m_Roll,	roll,  m_AnglesSmoothQuant))

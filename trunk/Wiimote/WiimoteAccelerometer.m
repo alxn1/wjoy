@@ -17,10 +17,10 @@
         return nil;
 
     m_IsEnabled = NO;
-    [self setGravitySmoothQuant:0.25];
+    [self setGravitySmoothQuant:0.15];
     [self setAnglesSmoothQuant:5.0];
-    [self setHardwareZeroX:0 y:0 z:0];
-    [self setHardware1gX:1 y:1 z:1];
+    [self setHardwareZeroX:500 y:500 z:500];
+    [self setHardware1gX:600 y:600 z:600];
     [self reset];
 
     return self;
