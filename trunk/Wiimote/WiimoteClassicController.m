@@ -57,6 +57,8 @@
     if(self == nil)
         return nil;
 
+    m_IsCalibrationDataReaded = NO;
+
     [self reset];
     return self;
 }
@@ -150,6 +152,7 @@
     m_CalibrationData.rightStick.y.center   /= 8;
 
     [self checkCalibrationData];
+    m_IsCalibrationDataReaded = YES;
 }
 
 - (void)handleButtonState:(WiimoteDeviceClassicControllerButtonState)state
@@ -182,6 +185,9 @@
 
 - (void)handleAnalogData:(const uint8_t*)analogData
 {
+    if(!m_IsCalibrationDataReaded)
+        return;
+
     // TODO: remove all magic constants ;)
 
 	uint8_t leftStickY  = ((analogData[1] >> 0) & 0x3F);

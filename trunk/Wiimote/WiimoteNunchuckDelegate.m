@@ -8,12 +8,21 @@
 
 #import "WiimoteNunchuckDelegate.h"
 
-NSString *WiimoteNunchuckButtonPressedNotification          = @"WiimoteNunchuckButtonPressedNotification";
-NSString *WiimoteNunchuckButtonReleasedNotification         = @"WiimoteNunchuckButtonReleasedNotification";
-NSString *WiimoteNunchuckStickPositionChangedNotification   = @"WiimoteNunchuckStickPositionChangedNotification";
+NSString *WiimoteNunchuckButtonPressedNotification                      = @"WiimoteNunchuckButtonPressedNotification";
+NSString *WiimoteNunchuckButtonReleasedNotification                     = @"WiimoteNunchuckButtonReleasedNotification";
+NSString *WiimoteNunchuckStickPositionChangedNotification               = @"WiimoteNunchuckStickPositionChangedNotification";
+NSString *WiimoteNunchuckAccelerometerEnabledStateChangedNotification   = @"WiimoteNunchuckAccelerometerEnabledStateChangedNotification";
+NSString *WiimoteNunchuckAccelerometerGravityChangedNotification        = @"WiimoteNunchuckAccelerometerGravityChangedNotification";
+NSString *WiimoteNunchuckAccelerometerAnglesChangedNotification         = @"WiimoteNunchuckAccelerometerAnglesChangedNotification";
 
-NSString *WiimoteNunchuckButtonKey                          = @"WiimoteNunchuckButtonKey";
-NSString *WiimoteNunchuckStickPositionKey                   = @"WiimoteNunchuckStickPositionKey";
+NSString *WiimoteNunchuckButtonKey                                      = @"WiimoteNunchuckButtonKey";
+NSString *WiimoteNunchuckStickPositionKey                               = @"WiimoteNunchuckStickPositionKey";
+NSString *WiimoteNunchuckAccelerometerEnabledStateKey                   = @"WiimoteNunchuckAccelerometerEnabledStateKey";
+NSString *WiimoteNunchuckAccelerometerGravityX                          = @"WiimoteNunchuckAccelerometerGravityX";
+NSString *WiimoteNunchuckAccelerometerGravityY                          = @"WiimoteNunchuckAccelerometerGravityY";
+NSString *WiimoteNunchuckAccelerometerGravityZ                          = @"WiimoteNunchuckAccelerometerGravityZ";
+NSString *WiimoteNunchuckAccelerometerPitch                             = @"WiimoteNunchuckAccelerometerPitch";
+NSString *WiimoteNunchuckAccelerometerRoll                              = @"WiimoteNunchuckAccelerometerRoll";
 
 @implementation NSObject (WiimoteNunchuckDelegate)
 
@@ -26,6 +35,18 @@ NSString *WiimoteNunchuckStickPositionKey                   = @"WiimoteNunchuckS
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(double)x y:(double)y z:(double)z
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(double)pitch roll:(double)roll
 {
 }
 

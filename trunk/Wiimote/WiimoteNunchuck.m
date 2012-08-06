@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteNunchuck.h"
+#import "WiimoteAccelerometer+PlugIn.h"
 
 @interface WiimoteNunchuck (PrivatePart)
 
@@ -57,10 +58,19 @@
         return nil;
 
 	m_IsCalibrationDataReaded	= NO;
-	m_IsAccelerometerEnabled	= NO;
+    m_Accelerometer             = [[WiimoteAccelerometer alloc] init];
+
+    [m_Accelerometer setDelegate:self];
 
     [self reset];
     return self;
+}
+
+- (void)dealloc
+{
+    [m_Accelerometer setDelegate:nil];
+    [m_Accelerometer release];
+    [super dealloc];
 }
 
 - (NSString*)name
@@ -76,6 +86,11 @@
 - (BOOL)isButtonPressed:(WiimoteNunchuckButtonType)button
 {
     return m_ButtonState[button];
+}
+
+- (WiimoteAccelerometer*)accelerometer
+{
+    return [[m_Accelerometer retain] autorelease];
 }
 
 - (void)setStickPosition:(NSPoint)newPosition
@@ -111,6 +126,8 @@
 
 	m_StickCalibrationData = calibrationData->stick;
     WiimoteDeviceCheckStickCalibration(m_StickCalibrationData, 0, 127, 255);
+
+    [m_Accelerometer setCalibrationData:&(calibrationData->accelerometer)];
 	m_IsCalibrationDataReaded = YES;
 }
 
@@ -133,6 +150,15 @@
 							stickPostion);
 
 		[self setStickPosition:stickPostion];
+
+        if([m_Accelerometer isEnabled])
+        {
+            uint16_t x = (((uint16_t)nunchuckReport->accelerometerX) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 2) & 0x3);
+            uint16_t y = (((uint16_t)nunchuckReport->accelerometerY) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 4) & 0x3);
+            uint16_t z = (((uint16_t)nunchuckReport->accelerometerZ) << 2) | ((nunchuckReport->acceleromererXYZAndButtonState >> 6) & 0x3);
+
+            [m_Accelerometer setHardwareValueX:x y:y z:z];
+        }
 	}
 
     [self setButton:WiimoteNunchuckButtonTypeZ
@@ -150,11 +176,32 @@
 
 - (void)reset
 {
-	m_ButtonState[WiimoteNunchuckButtonTypeC]       = NO;
-	m_ButtonState[WiimoteNunchuckButtonTypeZ]       = NO;
-	m_StickPosition                                 = NSZeroPoint;
-	m_AccelerometerPitch							= 0.0;
-	m_AccelerometerRoll								= 0.0;
+	m_ButtonState[WiimoteNunchuckButtonTypeC]   = NO;
+	m_ButtonState[WiimoteNunchuckButtonTypeZ]   = NO;
+	m_StickPosition                             = NSZeroPoint;
+
+	[m_Accelerometer reset];
+}
+
+- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
+         enabledStateChanged:(BOOL)enabled
+{
+    [[self eventDispatcher] postNunchuck:self accelerometerEnabledStateChanged:enabled];
+}
+
+- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
+             gravityChangedX:(double)x
+                           y:(double)y
+                           z:(double)z
+{
+    [[self eventDispatcher] postNunchuck:self accelerometerChangedGravityX:x y:y z:z];
+}
+
+- (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
+                pitchChanged:(double)pitch
+                        roll:(double)roll
+{
+    [[self eventDispatcher] postNunchuck:self accelerometerChangedPitch:pitch roll:roll];
 }
 
 @end

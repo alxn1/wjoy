@@ -211,7 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device setDelegate:self];
     [m_Device setHighlightedLEDMask:WiimoteLEDFlagOne];
     [m_Device playConnectEffect];
-	[m_Device setAccelerometerEnabled:YES];
+	[[m_Device accelerometer] setEnabled:YES];
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
 	NSLog(@"%@", [Wiimote connectedDevices]);
@@ -274,6 +274,8 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension connected: %@", [extension name]);
+    if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
+        [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
@@ -294,6 +296,21 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
     NSLog(@"Nunchuck position changed: %.02f %.02f", position.x, position.y);
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled
+{
+    NSLog(@"Nunchuck accelerometer %@", ((enabled)?(@"enabled"):(@"disabled")));
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(double)x y:(double)y z:(double)z
+{
+    NSLog(@"Nunchuck accelerometer position (gravity) changed: %.02f %.02f %.02f", x, y, z);
+}
+
+- (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(double)pitch roll:(double)roll
+{
+    NSLog(@"Nunchuck accelerometer position (pitch-roll) changed: %.02f %.02f", pitch, roll);
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -335,6 +352,11 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote accelerometerEnabledStateChanged:(BOOL)enabled
 {
     NSLog(@"Accelerometer %@", ((enabled)?(@"enabled"):(@"disabled")));
+}
+
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedGravityX:(double)x y:(double)y z:(double)z
+{
+    NSLog(@"Accelerometer position (gravity) changed: %.02f %.02f %.02f", x, y, z);
 }
 
 - (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(double)pitch roll:(double)roll

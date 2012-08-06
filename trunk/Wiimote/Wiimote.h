@@ -8,6 +8,7 @@
 
 #import "WiimoteDelegate.h"
 #import "WiimoteExtension.h"
+#import "WiimoteAccelerometer.h"
 #import "WiimoteWatchdog.h"
 
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
@@ -66,11 +67,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (BOOL)isVibrationEnabled;
 - (void)setVibrationEnabled:(BOOL)enabled;
 
-- (BOOL)isAccelerometerEnabled;
-- (void)setAccelerometerEnabled:(BOOL)enabled;
-
-- (double)accelerometerPitch;
-- (double)accelerometerRoll;
+- (WiimoteAccelerometer*)accelerometer;
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 

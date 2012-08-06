@@ -9,7 +9,7 @@
 #import "Wiimote.h"
 #import "WiimotePart.h"
 #import "WiimoteGenericExtension.h"
-#import "WiimoteProtocol.h"
+#import "WiimoteAccelerometer+PlugIn.h"
 
 @interface Wiimote (PlugIn)
 
