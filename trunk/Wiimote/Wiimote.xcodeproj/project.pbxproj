@@ -270,8 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				0A48911015C7FB3B00207478 /* base */,
-				0A48911A15C7FC9100207478 /* internal */,
 				0A48911D15C7FCC200207478 /* plugin interface */,
+				0A48911A15C7FC9100207478 /* internal */,
 				0A48911E15C7FCDD00207478 /* standart extensions */,
 				0A48908415C7FA4500207478 /* WiimoteDelegate.h */,
 				0A48908515C7FA4500207478 /* WiimoteDelegate.m */,
