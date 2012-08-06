@@ -42,14 +42,14 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    if([report type] != WiimoteDeviceReportTypeState ||
-      [[report data] length] < sizeof(WiimoteDeviceStateReport))
+    if([report type]    != WiimoteDeviceReportTypeState ||
+       [report length]  < sizeof(WiimoteDeviceStateReport))
     {
         return;
     }
 
     const WiimoteDeviceStateReport *state =
-                (const WiimoteDeviceStateReport*)[[report data] bytes];
+                (const WiimoteDeviceStateReport*)[report data];
 
     double  batteryLevel        = (((double)state->batteryLevel) / ((double)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
     BOOL    isBatteryLevelLow   = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);

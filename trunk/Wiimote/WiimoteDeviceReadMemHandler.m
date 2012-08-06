@@ -66,9 +66,9 @@
 	return ([m_ReadedData length] >= m_MemoryRange.length);
 }
 
-- (void)handleData:(NSData*)data
+- (void)handleData:(const uint8_t*)data length:(NSUInteger)length
 {
-    [m_ReadedData appendData:data];
+    [m_ReadedData appendBytes:data length:length];
     if([m_ReadedData length] >= m_MemoryRange.length)
 		[self dataReadFinished];
 }

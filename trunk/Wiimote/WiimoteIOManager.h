@@ -19,17 +19,20 @@
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(NSData*)data;
+			   data:(const uint8_t*)data
+             length:(NSUInteger)length;
 
 - (BOOL)writeMemory:(NSUInteger)address
-			   data:(NSData*)data;
+			   data:(const uint8_t*)data
+             length:(NSUInteger)length;
 
 - (BOOL)readMemory:(NSRange)memoryRange
 			target:(id)target
 			action:(SEL)action;
 
 - (BOOL)injectReport:(NSUInteger)type
-                data:(NSData*)data;
+                data:(const uint8_t*)data
+              length:(NSUInteger)length;
 
 - (Wiimote*)owner;
 

@@ -14,32 +14,31 @@
 @implementation WiimoteIOManager
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
-			   data:(NSData*)data
+			   data:(const uint8_t*)data
+             length:(NSUInteger)length
 {
-    return [m_Device postCommand:command
-                            data:data];
+    return [m_Device postCommand:command data:data length:length];
 }
 
 - (BOOL)writeMemory:(NSUInteger)address
-			   data:(NSData*)data
+			   data:(const uint8_t*)data
+             length:(NSUInteger)length
 {
-    return [m_Device writeMemory:address
-                            data:data];
+    return [m_Device writeMemory:address data:data length:length];
 }
 
 - (BOOL)readMemory:(NSRange)memoryRange
 			target:(id)target
 			action:(SEL)action
 {
-    return [m_Device readMemory:memoryRange
-                         target:target
-                         action:action];
+    return [m_Device readMemory:memoryRange target:target action:action];
 }
 
 - (BOOL)injectReport:(NSUInteger)type
-                data:(NSData*)data
+                data:(const uint8_t*)data
+              length:(NSUInteger)length
 {
-    return [m_Device injectReport:type data:data];
+    return [m_Device injectReport:type data:data length:length];
 }
 
 - (Wiimote*)owner

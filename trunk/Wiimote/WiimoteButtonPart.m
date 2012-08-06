@@ -44,11 +44,11 @@
 
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
-    if([[report data] length] < sizeof(WiimoteDeviceButtonState))
+    if([report length] < sizeof(WiimoteDeviceButtonState))
         return;
 
     const WiimoteDeviceButtonState *buttonReport =
-            (const WiimoteDeviceButtonState*)[[report data] bytes];
+            (const WiimoteDeviceButtonState*)[report data];
 
     WiimoteDeviceButtonState state = OSSwapBigToHostConstInt16(*buttonReport);
 

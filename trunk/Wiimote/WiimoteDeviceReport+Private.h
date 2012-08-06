@@ -10,13 +10,14 @@
 
 @interface WiimoteDeviceReport (Private)
 
-+ (WiimoteDeviceReport*)parseReportData:(const uint8_t*)data
-								 length:(NSUInteger)length
-								 device:(WiimoteDevice*)device;
-
 + (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
-                                        data:(NSData*)data
+                                        data:(const uint8_t*)data
+                                      length:(NSUInteger)length
                                       device:(WiimoteDevice*)device;
+
+- (id)initWithDevice:(WiimoteDevice*)device;
+
+- (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length;
 
 - (WiimoteDevice*)device;
 

@@ -38,7 +38,7 @@ typedef enum
 - (WiimoteEventDispatcher*)eventDispatcher;
 
 - (void)calibrate:(WiimoteIOManager*)ioManager;
-- (void)handleReport:(NSData*)extensionData;
+- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length;
 
 @end
 
@@ -47,7 +47,7 @@ typedef enum
 - (BOOL)beginReadCalibrationData:(WiimoteIOManager*)ioManager
                      memoryRange:(NSRange)memoryRange;
 
-- (void)handleCalibrationData:(NSData*)data;
+- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length;
 
 @end
 
