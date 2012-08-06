@@ -54,6 +54,7 @@
 	m_Device				= [device retain];
 	m_DataChannel			= nil;
 	m_ControlChannel		= nil;
+    m_Report                = [[WiimoteDeviceReport alloc] initWithDevice:self];
     m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
     m_IsVibrationEnabled    = NO;
@@ -66,6 +67,7 @@
 - (void)dealloc
 {
 	[self disconnect];
+    [m_Report release];
     [m_ReadMemQueue release];
 	[m_ControlChannel release];
 	[m_DataChannel release];
@@ -136,20 +138,23 @@
 	return [m_Device getAddressString];
 }
 
-- (BOOL)postCommand:(WiimoteDeviceCommandType)command data:(NSData*)data
+- (BOOL)postCommand:(WiimoteDeviceCommandType)command
+               data:(const uint8_t*)data
+             length:(NSUInteger)length
 {
-	if(![self isConnected] ||
-        [data length] == 0)
+    if(![self isConnected]  ||
+        data    == NULL     ||
+        length  == 0)
     {
 		return NO;
     }
 
-	uint8_t                     buffer[sizeof(WiimoteDeviceCommandHeader) + [data length]];
+	uint8_t                     buffer[sizeof(WiimoteDeviceCommandHeader) + length];
     WiimoteDeviceCommandHeader *header = (WiimoteDeviceCommandHeader*)buffer;
 
     header->packetType  = WiimoteDevicePacketTypeCommand;
     header->commandType = command;
-    memcpy(buffer + sizeof(WiimoteDeviceCommandHeader), [data bytes], [data length]);
+    memcpy(buffer + sizeof(WiimoteDeviceCommandHeader), data, length);
 
     if(m_IsVibrationEnabled)
     {
@@ -167,33 +172,38 @@
                        length:sizeof(buffer)] == kIOReturnSuccess);
 }
 
-- (BOOL)writeMemory:(NSUInteger)address data:(NSData*)data
+- (BOOL)writeMemory:(NSUInteger)address
+               data:(const uint8_t*)data
+             length:(NSUInteger)length
 {
-    if(![self isConnected] ||
-		[data length] > WiimoteDeviceWriteMemoryReportMaxDataSize)
+    if(![self isConnected]  ||
+        data    == NULL     ||
+		length  > WiimoteDeviceWriteMemoryReportMaxDataSize)
 	{
 		return NO;
 	}
 
-    if([data length] == 0)
+    if(length == 0)
 		return YES;
 
-    NSMutableData                   *commandData		= [NSMutableData dataWithLength:sizeof(WiimoteDeviceWriteMemoryParams)];
-	uint8_t                         *buffer         = [commandData mutableBytes];
-    WiimoteDeviceWriteMemoryParams  *params         = (WiimoteDeviceWriteMemoryParams*)buffer;
+    uint8_t                          buffer[sizeof(WiimoteDeviceWriteMemoryParams)];
+    WiimoteDeviceWriteMemoryParams  *params = (WiimoteDeviceWriteMemoryParams*)buffer;
 
     params->address = OSSwapHostToBigConstInt32(address);
-    params->length  = [data length];
+    params->length  = length;
     memset(params->data, 0, sizeof(params->data));
-    memcpy(params->data, [data bytes], [data length]);
+    memcpy(params->data, data, length);
 
     return [self postCommand:WiimoteDeviceCommandTypeWriteMemory
-						data:commandData];
+						data:buffer
+                      length:sizeof(buffer)];
 }
 
-- (BOOL)readMemory:(NSRange)memoryRange target:(id)target action:(SEL)action
+- (BOOL)readMemory:(NSRange)memoryRange
+            target:(id)target
+            action:(SEL)action
 {
-	if(![self isConnected])
+    if(![self isConnected])
 		return NO;
 
 	return [m_ReadMemQueue readMemory:memoryRange
@@ -201,15 +211,11 @@
 							   action:action];
 }
 
-- (BOOL)injectReport:(NSUInteger)type data:(NSData*)data
+- (BOOL)injectReport:(NSUInteger)type
+                data:(const uint8_t*)data
+              length:(NSUInteger)length
 {
-    if(![self isConnected])
-        return NO;
-
-    WiimoteDeviceReport *report = [WiimoteDeviceReport
-                                            deviceReportWithType:type
-                                                            data:data
-                                                          device:self];
+    WiimoteDeviceReport *report = [WiimoteDeviceReport deviceReportWithType:type data:data length:length device:self];
 
     if(report == nil)
         return NO;
@@ -222,7 +228,8 @@
 {
     uint8_t param = 0;
     return [self postCommand:WiimoteDeviceCommandTypeGetState
-                        data:[NSData dataWithBytes:&param length:sizeof(param)]];
+                        data:&param
+                      length:sizeof(param)];
 }
 
 - (BOOL)requestReportType:(WiimoteDeviceReportType)type
@@ -233,15 +240,15 @@
     params.reportType   = type;
 
     return [self postCommand:WiimoteDeviceCommandTypeSetReportType
-						data:[NSData dataWithBytes:&params
-                                            length:sizeof(params)]];
+						data:(const uint8_t*)&params
+                      length:sizeof(params)];
 }
 
 - (BOOL)postVibrationAndLEDStates
 {
     return [self postCommand:WiimoteDeviceCommandTypeSetLEDState
-                        data:[NSData dataWithBytes:&m_LEDsState
-                                            length:sizeof(m_LEDsState)]];
+                        data:&m_LEDsState
+                      length:sizeof(m_LEDsState)];
 }
 
 - (BOOL)isVibrationEnabled
@@ -331,10 +338,13 @@
                     data:(void*)dataPointer
                   length:(size_t)dataLength
 {
-	[self handleReport:[WiimoteDeviceReport
-                                parseReportData:dataPointer
-                                         length:dataLength
-                                         device:self]];
+    if(![m_Report updateFromReportData:(const uint8_t*)dataPointer
+                                length:dataLength])
+    {
+        return;
+    }
+
+	[self handleReport:m_Report];
 }
 
 - (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel

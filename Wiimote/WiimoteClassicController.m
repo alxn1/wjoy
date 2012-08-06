@@ -130,12 +130,12 @@
                       positionChanged:newPosition];
 }
 
-- (void)handleCalibrationData:(NSData*)data
+- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
-    if([data length] < sizeof(m_CalibrationData))
+    if(length < sizeof(m_CalibrationData))
         return;
 
-    memcpy(&m_CalibrationData, [data bytes], sizeof(m_CalibrationData));
+    memcpy(&m_CalibrationData, data, sizeof(m_CalibrationData));
 
     m_CalibrationData.leftStick.x.max       /= 4;
     m_CalibrationData.leftStick.x.min       /= 4;
@@ -218,13 +218,13 @@
     [self setAnalogShift:WiimoteClassicControllerAnalogShiftTypeRight position:analogShiftPosition];
 }
 
-- (void)handleReport:(NSData*)extensionData
+- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
 {
-    if([extensionData length] < sizeof(WiimoteDeviceClassicControllerReport))
+    if(length < sizeof(WiimoteDeviceClassicControllerReport))
         return;
 
     const WiimoteDeviceClassicControllerReport *classicReport =
-                (const WiimoteDeviceClassicControllerReport*)[extensionData bytes];
+                (const WiimoteDeviceClassicControllerReport*)extensionData;
 
     WiimoteDeviceClassicControllerButtonState state = OSSwapBigToHostConstInt16(classicReport->buttonState);
 

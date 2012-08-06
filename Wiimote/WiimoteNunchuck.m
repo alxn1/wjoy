@@ -116,13 +116,13 @@
         [[self eventDispatcher] postNunchuck:self buttonReleased:button];
 }
 
-- (void)handleCalibrationData:(NSData*)data
+- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
-    if([data length] < sizeof(WiimoteDeviceNunchuckCalibrationData))
+    if(length < sizeof(WiimoteDeviceNunchuckCalibrationData))
         return;
 
 	const WiimoteDeviceNunchuckCalibrationData *calibrationData =
-			(const WiimoteDeviceNunchuckCalibrationData*)[data bytes];
+			(const WiimoteDeviceNunchuckCalibrationData*)data;
 
 	m_StickCalibrationData = calibrationData->stick;
     WiimoteDeviceCheckStickCalibration(m_StickCalibrationData, 0, 127, 255);
@@ -131,13 +131,13 @@
 	m_IsCalibrationDataReaded = YES;
 }
 
-- (void)handleReport:(NSData*)extensionData
+- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
 {
-    if([extensionData length] < sizeof(WiimoteDeviceNunchuckReport))
+    if(length < sizeof(WiimoteDeviceNunchuckReport))
         return;
 
     const WiimoteDeviceNunchuckReport *nunchuckReport =
-                (const WiimoteDeviceNunchuckReport*)([extensionData bytes]);
+                (const WiimoteDeviceNunchuckReport*)extensionData;
 
 	if(m_IsCalibrationDataReaded)
 	{

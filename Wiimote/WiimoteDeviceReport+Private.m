@@ -18,98 +18,64 @@
 	return nil;
 }
 
-- (id)initWithReportData:(const uint8_t*)data
-				  length:(NSUInteger)length
-				  device:(WiimoteDevice*)device
-{
-	self = [super init];
-	if(self == nil)
-		return nil;
-
-    const WiimoteDeviceReportHeader *header = (const WiimoteDeviceReportHeader*)data;
-
-	if(device	== nil  ||
-	   data		== NULL ||
-	   length < sizeof(WiimoteDeviceReportHeader) ||
-	   header->packetType != WiimoteDevicePacketTypeReport)
-	{
-		[self release];
-		return nil;
-	}
-
-	m_Device	= [device retain];
-	m_Wiimote	= nil;
-    m_Type		= header->reportType;
-	m_Data		= [[NSData alloc]
-						initWithBytes:data   + sizeof(WiimoteDeviceReportHeader)
-							   length:length - sizeof(WiimoteDeviceReportHeader)];
-
-	return self;
-}
-
-- (id)initWithType:(NSUInteger)type
-              data:(NSData*)data
-            device:(WiimoteDevice*)device
+- (id)initWithDevice:(WiimoteDevice*)device
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    if(device       == nil ||
-      [data length] == 0)
-    {
-        [self release];
-        return nil;
-    }
-
-    m_Device    = [device retain];
-    m_Wiimote   = nil;
-    m_Type      = type;
-    m_Data      = [data copy];
+    m_Device        = device;
+    m_Data          = NULL;
+    m_DataLength    = 0;
+    m_Type          = 0;
 
     return self;
 }
 
-- (void)dealloc
+- (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length
 {
-	[m_Data release];
-	[m_Device release];
-	[m_Wiimote release];
-	[super dealloc];
+    const WiimoteDeviceReportHeader *header = (const WiimoteDeviceReportHeader*)data;
+
+	if(data		== NULL ||
+	   length < sizeof(WiimoteDeviceReportHeader) ||
+	   header->packetType != WiimoteDevicePacketTypeReport)
+	{
+		return NO;
+	}
+
+	m_Wiimote       = nil;
+    m_Type          = header->reportType;
+	m_Data          = data   + sizeof(WiimoteDeviceReportHeader);
+    m_DataLength    = length - sizeof(WiimoteDeviceReportHeader);
+
+	return YES;
 }
 
 - (WiimoteDevice*)device
 {
-	return [[m_Device retain] autorelease];
+	return m_Device;
 }
 
 - (void)setWiimote:(Wiimote*)wiimote
 {
-	if(m_Wiimote == wiimote)
-		return;
-
-	[m_Wiimote release];
-	m_Wiimote = [wiimote retain];
-}
-
-+ (WiimoteDeviceReport*)parseReportData:(const uint8_t*)data
-								 length:(NSUInteger)length
-								 device:(WiimoteDevice*)device
-{
-	return [[[WiimoteDeviceReport alloc]
-                                initWithReportData:data
-                                            length:length
-                                            device:device] autorelease];
+	m_Wiimote = wiimote;
 }
 
 + (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
-                                        data:(NSData*)data
+                                        data:(const uint8_t*)data
+                                      length:(NSUInteger)length
                                       device:(WiimoteDevice*)device
 {
-    return [[[WiimoteDeviceReport alloc]
-                                initWithType:type
-                                        data:data
-                                      device:device] autorelease];
+    WiimoteDeviceReport *result = [[WiimoteDeviceReport alloc] initWithDevice:device];
+
+    if(result == nil)
+        return nil;
+
+    result->m_Type          = type;
+    result->m_Data          = data;
+    result->m_DataLength    = length;
+
+    return [result autorelease];
 }
 
 @end

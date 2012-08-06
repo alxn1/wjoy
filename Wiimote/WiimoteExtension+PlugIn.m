@@ -76,7 +76,7 @@
 {
 }
 
-- (void)handleReport:(NSData*)extensionData
+- (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
 {
 }
 
@@ -89,7 +89,10 @@
     [self autorelease];
 
     if(data != nil)
-        [self handleCalibrationData:data];
+    {
+        [self handleCalibrationData:(const uint8_t*)[data bytes]
+                             length:[data length]];
+    }
 }
 
 - (BOOL)beginReadCalibrationData:(WiimoteIOManager*)ioManager
@@ -108,7 +111,7 @@
     return YES;
 }
 
-- (void)handleCalibrationData:(NSData*)data
+- (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
 }
 

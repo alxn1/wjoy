@@ -77,12 +77,11 @@
 	if(m_CurrentMemHandler == nil)
 		return;
 
-    NSData                              *data         = [report data];
     const WiimoteDeviceReadMemoryReport *memoryReport =
-                                            (const WiimoteDeviceReadMemoryReport*)[data bytes];
+                                            (const WiimoteDeviceReadMemoryReport*)[report data];
 
-    if([report type] != WiimoteDeviceReportTypeReadMemory ||
-       [data length] < sizeof(WiimoteDeviceReadMemoryReport))
+    if([report type]    != WiimoteDeviceReportTypeReadMemory ||
+       [report length]  < sizeof(WiimoteDeviceReadMemoryReport))
     {
         return;
     }
@@ -101,9 +100,8 @@
                                 WiimoteDeviceReadMemoryReportDataSizeMask) >>
                                     WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
 
-    [m_CurrentMemHandler handleData:
-							[NSData dataWithBytes:memoryReport->data
-										   length:dataSize]];
+    [m_CurrentMemHandler handleData:memoryReport->data
+                             length:dataSize];
 
 	if([m_CurrentMemHandler isAllDataReaded])
         [self runNextHandler];
@@ -162,10 +160,9 @@
     params.address = OSSwapHostToBigConstInt32((uint32_t)memoryRange.location);
     params.length  = OSSwapHostToBigConstInt16((uint16_t)memoryRange.length);
 
-	NSData *commandData = [NSData dataWithBytes:&params length:sizeof(params)];
-
 	if([m_Device postCommand:WiimoteDeviceCommandTypeReadMemory
-						data:commandData])
+						data:(const uint8_t*)&params
+                      length:sizeof(params)])
     {
         m_CurrentMemHandler = [handler retain];
         return YES;

@@ -31,6 +31,7 @@
 		IOBluetoothL2CAPChannel			*m_DataChannel;
         IOBluetoothL2CAPChannel			*m_ControlChannel;
 
+        WiimoteDeviceReport             *m_Report;
 		WiimoteDeviceReadMemQueue		*m_ReadMemQueue;
 
         BOOL							 m_IsVibrationEnabled;
@@ -49,12 +50,21 @@
 - (NSData*)address;
 - (NSString*)addressString;
 
-- (BOOL)postCommand:(WiimoteDeviceCommandType)command data:(NSData*)data;
+- (BOOL)postCommand:(WiimoteDeviceCommandType)command
+               data:(const uint8_t*)data
+             length:(NSUInteger)length;
 
-- (BOOL)writeMemory:(NSUInteger)address data:(NSData*)data;
-- (BOOL)readMemory:(NSRange)memoryRange target:(id)target action:(SEL)action;
+- (BOOL)writeMemory:(NSUInteger)address
+               data:(const uint8_t*)data
+             length:(NSUInteger)length;
 
-- (BOOL)injectReport:(NSUInteger)type data:(NSData*)data;
+- (BOOL)readMemory:(NSRange)memoryRange
+            target:(id)target
+            action:(SEL)action;
+
+- (BOOL)injectReport:(NSUInteger)type
+                data:(const uint8_t*)data
+              length:(NSUInteger)length;
 
 - (BOOL)requestStateReport;
 - (BOOL)requestReportType:(WiimoteDeviceReportType)type;

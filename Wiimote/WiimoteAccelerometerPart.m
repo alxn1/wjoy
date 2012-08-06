@@ -82,7 +82,7 @@
     if(![m_Accelerometer isEnabled] || !m_IsCalibrationDataReaded)
         return;
 
-    if([[report data] length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
+    if([report length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
         return;
 
     WiimoteDeviceReportType reportType = [report type];
@@ -100,7 +100,7 @@
     }
 
 	const WiimoteDeviceButtonAndAccelerometerStateReport *stateReport =
-            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[[report data] bytes];
+            (const WiimoteDeviceButtonAndAccelerometerStateReport*)[report data];
 
     uint16_t x = (((uint16_t)stateReport->accelerometerX) << 2) | (((stateReport->accelerometerAdditionalX  >> 5) & 0x3) << 0);
     uint16_t y = (((uint16_t)stateReport->accelerometerY) << 2) | (((stateReport->accelerometerAdditionalYZ >> 5) & 0x1) << 1);

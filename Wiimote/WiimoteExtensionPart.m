@@ -13,7 +13,7 @@
 
 @interface WiimoteExtensionPart (PrivatePart)
 
-- (NSData*)extractExtensionReportPart:(WiimoteDeviceReport*)report;
+- (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
 - (void)processExtensionReport:(WiimoteDeviceReport*)report;
 
 - (void)extensionConnected;
@@ -149,14 +149,14 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 {
     [self processExtensionReport:report];
 
-    if([report type] != WiimoteDeviceReportTypeState ||
-      [[report data] length] < sizeof(WiimoteDeviceStateReport))
+    if([report type]    != WiimoteDeviceReportTypeState ||
+       [report length]  < sizeof(WiimoteDeviceStateReport))
     {
         return;
     }
 
     const WiimoteDeviceStateReport *state =
-                (const WiimoteDeviceStateReport*)[[report data] bytes];
+                (const WiimoteDeviceStateReport*)[report data];
 
     BOOL isExtensionConnected = ((state->flagsAndLEDState &
                         WiimoteDeviceStateReportFlagExtensionConnected) != 0);
@@ -183,7 +183,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 @implementation WiimoteExtensionPart (PrivatePart)
 
-- (NSData*)extractExtensionReportPart:(WiimoteDeviceReport*)report
+- (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
 {
     WiimoteDeviceReportType reportType              = [report type];
     NSUInteger              extensionBytesOffset    = 0;
@@ -217,14 +217,16 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
             break;
         
         default:
-            return nil;
+            return NULL;
     }
 
-    if([[report data] length] < (extensionBytesOffset + extensionBytesSize))
+    if([report length] < (extensionBytesOffset + extensionBytesSize))
         return nil;
 
-    return [NSData dataWithBytes:((const uint8_t*)[[report data] bytes]) + extensionBytesOffset
-                          length:extensionBytesSize];
+    if(length != NULL)
+        *length = extensionBytesSize;
+
+    return ([report data] + extensionBytesOffset);
 }
 
 - (void)processExtensionReport:(WiimoteDeviceReport*)report
@@ -232,24 +234,24 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     if(m_Extension == nil)
         return;
 
-    NSData *extensionReportPart = [self extractExtensionReportPart:report];
+    NSUInteger       length              = 0;
+    const uint8_t   *extensionReportPart = [self extractExtensionReportPart:report length:&length];
 
-    if(extensionReportPart == nil)
+    if(extensionReportPart == NULL)
         return;
 
-    [m_Extension handleReport:extensionReportPart];
+    [m_Extension handleReport:extensionReportPart length:length];
 }
 
 - (void)initializeExtensionPort
 {
-    NSMutableData *data = [NSMutableData dataWithLength:1];
+    uint8_t data = WiimoteDeviceRoutineInitValue1;
 
-    *((uint8_t*)[data mutableBytes]) = WiimoteDeviceRoutineInitValue1;
-    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress1 data:data];
+    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress1 data:&data length:sizeof(data)];
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 
-    *((uint8_t*)[data mutableBytes]) = WiimoteDeviceRoutineInitValue2;
-    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress2 data:data];
+    data = WiimoteDeviceRoutineInitValue2;
+    [[self ioManager] writeMemory:WiimoteDeviceRoutineInitAddress2 data:&data length:sizeof(data)];
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 }
 

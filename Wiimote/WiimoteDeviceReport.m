@@ -12,19 +12,24 @@
 
 @implementation WiimoteDeviceReport
 
-- (NSData*)data
-{
-	return [[m_Data retain] autorelease];
-}
-
 - (NSUInteger)type
 {
 	return m_Type;
 }
 
+- (const uint8_t*)data
+{
+    return m_Data;
+}
+
+- (NSUInteger)length
+{
+    return m_DataLength;
+}
+
 - (Wiimote*)wiimote
 {
-	return [[m_Wiimote retain] autorelease];
+	return m_Wiimote;
 }
 
 @end

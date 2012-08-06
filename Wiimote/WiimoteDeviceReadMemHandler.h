@@ -26,7 +26,7 @@
 - (NSRange)memoryRange;
 
 - (BOOL)isAllDataReaded;
-- (void)handleData:(NSData*)data;
+- (void)handleData:(const uint8_t*)data length:(NSUInteger)length;
 
 - (void)errorOccured;
 - (void)disconnected;
