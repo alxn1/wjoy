@@ -128,6 +128,21 @@
     WiimoteDeviceCheckStickCalibration(m_StickCalibrationData, 0, 127, 255);
 
     [m_Accelerometer setCalibrationData:&(calibrationData->accelerometer)];
+	
+	if([m_Accelerometer zeroX] == 0 ||
+	   [m_Accelerometer zeroY] == 0 ||
+	   [m_Accelerometer zeroZ] == 0)
+	{
+		[m_Accelerometer setHardwareZeroX:500 y:500 z:500];
+	}
+
+	if([m_Accelerometer gX] == 0 ||
+	   [m_Accelerometer gY] == 0 ||
+	   [m_Accelerometer gZ] == 0)
+	{
+		[m_Accelerometer setHardware1gX:700 y:700 z:700];
+	}
+
 	m_IsCalibrationDataReaded = YES;
 }
 

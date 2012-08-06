@@ -29,6 +29,14 @@
 
 @interface WiimoteAccelerometer (PlugIn)
 
+- (uint16_t)zeroX;
+- (uint16_t)zeroY;
+- (uint16_t)zeroZ;
+
+- (uint16_t)gX;
+- (uint16_t)gY;
+- (uint16_t)gZ;
+
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z;
 
 - (void)setHardwareZeroX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z;

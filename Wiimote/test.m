@@ -211,7 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device setDelegate:self];
     [m_Device setHighlightedLEDMask:WiimoteLEDFlagOne];
     [m_Device playConnectEffect];
-	[[m_Device accelerometer] setEnabled:YES];
+	//[[m_Device accelerometer] setEnabled:YES];
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
 	NSLog(@"%@", [Wiimote connectedDevices]);
@@ -274,8 +274,8 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension connected: %@", [extension name]);
-    if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
-        [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
+    //if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
+    //    [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
