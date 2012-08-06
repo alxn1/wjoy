@@ -103,9 +103,6 @@
 /* Begin PBXFileReference section */
 		0A2205D015C2A709004D168E /* WiiRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiiRemote.h; sourceTree = "<group>"; };
 		0A2205D115C2A709004D168E /* WiiRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiiRemote.m; sourceTree = "<group>"; };
-		0A2205D215C2A709004D168E /* WiiRemoteDiscovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiiRemoteDiscovery.h; sourceTree = "<group>"; };
-		0A2205D315C2A709004D168E /* WiiRemoteDiscovery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiiRemoteDiscovery.m; sourceTree = "<group>"; };
-		0A2205D415C2A709004D168E /* WiiRemotePrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiiRemotePrivate.h; sourceTree = "<group>"; };
 		0A2205EE15C2A72D004D168E /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 		0A2205F915C2A7B2004D168E /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		0A22060A15C2A84C004D168E /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,8 +190,6 @@
 		0A66C81115CBE8A800096DDA /* WiimoteAccelerometerPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteAccelerometerPart.m; sourceTree = "<group>"; };
 		0A66C82615CBF49000096DDA /* WiimoteEventDispatcher+Accelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventDispatcher+Accelerometer.h"; sourceTree = "<group>"; };
 		0A66C82715CBF49000096DDA /* WiimoteEventDispatcher+Accelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventDispatcher+Accelerometer.m"; sourceTree = "<group>"; };
-		0A66C83415CC004300096DDA /* definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
-		0A66C83515CC004300096DDA /* dynamics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dynamics.c; sourceTree = "<group>"; };
 		0A66C87C15CC0C5000096DDA /* Wiimote+PlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wiimote+PlugIn.h"; sourceTree = "<group>"; };
 		0A66C87D15CC0C5000096DDA /* Wiimote+PlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Wiimote+PlugIn.m"; sourceTree = "<group>"; };
 		0A6901C215C90EB8000D988D /* WiimoteUnknownExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteUnknownExtension.h; sourceTree = "<group>"; };
@@ -259,7 +254,7 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A2205F415C2A735004D168E /* unused code */,
+				0A2205F415C2A735004D168E /* unused code (DarwiinRemote) */,
 				0A2205BC15C2A6E4004D168E /* framework */,
 				0A2205BD15C2A6EC004D168E /* test */,
 			);
@@ -297,18 +292,13 @@
 			name = test;
 			sourceTree = "<group>";
 		};
-		0A2205F415C2A735004D168E /* unused code */ = {
+		0A2205F415C2A735004D168E /* unused code (DarwiinRemote) */ = {
 			isa = PBXGroup;
 			children = (
-				0A66C83415CC004300096DDA /* definitions.h */,
-				0A66C83515CC004300096DDA /* dynamics.c */,
-				0A2205D215C2A709004D168E /* WiiRemoteDiscovery.h */,
-				0A2205D315C2A709004D168E /* WiiRemoteDiscovery.m */,
 				0A2205D015C2A709004D168E /* WiiRemote.h */,
-				0A2205D415C2A709004D168E /* WiiRemotePrivate.h */,
 				0A2205D115C2A709004D168E /* WiiRemote.m */,
 			);
-			name = "unused code";
+			name = "unused code (DarwiinRemote)";
 			sourceTree = "<group>";
 		};
 		0A48911015C7FB3B00207478 /* base */ = {

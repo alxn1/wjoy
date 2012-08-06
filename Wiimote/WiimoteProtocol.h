@@ -10,6 +10,8 @@
 
 // WARNING!!! Wiimote use big-endian data format!!!
 
+// This file contain all hardware-specific type definitions for Wii Remote.
+
 #pragma push(pack)
 #pragma pack(1)
 

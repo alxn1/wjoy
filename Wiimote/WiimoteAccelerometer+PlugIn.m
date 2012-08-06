@@ -17,20 +17,6 @@
 
 @implementation WiimoteAccelerometer (PlugIn)
 
-- (void)setCalibrationData:(const WiimoteDeviceAccelerometerCalibrationData*)calibrationData
-{
-    uint16_t zeroX  = (((uint16_t)calibrationData->zero.x) << 2) | ((calibrationData->zero.additionalXYZ >> 0) & 0x3);
-    uint16_t zeroY  = (((uint16_t)calibrationData->zero.y) << 2) | ((calibrationData->zero.additionalXYZ >> 2) & 0x3);
-    uint16_t zeroZ  = (((uint16_t)calibrationData->zero.z) << 2) | ((calibrationData->zero.additionalXYZ >> 4) & 0x3);
-
-    uint16_t gX     = (((uint16_t)calibrationData->oneG.x) << 2) | ((calibrationData->oneG.additionalXYZ >> 0) & 0x3);
-    uint16_t gY     = (((uint16_t)calibrationData->oneG.y) << 2) | ((calibrationData->oneG.additionalXYZ >> 2) & 0x3);
-    uint16_t gZ     = (((uint16_t)calibrationData->oneG.z) << 2) | ((calibrationData->oneG.additionalXYZ >> 4) & 0x3);
-
-    [self setHardwareZeroX:zeroX y:zeroY z:zeroZ];
-    [self setHardware1gX:gX y:gY z:gZ];
-}
-
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
     double newX = (((double)x) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
@@ -72,6 +58,20 @@
     m_1gX = x;
     m_1gY = y;
     m_1gZ = z;
+}
+
+- (void)setCalibrationData:(const WiimoteDeviceAccelerometerCalibrationData*)calibrationData
+{
+    uint16_t zeroX  = (((uint16_t)calibrationData->zero.x) << 2) | ((calibrationData->zero.additionalXYZ >> 0) & 0x3);
+    uint16_t zeroY  = (((uint16_t)calibrationData->zero.y) << 2) | ((calibrationData->zero.additionalXYZ >> 2) & 0x3);
+    uint16_t zeroZ  = (((uint16_t)calibrationData->zero.z) << 2) | ((calibrationData->zero.additionalXYZ >> 4) & 0x3);
+
+    uint16_t gX     = (((uint16_t)calibrationData->oneG.x) << 2) | ((calibrationData->oneG.additionalXYZ >> 0) & 0x3);
+    uint16_t gY     = (((uint16_t)calibrationData->oneG.y) << 2) | ((calibrationData->oneG.additionalXYZ >> 2) & 0x3);
+    uint16_t gZ     = (((uint16_t)calibrationData->oneG.z) << 2) | ((calibrationData->oneG.additionalXYZ >> 4) & 0x3);
+
+    [self setHardwareZeroX:zeroX y:zeroY z:zeroZ];
+    [self setHardware1gX:gX y:gY z:gZ];
 }
 
 - (void)reset
