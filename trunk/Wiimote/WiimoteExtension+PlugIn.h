@@ -139,6 +139,12 @@ do it with registerExtensionClass: method. You can do it in + (void)load; method
     [WiimoteExtension registerExtensionClass:[MyExtension class]];
 }
 
+// you need to implement this method.
+- (NSString*)name
+{
+    return @"MyExtension";
+}
+
 @end
 
 */
