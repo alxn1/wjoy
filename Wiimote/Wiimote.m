@@ -124,11 +124,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     [m_VibrationPart setVibrationEnabled:enabled];
 }
 
-- (WiimoteAccelerometer*)accelerometer
-{
-    return [m_AccelerometerPart accelerometer];
-}
-
 - (BOOL)isButtonPressed:(WiimoteButtonType)button
 {
     return [m_ButtonPart isButtonPressed:button];
@@ -142,6 +137,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (BOOL)isBatteryLevelLow
 {
     return [m_BatteryPart isBatteryLevelLow];
+}
+
+- (WiimoteAccelerometer*)accelerometer
+{
+    return [m_AccelerometerPart accelerometer];
 }
 
 - (WiimoteExtension*)connectedExtension

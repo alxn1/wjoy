@@ -77,14 +77,14 @@
 	if(m_CurrentMemHandler == nil)
 		return;
 
-    const WiimoteDeviceReadMemoryReport *memoryReport =
-                                            (const WiimoteDeviceReadMemoryReport*)[report data];
-
     if([report type]    != WiimoteDeviceReportTypeReadMemory ||
        [report length]  < sizeof(WiimoteDeviceReadMemoryReport))
     {
         return;
     }
+
+    const WiimoteDeviceReadMemoryReport *memoryReport =
+                                            (const WiimoteDeviceReadMemoryReport*)[report data];
 
     if(((memoryReport->errorAndDataSize &
             WiimoteDeviceReadMemoryReportErrorMask) >>
@@ -100,8 +100,7 @@
                                 WiimoteDeviceReadMemoryReportDataSizeMask) >>
                                     WiimoteDeviceReadMemoryReportDataSizeOffset) + 1;
 
-    [m_CurrentMemHandler handleData:memoryReport->data
-                             length:dataSize];
+    [m_CurrentMemHandler handleData:memoryReport->data length:dataSize];
 
 	if([m_CurrentMemHandler isAllDataReaded])
         [self runNextHandler];

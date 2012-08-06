@@ -67,13 +67,13 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (BOOL)isVibrationEnabled;
 - (void)setVibrationEnabled:(BOOL)enabled;
 
-- (WiimoteAccelerometer*)accelerometer;
-
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 
 // 0.0 - 100.0 %, or -1 if undefined
 - (double)batteryLevel;
 - (BOOL)isBatteryLevelLow;
+
+- (WiimoteAccelerometer*)accelerometer;
 
 - (WiimoteExtension*)connectedExtension;
 - (void)disconnectExtension;
