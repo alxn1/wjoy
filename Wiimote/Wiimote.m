@@ -124,24 +124,9 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     [m_VibrationPart setVibrationEnabled:enabled];
 }
 
-- (BOOL)isAccelerometerEnabled
+- (WiimoteAccelerometer*)accelerometer
 {
-    return [m_AccelerometerPart isEnabled];
-}
-
-- (void)setAccelerometerEnabled:(BOOL)enabled
-{
-    [m_AccelerometerPart setEnabled:enabled];
-}
-
-- (double)accelerometerPitch
-{
-    return [m_AccelerometerPart pitch];
-}
-
-- (double)accelerometerRoll
-{
-    return [m_AccelerometerPart roll];
+    return [m_AccelerometerPart accelerometer];
 }
 
 - (BOOL)isButtonPressed:(WiimoteButtonType)button

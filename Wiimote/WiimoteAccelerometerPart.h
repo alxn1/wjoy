@@ -8,29 +8,15 @@
 
 #import "WiimotePart.h"
 
+@class WiimoteAccelerometer;
+
 @interface WiimoteAccelerometerPart : WiimotePart
 {
     @private
-        BOOL        m_IsCalibrationDataReaded;
-
-        double      m_Pitch;
-        double      m_Roll;
-
-        uint16_t    m_ZeroX;
-        uint16_t    m_ZeroY;
-        uint16_t    m_ZeroZ;
-
-        uint16_t    m_1gX;
-        uint16_t    m_1gY;
-        uint16_t    m_1gZ;
-
-        BOOL        m_IsEnabled;
+        BOOL                     m_IsCalibrationDataReaded;
+        WiimoteAccelerometer    *m_Accelerometer;
 }
 
-- (BOOL)isEnabled;
-- (void)setEnabled:(BOOL)enabled;
-
-- (double)pitch;
-- (double)roll;
+- (WiimoteAccelerometer*)accelerometer;
 
 @end
