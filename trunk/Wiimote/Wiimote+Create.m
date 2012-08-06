@@ -32,12 +32,6 @@
 
 @implementation Wiimote (Create)
 
-- (void)initialize
-{
-    [self requestUpdateState];
-    [self deviceConfigurationChanged];
-}
-
 - (void)initParts
 {
     m_LEDPart           = (WiimoteLEDPart*)             [self partWithClass:[WiimoteLEDPart class]];
@@ -76,7 +70,8 @@
 	[m_Device setDelegate:self];
 
 	[self initParts];
-    [self initialize];
+    [self requestUpdateState];
+    [self deviceConfigurationChanged];
 
     [Wiimote wiimoteConnected:self];
 	[[m_PartSet eventDispatcher] postConnectedNotification];

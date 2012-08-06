@@ -35,9 +35,3 @@
 - (id)delegate;
 
 @end
-
-/*
-
-    You can add cathegory to WiimoteEventDispatcher, if you plugin need to send events.
-
-*/

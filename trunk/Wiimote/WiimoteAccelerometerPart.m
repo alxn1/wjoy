@@ -121,7 +121,7 @@
 - (void)beginReadCalibrationData
 {
     NSRange memRange = NSMakeRange(
-                                WiimoteDeviceAccelerometerCalibrationDataAddress,
+                                WiimoteDeviceCalibrationDataAddress,
                                 sizeof(WiimoteDeviceAccelerometerCalibrationData));
 
     if(![[self ioManager] readMemory:memRange

@@ -45,7 +45,7 @@
         return nil;
     }
 
-    if(![manager readMemory:NSMakeRange(WiimoteDeviceRoutineProbeAddress, [m_Signature length])
+    if(![manager readMemory:NSMakeRange(WiimoteDeviceRoutineExtensionProbeAddress, [m_Signature length])
                      target:self
                      action:@selector(ioManagerDataReaded:)])
     {

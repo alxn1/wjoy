@@ -1,0 +1,82 @@
+//
+//  WiimoteProtocolUtils.h
+//  Wiimote
+//
+//  Created by alxn1 on 06.08.12.
+//  Copyright 2012 alxn1. All rights reserved.
+//
+
+#define WiimoteDeviceFloatEpsilon 0.075f
+
+#define WiimoteDeviceIsFloatEqual(a, b) \
+			(fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
+
+#define WiimoteDeviceIsFloatEqualEx(a, b, epsilon) \
+			(fabs(((a) - (b))) <= (epsilon))
+
+#define WiimoteDeviceIsPointEqual(a, b) \
+			(WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
+			 WiimoteDeviceIsFloatEqual((a).y, (b).y))
+
+#define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
+            { \
+                if((stickCalibration).x.center == 0) \
+                    (stickCalibration).x.center = (centerValue); \
+            \
+                if((stickCalibration).y.center == 0) \
+                    (stickCalibration).y.center = (centerValue); \
+            \
+                if((stickCalibration).x.max == 0) \
+                    (stickCalibration).x.max = (maxValue); \
+            \
+                if((stickCalibration).y.max == 0) \
+                    (stickCalibration).y.max = (maxValue); \
+            }
+
+#define WiimoteDeviceNormalizeStickCoordinateEx(value, min, center, max, result) \
+            { \
+                float wiimote_device_norm_value_; \
+            \
+                if((value) <= (center)) \
+                { \
+                    wiimote_device_norm_value_ = ((float)(value) - (float)(min)) / \
+                                                 ((float)(center) - (float)(min)) - 1.0f; \
+                } \
+                else \
+                { \
+                    wiimote_device_norm_value_ = ((float)(value) - (float)(center)) / \
+                                                 ((float)(max) - (float)(center)); \
+                } \
+            \
+                if(wiimote_device_norm_value_ < -1.0f) \
+                    wiimote_device_norm_value_ = -1.0f; \
+            \
+                if(wiimote_device_norm_value_ > 1.0f) \
+                    wiimote_device_norm_value_ = 1.0f; \
+            \
+                result = wiimote_device_norm_value_; \
+            }
+
+#define WiimoteDeviceNormalizeStickCoordinate(value, result) \
+                WiimoteDeviceNormalizeStickCoordinateEx((value), 0, 127, 255, (result))
+
+#define WiimoteDeviceNormalizeStick(pointX, pointY, stickCalibrationData, resultPoint) \
+            { \
+                WiimoteDeviceNormalizeStickCoordinateEx( \
+                                                (pointX), \
+                                                (stickCalibrationData).x.min, \
+                                                (stickCalibrationData).x.center, \
+                                                (stickCalibrationData).x.max, \
+                                                (resultPoint).x); \
+            \
+                WiimoteDeviceNormalizeStickCoordinateEx( \
+                                                (pointY), \
+                                                (stickCalibrationData).y.min, \
+                                                (stickCalibrationData).y.center, \
+                                                (stickCalibrationData).y.max, \
+                                                (resultPoint).y); \
+            }
+
+#define WiimoteDeviceNormilizeShift(shiftValue, min, center, max, result) \
+            WiimoteDeviceNormalizeStickCoordinateEx((shiftValue), (min), (center), (max), (result)); \
+            (result) = ((result) + 1.0f) * 0.5f

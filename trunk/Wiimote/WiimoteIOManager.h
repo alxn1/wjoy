@@ -37,23 +37,3 @@
 - (Wiimote*)owner;
 
 @end
-
-/*
-
-WiimoteIOManager can be used for interact with read hardware. You can read
-data from wiimote, write data to it, and post command to wiimote.
-
-In addition, you can inject some data as report, what readed from wiimote real
-hardware, and all wiimote parts and extension get this report for processing.
-
-Method
-
-- (BOOL)readMemory:(NSRange)memoryRange
-			target:(id)target
-			action:(SEL)action;
-
-is asynchonous. It start read some memory, and on complete it call action method
-on target. If wiimote disconnected before completion read operation, action called
-with nil parameter. If read complete with error - with NSData with zero length.
-If all data readed successfully, NSData in parameter will be contain readed data.
-*/

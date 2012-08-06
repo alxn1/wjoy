@@ -29,10 +29,3 @@
 - (Wiimote*)wiimote;
 
 @end
-
-/*
-    WiimoteDeviceReport - it's class, that contains report from device.
-    WiimoteDeviceReport parse only header with type of report, and strip this
-    header from data. Methods - (const uint8_t*)data;
-    - (NSUInteger)length; return data withoud this header.
-*/
