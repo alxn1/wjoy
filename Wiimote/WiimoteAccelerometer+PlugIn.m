@@ -17,36 +17,6 @@
 
 @implementation WiimoteAccelerometer (PlugIn)
 
-- (uint16_t)zeroX
-{
-	return m_ZeroX;
-}
-
-- (uint16_t)zeroY
-{
-	return m_ZeroY;
-}
-
-- (uint16_t)zeroZ
-{
-	return m_ZeroZ;
-}
-
-- (uint16_t)gX
-{
-	return m_1gX;
-}
-
-- (uint16_t)gY
-{
-	return m_1gY;
-}
-
-- (uint16_t)gZ
-{
-	return m_1gZ;
-}
-
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
     double newX = (((double)x) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
@@ -102,6 +72,20 @@
 
     [self setHardwareZeroX:zeroX y:zeroY z:zeroZ];
     [self setHardware1gX:gX y:gY z:gZ];
+}
+
+- (BOOL)isHardwareZeroValuesInvalid
+{
+    return (m_ZeroX == 0 ||
+            m_ZeroY == 0 ||
+            m_ZeroZ == 0);
+}
+
+- (BOOL)isHardware1gValuesInvalid
+{
+    return (m_1gX == 0 ||
+            m_1gY == 0 ||
+            m_1gZ == 0);
 }
 
 - (void)reset

@@ -14,6 +14,7 @@
 
 - (void)beginReadCalibrationData;
 - (void)handleCalibrationData:(NSData*)data;
+- (void)checkCalibrationData;
 
 @end
 
@@ -145,22 +146,18 @@
                 (const WiimoteDeviceAccelerometerCalibrationData*)[data bytes];
 
     [m_Accelerometer setCalibrationData:calibrationData];
-
-	if([m_Accelerometer zeroX] == 0 ||
-	   [m_Accelerometer zeroY] == 0 ||
-	   [m_Accelerometer zeroZ] == 0)
-	{
-		[m_Accelerometer setHardwareZeroX:500 y:500 z:500];
-	}
-
-	if([m_Accelerometer gX] == 0 ||
-	   [m_Accelerometer gY] == 0 ||
-	   [m_Accelerometer gZ] == 0)
-	{
-		[m_Accelerometer setHardware1gX:600 y:600 z:600];
-	}
+	[self checkCalibrationData];
 
     m_IsCalibrationDataReaded = YES;
+}
+
+- (void)checkCalibrationData
+{
+    if([m_Accelerometer isHardwareZeroValuesInvalid])
+        [m_Accelerometer setHardwareZeroX:500 y:500 z:500];
+
+    if([m_Accelerometer isHardware1gValuesInvalid])
+        [m_Accelerometer setHardware1gX:600 y:600 z:600];
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer

@@ -10,8 +10,8 @@
 
 @interface WiimoteClassicController (PrivatePart)
 
-- (void)reset;
 - (void)checkCalibrationData;
+- (void)reset;
 
 @end
 
@@ -236,6 +236,12 @@
 
 @implementation WiimoteClassicController (PrivatePart)
 
+- (void)checkCalibrationData
+{
+    WiimoteDeviceCheckStickCalibration(m_CalibrationData.leftStick,  0, 31, 63);
+    WiimoteDeviceCheckStickCalibration(m_CalibrationData.rightStick, 0, 15, 31);
+}
+
 - (void)reset
 {
     for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)
@@ -249,12 +255,6 @@
 
     memset(&m_CalibrationData, 0, sizeof(m_CalibrationData));
     [self checkCalibrationData];
-}
-
-- (void)checkCalibrationData
-{
-    WiimoteDeviceCheckStickCalibration(m_CalibrationData.leftStick,  0, 31, 63);
-    WiimoteDeviceCheckStickCalibration(m_CalibrationData.rightStick, 0, 15, 31);
 }
 
 @end
