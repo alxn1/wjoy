@@ -211,7 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device setDelegate:self];
     [m_Device setHighlightedLEDMask:WiimoteLEDFlagOne];
     [m_Device playConnectEffect];
-	[[m_Device accelerometer] setEnabled:YES]; // TODO: test enable/disable state!!!
+	[[m_Device accelerometer] setEnabled:YES];
     [m_Device setIREnabled:YES];
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
@@ -274,7 +274,6 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
-    // TODO: test enable/disable state!!!
     NSLog(@"Extension connected: %@", [extension name]);
     if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
         [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
@@ -374,9 +373,9 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote irPointPositionChanged:(WiimoteIRPoint*)point
 {
     if([point isOutOfView])
-        NSLog(@"IR point %lli os out of view", [point index]);
+        NSLog(@"IR point %li os out of view", [point index]);
     else
-        NSLog(@"IR point position: %.0f %.0f", [point position].x, [point position].y);
+        NSLog(@"IR point position (%li): %.0f %.0f", [point index], [point position].x, [point position].y);
 }
 
 @end
