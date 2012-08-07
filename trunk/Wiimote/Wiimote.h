@@ -16,6 +16,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 @class WiimoteDevice;
 @class WiimotePartSet;
+@class WiimoteIRPart;
 @class WiimoteLEDPart;
 @class WiimoteButtonPart;
 @class WiimoteBatteryPart;
@@ -30,6 +31,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
         WiimotePartSet              *m_PartSet;
         NSString                    *m_ModelName;
 
+        WiimoteIRPart               *m_IRPart;
         WiimoteLEDPart              *m_LEDPart;
         WiimoteButtonPart           *m_ButtonPart;
         WiimoteBatteryPart          *m_BatteryPart;
@@ -72,6 +74,11 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 // 0.0 - 100.0 %, or -1 if undefined
 - (double)batteryLevel;
 - (BOOL)isBatteryLevelLow;
+
+- (BOOL)isIREnabled;
+- (void)setIREnabled:(BOOL)enabled;
+
+- (WiimoteIRPoint*)irPoint:(NSUInteger)index;
 
 - (WiimoteAccelerometer*)accelerometer;
 

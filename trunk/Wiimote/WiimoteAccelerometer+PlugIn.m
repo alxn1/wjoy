@@ -96,6 +96,8 @@
 
     m_Pitch     = 0.0;
     m_Roll      = 0.0;
+
+    m_IsEnabled = NO;
 }
 
 - (id)delegate

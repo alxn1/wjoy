@@ -68,7 +68,7 @@
 	if(m_CurrentMemHandler == nil)
 		return [self runHandler:handler];
 
-	[m_ReadMemHandlersQueue addObject:handler];
+    [self addHandlerToQueue:handler];
 	return YES;
 }
 

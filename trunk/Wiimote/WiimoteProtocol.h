@@ -18,6 +18,7 @@
 #import "WiimoteProtocolBase.h"
 #import "WiimoteProtocolCommand.h"
 #import "WiimoteProtocolReport.h"
+#import "WiimoteProtocolIR.h"
 #import "WiimoteProtocolCalibration.h"
 #import "WiimoteProtocolExtension.h"
 #import "WiimoteProtocolNunchuck.h"

@@ -56,10 +56,11 @@ typedef enum
     WiimoteDeviceStateReportFlagBatteryIsLow		= 0x01,
     WiimoteDeviceStateReportFlagExtensionConnected	= 0x02,
     WiimoteDeviceStateReportFlagSpeakerEnabled		= 0x04,
-    WiimoteDeviceStateReportFlagIRCameraEnabled     = 0x08
+    WiimoteDeviceStateReportFlagIREnabled           = 0x08
 } WiimoteDeviceStateReportFlag;
 
-typedef struct {
+typedef struct
+{
     uint8_t packetType;
     uint8_t reportType;
 } WiimoteDeviceReportHeader;
