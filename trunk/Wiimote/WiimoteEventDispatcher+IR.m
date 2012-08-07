@@ -20,9 +20,12 @@
 
 - (void)postIRPointPositionChangedNotification:(WiimoteIRPoint*)point
 {
-    [self postNotification:WiimoteIRPointPositionChangedNotification
-                     param:point
-                       key:WiimoteIRPointKey];
+    if([self isStateNotificationsEnabled])
+    {
+        [self postNotification:WiimoteIRPointPositionChangedNotification
+                         param:point
+                           key:WiimoteIRPointKey];
+    }
 }
 
 @end
