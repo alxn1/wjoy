@@ -245,8 +245,9 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)initializeExtensionPort
 {
-    uint8_t data = WiimoteDeviceRoutineExtensionInitValue1;
+    uint8_t data;
 
+    data = WiimoteDeviceRoutineExtensionInitValue1;
     [[self ioManager] writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
 	[[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]];
 
