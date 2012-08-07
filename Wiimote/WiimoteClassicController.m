@@ -188,8 +188,6 @@
     if(!m_IsCalibrationDataReaded)
         return;
 
-    // TODO: remove all magic constants ;)
-
 	uint8_t leftStickY  = ((analogData[1] >> 0) & 0x3F);
 	uint8_t leftStickX  = ((analogData[0] >> 0) & 0x3F);
 

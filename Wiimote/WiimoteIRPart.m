@@ -19,7 +19,7 @@
 - (void)enableHardware:(WiimoteDeviceIRMode)irMode;
 - (void)disableHardware;
 
-- (void)setPoint:(NSUInteger)index position:(NSPoint)position;
+- (void)setPoint:(NSUInteger)index position:(NSPoint)newPosition;
 - (void)setPointOutOfView:(NSUInteger)index;
 
 - (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length;
@@ -45,7 +45,7 @@
     m_IsHardwareEnabled = NO;
     m_IRReportMode      = -1;
     m_ReportType        = -1;
-    m_Points            = [NSArray arrayWithObjects:
+    m_Points            = [[NSArray alloc] initWithObjects:
                                     [WiimoteIRPoint pointWithOwner:owner index:0],
                                     [WiimoteIRPoint pointWithOwner:owner index:1],
                                     [WiimoteIRPoint pointWithOwner:owner index:2],
@@ -133,11 +133,10 @@
             break;
 
         default:
-            [self disableHardware];
             return;
     }
 
-    if(reportType != m_ReportType)
+    if(m_ReportType != reportType)
     {
         [self enableHardware:[self irModeFromReportType:reportType]];
         m_ReportType = reportType;
@@ -242,17 +241,17 @@
     m_IRReportMode      = -1;
 }
 
-- (void)setPoint:(NSUInteger)index position:(NSPoint)position
+- (void)setPoint:(NSUInteger)index position:(NSPoint)newPosition
 {
     WiimoteIRPoint *point = [m_Points objectAtIndex:index];
 
     if(![point isOutOfView] &&
-        WiimoteDeviceIsPointEqualEx([point position], position, 1.0))
+        WiimoteDeviceIsPointEqualEx([point position], newPosition, 1.0))
     {
         return;
     }
 
-    [point setPosition:position];
+    [point setPosition:newPosition];
     [point setOutOfView:NO];
 
     [[self eventDispatcher] postIRPointPositionChangedNotification:point];
@@ -288,7 +287,7 @@
         x = (((uint16_t)data[3]) << 2) | ((data[2] >> 0) & 0x3);
         y = (((uint16_t)data[4]) << 2) | ((data[2] >> 2) & 0x3);
 
-        if(x >= 0x3FF && y >= 0x3FF)
+        if(y >= 0x3FF)
             [self setPointOutOfView:index + 1];
         else
             [self setPoint:index + 1 position:NSMakePoint(x + 1, y + 1)];
@@ -305,7 +304,7 @@
         uint16_t x = (((uint16_t)data[i + 0]) << 2) | ((data[i + 2] >> 4) & 0x3);
         uint16_t y = (((uint16_t)data[i + 1]) << 2) | ((data[i + 2] >> 6) & 0x3);
 
-        if(x >= 0x3FF && y >= 0x3FF)
+        if(y >= 0x3FF)
             [self setPointOutOfView:i];
         else
             [self setPoint:i position:NSMakePoint(x + 1, y + 1)];

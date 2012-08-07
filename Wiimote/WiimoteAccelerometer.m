@@ -36,9 +36,9 @@
     if(m_IsEnabled == enabled)
         return;
 
+	[self reset];
     m_IsEnabled = enabled;
 
-    [self reset];
     [m_Delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
 }
 

@@ -37,7 +37,7 @@
 + (NSRange)calibrationDataMemoryRange
 {
     return NSMakeRange(
-                WiimoteDeviceRoutineExtensionCalibrationDataAddress,
+				WiimoteDeviceRoutineExtensionCalibrationDataAddress,
                 WiimoteDeviceRoutineExtensionCalibrationDataSize);
 }
 
