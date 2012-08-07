@@ -7,11 +7,10 @@
 //
 
 #import "AVAudioSource.h"
+#import "AVMutableAudioPacket.h"
 
 #import "avformat.h"
 #import "avcodec.h"
-
-@class AVMutableAudioPacket;
 
 @interface AVFileAudioSource : AVAudioSource
 {

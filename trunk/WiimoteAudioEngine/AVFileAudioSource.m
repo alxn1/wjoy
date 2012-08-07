@@ -7,7 +7,6 @@
 //
 
 #import "AVFileAudioSource.h"
-#import "AVMutableAudioPacket.h"
 
 @interface AVFileAudioSource (PrivatePart)
 
