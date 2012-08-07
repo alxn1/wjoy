@@ -14,18 +14,22 @@ NSString *WiimoteButtonPresedNotification                           = @"WiimoteB
 NSString *WiimoteButtonReleasedNotification                         = @"WiimoteButtonReleasedNotification";
 NSString *WiimoteVibrationStateChangedNotification                  = @"WiimoteVibrationStateChangedNotification";
 NSString *WiimoteHighlightedLEDMaskChangedNotification              = @"WiimoteHighlightedLEDMaskChangedNotification";
+NSString *WiimoteBatteryLevelUpdatedNotification                    = @"WiimoteBatteryLevelUpdatedNotification";
+NSString *WiimoteIREnabledStateChangedNotification                  = @"WiimoteIREnabledStateChangedNotification";
+NSString *WiimoteIRPointPositionChangedNotification                 = @"WiimoteIRPointPositionChangedNotification";
 NSString *WiimoteAccelerometerEnabledStateChangedNotification       = @"WiimoteAccelerometerEnabledStateChangedNotification";
 NSString *WiimoteAccelerometerGravityChangedNotification            = @"WiimoteAccelerometerGravityChangedNotification";
 NSString *WiimoteAccelerometerAnglesChangedNotification				= @"WiimoteAccelerometerAnglesChangedNotification";
 NSString *WiimoteExtensionConnectedNotification                     = @"WiimoteExtensionConnectedNotification";
 NSString *WiimoteExtensionDisconnectedNotification                  = @"WiimoteExtensionDisconnectedNotification";
-NSString *WiimoteBatteryLevelUpdatedNotification                    = @"WiimoteBatteryLevelUpdatedNotification";
 
 NSString *WiimoteButtonKey                                          = @"WiimoteButtonKey";
 NSString *WiimoteVibrationStateKey                                  = @"WiimoteVibrationStateKey";
 NSString *WiimoteHighlightedLEDMaskKey                              = @"WiimoteHighlightedLEDMaskKey";
 NSString *WiimoteBatteryLevelKey                                    = @"WiimoteBatteryLevelKey";
 NSString *WiimoteIsBatteryLevelLowKey                               = @"WiimoteIsBatteryLevelLowKey";
+NSString *WiimoteIREnabledStateKey                                  = @"WiimoteIREnabledStateKey";
+NSString *WiimoteIRPointKey                                         = @"WiimoteIRPointKey";
 NSString *WiimoteAccelerometerEnabledStateKey                       = @"WiimoteAccelerometerEnabledStateKey";
 NSString *WiimoteAccelerometerGravityX                              = @"WiimoteAccelerometerGravityX";
 NSString *WiimoteAccelerometerGravityY                              = @"WiimoteAccelerometerGravityY";
@@ -53,6 +57,14 @@ NSString *WiimoteExtensionKey                                       = @"WiimoteE
 }
 
 - (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote irEnabledStateChanged:(BOOL)enabled
+{
+}
+
+- (void)wiimote:(Wiimote*)wiimote irPointPositionChanged:(WiimoteIRPoint*)point
 {
 }
 

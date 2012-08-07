@@ -6,10 +6,18 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
+#import "WiimoteIRPoint.h"
 #import "WiimoteNunchuckDelegate.h"
 #import "WiimoteClassicControllerDelegate.h"
 
-#define WiimoteButtonCount 11
+#define WiimoteButtonCount  11
+
+#define WiimoteIRPointCount 4
+
+#define WiimoteIRMinX       1.0
+#define WiimoteIRMinY       1.0
+#define WiimoteIRMaxX       1024.0
+#define WiimoteIRMaxY       768.0
 
 typedef enum
 {
@@ -40,6 +48,8 @@ FOUNDATION_EXPORT NSString *WiimoteButtonReleasedNotification;
 FOUNDATION_EXPORT NSString *WiimoteVibrationStateChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteHighlightedLEDMaskChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteBatteryLevelUpdatedNotification;
+FOUNDATION_EXPORT NSString *WiimoteIREnabledStateChangedNotification;
+FOUNDATION_EXPORT NSString *WiimoteIRPointPositionChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerEnabledStateChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityChangedNotification;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerAnglesChangedNotification;
@@ -52,6 +62,8 @@ FOUNDATION_EXPORT NSString *WiimoteVibrationStateKey;
 FOUNDATION_EXPORT NSString *WiimoteHighlightedLEDMaskKey;
 FOUNDATION_EXPORT NSString *WiimoteBatteryLevelKey;
 FOUNDATION_EXPORT NSString *WiimoteIsBatteryLevelLowKey;
+FOUNDATION_EXPORT NSString *WiimoteIREnabledStateKey;
+FOUNDATION_EXPORT NSString *WiimoteIRPointKey;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerEnabledStateKey;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityX;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityY;
@@ -70,6 +82,8 @@ FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 - (void)wiimote:(Wiimote*)wiimote vibrationStateChanged:(BOOL)isVibrationEnabled;
 - (void)wiimote:(Wiimote*)wiimote highlightedLEDMaskChanged:(NSUInteger)mask;
 - (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow;
+- (void)wiimote:(Wiimote*)wiimote irEnabledStateChanged:(BOOL)enabled;
+- (void)wiimote:(Wiimote*)wiimote irPointPositionChanged:(WiimoteIRPoint*)point;
 - (void)wiimote:(Wiimote*)wiimote accelerometerEnabledStateChanged:(BOOL)enabled;
 - (void)wiimote:(Wiimote*)wiimote accelerometerChangedGravityX:(double)x y:(double)y z:(double)z;
 - (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(double)pitch roll:(double)roll;

@@ -12,6 +12,7 @@
 
 #import "WiimoteDevice.h"
 
+#import "WiimoteIRPart.h"
 #import "WiimoteLEDPart.h"
 #import "WiimoteButtonPart.h"
 #import "WiimoteBatteryPart.h"
@@ -34,6 +35,7 @@
 
 - (void)initParts
 {
+    m_IRPart            = (WiimoteIRPart*)              [self partWithClass:[WiimoteIRPart class]];
     m_LEDPart           = (WiimoteLEDPart*)             [self partWithClass:[WiimoteLEDPart class]];
     m_ButtonPart        = (WiimoteButtonPart*)          [self partWithClass:[WiimoteButtonPart class]];
     m_BatteryPart       = (WiimoteBatteryPart*)         [self partWithClass:[WiimoteBatteryPart class]];

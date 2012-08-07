@@ -1,0 +1,323 @@
+//
+//  WiimoteIRPart.m
+//  Wiimote
+//
+//  Created by alxn1 on 07.08.12.
+//  Copyright 2012 alxn1. All rights reserved.
+//
+
+#import "WiimoteIRPart.h"
+#import "WiimoteProtocol.h"
+#import "WiimoteIRPoint+Private.h"
+#import "WiimoteEventDispatcher+IR.h"
+#import "Wiimote+PlugIn.h"
+
+@interface WiimoteIRPart (PrivatePart)
+
+- (WiimoteDeviceIRMode)irModeFromReportType:(WiimoteDeviceReportType)reportType;
+
+- (void)enableHardware:(WiimoteDeviceIRMode)irMode;
+- (void)disableHardware;
+
+- (void)setPoint:(NSUInteger)index position:(NSPoint)position;
+- (void)setPointOutOfView:(NSUInteger)index;
+
+- (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length;
+
+@end
+
+@implementation WiimoteIRPart
+
++ (void)load
+{
+    [WiimotePart registerPartClass:[WiimoteIRPart class]];
+}
+
+- (id)initWithOwner:(Wiimote*)owner
+    eventDispatcher:(WiimoteEventDispatcher*)dispatcher
+          ioManager:(WiimoteIOManager*)ioManager
+{
+    self = [super initWithOwner:owner eventDispatcher:dispatcher ioManager:ioManager];
+    if(self == nil)
+        return nil;
+
+    m_IsEnabled         = NO;
+    m_IsHardwareEnabled = NO;
+    m_IRReportMode      = -1;
+    m_ReportType        = -1;
+    m_Points            = [NSArray arrayWithObjects:
+                                    [WiimoteIRPoint pointWithOwner:owner index:0],
+                                    [WiimoteIRPoint pointWithOwner:owner index:1],
+                                    [WiimoteIRPoint pointWithOwner:owner index:2],
+                                    [WiimoteIRPoint pointWithOwner:owner index:3],
+                                    nil];
+
+    return self;
+}
+
+- (void)dealloc
+{
+    [m_Points release];
+    [super dealloc];
+}
+
+- (BOOL)isEnabled
+{
+    return m_IsEnabled;
+}
+
+- (void)setEnabled:(BOOL)enabled
+{
+    if(m_IsEnabled == enabled)
+        return;
+
+    if(!enabled)
+        [self disableHardware];
+
+    m_IsEnabled     = enabled;
+    m_IRReportMode  = -1;
+    m_ReportType    = -1;
+
+    [[self owner] deviceConfigurationChanged];
+    [[self eventDispatcher] postIREnabledStateChangedNotification:enabled];
+}
+
+- (WiimoteIRPoint*)point:(NSUInteger)index
+{
+    return [m_Points objectAtIndex:index];
+}
+
+- (NSSet*)allowedReportTypeSet
+{
+    static NSSet *allowedReportTypeSet = nil;
+
+    if(![self isEnabled])
+        return nil;
+
+    if(allowedReportTypeSet == nil)
+    {
+        allowedReportTypeSet = [[NSSet alloc] initWithObjects:
+            [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState],
+            [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState],
+            [NSNumber numberWithInteger:WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes],
+            nil];
+    }
+
+    return allowedReportTypeSet;
+}
+
+- (void)handleReport:(WiimoteDeviceReport*)report
+{
+    if(![self isEnabled])
+        return;
+
+    WiimoteDeviceReportType reportType      = [report type];
+    NSUInteger              irDataOffset    = 0;
+    NSUInteger              irDataSize      = 0;
+
+    switch(reportType)
+    {
+        case WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState:
+            irDataOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize;
+            irDataSize      = 12;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndIR10BytesAndExtension9BytesState:
+            irDataOffset    = sizeof(WiimoteDeviceButtonState);
+            irDataSize      = 10;
+            break;
+
+        case WiimoteDeviceReportTypeButtonAndAccelerometerAndIR10BytesAndExtension6Bytes:
+            irDataOffset    = sizeof(WiimoteDeviceButtonState) + WiimoteDeviceAccelerometerDataSize;
+            irDataSize      = 10;
+            break;
+
+        default:
+            [self disableHardware];
+            return;
+    }
+
+    if(reportType != m_ReportType)
+    {
+        [self enableHardware:[self irModeFromReportType:reportType]];
+        m_ReportType = reportType;
+        return;
+    }
+
+    if((irDataOffset + irDataSize) > [report length])
+        return;
+
+    [self handleIRData:[report data] + irDataOffset
+                length:irDataSize];
+}
+
+- (void)disconnected
+{
+    m_IsEnabled         = NO;
+    m_IsHardwareEnabled = NO;
+    m_ReportType        = -1;
+    m_IRReportMode      = -1;
+
+    NSUInteger pointCount = [m_Points count];
+
+    for(NSUInteger i = 0; i < pointCount; i++)
+    {
+        WiimoteIRPoint *point = [m_Points objectAtIndex:i];
+
+        [point setPosition:NSZeroPoint];
+        [point setOutOfView:YES];
+    }
+}
+
+@end
+
+@implementation WiimoteIRPart (PrivatePart)
+
+- (WiimoteDeviceIRMode)irModeFromReportType:(WiimoteDeviceReportType)reportType
+{
+    if(reportType == WiimoteDeviceReportTypeButtonAndAccelerometerAndIR12BytesState)
+        return WiimoteDeviceIRModeExtended;
+
+    return WiimoteDeviceIRModeBasic;
+}
+
+- (void)enableHardware:(WiimoteDeviceIRMode)irMode
+{
+    static const uint8_t sensitivityBlock1[] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0x41 };
+    static const uint8_t sensitivityBlock2[] = { 0x40, 0x00 };
+
+    if(m_IsHardwareEnabled)
+    {
+        if(m_IRReportMode == irMode)
+            return;
+
+        [self disableHardware];
+    }
+
+    uint8_t data = WiimoteDeviceCommandSetIREnabledStateFlagIREnabled;
+
+    [[self ioManager] postCommand:WiimoteDeviceCommandTypeSetIREnabledState data:&data length:sizeof(data)];
+    usleep(50000);
+
+    [[self ioManager] postCommand:WiimoteDeviceCommandTypeSetIREnabledState2 data:&data length:sizeof(data)];
+    usleep(50000);
+
+    data = WiimoteDeviceIRBeginInitValue;
+    [[self ioManager] writeMemory:WiimoteDeviceIRInitAddress data:&data length:sizeof(data)];
+    usleep(50000);
+
+    [[self ioManager] writeMemory:WiimoteDeviceIRSensitivityBlockAddress1 data:sensitivityBlock1 length:sizeof(sensitivityBlock1)];
+    usleep(50000);
+
+    [[self ioManager] writeMemory:WiimoteDeviceIRSensitivityBlockAddress2 data:sensitivityBlock2 length:sizeof(sensitivityBlock2)];
+    usleep(50000);
+
+    data = WiimoteDeviceIREndInitValue;
+    [[self ioManager] writeMemory:WiimoteDeviceIRInitAddress data:&data length:sizeof(data)];
+    usleep(50000);
+
+    data = irMode;
+    [[self ioManager] writeMemory:WiimoteDeviceIRModeAddress data:&data length:sizeof(data)];
+    usleep(50000);
+
+    m_IsHardwareEnabled = YES;
+    m_IRReportMode      = irMode;
+}
+
+- (void)disableHardware
+{
+    if(!m_IsHardwareEnabled)
+        return;
+
+    uint8_t data = 0;
+
+    [[self ioManager] postCommand:WiimoteDeviceCommandTypeSetIREnabledState data:&data length:sizeof(data)];
+    usleep(50000);
+
+    [[self ioManager] postCommand:WiimoteDeviceCommandTypeSetIREnabledState2 data:&data length:sizeof(data)];
+    usleep(50000);
+
+    m_IsHardwareEnabled = NO;
+    m_ReportType        = -1;
+    m_IRReportMode      = -1;
+}
+
+- (void)setPoint:(NSUInteger)index position:(NSPoint)position
+{
+    WiimoteIRPoint *point = [m_Points objectAtIndex:index];
+
+    if(![point isOutOfView] &&
+        WiimoteDeviceIsPointEqualEx([point position], position, 1.0))
+    {
+        return;
+    }
+
+    [point setPosition:position];
+    [point setOutOfView:NO];
+
+    [[self eventDispatcher] postIRPointPositionChangedNotification:point];
+}
+
+- (void)setPointOutOfView:(NSUInteger)index
+{
+    WiimoteIRPoint *point = [m_Points objectAtIndex:index];
+
+    if([point isOutOfView])
+        return;
+
+    [point setPosition:NSZeroPoint];
+    [point setOutOfView:YES];
+
+    [[self eventDispatcher] postIRPointPositionChangedNotification:point];
+}
+
+- (void)handle10ByteIRData:(const uint8_t*)data
+{
+    NSUInteger index = 0;
+
+    for(NSUInteger i = 0; i < 2; i++)
+    {
+        uint16_t x = (((uint16_t)data[0]) << 2) | ((data[2] >> 4) & 0x3);
+        uint16_t y = (((uint16_t)data[1]) << 2) | ((data[2] >> 6) & 0x3);
+
+        if(x >= 0x3FF && y >= 0x3FF)
+            [self setPointOutOfView:index];
+        else
+            [self setPoint:index position:NSMakePoint(x + 1, y + 1)];
+
+        x = (((uint16_t)data[3]) << 2) | ((data[2] >> 0) & 0x3);
+        y = (((uint16_t)data[4]) << 2) | ((data[2] >> 2) & 0x3);
+
+        if(x >= 0x3FF && y >= 0x3FF)
+            [self setPointOutOfView:index + 1];
+        else
+            [self setPoint:index + 1 position:NSMakePoint(x + 1, y + 1)];
+
+        index   += 2;
+        data    += 5;
+    }
+}
+
+- (void)handle12ByteIRData:(const uint8_t*)data
+{
+    for(NSUInteger i = 0; i < WiimoteIRPointCount; i++)
+    {
+        uint16_t x = (((uint16_t)data[i + 0]) << 2) | ((data[i + 2] >> 4) & 0x3);
+        uint16_t y = (((uint16_t)data[i + 1]) << 2) | ((data[i + 2] >> 6) & 0x3);
+
+        if(x >= 0x3FF && y >= 0x3FF)
+            [self setPointOutOfView:i];
+        else
+            [self setPoint:i position:NSMakePoint(x + 1, y + 1)];
+    }
+}
+
+- (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length
+{
+    if(length == 10)
+        [self handle10ByteIRData:data];
+    else
+        [self handle12ByteIRData:data];
+}
+
+@end

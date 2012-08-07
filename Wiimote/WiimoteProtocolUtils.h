@@ -18,6 +18,10 @@
 			(WiimoteDeviceIsFloatEqual((a).x, (b).x) && \
 			 WiimoteDeviceIsFloatEqual((a).y, (b).y))
 
+#define WiimoteDeviceIsPointEqualEx(a, b, epsilon) \
+			(WiimoteDeviceIsFloatEqualEx((a).x, (b).x, (epsilon)) && \
+			 WiimoteDeviceIsFloatEqualEx((a).y, (b).y, (epsilon)))
+
 #define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
             { \
                 if((stickCalibration).x.center == 0) \

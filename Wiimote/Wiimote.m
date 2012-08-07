@@ -12,6 +12,7 @@
 #import "WiimotePartSet.h"
 #import "WiimoteInquiry.h"
 
+#import "WiimoteIRPart.h"
 #import "WiimoteLEDPart.h"
 #import "WiimoteButtonPart.h"
 #import "WiimoteBatteryPart.h"
@@ -137,6 +138,21 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (BOOL)isBatteryLevelLow
 {
     return [m_BatteryPart isBatteryLevelLow];
+}
+
+- (BOOL)isIREnabled
+{
+    return [m_IRPart isEnabled];
+}
+
+- (void)setIREnabled:(BOOL)enabled
+{
+    [m_IRPart setEnabled:enabled];
+}
+
+- (WiimoteIRPoint*)irPoint:(NSUInteger)index
+{
+    return [m_IRPart point:index];
 }
 
 - (WiimoteAccelerometer*)accelerometer

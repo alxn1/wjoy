@@ -10,37 +10,53 @@
 
 typedef enum
 {
-    WiimoteDeviceCommandTypeSetLEDState             = 0x11,
-    WiimoteDeviceCommandTypeSetReportType           = 0x12,
-    WiimoteDeviceCommandTypeGetState				= 0x15,
-	WiimoteDeviceCommandTypeWriteMemory				= 0x16,
-	WiimoteDeviceCommandTypeReadMemory				= 0x17
+    WiimoteDeviceCommandTypeSetLEDState                 = 0x11,
+    WiimoteDeviceCommandTypeSetReportType               = 0x12,
+    WiimoteDeviceCommandTypeSetIREnabledState           = 0x13,
+    WiimoteDeviceCommandTypeGetState                    = 0x15,
+	WiimoteDeviceCommandTypeWriteMemory                 = 0x16,
+	WiimoteDeviceCommandTypeReadMemory                  = 0x17,
+    WiimoteDeviceCommandTypeSetIREnabledState2          = 0x1A
 } WiimoteDeviceCommandType;
 
 typedef enum
 {
-    WiimoteDeviceCommandFlagVibrationEnabled        = 0x01
+    WiimoteDeviceCommandFlagVibrationEnabled            = 0x01
 } WiimoteDeviceCommandFlag;
 
 typedef enum
 {
-    WiimoteDeviceSetReportTypeCommandFlagPeriodic   = 0x04,
+    WiimoteDeviceSetReportTypeCommandFlagPeriodic       = 0x04
 } WiimoteDeviceSetReportTypeCommandFlag;
 
 typedef enum
 {
-    WiimoteDeviceSetLEDStateCommandFlagLEDOne       = 0x10,
-    WiimoteDeviceSetLEDStateCommandFlagLEDTwo       = 0x20,
-    WiimoteDeviceSetLEDStateCommandFlagLEDThree     = 0x40,
-    WiimoteDeviceSetLEDStateCommandFlagLEDFour      = 0x80
+    WiimoteDeviceCommandSetIREnabledStateFlagIREnabled  = 0x04
+} WiimoteDeviceCommandSetIREnabledStateFlag;
+
+typedef enum
+{
+    WiimoteDeviceSetLEDStateCommandFlagLEDOne           = 0x10,
+    WiimoteDeviceSetLEDStateCommandFlagLEDTwo           = 0x20,
+    WiimoteDeviceSetLEDStateCommandFlagLEDThree         = 0x40,
+    WiimoteDeviceSetLEDStateCommandFlagLEDFour          = 0x80
 } WiimoteDeviceSetLEDStateCommandFlag;
 
-typedef struct {
+typedef enum
+{
+    WiimoteDeviceIRModeBasic                            = 1,
+    WiimoteDeviceIRModeExtended                         = 3,
+    WiimoteDeviceIRModeFull                             = 5
+} WiimoteDeviceIRMode;
+
+typedef struct
+{
     uint8_t packetType;
     uint8_t commandType;
 } WiimoteDeviceCommandHeader;
 
-typedef struct {
+typedef struct
+{
     uint32_t address;
     uint8_t  length;
     uint8_t  data[WiimoteDeviceWriteMemoryReportMaxDataSize];

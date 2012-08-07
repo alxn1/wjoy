@@ -326,6 +326,9 @@
 
 - (void)handleDisconnect
 {
+    m_IsVibrationEnabled    = NO;
+    m_LEDsState             = 0;
+
     [m_ReadMemQueue handleDisconnect];
 	[m_Delegate wiimoteDeviceDisconnected:self];
 }
