@@ -18,7 +18,7 @@
 
 @implementation AVFileAudioSource
 
-+ (AVFileAudioSource*)sourceWithFile:(NSString*)filePath
++ (AVFileAudioSource*)sourceFromFile:(NSString*)filePath
 {
     return [[[AVFileAudioSource alloc] initWithFilePath:filePath] autorelease];
 }
@@ -101,12 +101,7 @@
     if(context == NULL)
         return NULL;
 
-#ifdef DEBUG
-    dump_format(context, 0, [filePath fileSystemRepresentation], NO);
-#endif
-
     AVCodecContext *codecContext = [self findAudioStream:context index:index];
-
     if(codecContext == NULL)
     {
         av_close_input_file(context);

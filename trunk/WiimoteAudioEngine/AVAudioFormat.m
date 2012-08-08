@@ -10,6 +10,22 @@
 
 @implementation AVAudioFormat
 
++ (AVAudioFormat*)audioFormatWithSampleRate:(NSUInteger)sampleRate
+                               channelCount:(NSUInteger)channelCount
+                               sampleFormat:(AVAudioSampleFormat)sampleFormat
+{
+    return [[[AVAudioFormat alloc]
+                        initWithSampleRate:sampleRate
+                              channelCount:channelCount
+                              sampleFormat:sampleFormat] autorelease];
+}
+
+- (id)init
+{
+    [[self init] release];
+    return nil;
+}
+
 - (id)initWithSampleRate:(NSUInteger)sampleRate
             channelCount:(NSUInteger)channelCount
             sampleFormat:(AVAudioSampleFormat)sampleFormat
@@ -21,6 +37,13 @@
     m_SampleRate    = sampleRate;
     m_ChannelCount  = channelCount;
     m_SampleFormat  = sampleFormat;
+
+    if(m_SampleRate   == 0 ||
+       m_ChannelCount == 0)
+    {
+        [self release];
+        return nil;
+    }
 
     return self;
 }

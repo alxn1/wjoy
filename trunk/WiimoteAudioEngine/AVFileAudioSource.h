@@ -22,6 +22,6 @@
         AVCodecContext          *m_CodecContext;
 }
 
-+ (AVFileAudioSource*)sourceWithFile:(NSString*)filePath;
++ (AVFileAudioSource*)sourceFromFile:(NSString*)filePath;
 
 @end
