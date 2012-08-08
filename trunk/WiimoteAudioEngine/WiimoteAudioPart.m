@@ -103,19 +103,16 @@
 {
     if(![[self owner] isConnected] || audioSource == nil)
         return NO;
-    
+
+    NSData *data = [audioSource getAllAudioData];
+
+    if(data == nil || [data length] == 0)
+        return NO;
+
     [self enableHardwareWithVolume:volume];
 
-    BOOL    result  = YES;
-    NSData *data    = [audioSource getAllAudioData];
-
-    if(data != nil)
-    {
-        result = [self postAudioData:(const uint8_t*)[data bytes]
-                              length:[data length]];
-    }
-    else
-        result = NO;
+    BOOL result = [self postAudioData:(const uint8_t*)[data bytes]
+                               length:[data length]];
 
     [self disableHardware];
     return result;
