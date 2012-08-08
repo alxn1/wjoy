@@ -7,12 +7,31 @@
 //
 
 #import "AVFileAudioSource.h"
+#import "AVAudioSourceConverter.h"
 
 @implementation AVAudioSource
 
-+ (AVAudioSource*)sourceWithFile:(NSString*)filePath
++ (AVAudioSource*)sourceFromFile:(NSString*)filePath
 {
-    return [AVFileAudioSource sourceWithFile:filePath];
+    return [AVFileAudioSource sourceFromFile:filePath];
+}
+
++ (AVAudioSource*)sourceFromFile:(NSString*)filePath format:(AVAudioFormat*)format
+{
+    return [AVAudioSourceConverter
+                        wrapAudioSource:[AVFileAudioSource sourceFromFile:filePath]
+                                 format:format];
+}
+
++ (AVAudioSource*)convertAudioSourceFormat:(AVAudioSource*)audioSource format:(AVAudioFormat*)format
+{
+    if(audioSource == nil || format == nil)
+        return nil;
+
+    if([[audioSource format] isEqualToAudioFormat:format])
+        return audioSource;
+
+    return [AVAudioSourceConverter wrapAudioSource:audioSource format:format];
 }
 
 - (AVAudioFormat*)format

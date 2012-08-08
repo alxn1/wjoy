@@ -25,6 +25,10 @@ typedef enum
         AVAudioSampleFormat m_SampleFormat;
 }
 
++ (AVAudioFormat*)audioFormatWithSampleRate:(NSUInteger)sampleRate
+                               channelCount:(NSUInteger)channelCount
+                               sampleFormat:(AVAudioSampleFormat)sampleFormat;
+
 - (id)initWithSampleRate:(NSUInteger)sampleRate
             channelCount:(NSUInteger)channelCount
             sampleFormat:(AVAudioSampleFormat)sampleFormat;

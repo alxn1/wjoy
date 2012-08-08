@@ -12,7 +12,10 @@
 {
 }
 
-+ (AVAudioSource*)sourceWithFile:(NSString*)filePath;
++ (AVAudioSource*)sourceFromFile:(NSString*)filePath;
++ (AVAudioSource*)sourceFromFile:(NSString*)filePath format:(AVAudioFormat*)format;
+
++ (AVAudioSource*)convertAudioSourceFormat:(AVAudioSource*)audioSource format:(AVAudioFormat*)format;
 
 - (AVAudioFormat*)format;
 - (AVAudioPacket*)nextPacket;
