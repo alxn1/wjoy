@@ -382,6 +382,8 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 
 int main(int argc, const char * argv[])
 {
+    // http://abstrakraft.org/cwiid/browser/wminput/plugins/ir_ptr/ir_ptr.c - reimplement this ;) it's IR pointing algo
+
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     [WiimoteWrapper run];
 	[pool release];
