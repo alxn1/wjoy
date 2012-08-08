@@ -77,28 +77,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A59355915D26F66005CAAA9 /* Wiimote.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* Wiimote.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 		0A59356415D26F66005CAAA9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A59355915D26F66005CAAA9 /* Wiimote.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0A22060A15C2A84C004D168E /* test.app */;
+			remoteGlobalIDString = 0A22060A15C2A84C004D168E;
 			remoteInfo = test;
 		};
 		0A59360A15D26FBA005CAAA9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A59355915D26F66005CAAA9 /* Wiimote.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Wiimote */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 		0A59360C15D26FC1005CAAA9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A59355915D26F66005CAAA9 /* Wiimote.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Wiimote */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 /* End PBXContainerItemProxy section */
