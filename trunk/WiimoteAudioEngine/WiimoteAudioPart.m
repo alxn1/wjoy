@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteAudioPart.h"
+#import <sys/time.h>
 
 @implementation WiimoteAudioPart
 
@@ -23,7 +24,7 @@
     if(volume > 1.0) volume = 1.0;
 
     uint8_t     adpcmFormatCode     = 0x00;
-    uint16_t    sampleRateCode      = OSSwapHostToLittleConstInt16(1500);
+    uint16_t    sampleRateCode      = OSSwapHostToLittleConstInt16(6000000 / 4000);
     uint8_t     volumeCode          = (uint8_t)(volume * 0x40);
 
     uint8_t     setupData[7]        = { 0 };
@@ -61,19 +62,28 @@
     [[self ioManager] postCommand:WiimoteDeviceCommandTypeMuteSpeaker data:&data length:sizeof(data)];
 }
 
+- (NSInteger)currentTime
+{
+	struct timeval time;
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000000) + (time.tv_usec));
+}
+
 - (BOOL)postAudioData:(const uint8_t*)data length:(NSUInteger)length
 {
     NSUInteger  chunkLength;
     uint8_t     buffer[21];
+	NSInteger	startTime;
 
     while(length > 0)
     {
+		startTime	= [self currentTime];
         chunkLength = length;
 
         if(chunkLength > (sizeof(buffer) - 1))
             chunkLength = sizeof(buffer) - 1;
 
-        buffer[0] = chunkLength;
+        buffer[0] = chunkLength << 3;
         memcpy(buffer + 1, data, chunkLength);
 
         if(![[self ioManager]
@@ -86,7 +96,10 @@
 
         data    += chunkLength;
         length  -= chunkLength;
-        usleep(10000);
+
+		NSInteger delay = [self currentTime] - startTime;
+		if(delay >= 0 && delay < 10000)
+			usleep(10000 - delay);
     }
 
     return YES;
