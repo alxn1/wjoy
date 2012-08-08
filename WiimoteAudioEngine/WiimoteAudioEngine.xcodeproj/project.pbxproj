@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		0A4AE5C815D13E9800408710 /* build ffmpeg */ = {
+		0A4AE5C815D13E9800408710 /* rebuild ffmpeg */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 0A4AE5CC15D13EAC00408710 /* Build configuration list for PBXAggregateTarget "build ffmpeg" */;
+			buildConfigurationList = 0A4AE5CC15D13EAC00408710 /* Build configuration list for PBXAggregateTarget "rebuild ffmpeg" */;
 			buildPhases = (
 				0A4AE5C715D13E9800408710 /* Run Builder */,
 			);
 			dependencies = (
 			);
-			name = "build ffmpeg";
+			name = "rebuild ffmpeg";
 			productName = "build ffmpeg";
 		};
 /* End PBXAggregateTarget section */
@@ -36,8 +36,6 @@
 		0A4AE65515D1419700408710 /* libavformat.dylib in Copy FFMPEG */ = {isa = PBXBuildFile; fileRef = 0A4AE61715D1417500408710 /* libavformat.dylib */; };
 		0A4AE65615D1419700408710 /* libavutil.dylib in Copy FFMPEG */ = {isa = PBXBuildFile; fileRef = 0A4AE61815D1417500408710 /* libavutil.dylib */; };
 		0A4AE65715D1419700408710 /* libswscale.dylib in Copy FFMPEG */ = {isa = PBXBuildFile; fileRef = 0A4AE61915D1417500408710 /* libswscale.dylib */; };
-		0A4AE67A15D143E100408710 /* WiimoteAudioEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* WiimoteAudioEngine.framework */; };
-		0A4AE67C15D143F100408710 /* WiimoteAudioEngine.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* WiimoteAudioEngine.framework */; };
 		0A4AE68415D1441E00408710 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4AE67E15D1440E00408710 /* Cocoa.framework */; };
 		0A4AE69315D1443A00408710 /* test.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4AE69215D1443A00408710 /* test.m */; };
 		0A4AE70415D1493700408710 /* AVAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A4AE70215D1493700408710 /* AVAudioSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -128,7 +126,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				0A5935E815D26F8D005CAAA9 /* Wiimote.framework in Copy Frameworks */,
-				0A4AE67C15D143F100408710 /* WiimoteAudioEngine.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,7 +189,6 @@
 		0A4AE61715D1417500408710 /* libavformat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libavformat.dylib; sourceTree = "<group>"; };
 		0A4AE61815D1417500408710 /* libavutil.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libavutil.dylib; sourceTree = "<group>"; };
 		0A4AE61915D1417500408710 /* libswscale.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libswscale.dylib; sourceTree = "<group>"; };
-		0A4AE67015D143BF00408710 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A4AE67215D143BF00408710 /* test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-Info.plist"; sourceTree = "<group>"; };
 		0A4AE67E15D1440E00408710 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0A4AE69215D1443A00408710 /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
@@ -223,8 +219,9 @@
 		0A5936A715D27577005CAAA9 /* WiimoteAudioSourceWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteAudioSourceWrapper.m; sourceTree = "<group>"; };
 		0A59374115D27EDE005CAAA9 /* Wiimote+Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wiimote+Audio.h"; sourceTree = "<group>"; };
 		0A59374215D27EDE005CAAA9 /* Wiimote+Audio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Wiimote+Audio.m"; sourceTree = "<group>"; };
+		0A59381E15D297A8005CAAA9 /* WiimoteAudioEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = WiimoteAudioEngine.framework; path = build/Debug/WiimoteAudioEngine.framework; sourceTree = "<group>"; };
+		0A59381F15D297A8005CAAA9 /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = test.app; path = build/Debug/test.app; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8DC2EF5B0486A6940098B216 /* WiimoteAudioEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WiimoteAudioEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,7 +231,6 @@
 			files = (
 				0A4AE68415D1441E00408710 /* Cocoa.framework in Frameworks */,
 				0A5935F615D26F94005CAAA9 /* Wiimote.framework in Frameworks */,
-				0A4AE67A15D143E100408710 /* WiimoteAudioEngine.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,22 +253,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		034768DFFF38A50411DB9C8B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8DC2EF5B0486A6940098B216 /* WiimoteAudioEngine.framework */,
-				0A4AE67015D143BF00408710 /* test.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		0867D691FE84028FC02AAC07 /* WiimoteAudioEngine */ = {
 			isa = PBXGroup;
 			children = (
 				0A59355915D26F66005CAAA9 /* Wiimote.xcodeproj */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
-				034768DFFF38A50411DB9C8B /* Products */,
+				0A59382215D297B2005CAAA9 /* Products */,
 			);
 			name = WiimoteAudioEngine;
 			sourceTree = "<group>";
@@ -289,7 +276,6 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A4AE5DA15D1416900408710 /* ffmpeg */,
 				0A4AE53515D13E2800408710 /* framework */,
 				0A4AE67815D143D400408710 /* test */,
 			);
@@ -458,6 +444,7 @@
 		0A4AE71A15D14C7300408710 /* AV */ = {
 			isa = PBXGroup;
 			children = (
+				0A4AE5DA15D1416900408710 /* ffmpeg */,
 				0A4AE71B15D14C7E00408710 /* base */,
 				0A4AE71C15D14C9B00408710 /* internal */,
 				0A4AE70215D1493700408710 /* AVAudioSource.h */,
@@ -516,6 +503,15 @@
 			name = internal;
 			sourceTree = "<group>";
 		};
+		0A59382215D297B2005CAAA9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A59381E15D297A8005CAAA9 /* WiimoteAudioEngine.framework */,
+				0A59381F15D297A8005CAAA9 /* test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -553,7 +549,7 @@
 			);
 			name = test;
 			productName = test;
-			productReference = 0A4AE67015D143BF00408710 /* test.app */;
+			productReference = 0A59381F15D297A8005CAAA9 /* test.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8DC2EF4F0486A6940098B216 /* WiimoteAudioEngine */ = {
@@ -574,7 +570,7 @@
 			name = WiimoteAudioEngine;
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = WiimoteAudioEngine;
-			productReference = 8DC2EF5B0486A6940098B216 /* WiimoteAudioEngine.framework */;
+			productReference = 0A59381E15D297A8005CAAA9 /* WiimoteAudioEngine.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -593,7 +589,7 @@
 				German,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* WiimoteAudioEngine */;
-			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			productRefGroup = 0867D691FE84028FC02AAC07 /* WiimoteAudioEngine */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -605,7 +601,7 @@
 			targets = (
 				8DC2EF4F0486A6940098B216 /* WiimoteAudioEngine */,
 				0A4AE66F15D143BF00408710 /* test */,
-				0A4AE5C815D13E9800408710 /* build ffmpeg */,
+				0A4AE5C815D13E9800408710 /* rebuild ffmpeg */,
 			);
 		};
 /* End PBXProject section */
@@ -863,7 +859,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A4AE5CC15D13EAC00408710 /* Build configuration list for PBXAggregateTarget "build ffmpeg" */ = {
+		0A4AE5CC15D13EAC00408710 /* Build configuration list for PBXAggregateTarget "rebuild ffmpeg" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A4AE5C915D13E9800408710 /* Debug */,
