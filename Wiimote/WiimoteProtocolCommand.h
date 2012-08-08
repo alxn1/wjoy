@@ -13,9 +13,12 @@ typedef enum
     WiimoteDeviceCommandTypeSetLEDState                 = 0x11,
     WiimoteDeviceCommandTypeSetReportType               = 0x12,
     WiimoteDeviceCommandTypeSetIREnabledState           = 0x13,
+    WiimoteDeviceCommandTypeEnableSpeaker               = 0x14,
     WiimoteDeviceCommandTypeGetState                    = 0x15,
 	WiimoteDeviceCommandTypeWriteMemory                 = 0x16,
 	WiimoteDeviceCommandTypeReadMemory                  = 0x17,
+    WiimoteDeviceCommandTypeSpeakerData                 = 0x18,
+    WiimoteDeviceCommandTypeMuteSpeaker                 = 0x19,
     WiimoteDeviceCommandTypeSetIREnabledState2          = 0x1A
 } WiimoteDeviceCommandType;
 

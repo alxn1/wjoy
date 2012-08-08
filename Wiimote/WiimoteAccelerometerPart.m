@@ -163,6 +163,14 @@
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
          enabledStateChanged:(BOOL)enabled
 {
+    if(![[self owner] isConnected])
+    {
+        if(enabled)
+            [accelerometer setEnabled:NO];
+
+        return;
+    }
+
     [[self owner] deviceConfigurationChanged];
     [[self eventDispatcher] postAccelerometerEnabledNotification:enabled];
 }

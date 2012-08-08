@@ -68,6 +68,9 @@
 
 - (void)setEnabled:(BOOL)enabled
 {
+    if(![[self owner] isConnected])
+        return;
+
     if(m_IsEnabled == enabled)
         return;
 

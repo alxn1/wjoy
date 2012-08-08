@@ -8,6 +8,7 @@
 
 #import "WiimoteNunchuck.h"
 #import "WiimoteAccelerometer+PlugIn.h"
+#import "Wiimote.h"
 
 @interface WiimoteNunchuck (PrivatePart)
 
@@ -198,6 +199,14 @@
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
          enabledStateChanged:(BOOL)enabled
 {
+    if(![[self owner] isConnected])
+    {
+        if(enabled)
+            [accelerometer setEnabled:NO];
+
+        return;
+    }
+
     [[self eventDispatcher] postNunchuck:self accelerometerEnabledStateChanged:enabled];
 }
 
