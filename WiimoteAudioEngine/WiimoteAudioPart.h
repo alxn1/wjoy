@@ -13,6 +13,7 @@
 {
 }
 
+- (BOOL)playAudioData:(NSData*)data volume:(double)volume;
 - (BOOL)playAudio:(WiimoteAudioSource*)audioSource volume:(double)volume;
 
 @end

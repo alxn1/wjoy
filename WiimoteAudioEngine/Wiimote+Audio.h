@@ -11,6 +11,7 @@
 
 @interface Wiimote (Audio)
 
+- (BOOL)playAudioData:(NSData*)data volume:(double)volume; // must be 4000Hz Yamaha ADPCM data
 - (BOOL)playAudio:(WiimoteAudioSource*)audioSource volume:(double)volume;
 - (BOOL)playAudioFile:(NSString*)filePath volume:(double)volume;
 

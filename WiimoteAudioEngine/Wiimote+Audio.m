@@ -11,6 +11,14 @@
 
 @implementation Wiimote (Audio)
 
+- (BOOL)playAudioData:(NSData*)data volume:(double)volume
+{
+    return [(WiimoteAudioPart*)
+                [self partWithClass:[WiimoteAudioPart class]]
+                                                        playAudioData:data
+                                                               volume:volume];
+}
+
 - (BOOL)playAudio:(WiimoteAudioSource*)audioSource volume:(double)volume
 {
     return [(WiimoteAudioPart*)
