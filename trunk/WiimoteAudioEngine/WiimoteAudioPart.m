@@ -112,14 +112,9 @@
     usleep(50000);
 }
 
-- (BOOL)playAudio:(WiimoteAudioSource*)audioSource volume:(double)volume
+- (BOOL)playAudioData:(NSData*)data volume:(double)volume
 {
-    if(![[self owner] isConnected] || audioSource == nil)
-        return NO;
-
-    NSData *data = [audioSource getAllAudioData];
-
-    if(data == nil || [data length] == 0)
+    if(![[self owner] isConnected] || [data length] == 0)
         return NO;
 
     [self enableHardwareWithVolume:volume];
@@ -129,6 +124,14 @@
 
     [self disableHardware];
     return result;
+}
+
+- (BOOL)playAudio:(WiimoteAudioSource*)audioSource volume:(double)volume
+{
+    if(![[self owner] isConnected] || audioSource == nil)
+        return NO;
+
+    return [self playAudioData:[audioSource getAllAudioData] volume:volume];
 }
 
 @end

@@ -88,7 +88,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (void)requestUpdateState;
 
 // disable all notifications, except begin/end discovery,
-// battery level, extensions connect/disconnec and wiimote connect/disconnect
+// battery level, extensions connect/disconnect and wiimote connect/disconnect
 - (BOOL)isStateChangeNotificationsEnabled;
 - (void)setStateChangeNotificationsEnabled:(BOOL)enabled;
 

@@ -61,7 +61,7 @@
 		0A59368515D273E5005CAAA9 /* WiimoteAudioSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A59368315D273E5005CAAA9 /* WiimoteAudioSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A59368615D273E5005CAAA9 /* WiimoteAudioSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A59368415D273E5005CAAA9 /* WiimoteAudioSource.m */; };
 		0A5936A915D27577005CAAA9 /* WiimoteAudioSourceWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5936A715D27577005CAAA9 /* WiimoteAudioSourceWrapper.m */; };
-		0A59374315D27EDE005CAAA9 /* Wiimote+Audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A59374115D27EDE005CAAA9 /* Wiimote+Audio.h */; };
+		0A59374315D27EDE005CAAA9 /* Wiimote+Audio.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A59374115D27EDE005CAAA9 /* Wiimote+Audio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A59374415D27EDE005CAAA9 /* Wiimote+Audio.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A59374215D27EDE005CAAA9 /* Wiimote+Audio.m */; };
 /* End PBXBuildFile section */
 
