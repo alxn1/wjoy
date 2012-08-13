@@ -6,9 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteDeviceReport.h"
-#import "WiimoteEventDispatcher.h"
-#import "WiimoteIOManager.h"
+#import <Wiimote/WiimoteDeviceReport.h>
+#import <Wiimote/WiimoteEventDispatcher.h>
+#import <Wiimote/WiimoteIOManager.h>
 
 @interface WiimotePart : NSObject
 {

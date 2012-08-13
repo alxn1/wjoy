@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteProtocol.h"
+#import <Wiimote/WiimoteProtocol.h>
 
 @class Wiimote;
 @class WiimoteDevice;

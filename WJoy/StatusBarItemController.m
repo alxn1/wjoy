@@ -6,9 +6,10 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
+#import <Wiimote/Wiimote.h>
+
 #import "StatusBarItemController.h"
 #import "LoginItemsList.h"
-#import "Wiimote.h"
 
 @interface StatusBarItemController (PrivatePart)
 

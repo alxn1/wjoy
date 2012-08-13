@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "AVAudioSource.h"
+#import <WiimoteAudioEngine/AVAudioSource.h>
 
 @interface WiimoteAudioSource : NSObject
 {

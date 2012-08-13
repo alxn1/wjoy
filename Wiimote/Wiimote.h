@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteDelegate.h"
-#import "WiimoteExtension.h"
-#import "WiimoteAccelerometer.h"
-#import "WiimoteWatchdog.h"
+#import <Wiimote/WiimoteDelegate.h>
+#import <Wiimote/WiimoteExtension.h>
+#import <Wiimote/WiimoteAccelerometer.h>
+#import <Wiimote/WiimoteWatchdog.h>
 
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;

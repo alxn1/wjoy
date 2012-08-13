@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "AVAudioFormat.h"
+#import <WiimoteAudioEngine/AVAudioFormat.h>
 
 @interface AVAudioPacket : NSObject
 {

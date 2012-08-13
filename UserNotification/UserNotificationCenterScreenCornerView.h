@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "UserNotificationCenter.h"
+#import <UserNotification/UserNotificationCenter.h>
 
 @interface UserNotificationCenterScreenCornerView : NSView
 {

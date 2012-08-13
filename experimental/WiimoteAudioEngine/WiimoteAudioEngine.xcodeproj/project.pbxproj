@@ -77,28 +77,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0AA6220715D3AB6500CA16A9 /* Wiimote.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* Wiimote.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 		0AA6221215D3AB6500CA16A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0AA6220715D3AB6500CA16A9 /* Wiimote.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0A22060A15C2A84C004D168E /* test.app */;
+			remoteGlobalIDString = 0A22060A15C2A84C004D168E;
 			remoteInfo = test;
 		};
 		0AA6229615D3ABA500CA16A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0AA6220715D3AB6500CA16A9 /* Wiimote.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Wiimote */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 		0AA622A015D3ABBF00CA16A9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0AA6220715D3AB6500CA16A9 /* Wiimote.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* Wiimote */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
 /* End PBXContainerItemProxy section */
@@ -793,7 +793,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
-					../../Wiimote,
+					../../,
 					./ffmpeg/include,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -817,7 +817,7 @@
 				FRAMEWORK_VERSION = A;
 				GCC_MODEL_TUNING = G5;
 				HEADER_SEARCH_PATHS = (
-					../../Wiimote,
+					../../,
 					./ffmpeg/include,
 				);
 				INFOPLIST_FILE = Info.plist;
@@ -839,7 +839,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../../Wiimote;
+				HEADER_SEARCH_PATHS = ../../;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG";
 				PREBINDING = NO;
@@ -854,7 +854,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = ../../Wiimote;
+				HEADER_SEARCH_PATHS = ../../;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 			};

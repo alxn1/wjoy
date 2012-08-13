@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "Wiimote+Audio.h"
+#import <WiimoteAudioEngine/Wiimote+Audio.h>
 
 @interface WiimoteWrapper : NSObject
 {

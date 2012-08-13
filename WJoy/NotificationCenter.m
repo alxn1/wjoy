@@ -6,9 +6,10 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
+#import <Wiimote/Wiimote.h>
+#import <UserNotification/UserNotificationCenter.h>
+
 #import "NotificationCenter.h"
-#import "UserNotificationCenter.h"
-#import "Wiimote.h"
 
 @interface NotificationCenter (PrivatePart)
 

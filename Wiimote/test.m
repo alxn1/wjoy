@@ -6,10 +6,8 @@
 //  Copyright (c) 2012 alxn1. All rights reserved.
 //
 
-#import "Wiimote.h"
-#import "WiimoteWatchdog.h"
-
 #import <Cocoa/Cocoa.h>
+#import <Wiimote/Wiimote.h>
 
 static NSString *wiimoteButtonName(WiimoteButtonType button)
 {

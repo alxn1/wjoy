@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteExtension+PlugIn.h"
+#import <Wiimote/WiimoteExtension+PlugIn.h>
 
 @interface WiimoteGenericExtension : WiimoteExtension
 {

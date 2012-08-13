@@ -6,9 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "Wiimote.h"
-#import "WJoyDevice.h"
-#import "VHIDDevice.h"
+#import <Wiimote/Wiimote.h>
+#import <WirtualJoy/WJoyDevice.h>
+#import <VHID/VHIDDevice.h>
 
 @interface WiimoteAutoWrapper : NSObject<
                                     VHIDDeviceDelegate>
