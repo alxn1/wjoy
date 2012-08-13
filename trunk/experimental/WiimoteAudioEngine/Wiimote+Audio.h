@@ -6,8 +6,8 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "Wiimote.h"
-#import "WiimoteAudioSource.h"
+#import <Wiimote/Wiimote.h>
+#import <WiimoteAudioEngine/WiimoteAudioSource.h>
 
 @interface Wiimote (Audio)
 

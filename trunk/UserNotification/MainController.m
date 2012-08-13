@@ -7,8 +7,8 @@
 //
 
 #import "MainController.h"
-#import "UserNotificationCenter.h"
-#import "UserNotificationCenterScreenCornerView.h"
+#import <UserNotification/UserNotificationCenter.h>
+#import <UserNotification/UserNotificationCenterScreenCornerView.h>
 
 typedef enum
 {

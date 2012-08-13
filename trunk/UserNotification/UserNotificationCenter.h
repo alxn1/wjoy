@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "UserNotification.h"
+#import <UserNotification/UserNotification.h>
 
 @class UserNotificationCenter;
 

@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteIOManager.h"
+#import <Wiimote/WiimoteIOManager.h>
 
 @interface WiimoteExtensionProbeHandler : NSObject
 {

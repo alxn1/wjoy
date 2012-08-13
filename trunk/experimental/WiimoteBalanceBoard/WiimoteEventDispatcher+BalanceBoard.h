@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteEventDispatcher.h"
+#import <Wiimote/WiimoteEventDispatcher.h>
 
 @class WiimoteBalanceBoard;
 

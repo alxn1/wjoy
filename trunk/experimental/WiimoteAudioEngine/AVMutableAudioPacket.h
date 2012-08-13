@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "AVAudioPacket.h"
+#import <WiimoteAudioEngine/AVAudioPacket.h>
 
 @interface AVMutableAudioPacket : AVAudioPacket
 {

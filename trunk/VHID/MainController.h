@@ -8,8 +8,8 @@
 
 #import "TestView.h"
 
-#import "WJoyDevice.h"
-#import "VHIDDevice.h"
+#import <WirtualJoy/WJoyDevice.h>
+#import <VHID/VHIDDevice.h>
 
 @interface MainController : NSObject<VHIDDeviceDelegate, TestViewDelegate>
 {

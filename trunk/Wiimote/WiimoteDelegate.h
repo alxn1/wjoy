@@ -6,9 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteIRPoint.h"
-#import "WiimoteNunchuckDelegate.h"
-#import "WiimoteClassicControllerDelegate.h"
+#import <Wiimote/WiimoteIRPoint.h>
+#import <Wiimote/WiimoteNunchuckDelegate.h>
+#import <Wiimote/WiimoteClassicControllerDelegate.h>
 
 #define WiimoteButtonCount  11
 

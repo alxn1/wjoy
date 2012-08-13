@@ -6,8 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
+#import <Wiimote/Wiimote.h>
+
 #import "WiimoteLEDsController.h"
-#import "Wiimote.h"
 
 @interface WiimoteLEDsController (PrivatePart)
 

@@ -6,10 +6,10 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "Wiimote.h"
-#import "WiimotePart.h"
-#import "WiimoteGenericExtension.h"
-#import "WiimoteAccelerometer+PlugIn.h"
+#import <Wiimote/Wiimote.h>
+#import <Wiimote/WiimotePart.h>
+#import <Wiimote/WiimoteGenericExtension.h>
+#import <Wiimote/WiimoteAccelerometer+PlugIn.h>
 
 @interface Wiimote (PlugIn)
 

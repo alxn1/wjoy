@@ -6,8 +6,8 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteAccelerometer.h"
-#import "WiimoteProtocol.h"
+#import <Wiimote/WiimoteAccelerometer.h>
+#import <Wiimote/WiimoteProtocol.h>
 
 @class WiimoteAccelerometer;
 

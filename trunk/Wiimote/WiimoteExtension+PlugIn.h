@@ -6,9 +6,9 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "WiimoteExtension.h"
-#import "WiimoteIOManager.h"
-#import "WiimoteEventDispatcher.h"
+#import <Wiimote/WiimoteExtension.h>
+#import <Wiimote/WiimoteIOManager.h>
+#import <Wiimote/WiimoteEventDispatcher.h>
 
 typedef enum
 {
