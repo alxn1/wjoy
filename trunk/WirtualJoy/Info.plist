@@ -24,7 +24,7 @@
 	<string>1</string>
 	<key>IOKitPersonalities</key>
 	<dict>
-		<key>${EXECUTABLE_NAME}</key>
+		<key>wjoy</key>
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>com.alxn1.driver.${PRODUCT_NAME:rfc1034Identifier}</string>
