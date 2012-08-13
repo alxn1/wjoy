@@ -30,7 +30,7 @@
                 NS_WindowCollectionBehaviorStationary |
                 NS_WindowCollectionBehaviorIgnoresCycle];
 
-    [self setLevel:kCGDesktopWindowLevel - 1];
+    [self setLevel:kCGDesktopIconWindowLevel - 1];
 
     return self;
 }
@@ -54,7 +54,7 @@
                 NS_WindowCollectionBehaviorStationary |
                 NS_WindowCollectionBehaviorIgnoresCycle];
 
-    [self setLevel:kCGDesktopWindowLevel - 1];
+    [self setLevel:kCGDesktopIconWindowLevel - 1];
 
     return self;
 }
