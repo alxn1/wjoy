@@ -23,13 +23,14 @@
                               backing:bufferingType
                                 defer:flag];
 
-    [self setLevel:kCGDesktopWindowLevel];
     [self setOpaque:NO];
     [self setBackgroundColor:[NSColor clearColor]];
     [self setCollectionBehavior:
                 NSWindowCollectionBehaviorCanJoinAllSpaces |
                 NS_WindowCollectionBehaviorStationary |
                 NS_WindowCollectionBehaviorIgnoresCycle];
+
+    [self setLevel:kCGDesktopWindowLevel - 1];
 
     return self;
 }
@@ -46,13 +47,14 @@
                                 defer:flag
                                screen:screen];
 
-    [self setLevel:kCGDesktopWindowLevel];
     [self setOpaque:NO];
     [self setBackgroundColor:[NSColor clearColor]];
     [self setCollectionBehavior:
                 NSWindowCollectionBehaviorCanJoinAllSpaces |
                 NS_WindowCollectionBehaviorStationary |
                 NS_WindowCollectionBehaviorIgnoresCycle];
+
+    [self setLevel:kCGDesktopWindowLevel - 1];
 
     return self;
 }
