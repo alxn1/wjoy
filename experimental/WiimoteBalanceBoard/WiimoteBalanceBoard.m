@@ -20,6 +20,7 @@
 + (void)load
 {
     [WiimoteExtension registerExtensionClass:[WiimoteBalanceBoard class]];
+    [Wiimote registerSupportedModelName:@"Nintendo RVL-WBC-01"];
 }
 
 + (NSData*)extensionSignature
