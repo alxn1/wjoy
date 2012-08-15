@@ -69,6 +69,7 @@
         return nil;
 
     m_IsHowered             = NO;
+    m_IsMouseDragged        = NO;
     m_IsCloseButtonDragged  = NO;
     m_IsCloseButtonPressed  = NO;
     m_IsAlreadyClicked      = NO;
@@ -212,25 +213,29 @@
         m_IsCloseButtonDragged = YES;
         [self setCloseButtonPressed:YES];
     }
+
+    m_IsMouseDragged = YES;
 }
 
 - (void)mouseDragged:(NSEvent*)event
 {
-    if(!m_IsCloseButtonDragged)
-        return;
-
     NSPoint mousePosition = [self convertPoint:[event locationInWindow]
                                       fromView:nil];
 
-    [self setCloseButtonPressed:
-                        NSPointInRect(
-                            mousePosition,
-                            [self closeButtonRect:[self bounds]])];
+    [self setHowered:NSPointInRect(mousePosition, [self frame])];
+
+    if(m_IsCloseButtonDragged)
+    {
+        [self setCloseButtonPressed:
+                            NSPointInRect(
+                                mousePosition,
+                                [self closeButtonRect:[self bounds]])];
+    }
 }
 
 - (void)mouseUp:(NSEvent*)event
 {
-    if(!m_IsCloseButtonPressed)
+    if(!m_IsCloseButtonPressed && [self isHowered])
     {
         if(m_Target != nil && m_Action != nil && !m_IsAlreadyClicked)
         {
@@ -241,20 +246,42 @@
 
     [self setCloseButtonPressed:NO];
     m_IsCloseButtonDragged = NO;
+    m_IsMouseDragged = NO;
 
-    [[self window] close];
+    if([self isHowered])
+        [[self window] close];
 }
 
 - (void)mouseEntered:(NSEvent*)event
 {
+    if(m_IsMouseDragged)
+        return;
+
     [self setHowered:YES];
-    [m_Delegate notificationWindowViewMouseEntered:self];
 }
 
 - (void)mouseExited:(NSEvent*)event
 {
+    if(m_IsMouseDragged)
+        return;
+
     [self setHowered:NO];
-    [m_Delegate notificationWindowViewMouseExited:self];
+}
+
++ (NSGradient*)bgGradient
+{
+    static NSGradient *result = nil;
+
+    if(result == nil)
+    {
+        result = [[NSGradient alloc] initWithColorsAndLocations:
+                                                [NSColor clearColor],                            0.0f,
+                                                [NSColor colorWithDeviceWhite:0.0f alpha:0.25f], 0.5f,
+                                                [NSColor colorWithDeviceWhite:0.5f alpha:0.35f], 0.9f,
+                                                nil];
+    }
+
+    return result;
 }
 
 - (void)drawRect:(NSRect)rect
@@ -264,8 +291,11 @@
     [NSGraphicsContext saveGraphicsState];
     CGContextSetShouldSmoothFonts([[NSGraphicsContext currentContext] graphicsPort], NO);
 
-    [[NSColor colorWithDeviceWhite:0.0f alpha:0.6f] setFill];
-    [[NSBezierPath bezierPathWithRoundedRect:rect xRadius:10.0f yRadius:10.0f] fill];
+    NSBezierPath *bgPath = [NSBezierPath bezierPathWithRoundedRect:rect xRadius:10.0f yRadius:10.0f];
+    [[NSColor colorWithDeviceWhite:0.0f alpha:0.7f] setFill];
+
+    [bgPath fill];
+    [[NotificationWindowView bgGradient] drawInBezierPath:bgPath angle:90.0f];
 
     if(m_Icon != nil)
     {
@@ -298,18 +328,25 @@
                 attributes:attributes];
     }
 
-    if(m_IsHowered)
-    {
-        NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.0f, 1.0f)
-                                                             xRadius:10.0f
-                                                             yRadius:10.0f];
+    NSBezierPath *path = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.0f, 1.0f)
+                                                         xRadius:10.0f
+                                                         yRadius:10.0f];
 
+    if([self isHowered])
+    {
         [[NSColor colorWithDeviceWhite:1.0f alpha:1.0f] setStroke];
         [path setLineWidth:2.0f];
-        [path stroke];
-
-        [self drawCloseButton:rect];
     }
+    else
+    {
+        [[NSColor colorWithDeviceWhite:1.0f alpha:0.45f] setStroke];
+        [path setLineWidth:1.5f];
+    }
+    
+    [path stroke];
+
+    if([self isHowered])
+        [self drawCloseButton:rect];
 
     [NSGraphicsContext restoreGraphicsState];
 }
@@ -330,6 +367,11 @@
 
     m_IsHowered = hovered;
     [self setNeedsDisplay:YES];
+
+    if(hovered)
+        [m_Delegate notificationWindowViewMouseEntered:self];
+    else
+        [m_Delegate notificationWindowViewMouseExited:self];
 }
 
 - (BOOL)isCloseButtonPressed
@@ -473,7 +515,7 @@
 
     return [NSDictionary dictionaryWithObjectsAndKeys:
                             [NSColor whiteColor],                   NSForegroundColorAttributeName,
-                            [NSFont systemFontOfSize:12.0f],        NSFontAttributeName,
+                            [NSFont menuFontOfSize:12.0f],          NSFontAttributeName,
                             style,                                  NSParagraphStyleAttributeName,
                             nil];
 }

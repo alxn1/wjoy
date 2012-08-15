@@ -27,6 +27,7 @@
         NSTrackingRectTag                    m_TrackingRectTag;
 
         BOOL                                 m_IsHowered;
+        BOOL                                 m_IsMouseDragged;
         BOOL                                 m_IsCloseButtonDragged;
         BOOL                                 m_IsCloseButtonPressed;
         BOOL                                 m_IsAlreadyClicked;
