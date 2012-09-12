@@ -164,7 +164,10 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
         if([WiimoteInquiry isModelSupported:[device getName]])
+		{
+			IOBluetoothIgnoreHIDDevice([device getDeviceRef]);
             [Wiimote connectToBluetoothDevice:device];
+		}
     }
 }
 
