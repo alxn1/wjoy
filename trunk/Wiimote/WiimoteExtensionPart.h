@@ -10,19 +10,22 @@
 
 @class WiimoteExtension;
 @class WiimoteExtensionHelper;
+@class WiimoteMotionPlusDetector;
 
 @interface WiimoteExtensionPart : WiimotePart
 {
     @private
-        BOOL                     m_IsExtensionConnected;
-        WiimoteExtensionHelper  *m_ProbeHelper;
-        WiimoteExtension        *m_Extension;
+        BOOL                         m_IsExtensionConnected;
+        WiimoteExtensionHelper      *m_ProbeHelper;
+        WiimoteMotionPlusDetector   *m_MotionPlusDetector;
+        WiimoteExtension            *m_Extension;
 }
 
 + (void)registerExtensionClass:(Class)cls;
 
 - (WiimoteExtension*)connectedExtension;
 
+- (void)detectMotionPlus;
 - (void)disconnectExtension;
 
 @end

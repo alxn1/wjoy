@@ -40,5 +40,3 @@ typedef struct
     uint8_t                                     analogData[WiimoteDeviceClassicControllerAnalogDataSize];
     WiimoteDeviceClassicControllerButtonState   buttonState;
 } WiimoteDeviceClassicControllerReport;
-
-

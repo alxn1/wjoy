@@ -50,6 +50,19 @@
     [super dealloc];
 }
 
+- (void)initializeExtensionPort
+{
+    uint8_t data;
+
+    data = WiimoteDeviceRoutineExtensionInitValue1;
+    [m_IOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
+	usleep(50000);
+
+    data = WiimoteDeviceRoutineExtensionInitValue2;
+    [m_IOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
+	usleep(50000);
+}
+
 - (void)beginProbe
 {
     [self retain];
@@ -123,6 +136,7 @@
     if(m_IsStarted)
         return;
 
+    [self initializeExtensionPort];
 	[self beginProbe];
     [self probeNextClass];
 }
