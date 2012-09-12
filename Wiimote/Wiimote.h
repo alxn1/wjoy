@@ -83,6 +83,7 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 - (WiimoteAccelerometer*)accelerometer;
 
 - (WiimoteExtension*)connectedExtension;
+- (void)detectMotionPlus;
 - (void)disconnectExtension;
 
 - (void)requestUpdateState;

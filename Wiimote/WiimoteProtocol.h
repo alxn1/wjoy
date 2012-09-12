@@ -23,6 +23,7 @@
 #import <Wiimote/WiimoteProtocolExtension.h>
 #import <Wiimote/WiimoteProtocolNunchuck.h>
 #import <Wiimote/WiimoteProtocolClassicController.h>
+#import <Wiimote/WiimoteProtocolMotionPlus.h>
 #import <Wiimote/WiimoteProtocolUtils.h>
 
 #pragma pop(pack)

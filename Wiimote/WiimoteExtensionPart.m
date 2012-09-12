@@ -8,6 +8,7 @@
 
 #import "WiimoteExtensionPart.h"
 #import "WiimoteEventDispatcher+Extension.h"
+#import "WiimoteMotionPlusDetector.h"
 #import "WiimoteExtensionHelper.h"
 #import "Wiimote+PlugIn.h"
 
@@ -18,6 +19,8 @@
 
 - (void)extensionConnected;
 - (void)extensionDisconnected;
+
+- (void)motionPlusDetectFinish:(NSNumber*)detected;
 
 @end
 
@@ -80,6 +83,10 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     m_ProbeHelper           = nil;
     m_Extension             = nil;
     m_IsExtensionConnected  = NO;
+    m_MotionPlusDetector    = [[WiimoteMotionPlusDetector alloc]
+                                                        initWithIOManager:ioManager
+                                                                   target:self
+                                                                   action:@selector(motionPlusDetectFinish:)];
 
     return self;
 }
@@ -87,6 +94,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 - (void)dealloc
 {
     [self extensionDisconnected];
+    [m_MotionPlusDetector release];
     [super dealloc];
 }
 
@@ -96,6 +104,12 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
         return nil;
 
     return [[m_Extension retain] autorelease];
+}
+
+- (void)detectMotionPlus
+{
+    if(m_ProbeHelper == nil)
+        [m_MotionPlusDetector run];
 }
 
 - (void)disconnectExtension
@@ -243,23 +257,9 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     [m_Extension handleReport:extensionReportPart length:length];
 }
 
-- (void)initializeExtensionPort
-{
-    uint8_t data;
-
-    data = WiimoteDeviceRoutineExtensionInitValue1;
-    [[self ioManager] writeMemory:WiimoteDeviceRoutineExtensionInitAddress1 data:&data length:sizeof(data)];
-	usleep(50000);
-
-    data = WiimoteDeviceRoutineExtensionInitValue2;
-    [[self ioManager] writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
-	usleep(50000);
-}
-
 - (void)extensionConnected
 {
     [self extensionDisconnected];
-    [self initializeExtensionPort];
 
     m_ProbeHelper = [[WiimoteExtensionHelper alloc]
                                           initWithWiimote:[self owner]
@@ -283,6 +283,8 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
         [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
         [[self owner] deviceConfigurationChanged];
     }
+
+    [self detectMotionPlus];
 }
 
 - (void)extensionDisconnected
@@ -291,11 +293,20 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
         [[self eventDispatcher] postExtensionDisconnectedNotification:m_Extension];
 
     [m_ProbeHelper cancel];
+    [m_MotionPlusDetector cancel];
     [m_ProbeHelper release];
     [m_Extension autorelease];
 
     m_ProbeHelper   = nil;
     m_Extension     = nil;
+}
+
+- (void)motionPlusDetectFinish:(NSNumber*)detected
+{
+    if([detected boolValue])
+        NSLog(@"Wii Motion Plus detected (sub-extension: %@)!", [m_Extension name]);
+    else
+        NSLog(@"Wii Motion Plus not detected :(");
 }
 
 @end
