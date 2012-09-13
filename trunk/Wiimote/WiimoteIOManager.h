@@ -30,10 +30,6 @@
 			target:(id)target
 			action:(SEL)action;
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(const uint8_t*)data
-              length:(NSUInteger)length;
-
 - (Wiimote*)owner;
 
 @end

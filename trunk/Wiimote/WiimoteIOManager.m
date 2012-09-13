@@ -34,13 +34,6 @@
     return [m_Device readMemory:memoryRange target:target action:action];
 }
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(const uint8_t*)data
-              length:(NSUInteger)length
-{
-    return [m_Device injectReport:type data:data length:length];
-}
-
 - (Wiimote*)owner
 {
 	return m_Owner;

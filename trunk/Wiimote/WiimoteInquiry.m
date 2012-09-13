@@ -11,6 +11,8 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
+#import <dlfcn.h>
+
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
 NSString *WiimoteDeviceName              = @"Nintendo RVL-CNT-01";
@@ -20,6 +22,7 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
 
 - (id)initInternal;
 
+- (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device;
 - (void)connectToFindedDevices:(NSArray*)devices;
 
 @end
@@ -155,6 +158,21 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
     return self;
 }
 
+- (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device
+{
+    static BOOL isInit                                              = NO;
+    static void (*ignoreHIDDeviceFn)(IOBluetoothDeviceRef device)   = NULL;
+
+    if(!isInit)
+    {
+        ignoreHIDDeviceFn   = dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
+        isInit              = YES;
+    }
+
+    if(ignoreHIDDeviceFn != NULL)
+        ignoreHIDDeviceFn(device);
+}
+
 - (void)connectToFindedDevices:(NSArray*)devices
 {
     NSUInteger count = [devices count];
@@ -165,7 +183,7 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
 
         if([WiimoteInquiry isModelSupported:[device getName]])
 		{
-			IOBluetoothIgnoreHIDDevice([device getDeviceRef]);
+            [self postIgnoreHintToSystem:[device getDeviceRef]];
             [Wiimote connectToBluetoothDevice:device];
 		}
     }

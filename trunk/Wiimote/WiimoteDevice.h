@@ -62,10 +62,6 @@
             target:(id)target
             action:(SEL)action;
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(const uint8_t*)data
-              length:(NSUInteger)length;
-
 - (BOOL)requestStateReport;
 - (BOOL)requestReportType:(WiimoteDeviceReportType)type;
 

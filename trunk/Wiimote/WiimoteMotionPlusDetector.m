@@ -41,6 +41,12 @@
                 [[WiimoteMotionPlusDetector motionPlusSignature] length]);
 }
 
+- (id)init
+{
+    [[super init] release];
+    return nil;
+}
+
 - (id)initWithIOManager:(WiimoteIOManager*)ioManager
                  target:(id)target
                  action:(SEL)action
