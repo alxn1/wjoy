@@ -12,6 +12,7 @@
 
 typedef enum
 {
+    WiimoteExtensionMeritClassMotionPlus    = 1,
     WiimoteExtensionMeritClassSystemHigh    = 1000,
     WiimoteExtensionMeritClassUserHigh      = 10000,
     WiimoteExtensionMeritClassSystem        = 100000,
@@ -26,7 +27,8 @@ typedef enum
 + (NSUInteger)merit;
 + (NSUInteger)minReportDataSize;
 
-+ (void)initialize:(WiimoteIOManager*)ioManager;
++ (void)initialize:(WiimoteIOManager*)ioManager
+  withSubExtension:(WiimoteExtension*)subExtension;
 
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
@@ -58,5 +60,21 @@ typedef enum
 + (void)probeFinished:(BOOL)result
                target:(id)target
                action:(SEL)action;
+
+@end
+
+@interface WiimoteExtension (SubExtension)
+
+- (void)setSubExtension:(WiimoteExtension*)extension;
+
+@end
+
+@interface WiimoteExtension (MotionPlus)
+
+- (BOOL)isSupportMotionPlus;
+- (WiimoteDeviceMotionPlusMode)motionPlusMode;
+
+- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+                        length:(NSUInteger)length;
 
 @end

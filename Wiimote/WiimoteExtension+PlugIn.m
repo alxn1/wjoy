@@ -38,6 +38,7 @@
 }
 
 + (void)initialize:(WiimoteIOManager*)ioManager
+  withSubExtension:(WiimoteExtension*)subExtension
 {
 }
 
@@ -149,6 +150,33 @@
     [target performSelector:action
                  withObject:[NSNumber numberWithBool:result]
                  afterDelay:0.0];
+}
+
+@end
+
+@implementation WiimoteExtension (SubExtension)
+
+- (void)setSubExtension:(WiimoteExtension*)extension
+{
+}
+
+@end
+
+@implementation WiimoteExtension (MotionPlus)
+
+- (BOOL)isSupportMotionPlus
+{
+    return NO;
+}
+
+- (WiimoteDeviceMotionPlusMode)motionPlusMode
+{
+    return WiimoteDeviceMotionPlusModeOther;
+}
+
+- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+                        length:(NSUInteger)length
+{
 }
 
 @end
