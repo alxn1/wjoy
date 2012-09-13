@@ -20,6 +20,7 @@
       eventDispatcher:(WiimoteEventDispatcher*)dispatcher
             ioManager:(WiimoteIOManager*)ioManager
      extensionClasses:(NSArray*)extensionClasses
+         subExtension:(WiimoteExtension*)extension
                target:(id)target
                action:(SEL)action
 {
@@ -33,7 +34,9 @@
     m_ExtensionClasses  = [extensionClasses mutableCopy];
     m_CurrentClass      = nil;
     m_Extension         = nil;
+    m_SubExtension      = [extension retain];
 
+    m_IsInitialized     = NO;
     m_IsStarted         = NO;
     m_IsCanceled        = NO;
 
@@ -46,6 +49,7 @@
 - (void)dealloc
 {
     [m_ExtensionClasses release];
+    [m_SubExtension release];
     [m_Extension release];
     [super dealloc];
 }
@@ -61,6 +65,8 @@
     data = WiimoteDeviceRoutineExtensionInitValue2;
     [m_IOManager writeMemory:WiimoteDeviceRoutineExtensionInitAddress2 data:&data length:sizeof(data)];
 	usleep(50000);
+
+    m_IsInitialized = YES;
 }
 
 - (void)beginProbe
@@ -98,7 +104,15 @@
     m_CurrentClass = [m_ExtensionClasses objectAtIndex:0];
     [m_ExtensionClasses removeObjectAtIndex:0];
 
-    [m_CurrentClass initialize:m_IOManager];
+    if(!m_IsInitialized &&
+       [m_CurrentClass merit] >= WiimoteExtensionMeritClassSystemHigh)
+    {
+        [self initializeExtensionPort];
+    }
+
+    [m_CurrentClass initialize:m_IOManager
+              withSubExtension:m_SubExtension];
+
     [m_CurrentClass probe:m_IOManager
                    target:self
                    action:@selector(currentClassProbeFinished:)];
@@ -128,6 +142,8 @@
     }
 
     [m_Extension calibrate:m_IOManager];
+    [m_Extension setSubExtension:m_SubExtension];
+
     [self probeFinished:m_Extension];
 }
 
@@ -136,7 +152,7 @@
     if(m_IsStarted)
         return;
 
-    [self initializeExtensionPort];
+    m_IsInitialized = NO;
 	[self beginProbe];
     [self probeNextClass];
 }

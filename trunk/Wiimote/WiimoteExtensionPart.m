@@ -259,6 +259,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)extensionConnected
 {
+    WiimoteExtension *extension = [[m_Extension retain] autorelease];
     [self extensionDisconnected];
 
     m_ProbeHelper = [[WiimoteExtensionHelper alloc]
@@ -266,6 +267,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
                                           eventDispatcher:[self eventDispatcher]
                                                 ioManager:[self ioManager]
                                          extensionClasses:[WiimoteExtensionPart registredExtensionClasses]
+                                             subExtension:extension
                                                    target:self
                                                    action:@selector(extensionCreated:)];
 
@@ -303,10 +305,12 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)motionPlusDetectFinish:(NSNumber*)detected
 {
-    if([detected boolValue])
-        NSLog(@"Wii Motion Plus detected (sub-extension: %@)!", [m_Extension name]);
-    else
-        NSLog(@"Wii Motion Plus not detected :(");
+    if(![detected boolValue])
+        return;
+
+    m_IsExtensionConnected = YES;
+    [self extensionConnected];
+    [[self owner] deviceConfigurationChanged];
 }
 
 @end

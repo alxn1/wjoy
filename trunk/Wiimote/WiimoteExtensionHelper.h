@@ -18,7 +18,9 @@
         NSMutableArray          *m_ExtensionClasses;
         Class                    m_CurrentClass;
         WiimoteExtension        *m_Extension;
+        WiimoteExtension        *m_SubExtension;
 
+        BOOL                     m_IsInitialized;
         BOOL                     m_IsStarted;
         BOOL                     m_IsCanceled;
 
@@ -30,6 +32,7 @@
       eventDispatcher:(WiimoteEventDispatcher*)dispatcher
             ioManager:(WiimoteIOManager*)ioManager
      extensionClasses:(NSArray*)extensionClasses
+         subExtension:(WiimoteExtension*)extension
                target:(id)target
                action:(SEL)action;
 

@@ -118,6 +118,11 @@
         [[self eventDispatcher] postNunchuck:self buttonReleased:button];
 }
 
+- (WiimoteDeviceMotionPlusMode)motionPlusMode
+{
+    return WiimoteDeviceMotionPlusModeNunchuck;
+}
+
 - (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
     if(length < sizeof(WiimoteDeviceNunchuckCalibrationData))
