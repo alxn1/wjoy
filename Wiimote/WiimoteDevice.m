@@ -211,19 +211,6 @@
 							   action:action];
 }
 
-- (BOOL)injectReport:(NSUInteger)type
-                data:(const uint8_t*)data
-              length:(NSUInteger)length
-{
-    WiimoteDeviceReport *report = [WiimoteDeviceReport deviceReportWithType:type data:data length:length device:self];
-
-    if(report == nil)
-        return NO;
-
-    [self handleReport:report];
-    return YES;
-}
-
 - (BOOL)requestStateReport
 {
     uint8_t param = 0;
