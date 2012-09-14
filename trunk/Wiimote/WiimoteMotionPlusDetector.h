@@ -7,6 +7,7 @@
 //
 
 #import <Wiimote/WiimoteIOManager.h>
+#import <Wiimote/WiimoteExtension+PlugIn.h>
 
 @interface WiimoteMotionPlusDetector : NSObject
 {
@@ -22,6 +23,9 @@
 
         NSTimer          *m_LastTryTimer;
 }
+
++ (void)activateMotionPlus:(WiimoteIOManager*)ioManager
+              subExtension:(WiimoteExtension*)subExtension;
 
 - (id)initWithIOManager:(WiimoteIOManager*)ioManager
                  target:(id)target

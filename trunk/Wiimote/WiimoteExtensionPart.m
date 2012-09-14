@@ -308,9 +308,16 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     if(![detected boolValue])
         return;
 
-    m_IsExtensionConnected = YES;
-    [self extensionConnected];
-    [[self owner] deviceConfigurationChanged];
+    [WiimoteMotionPlusDetector
+                    activateMotionPlus:[self ioManager]
+                          subExtension:m_Extension];
+
+    if(m_Extension != nil)
+    {
+        m_IsExtensionConnected = YES;
+        [self extensionConnected];
+        [[self owner] deviceConfigurationChanged];
+    }
 }
 
 @end

@@ -275,8 +275,8 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension connected: %@", [extension name]);
-    if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
-        [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
+    // if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
+    //    [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
 }
 
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension

@@ -110,9 +110,6 @@
         [self initializeExtensionPort];
     }
 
-    [m_CurrentClass initialize:m_IOManager
-              withSubExtension:m_SubExtension];
-
     [m_CurrentClass probe:m_IOManager
                    target:self
                    action:@selector(currentClassProbeFinished:)];

@@ -472,7 +472,8 @@
 		0A48911D15C7FCC200207478 /* plugin interface */ = {
 			isa = PBXGroup;
 			children = (
-				0A66C8DD15CC118300096DDA /* wiimote parts */,
+				0A4890BA15C7FA4500207478 /* WiimotePart.h */,
+				0A4890BB15C7FA4500207478 /* WiimotePart.m */,
 				0A66C89C15CC0DC300096DDA /* extensions */,
 				0A5C525515CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.h */,
 				0A5C525615CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.m */,
@@ -645,15 +646,6 @@
 				0A6901C315C90EB8000D988D /* WiimoteUnknownExtension.m */,
 			);
 			name = internal;
-			sourceTree = "<group>";
-		};
-		0A66C8DD15CC118300096DDA /* wiimote parts */ = {
-			isa = PBXGroup;
-			children = (
-				0A4890BA15C7FA4500207478 /* WiimotePart.h */,
-				0A4890BB15C7FA4500207478 /* WiimotePart.m */,
-			);
-			name = "wiimote parts";
 			sourceTree = "<group>";
 		};
 		0A6901C115C90E9C000D988D /* unknown */ = {

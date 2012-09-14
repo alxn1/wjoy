@@ -33,21 +33,6 @@
     return 6;
 }
 
-+ (void)initialize:(WiimoteIOManager*)ioManager
-  withSubExtension:(WiimoteExtension*)subExtension
-{
-    uint8_t data = WiimoteDeviceMotionPlusModeNormal;
-
-    if(subExtension != nil)
-        data = [subExtension motionPlusMode];
-
-    [ioManager writeMemory:WiimoteDeviceMotionPlusExtensionSetModeAddress
-                      data:&data
-                    length:sizeof(data)];
-
-    usleep(50000);
-}
-
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action
@@ -95,8 +80,8 @@
     if(length < 6)
         return;
 
-    BOOL isExtensionConnected   = (extensionData[5] & 0x1);
-    BOOL isExtensionDataReport  = (extensionData[5] & 0x2);
+    BOOL isExtensionConnected   = ((extensionData[5] & 0x1) == 1);
+    BOOL isExtensionDataReport  = ((extensionData[5] & 0x2) == 0);
     BOOL isSubExtensionPresent  = (m_SubExtension != nil);
 
     if(isExtensionConnected != isSubExtensionPresent)
@@ -146,10 +131,13 @@
 
 - (void)deactivate
 {
-    uint8_t data = WiimoteDeviceMotionPlusExtensionInitValue;
-    [m_IOManager writeMemory:WiimoteDeviceMotionPlusExtensionInitAddress
+    uint8_t data = WiimoteDeviceMotionPlusExtensionInitOrResetValue;
+
+    [m_IOManager writeMemory:WiimoteDeviceMotionPlusExtensionResetAddress
                         data:&data
                       length:sizeof(data)];
+
+    usleep(50000);
 }
 
 @end
