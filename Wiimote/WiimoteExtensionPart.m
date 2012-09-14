@@ -180,10 +180,13 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
     m_IsExtensionConnected = isExtensionConnected;
 
-    if(isExtensionConnected)
-        [self extensionConnected];
-    else
+    if(!isExtensionConnected)
+    {
         [self extensionDisconnected];
+        [self detectMotionPlus];
+    }
+    else
+        [self extensionConnected];
 
     [[self owner] deviceConfigurationChanged];
 }
