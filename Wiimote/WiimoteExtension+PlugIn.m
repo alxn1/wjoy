@@ -37,11 +37,6 @@
     return 0;
 }
 
-+ (void)initialize:(WiimoteIOManager*)ioManager
-  withSubExtension:(WiimoteExtension*)subExtension
-{
-}
-
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action

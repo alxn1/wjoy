@@ -41,6 +41,24 @@
                 [[WiimoteMotionPlusDetector motionPlusSignature] length]);
 }
 
++ (void)activateMotionPlus:(WiimoteIOManager*)ioManager
+              subExtension:(WiimoteExtension*)subExtension
+{
+    uint8_t data = WiimoteDeviceMotionPlusModeNormal;
+
+    if(subExtension != nil &&
+      [subExtension isSupportMotionPlus])
+    {
+        data = [subExtension motionPlusMode];
+    }
+
+    [ioManager writeMemory:WiimoteDeviceMotionPlusExtensionSetModeAddress
+                      data:&data
+                    length:sizeof(data)];
+
+    usleep(50000);
+}
+
 - (id)init
 {
     [[super init] release];
@@ -108,7 +126,7 @@
 
 - (void)initializeMotionPlus
 {
-    uint8_t data = WiimoteDeviceMotionPlusExtensionInitValue;
+    uint8_t data = WiimoteDeviceMotionPlusExtensionInitOrResetValue;
 
     [m_IOManager writeMemory:WiimoteDeviceMotionPlusExtensionInitAddress
                         data:&data

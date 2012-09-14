@@ -118,6 +118,11 @@
         [[self eventDispatcher] postNunchuck:self buttonReleased:button];
 }
 
+- (BOOL)isSupportMotionPlus
+{
+    return YES;
+}
+
 - (WiimoteDeviceMotionPlusMode)motionPlusMode
 {
     return WiimoteDeviceMotionPlusModeNunchuck;
@@ -175,6 +180,27 @@
     [self setButton:WiimoteNunchuckButtonTypeC
             pressed:((nunchuckReport->acceleromererXYZAndButtonState &
                                     WiimoteDeviceNunchuckReportButtonMaskC) == 0)];
+}
+
+- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+                        length:(NSUInteger)length
+{
+    if(length < sizeof(WiimoteDeviceNunchuckReport))
+        return;
+
+    uint8_t data[sizeof(WiimoteDeviceNunchuckReport)];
+
+    // transform to standart nunchuck report
+    memcpy(data, extensionData, sizeof(data));
+    data[4] &= 0xFE;
+    data[4] |= ((extensionData[5] >> 7) & 0x1);
+    data[5] =
+        ((extensionData[5] & 0x40) << 1) |
+        ((extensionData[5] & 0x20) >> 0) |
+        ((extensionData[5] & 0x10) >> 1) |
+        ((extensionData[5] & 0x0C) >> 2);
+
+    [self handleReport:data length:sizeof(data)];
 }
 
 @end

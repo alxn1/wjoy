@@ -27,9 +27,6 @@ typedef enum
 + (NSUInteger)merit;
 + (NSUInteger)minReportDataSize;
 
-+ (void)initialize:(WiimoteIOManager*)ioManager
-  withSubExtension:(WiimoteExtension*)subExtension;
-
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action;

@@ -130,6 +130,11 @@
                       positionChanged:newPosition];
 }
 
+- (BOOL)isSupportMotionPlus
+{
+    return YES;
+}
+
 - (void)handleCalibrationData:(const uint8_t*)data length:(NSUInteger)length
 {
     if(length < sizeof(m_CalibrationData))
@@ -228,6 +233,26 @@
 
     [self handleButtonState:state];
     [self handleAnalogData:classicReport->analogData];
+}
+
+- (void)handleMotionPlusReport:(const uint8_t*)extensionData
+                        length:(NSUInteger)length
+{
+    if(length < sizeof(WiimoteDeviceClassicControllerReport))
+        return;
+
+    uint8_t data[sizeof(WiimoteDeviceClassicControllerReport)];
+
+    // transform to standart classic controller report
+    memcpy(data, extensionData, sizeof(data));
+    data[5] &= 0xFC;
+    data[5] |= ((data[0] & 0x1) << 0);
+    data[5] |= ((data[1] & 0x1) << 1);
+    data[0] &= 0xFE;
+    data[1] &= 0xFE;
+    data[4] &= 0xFE;
+
+    [self handleReport:data length:sizeof(data)];
 }
 
 @end
