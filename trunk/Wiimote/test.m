@@ -211,7 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device playConnectEffect];
 	// [[m_Device accelerometer] setEnabled:YES];
     // [m_Device setIREnabled:YES];
-    [m_Device detectMotionPlus];
+    // [m_Device detectMotionPlus];
 
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
@@ -275,6 +275,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension connected: %@", [extension name]);
+	// [m_Device detectMotionPlus];
     // if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
     //    [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
 }
@@ -282,6 +283,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension disconnected: %@", [extension name]);
+	// [m_Device detectMotionPlus];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
