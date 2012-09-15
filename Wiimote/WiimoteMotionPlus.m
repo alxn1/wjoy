@@ -33,19 +33,33 @@
     return 6;
 }
 
++ (NSArray*)motionPlusSignatures
+{
+	static const uint8_t  signature1[]   = { 0x00, 0x00, 0xA4, 0x20, 0x04, 0x05 };
+	static const uint8_t  signature2[]   = { 0x00, 0x00, 0xA4, 0x20, 0x05, 0x05 };
+	static const uint8_t  signature3[]   = { 0x00, 0x00, 0xA4, 0x20, 0x07, 0x05 };
+
+    static NSArray       *result         = nil;
+
+    if(result == nil)
+	{
+		result = [[NSArray alloc] initWithObjects:
+					[NSData dataWithBytes:signature1 length:sizeof(signature1)],
+					[NSData dataWithBytes:signature2 length:sizeof(signature2)],
+					[NSData dataWithBytes:signature3 length:sizeof(signature3)],
+					nil];
+	}
+
+    return result;
+}
+
 + (void)probe:(WiimoteIOManager*)ioManager
        target:(id)target
        action:(SEL)action
 {
-    static const uint8_t     signature[]           = { 0x00, 0x00, 0xA4, 0x20, 0x04, 0x05 };
-    static NSData           *extensionSignature    = nil;
-
-    if(extensionSignature == nil)
-        extensionSignature = [[NSData alloc] initWithBytes:signature length:sizeof(signature)];
-
     [WiimoteExtensionProbeHandler
                             routineProbe:ioManager
-                               signature:extensionSignature
+							  signatures:[WiimoteMotionPlus motionPlusSignatures]
                                   target:target
                                   action:action];
 }
@@ -57,8 +71,10 @@
     if(self == nil)
         return nil;
 
-    m_SubExtension  = nil;
-    m_IOManager     = nil;
+    m_SubExtension				= nil;
+    m_IOManager					= nil;
+	m_ReportCounter				= 0;
+	m_ExtensionReportCounter	= 0;
 
     return self;
 }
@@ -80,15 +96,31 @@
     if(length < 6)
         return;
 
-    BOOL isExtensionConnected   = ((extensionData[5] & 0x1) == 1);
-    BOOL isExtensionDataReport  = ((extensionData[5] & 0x2) == 0);
-    BOOL isSubExtensionPresent  = (m_SubExtension != nil);
+	BOOL isExtensionDataReport  = ((extensionData[5] & 0x2) == 0);
 
-    if(isExtensionConnected != isSubExtensionPresent)
-    {
-        [self deactivate];
-        return;
-    }
+	m_ReportCounter++;
+	if(isExtensionDataReport)
+		m_ExtensionReportCounter++;
+
+	if(m_ReportCounter == 10)
+	{
+		BOOL needDeactivate = NO;
+
+		if((m_SubExtension == nil && m_ExtensionReportCounter != 0) ||
+		   (m_SubExtension != nil && m_ExtensionReportCounter == 0))
+		{
+			needDeactivate = YES;
+		}
+
+		m_ReportCounter			 = 0;
+		m_ExtensionReportCounter = 0;
+
+		if(needDeactivate)
+		{
+			[self deactivate];
+			return;
+		}
+	}
 
     if(isExtensionDataReport)
     {

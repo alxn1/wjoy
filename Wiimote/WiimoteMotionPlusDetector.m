@@ -22,13 +22,24 @@
 
 @implementation WiimoteMotionPlusDetector
 
-+ (NSData*)motionPlusSignature
++ (NSArray*)motionPlusSignatures
 { 
-    static const uint8_t  signature[]   = { 0x00, 0x00, 0xA6, 0x20, 0x00, 0x05 };
-    static NSData        *result        = nil;
+    static const uint8_t  signature1[]   = { 0x00, 0x00, 0xA6, 0x20, 0x00, 0x05 };
+	static const uint8_t  signature2[]   = { 0x00, 0x00, 0xA6, 0x20, 0x04, 0x05 };
+	static const uint8_t  signature3[]   = { 0x00, 0x00, 0xA6, 0x20, 0x05, 0x05 };
+	static const uint8_t  signature4[]   = { 0x00, 0x00, 0xA6, 0x20, 0x07, 0x05 };
+
+    static NSArray       *result         = nil;
 
     if(result == nil)
-        result = [[NSData alloc] initWithBytes:signature length:sizeof(signature)];
+	{
+		result = [[NSArray alloc] initWithObjects:
+					[NSData dataWithBytes:signature1 length:sizeof(signature1)],
+					[NSData dataWithBytes:signature2 length:sizeof(signature2)],
+					[NSData dataWithBytes:signature3 length:sizeof(signature3)],
+					[NSData dataWithBytes:signature4 length:sizeof(signature4)],
+					nil];
+	}
 
     return result;
 
@@ -38,13 +49,13 @@
 {
     return NSMakeRange(
                 WiimoteDeviceMotionPlusExtensionProbeAddress,
-                [[WiimoteMotionPlusDetector motionPlusSignature] length]);
+                [[[WiimoteMotionPlusDetector motionPlusSignatures] objectAtIndex:0] length]);
 }
 
 + (void)activateMotionPlus:(WiimoteIOManager*)ioManager
               subExtension:(WiimoteExtension*)subExtension
 {
-    uint8_t data = WiimoteDeviceMotionPlusModeNormal;
+	uint8_t data = WiimoteDeviceMotionPlusModeOther;
 
     if(subExtension != nil &&
       [subExtension isSupportMotionPlus])
@@ -163,11 +174,17 @@
         return;
     }
 
-    if([data isEqualToData:[WiimoteMotionPlusDetector motionPlusSignature]])
-    {
-        [self detectionFinished:YES];
-        return;
-    }
+	NSArray		*signatures		 = [WiimoteMotionPlusDetector motionPlusSignatures];
+	NSUInteger   countSignatures = [signatures count];
+
+	for(NSUInteger i = 0; i < countSignatures; i++)
+	{
+		if([data isEqualToData:[signatures objectAtIndex:i]])
+		{
+			[self detectionFinished:YES];
+			return;
+		}
+	}
 
     if(m_ReadTryCount >= WiimoteDeviceMotionPlusDetectTriesCount)
     {

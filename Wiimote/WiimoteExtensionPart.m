@@ -181,10 +181,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     m_IsExtensionConnected = isExtensionConnected;
 
     if(!isExtensionConnected)
-    {
         [self extensionDisconnected];
-        [self detectMotionPlus];
-    }
     else
         [self extensionConnected];
 
@@ -288,8 +285,6 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
         [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
         [[self owner] deviceConfigurationChanged];
     }
-
-    [self detectMotionPlus];
 }
 
 - (void)extensionDisconnected
@@ -319,7 +314,6 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     {
         m_IsExtensionConnected = YES;
         [self extensionConnected];
-        [[self owner] deviceConfigurationChanged];
     }
 }
 

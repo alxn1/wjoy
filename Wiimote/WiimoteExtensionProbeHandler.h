@@ -20,6 +20,11 @@
               target:(id)target
               action:(SEL)action;
 
++ (void)routineProbe:(WiimoteIOManager*)manager
+		  signatures:(NSArray*)signatures
+              target:(id)target
+              action:(SEL)action;
+
 - (id)initWithIOManager:(WiimoteIOManager*)manager
                  target:(id)target
                  action:(SEL)action;
