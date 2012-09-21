@@ -157,6 +157,11 @@
     return [[m_SubExtension retain] autorelease];
 }
 
+- (void)disconnectSubExtension
+{
+    // ???
+}
+
 @end
 
 @implementation WiimoteMotionPlus (PrivatePart)

@@ -14,6 +14,7 @@
 @protocol WiimoteMotionPlusProtocol
 
 - (WiimoteExtension*)subExtension;
+- (void)disconnectSubExtension;
 
 @end
 
