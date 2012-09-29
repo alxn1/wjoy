@@ -38,6 +38,7 @@ typedef enum
 
 - (void)calibrate:(WiimoteIOManager*)ioManager;
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length;
+- (void)disconnected;
 
 @end
 

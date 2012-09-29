@@ -112,6 +112,13 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
         [m_MotionPlusDetector run];
 }
 
+- (void)reconnectExtension
+{
+	[self extensionDisconnected];
+	m_IsExtensionConnected = NO;
+	[[self owner] requestUpdateState];
+}
+
 - (void)disconnectExtension
 {
     [self extensionDisconnected];
@@ -276,6 +283,8 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (void)extensionCreated:(WiimoteExtension*)extension
 {
+	WiimoteExtension *subExtension = [m_ProbeHelper subExtension];
+
     m_Extension = [extension retain];
     [m_ProbeHelper release];
 	m_ProbeHelper = nil;
@@ -283,14 +292,14 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 	if(m_Extension != nil)
 	{
         [[self eventDispatcher] postExtensionConnectedNotification:m_Extension];
+		[m_Extension setSubExtension:subExtension];
         [[self owner] deviceConfigurationChanged];
     }
 }
 
 - (void)extensionDisconnected
 {
-    if(m_Extension != nil)
-        [[self eventDispatcher] postExtensionDisconnectedNotification:m_Extension];
+	WiimoteExtension *ex = m_Extension;
 
     [m_ProbeHelper cancel];
     [m_MotionPlusDetector cancel];
@@ -299,6 +308,12 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
     m_ProbeHelper   = nil;
     m_Extension     = nil;
+
+	if(ex != nil)
+	{
+		[ex disconnected];
+        [[self eventDispatcher] postExtensionDisconnectedNotification:ex];
+	}
 }
 
 - (void)motionPlusDetectFinish:(NSNumber*)detected

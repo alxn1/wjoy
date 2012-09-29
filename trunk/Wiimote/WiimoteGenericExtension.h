@@ -29,4 +29,6 @@
 - (void)handleMotionPlusReport:(const uint8_t*)extensionData
                         length:(NSUInteger)length;
 
+- (void)disconnected;
+
 @end

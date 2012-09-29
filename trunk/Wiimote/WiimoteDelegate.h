@@ -9,6 +9,7 @@
 #import <Wiimote/WiimoteIRPoint.h>
 #import <Wiimote/WiimoteNunchuckDelegate.h>
 #import <Wiimote/WiimoteClassicControllerDelegate.h>
+#import <Wiimote/WiimoteMotionPlusDelegate.h>
 
 #define WiimoteButtonCount  11
 

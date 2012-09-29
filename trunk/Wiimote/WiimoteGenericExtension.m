@@ -101,4 +101,8 @@
 {
 }
 
+- (void)disconnected
+{
+}
+
 @end

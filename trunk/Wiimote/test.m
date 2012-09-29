@@ -211,7 +211,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     [m_Device playConnectEffect];
 	// [[m_Device accelerometer] setEnabled:YES];
     // [m_Device setIREnabled:YES];
-    // [m_Device detectMotionPlus];
+    [m_Device detectMotionPlus];
 
     NSLog(@"Wrapper created");
     NSLog(@"%@", [m_Device modelName]);
@@ -275,7 +275,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionConnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension connected: %@", [extension name]);
-	// [m_Device detectMotionPlus];
+	[m_Device detectMotionPlus];
     // if([extension conformsToProtocol:@protocol(WiimoteNunchuckProtocol)])
     //    [[(WiimoteNunchuckExtension*)extension accelerometer] setEnabled:YES];
 }
@@ -283,7 +283,7 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
 - (void)wiimote:(Wiimote*)wiimote extensionDisconnected:(WiimoteExtension*)extension
 {
     NSLog(@"Extension disconnected: %@", [extension name]);
-	// [m_Device detectMotionPlus];
+	[m_Device detectMotionPlus];
 }
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck buttonPressed:(WiimoteNunchuckButtonType)button
@@ -380,9 +380,30 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
         NSLog(@"IR point position (%li): %.0f %.0f", [point index], [point position].x, [point position].y);
 }
 
-@end
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+	  subExtensionConnected:(WiimoteExtension*)extension
+{
+	NSLog(@"Motion Plus sub extension connected: %@", [extension name]);
+}
 
-#import <dlfcn.h>
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+   subExtensionDisconnected:(WiimoteExtension*)extension
+{
+	NSLog(@"Motion Plus sub extension disconnected: %@", [extension name]);
+}
+
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+					 report:(const WiimoteMotionPlusReport*)report
+{
+	// NSLog(@"yaw: %u (%@)", report->yaw.speed, ((report->yaw.isSlowMode)?(@"slow"):(@"normal")));
+	// NSLog(@"roll: %u (%@)", report->roll.speed, ((report->roll.isSlowMode)?(@"slow"):(@"normal")));
+	// NSLog(@"pitch: %u (%@)", report->pitch.speed, ((report->pitch.isSlowMode)?(@"slow"):(@"normal")));
+}
+
+@end
 
 int main(int argc, const char * argv[])
 {

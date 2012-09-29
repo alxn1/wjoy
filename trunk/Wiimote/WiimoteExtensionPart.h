@@ -26,6 +26,7 @@
 - (WiimoteExtension*)connectedExtension;
 
 - (void)detectMotionPlus;
+- (void)reconnectExtension;
 - (void)disconnectExtension;
 
 @end
