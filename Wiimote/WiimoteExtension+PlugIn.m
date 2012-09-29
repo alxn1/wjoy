@@ -76,6 +76,10 @@
 {
 }
 
+- (void)disconnected
+{
+}
+
 @end
 
 @implementation WiimoteExtension (CalibrationUtils)

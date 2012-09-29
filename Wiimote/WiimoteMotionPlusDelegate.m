@@ -8,3 +8,31 @@
 
 #import "WiimoteMotionPlusDelegate.h"
 
+NSString *WiimoteMotionPlusSubExtensionConnectedNotification	= @"WiimoteMotionPlusSubExtensionConnectedNotification";
+NSString *WiimoteMotionPlusSubExtensionDisconnectedNotification = @"WiimoteMotionPlusSubExtensionDisconnectedNotification";
+NSString *WiimoteMotionPlusReportNotification					= @"WiimoteMotionPlusReportNotification";
+
+NSString *WiimoteMotionPlusSubExtensionKey						= @"WiimoteMotionPlusSubExtensionKey";
+NSString *WiimoteMotionPlusReportKey							= @"WiimoteMotionPlusReportKey";
+
+@implementation NSObject (WiimoteMotionPlusDelegate)
+
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+	  subExtensionConnected:(WiimoteExtension*)extension
+{
+}
+
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+   subExtensionDisconnected:(WiimoteExtension*)extension
+{
+}
+
+- (void)			wiimote:(Wiimote*)wiimote
+				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
+					 report:(const WiimoteMotionPlusReport*)report
+{
+}
+
+@end

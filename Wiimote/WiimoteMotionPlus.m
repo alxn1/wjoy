@@ -8,12 +8,8 @@
 
 #import "WiimoteMotionPlus.h"
 #import "WiimoteExtensionProbeHandler.h"
-
-@interface WiimoteMotionPlus (PrivatePart)
-
-- (void)deactivate;
-
-@end
+#import "WiimoteEventDispatcher+MotionPlus.h"
+#import "Wiimote.h"
 
 @implementation WiimoteMotionPlus
 
@@ -29,7 +25,6 @@
 
 + (NSUInteger)minReportDataSize
 {
-    // ???
     return 6;
 }
 
@@ -71,10 +66,11 @@
     if(self == nil)
         return nil;
 
-    m_SubExtension				= nil;
-    m_IOManager					= nil;
-	m_ReportCounter				= 0;
-	m_ExtensionReportCounter	= 0;
+    m_SubExtension					= nil;
+    m_IOManager						= nil;
+	m_ReportCounter					= 0;
+	m_ExtensionReportCounter		= 0;
+	m_IsSubExtensionDisconnected	= NO;
 
     return self;
 }
@@ -96,7 +92,14 @@
     if(length < 6)
         return;
 
+	BOOL isExtensionConnected	= ((extensionData[5] & 0x1) == 1);
 	BOOL isExtensionDataReport  = ((extensionData[5] & 0x2) == 0);
+
+	if(m_SubExtension == nil && isExtensionConnected)
+	{
+		[self deactivate];
+		return;
+	}
 
 	m_ReportCounter++;
 	if(isExtensionDataReport)
@@ -124,12 +127,29 @@
 
     if(isExtensionDataReport)
     {
-        [m_SubExtension handleMotionPlusReport:extensionData length:length];
+		if(!m_IsSubExtensionDisconnected)
+			[m_SubExtension handleMotionPlusReport:extensionData length:length];
+
         return;
     }
 
-    // ???
-    // handle motion plus data here
+	WiimoteMotionPlusReport report;
+
+    report.yaw.speed			= extensionData[0];
+	report.roll.speed			= extensionData[1];
+	report.pitch.speed			= extensionData[2];
+
+	report.yaw.speed		   |= ((uint16_t)(extensionData[3] >> 2)) << 8;
+	report.roll.speed		   |= ((uint16_t)(extensionData[4] >> 2)) << 8;
+	report.pitch.speed		   |= ((uint16_t)(extensionData[5] >> 2)) << 8;
+
+	report.yaw.isSlowMode		= ((extensionData[3] & 2) != 0);
+	report.roll.isSlowMode		= ((extensionData[4] & 2) != 0);
+	report.pitch.isSlowMode		= ((extensionData[3] & 1) != 0);
+
+	[[self eventDispatcher]
+					postMotionPlus:self
+							report:&report];
 }
 
 - (void)setSubExtension:(WiimoteExtension*)extension
@@ -137,7 +157,7 @@
     if(extension != nil &&
      ![extension isSupportMotionPlus])
     {
-        extension = nil;
+        m_IsSubExtensionDisconnected = YES;
     }
 
     if(m_SubExtension == extension)
@@ -145,6 +165,13 @@
 
     [m_SubExtension release];
     m_SubExtension = [extension retain];
+
+	if(extension != nil && !m_IsSubExtensionDisconnected)
+	{
+		[[self eventDispatcher]
+						postMotionPlus:self
+					extensionConnected:extension];
+	}
 }
 
 - (NSString*)name
@@ -152,19 +179,33 @@
     return @"Motion Plus";
 }
 
+- (void)disconnected
+{
+	[self disconnectSubExtension];
+}
+
 - (WiimoteExtension*)subExtension
 {
+	if(m_IsSubExtensionDisconnected)
+		return nil;
+
     return [[m_SubExtension retain] autorelease];
 }
 
 - (void)disconnectSubExtension
 {
-    // ???
+	if(m_IsSubExtensionDisconnected ||
+	   m_SubExtension == nil)
+	{
+		return;
+	}
+
+	m_IsSubExtensionDisconnected = YES;
+
+	[[self eventDispatcher]
+					postMotionPlus:self
+			 extensionDisconnected:m_SubExtension];
 }
-
-@end
-
-@implementation WiimoteMotionPlus (PrivatePart)
 
 - (void)deactivate
 {
@@ -175,6 +216,8 @@
                       length:sizeof(data)];
 
     usleep(50000);
+
+	[[self owner] reconnectExtension];
 }
 
 @end

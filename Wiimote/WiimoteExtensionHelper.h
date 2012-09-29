@@ -36,6 +36,8 @@
                target:(id)target
                action:(SEL)action;
 
+- (WiimoteExtension*)subExtension;
+
 - (void)start;
 - (void)cancel;
 

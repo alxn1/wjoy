@@ -170,6 +170,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
     [m_ExtensionPart detectMotionPlus];
 }
 
+- (void)reconnectExtension
+{
+	[m_ExtensionPart reconnectExtension];
+}
+
 - (void)disconnectExtension
 {
     [m_ExtensionPart disconnectExtension];

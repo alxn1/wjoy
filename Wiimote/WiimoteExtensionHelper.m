@@ -139,9 +139,12 @@
     }
 
     [m_Extension calibrate:m_IOManager];
-    [m_Extension setSubExtension:m_SubExtension];
+	[self probeFinished:m_Extension];
+}
 
-    [self probeFinished:m_Extension];
+- (WiimoteExtension*)subExtension
+{
+	return [[m_SubExtension retain] autorelease];
 }
 
 - (void)start

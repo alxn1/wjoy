@@ -12,6 +12,7 @@
 		0A22061315C2A868004D168E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		0A22061815C2A86D004D168E /* Wiimote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* Wiimote.framework */; };
 		0A22061F15C2A87F004D168E /* Wiimote.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* Wiimote.framework */; };
+		0A4883091616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4883071616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m */; };
 		0A4890C315C7FA4500207478 /* Wiimote.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A48907615C7FA4500207478 /* Wiimote.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A4890C415C7FA4500207478 /* Wiimote.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48907715C7FA4500207478 /* Wiimote.m */; };
 		0A4890C615C7FA4500207478 /* Wiimote+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A48907915C7FA4500207478 /* Wiimote+Create.m */; };
@@ -120,12 +121,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A2205D015C2A709004D168E /* WiiRemote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiiRemote.h; sourceTree = "<group>"; };
-		0A2205D115C2A709004D168E /* WiiRemote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiiRemote.m; sourceTree = "<group>"; };
 		0A2205EE15C2A72D004D168E /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
 		0A2205F915C2A7B2004D168E /* test.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test.m; sourceTree = "<group>"; };
 		0A22060A15C2A84C004D168E /* test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A22060C15C2A84C004D168E /* test-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "test-Info.plist"; sourceTree = "<group>"; };
+		0A4883061616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventDispatcher+MotionPlus.h"; sourceTree = "<group>"; };
+		0A4883071616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventDispatcher+MotionPlus.m"; sourceTree = "<group>"; };
 		0A48907615C7FA4500207478 /* Wiimote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wiimote.h; sourceTree = "<group>"; };
 		0A48907715C7FA4500207478 /* Wiimote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wiimote.m; sourceTree = "<group>"; };
 		0A48907815C7FA4500207478 /* Wiimote+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Wiimote+Create.h"; sourceTree = "<group>"; };
@@ -297,7 +298,6 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				0A2205F415C2A735004D168E /* unused code (DarwiinRemote) */,
 				0A2205BC15C2A6E4004D168E /* framework */,
 				0A2205BD15C2A6EC004D168E /* test */,
 			);
@@ -335,15 +335,6 @@
 				0A2205F915C2A7B2004D168E /* test.m */,
 			);
 			name = test;
-			sourceTree = "<group>";
-		};
-		0A2205F415C2A735004D168E /* unused code (DarwiinRemote) */ = {
-			isa = PBXGroup;
-			children = (
-				0A2205D015C2A709004D168E /* WiiRemote.h */,
-				0A2205D115C2A709004D168E /* WiiRemote.m */,
-			);
-			name = "unused code (DarwiinRemote)";
 			sourceTree = "<group>";
 		};
 		0A48911015C7FB3B00207478 /* base */ = {
@@ -669,6 +660,8 @@
 		0A8A2D8C1602255E00940B66 /* internal */ = {
 			isa = PBXGroup;
 			children = (
+				0A4883061616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.h */,
+				0A4883071616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m */,
 				0A8A2D8D1602257300940B66 /* WiimoteMotionPlus.h */,
 				0A8A2D8E1602257300940B66 /* WiimoteMotionPlus.m */,
 			);
@@ -862,6 +855,7 @@
 				0A6E74331600DA060054BD4A /* WiimoteMotionPlusDetector.m in Sources */,
 				0A8A2D901602257300940B66 /* WiimoteMotionPlus.m in Sources */,
 				0A8A2DB516022BFC00940B66 /* WiimoteMotionPlusDelegate.m in Sources */,
+				0A4883091616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
