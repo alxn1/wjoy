@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#define WiimoteNunchuckButtonCount	2
-#define WiimoteNunchuckStickCount   1
+#define WiimoteNunchuckButtonCount    2
+#define WiimoteNunchuckStickCount     1
 
 typedef enum
 {
-	WiimoteNunchuckButtonTypeC = 0,
-	WiimoteNunchuckButtonTypeZ = 1
+	WiimoteNunchuckButtonTypeC      = 0,
+	WiimoteNunchuckButtonTypeZ      = 1
 } WiimoteNunchuckButtonType;
 
 FOUNDATION_EXPORT NSString *WiimoteNunchuckButtonPressedNotification;

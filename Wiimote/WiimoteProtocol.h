@@ -12,7 +12,7 @@
 
 // This file contain all hardware-specific type definitions for Wii Remote.
 
-#pragma push(pack)
+#pragma pack(push)
 #pragma pack(1)
 
 #import <Wiimote/WiimoteProtocolBase.h>
@@ -26,4 +26,4 @@
 #import <Wiimote/WiimoteProtocolMotionPlus.h>
 #import <Wiimote/WiimoteProtocolUtils.h>
 
-#pragma pop(pack)
+#pragma pack(pop)

@@ -18,6 +18,7 @@
 		NSUInteger				 m_ExtensionReportCounter;
 
 		BOOL					 m_IsSubExtensionDisconnected;
+        WiimoteMotionPlusReport  m_Report;
 }
 
 @end

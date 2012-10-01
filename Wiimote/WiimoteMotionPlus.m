@@ -133,23 +133,21 @@
         return;
     }
 
-	WiimoteMotionPlusReport report;
+    m_Report.yaw.speed			= extensionData[0];
+	m_Report.roll.speed			= extensionData[1];
+	m_Report.pitch.speed        = extensionData[2];
 
-    report.yaw.speed			= extensionData[0];
-	report.roll.speed			= extensionData[1];
-	report.pitch.speed			= extensionData[2];
+	m_Report.yaw.speed		   |= ((uint16_t)(extensionData[3] >> 2)) << 8;
+	m_Report.roll.speed		   |= ((uint16_t)(extensionData[4] >> 2)) << 8;
+	m_Report.pitch.speed       |= ((uint16_t)(extensionData[5] >> 2)) << 8;
 
-	report.yaw.speed		   |= ((uint16_t)(extensionData[3] >> 2)) << 8;
-	report.roll.speed		   |= ((uint16_t)(extensionData[4] >> 2)) << 8;
-	report.pitch.speed		   |= ((uint16_t)(extensionData[5] >> 2)) << 8;
-
-	report.yaw.isSlowMode		= ((extensionData[3] & 2) != 0);
-	report.roll.isSlowMode		= ((extensionData[4] & 2) != 0);
-	report.pitch.isSlowMode		= ((extensionData[3] & 1) != 0);
+	m_Report.yaw.isSlowMode		= ((extensionData[3] & 2) != 0);
+	m_Report.roll.isSlowMode    = ((extensionData[4] & 2) != 0);
+	m_Report.pitch.isSlowMode   = ((extensionData[3] & 1) != 0);
 
 	[[self eventDispatcher]
 					postMotionPlus:self
-							report:&report];
+							report:&m_Report];
 }
 
 - (void)setSubExtension:(WiimoteExtension*)extension
@@ -182,6 +180,11 @@
 - (void)disconnected
 {
 	[self disconnectSubExtension];
+}
+
+- (const WiimoteMotionPlusReport*)lastReport
+{
+    return (&m_Report);
 }
 
 - (WiimoteExtension*)subExtension
