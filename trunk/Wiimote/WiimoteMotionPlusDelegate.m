@@ -17,6 +17,11 @@ NSString *WiimoteMotionPlusReportKey							= @"WiimoteMotionPlusReportKey";
 
 @implementation NSObject (WiimoteMotionPlusDelegate)
 
+- (const WiimoteMotionPlusReport*)lastReport
+{
+    return NULL;
+}
+
 - (void)			wiimote:(Wiimote*)wiimote
 				 motionPlus:(WiimoteMotionPlusExtension*)motionPlus
 	  subExtensionConnected:(WiimoteExtension*)extension

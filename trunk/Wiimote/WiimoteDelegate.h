@@ -11,14 +11,14 @@
 #import <Wiimote/WiimoteClassicControllerDelegate.h>
 #import <Wiimote/WiimoteMotionPlusDelegate.h>
 
-#define WiimoteButtonCount  11
+#define WiimoteButtonCount         11
 
-#define WiimoteIRPointCount 4
+#define WiimoteIRPointCount        4
 
-#define WiimoteIRMinX       1.0
-#define WiimoteIRMinY       1.0
-#define WiimoteIRMaxX       1024.0
-#define WiimoteIRMaxY       768.0
+#define WiimoteIRMinX              1.0
+#define WiimoteIRMinY              1.0
+#define WiimoteIRMaxX              1024.0
+#define WiimoteIRMaxY              768.0
 
 typedef enum
 {
