@@ -60,6 +60,7 @@
 
     NSImage *icon = [[[NSApplication sharedApplication] applicationIconImage] copy];
 
+    [icon setScalesWhenResized:YES];
     [icon setSize:NSMakeSize(20.0f, 20.0f)];
 
     [m_Item setImage:icon];
