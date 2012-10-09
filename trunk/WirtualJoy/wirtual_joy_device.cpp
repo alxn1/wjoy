@@ -60,9 +60,9 @@ bool WirtualJoyDevice::init(
                 OSString *productString,
                 OSDictionary *dictionary)
 {
-    m_ProductString = 0;
-    m_HIDReportDescriptor = 0;
-    m_StateBuffer = 0;
+    m_ProductString         = 0;
+    m_HIDReportDescriptor   = 0;
+    m_StateBuffer           = 0;
 
     if(productString     == 0 ||
        hidDescriptorData == 0)
@@ -88,7 +88,10 @@ bool WirtualJoyDevice::init(
             return false;
 
         if(!setProperty("HIDDefaultBehavior", str))
+        {
+            str->release();
             return false;
+        }
 
         str->release();
     }
