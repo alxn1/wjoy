@@ -3,7 +3,7 @@
 //  Wiimote
 //
 //  Created by alxn1 on 09.10.12.
-//  Copyright 2012 Dr. Web. All rights reserved.
+//  Copyright 2012 alxn1. All rights reserved.
 //
 
 #import <Wiimote/Wiimote.h>
