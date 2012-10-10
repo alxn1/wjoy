@@ -16,7 +16,7 @@
 }
 
 - (id)initWithIOManager:(WiimoteIOManager*)manager
-              signature:(NSArray*)signatures
+             signatures:(NSArray*)signatures
                  target:(id)target
                  action:(SEL)action;
 
@@ -27,7 +27,7 @@
 @implementation WiimoteExtensionRoutineProbeHandler
 
 - (id)initWithIOManager:(WiimoteIOManager*)manager
-              signature:(NSArray*)signatures
+             signatures:(NSArray*)signatures
                  target:(id)target
                  action:(SEL)action
 {
@@ -107,7 +107,7 @@
 {
 	[[WiimoteExtensionRoutineProbeHandler alloc]
 										initWithIOManager:manager
-												signature:[NSArray arrayWithObject:signature]
+                                               signatures:[NSArray arrayWithObject:signature]
 												   target:target
 												   action:action];
 }
@@ -119,7 +119,7 @@
 {
 	[[WiimoteExtensionRoutineProbeHandler alloc]
 										initWithIOManager:manager
-												signature:signatures
+                                               signatures:signatures
 												   target:target
 												   action:action];
 }

@@ -22,13 +22,19 @@
     [WiimoteExtension registerExtensionClass:[WiimoteClassicController class]];
 }
 
-+ (NSData*)extensionSignature
++ (NSArray*)extensionSignatures
 {
-    static const uint8_t  signature[]   = { 0x00, 0x00, 0xA4, 0x20, 0x01, 0x01 };
-    static NSData        *result        = nil;
+    static const uint8_t  signature1[]  = { 0x00, 0x00, 0xA4, 0x20, 0x01, 0x01 };
+    static const uint8_t  signature2[]  = { 0x01, 0x00, 0xA4, 0x20, 0x01, 0x01 }; // Pro
+    static NSArray       *result        = nil;
 
     if(result == nil)
-        result = [[NSData alloc] initWithBytes:signature length:sizeof(signature)];
+    {
+        result = [[NSArray alloc] initWithObjects:
+                    [NSData dataWithBytes:signature1 length:sizeof(signature1)],
+                    [NSData dataWithBytes:signature2 length:sizeof(signature2)],
+                    nil];
+    }
 
     return result;
 }

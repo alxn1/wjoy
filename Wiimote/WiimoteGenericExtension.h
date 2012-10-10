@@ -13,7 +13,10 @@
 }
 
 + (NSData*)extensionSignature;
++ (NSArray*)extensionSignatures;
+
 + (NSRange)calibrationDataMemoryRange;
+
 + (WiimoteExtensionMeritClass)meritClass;
 + (NSUInteger)minReportDataSize;
 
