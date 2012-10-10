@@ -35,6 +35,16 @@
     return nil;
 }
 
++ (NSArray*)extensionSignatures
+{
+    NSData *signature = [self extensionSignature];
+
+    if(signature == nil)
+        return nil;
+
+    return [NSArray arrayWithObject:signature];
+}
+
 + (NSRange)calibrationDataMemoryRange
 {
     return NSMakeRange(0, 0);
@@ -56,7 +66,7 @@
 {
     [WiimoteExtensionProbeHandler
                             routineProbe:ioManager
-                               signature:[self extensionSignature]
+                              signatures:[self extensionSignatures]
                                   target:target
                                   action:action];
 }
