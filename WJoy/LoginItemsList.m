@@ -115,6 +115,9 @@
                                             NULL,
                                             NULL);
 
+    if(icon != NULL)
+        ReleaseIconRef(icon);
+
     if(item == NULL)
         return NO;
 
