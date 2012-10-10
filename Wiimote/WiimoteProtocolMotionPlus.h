@@ -3,7 +3,7 @@
 //  Wiimote
 //
 //  Created by alxn1 on 12.09.12.
-//  Copyright 2012 Dr. Web. All rights reserved.
+//  Copyright 2012 alxn1. All rights reserved.
 //
 
 #define WiimoteDeviceMotionPlusExtensionProbeAddress          0x04A600FA
