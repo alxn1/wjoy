@@ -8,6 +8,8 @@
 
 #import <Wiimote/Wiimote.h>
 
+#import <UpdateChecker/UAppUpdateChecker.h>
+
 #import "StatusBarItemController.h"
 #import "LoginItemsList.h"
 
@@ -58,6 +60,13 @@
     [m_Menu setDelegate:self];
     [m_DiscoveryMenuItem release];
 
+    m_CheckUpdateMenuItem = [[NSMenuItem alloc]
+                                        initWithTitle:@"Check for update"
+                                               action:@selector(checkForUpdate)
+                                        keyEquivalent:@""];
+
+    [m_CheckUpdateMenuItem setTarget:self];
+
     NSImage *icon = [[[NSApplication sharedApplication] applicationIconImage] copy];
 
     [icon setScalesWhenResized:YES];
@@ -69,12 +78,25 @@
 
     [icon release];
 
+    [[NSNotificationCenter defaultCenter]
+                                addObserver:self
+                                   selector:@selector(onStartCheckUpdate)
+                                       name:UAppUpdateCheckerWillStartNotification
+                                     object:nil];
+
+    [[NSNotificationCenter defaultCenter]
+                                addObserver:self
+                                   selector:@selector(onFinishCheckUpdate)
+                                       name:UAppUpdateCheckerDidFinishNotification
+                                     object:nil];
+
     return self;
 }
 
 - (void)dealloc
 {
     [[NSStatusBar systemStatusBar] removeStatusItem:m_Item];
+    [m_CheckUpdateMenuItem release];
     [m_Item release];
     [m_Menu release];
     [super dealloc];
@@ -89,6 +111,21 @@
         [[LoginItemsList userItemsList] removeItemWithPath:appPath];
     else
         [[LoginItemsList userItemsList] addItemWithPath:appPath];
+}
+
+- (void)checkForUpdate
+{
+    [[UAppUpdateChecker sharedInstance] run];
+}
+
+- (void)onStartCheckUpdate
+{
+    [m_CheckUpdateMenuItem setEnabled:NO];
+}
+
+- (void)onFinishCheckUpdate
+{
+    [m_CheckUpdateMenuItem setEnabled:YES];
 }
 
 - (void)menuNeedsUpdate:(NSMenu*)menu
@@ -173,6 +210,9 @@
     [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
     [item release];
+
+    [m_Menu addItem:[NSMenuItem separatorItem]];
+    [m_Menu addItem:m_CheckUpdateMenuItem];
 
     item = [[NSMenuItem alloc] initWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@""];
     [item setTarget:[NSApplication sharedApplication]];

@@ -14,6 +14,7 @@
         NSMenu          *m_Menu;
         NSStatusItem    *m_Item;
         NSMenuItem      *m_DiscoveryMenuItem;
+        NSMenuItem      *m_CheckUpdateMenuItem;
 }
 
 + (void)start;

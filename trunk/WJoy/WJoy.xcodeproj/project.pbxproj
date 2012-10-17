@@ -10,6 +10,8 @@
 		0A1027F715C2B80A006715D7 /* StatusBarItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1027F615C2B80A006715D7 /* StatusBarItemController.m */; };
 		0A10280C15C2BA85006715D7 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A10280B15C2BA85006715D7 /* MainController.m */; };
 		0A10283715C2BE36006715D7 /* warning.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0A10283615C2BE36006715D7 /* warning.icns */; };
+		0A1F6405162EC5CD004FB111 /* UpdateChecker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1F6400162EC58A004FB111 /* UpdateChecker.framework */; };
+		0A1F6406162EC5D1004FB111 /* UpdateChecker.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1F6400162EC58A004FB111 /* UpdateChecker.framework */; };
 		0A2206A215C2AE51004D168E /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0A2206A015C2AE51004D168E /* app.icns */; };
 		0A2206A315C2AE51004D168E /* wiimote.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A2206A115C2AE51004D168E /* wiimote.png */; };
 		0A2206AE15C2AE84004D168E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A2206AD15C2AE84004D168E /* MainMenu.xib */; };
@@ -30,6 +32,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0A1F63FF162EC58A004FB111 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* UpdateChecker.framework */;
+			remoteInfo = UpdateChecker;
+		};
+		0A1F6401162EC58A004FB111 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A1F634A162EC33D004FB111 /* UpdateTest.app */;
+			remoteInfo = UpdateTest;
+		};
+		0A1F6403162EC5BA004FB111 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* UpdateChecker */;
+			remoteInfo = UpdateChecker;
+		};
 		0A2206C015C2AEFC004D168E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A2206B715C2AEFC004D168E /* UserNotification.xcodeproj */;
@@ -141,6 +164,7 @@
 				0A22070115C2AF7A004D168E /* VHID.framework in Copy Frameworks */,
 				0A22070215C2AF7E004D168E /* Wiimote.framework in Copy Frameworks */,
 				0A22070315C2AF84004D168E /* UserNotification.framework in Copy Frameworks */,
+				0A1F6406162EC5D1004FB111 /* UpdateChecker.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +177,7 @@
 		0A10280A15C2BA85006715D7 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		0A10280B15C2BA85006715D7 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		0A10283615C2BE36006715D7 /* warning.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = warning.icns; sourceTree = "<group>"; };
+		0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UpdateChecker.xcodeproj; path = ../UpdateChecker/UpdateChecker.xcodeproj; sourceTree = SOURCE_ROOT; };
 		0A2206A015C2AE51004D168E /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
 		0A2206A115C2AE51004D168E /* wiimote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wiimote.png; sourceTree = "<group>"; };
 		0A2206AD15C2AE84004D168E /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -187,6 +212,7 @@
 				0A2206FC15C2AF57004D168E /* VHID.framework in Frameworks */,
 				0A2206FD15C2AF59004D168E /* Wiimote.framework in Frameworks */,
 				0A2206FE15C2AF60004D168E /* UserNotification.framework in Frameworks */,
+				0A1F6405162EC5CD004FB111 /* UpdateChecker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +235,15 @@
 				0A10280B15C2BA85006715D7 /* MainController.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		0A1F63F7162EC58A004FB111 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A1F6400162EC58A004FB111 /* UpdateChecker.framework */,
+				0A1F6402162EC58A004FB111 /* UpdateTest.app */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		0A2206B815C2AEFC004D168E /* Products */ = {
@@ -287,6 +322,7 @@
 		29B97314FDCFA39411CA2CEA /* WJoy */ = {
 			isa = PBXGroup;
 			children = (
+				0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */,
 				0A2206E415C2AF12004D168E /* WirtualJoy.xcodeproj */,
 				0A2206C415C2AF03004D168E /* VHID.xcodeproj */,
 				0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */,
@@ -348,6 +384,7 @@
 				0A2206F815C2AF31004D168E /* PBXTargetDependency */,
 				0A2206F415C2AF2A004D168E /* PBXTargetDependency */,
 				0A2206FA15C2AF33004D168E /* PBXTargetDependency */,
+				0A1F6404162EC5BA004FB111 /* PBXTargetDependency */,
 			);
 			name = WJoy;
 			productInstallPath = "$(HOME)/Applications";
@@ -374,6 +411,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 0A1F63F7162EC58A004FB111 /* Products */;
+					ProjectRef = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
+				},
+				{
 					ProductGroup = 0A2206B815C2AEFC004D168E /* Products */;
 					ProjectRef = 0A2206B715C2AEFC004D168E /* UserNotification.xcodeproj */;
 				},
@@ -398,6 +439,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		0A1F6400162EC58A004FB111 /* UpdateChecker.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = UpdateChecker.framework;
+			remoteRef = 0A1F63FF162EC58A004FB111 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0A1F6402162EC58A004FB111 /* UpdateTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = UpdateTest.app;
+			remoteRef = 0A1F6401162EC58A004FB111 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		0A2206C115C2AEFC004D168E /* UserNotification.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -502,6 +557,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0A1F6404162EC5BA004FB111 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = UpdateChecker;
+			targetProxy = 0A1F6403162EC5BA004FB111 /* PBXContainerItemProxy */;
+		};
 		0A2206F415C2AF2A004D168E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Wiimote;
