@@ -28,5 +28,7 @@
 	<string>NSApplication</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>UALatesVersionPlistURL</key>
+	<string>http://wjoy.googlecode.com/svn/trunk/WJoy/WJoyLatestVersion.plist</string>
 </dict>
 </plist>
