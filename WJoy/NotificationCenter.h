@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <UserNotification/UserNotificationCenter.h>
 
-@interface NotificationCenter : NSObject
+@interface NotificationCenter : NSObject< UserNotificationCenterDelegate >
 {
 }
 

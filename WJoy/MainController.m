@@ -12,6 +12,8 @@
 #import "NotificationCenter.h"
 #import "WiimoteLEDsController.h"
 
+#import <UpdateChecker/UAppUpdateChecker.h>
+
 @implementation MainController
 
 - (void)awakeFromNib
@@ -21,6 +23,8 @@
     [StatusBarItemController start];
     [WiimoteAutoWrapper setMaxConnectedDevices:4];
     [WiimoteAutoWrapper start];
+
+    [[UAppUpdateChecker sharedInstance] run];
 
     [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
     [Wiimote beginDiscovery];
