@@ -17,6 +17,7 @@
 		0AA5359A1664953200E30585 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA535991664953200E30585 /* main.m */; };
 		0AA5359B1664953600E30585 /* ObjCDebug.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ObjCDebug.framework */; };
 		0AA535A01664953A00E30585 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0867D69BFE84028FC02AAC07 /* Foundation.framework */; };
+		0AC394EB167095CE00BFDCCA /* ObjCDebug.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* ObjCDebug.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,7 +25,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* ObjCDebug */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = ObjCDebug;
 		};
 /* End PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0AC394EB167095CE00BFDCCA /* ObjCDebug.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
