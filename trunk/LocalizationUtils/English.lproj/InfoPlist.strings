@@ -1,0 +1,10 @@
+/* 
+   InfoPlist.strings
+   SuperLocalizer
+
+   Created by alxn1 on 05.12.12.
+   Copyright 2012 alxn1. All rights reserved.
+ */
+
+CFBundleName = "Test Application";
+CFBundleDisplayName = "Test Application";

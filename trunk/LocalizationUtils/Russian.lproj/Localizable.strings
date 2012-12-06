@@ -1,0 +1,40 @@
+/* 
+   Localizable.strings
+   test
+
+   Created by alxn1 on 03.12.12.
+   Copyright 2012 alxn1. All rights reserved.
+ */
+
+"CheckBox"          = "Чек-Бокс";
+"Button"            = "Кнопка";
+"First"             = "Первый";
+"Second"            = "Второй";
+"File"              = "Файл";
+"Edit"              = "Правка";
+"Cut"               = "Вырезать";
+"Format"            = "Формат";
+"View"              = "Вид";
+"Window"            = "Окно";
+"Help"              = "Справка";
+"Services"          = "Службы";
+"Show All"          = "Показать все";
+"Box"               = "Ящик";
+"Tab"               = "Закладко";
+"Item 1"            = "Элемент 1";
+"Item 2"            = "Элемент 2";
+"Item 3"            = "Элемент 3";
+"Other"             = "Другое";
+"\"Button\""        = "\"Кнопка\"";
+"Preferences…"      = "Настройки…";
+"Hide Others"       = "Скрыть остальные";
+
+"About {%APP_NAME%}"                    = "О программе {%APP_NAME%}";
+"Quit {%APP_NAME%}"                     = "Завершить {%APP_NAME%}";
+"Hide {%APP_NAME%}"                     = "Скрыть {%APP_NAME%}";
+"Name: {%APP_NAME%}"                    = "Имя: {%APP_NAME%}";
+"{%APP_NAME%} Help"                     = "Справка {%APP_NAME%}";
+"Version: {%APP_VERSION%}"              = "Версия: {%APP_VERSION%}";
+"Short version: {%APP_SHORT_VERSION%}"  = "Короткая версия: {%APP_SHORT_VERSION%}";
+
+"Every place I look says that you have to replicate the entire xib file for each localization instance, even though you really only wanted to rip the text out and replicate the text in a different language for each localization instance." = "Везде, где я смотрел, говорят, что ты должен пересоздать xib целиком для каждой локализации, даже если тебе необходимо только удалить из него текст, и заменить его на другой для каждой из локазизаций.";
