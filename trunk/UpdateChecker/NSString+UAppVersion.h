@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "UAppVersion.h"
+#import <UpdateChecker/UAppVersion.h>
 
 @interface NSString (UAppVersion)
 
