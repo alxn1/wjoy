@@ -1,0 +1,26 @@
+/* 
+   Localizable.strings
+   test
+
+   Created by alxn1 on 03.12.12.
+   Copyright 2012 alxn1. All rights reserved.
+ */
+
+"CheckBox"          = "CheckBox";
+"Button"            = "Button";
+"First"             = "First";
+"Second"            = "Second";
+"File"              = "File";
+"Edit"              = "Edit";
+"Cut"               = "Cut";
+"Format"            = "Format";
+"View"              = "View";
+"Window"            = "Window";
+"Help"              = "Help";
+"Services"          = "Services";
+"Show All"          = "Show All";
+"Box"               = "Box";
+"Tab"               = "Tab";
+"View"              = "View";
+"\"Button\""        = "\"Button\"";
+"Every place I look says that you have to replicate the entire xib file for each localization instance, even though you really only wanted to rip the text out and replicate the text in a different language for each localization instance." = "Every place I look says that you have to replicate the entire xib file for each localization instance, even though you really only wanted to rip the text out and replicate the text in a different language for each localization instance.";
