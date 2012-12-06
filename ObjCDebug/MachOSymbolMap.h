@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#import "MachOSymbol.h"
+#import <ObjCDebug/MachOSymbol.h>
 
 typedef enum {
     MachOArchTypeX86,
