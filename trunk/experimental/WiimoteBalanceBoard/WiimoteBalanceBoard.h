@@ -9,8 +9,7 @@
 #import <Wiimote/Wiimote+PlugIn.h>
 #import "WiimoteBalanceBoardDelegate.h"
 
-#pragma push(pack)
-#pragma pack(1)
+#pragma pack(push, 1)
 
 typedef struct
 {
@@ -27,7 +26,7 @@ typedef struct
     WiimoteBalanceBoardReport kg34;
 } WiimoteBalanceBoardCalibrationData;
 
-#pragma pop(pack)
+#pragma pack(pop)
 
 @interface WiimoteBalanceBoard : WiimoteGenericExtension<
                                                 WiimoteBalanceBoardProtocol>
