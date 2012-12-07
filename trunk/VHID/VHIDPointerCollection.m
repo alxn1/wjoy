@@ -8,10 +8,14 @@
 
 #import "VHIDPointerCollection.h"
 
-#define HIDStatePointerSize                 2
+#define HIDStatePointerSize                     2
 
-#define HIDDescriptorBaseSize               12
-#define HIDDescriptorPointerCoordinateBase  0x30
+#define HIDDescriptorBaseSize                   12
+#define HIDDescriptorPointerCoordinateBase      0x30
+#define HIDDescriptorPointerCoordinateBase2     0x40
+
+#define HIDDescriptorMaxPointersBase            3
+#define HIDDescriptorMaxPointersBase2           1
 
 @implementation VHIDPointerCollection
 
@@ -52,15 +56,30 @@
     NSMutableData   *result         = [NSMutableData dataWithLength:reportLength];
     unsigned char   *data           = (unsigned char*)[result mutableBytes];
 
-    *data = 0x05; data++; *data = 0x01; data++; //  USAGE_PAGE (Generic Desktop)
+    *data = 0x05; data++; *data = 0x01; data++;                         //  USAGE_PAGE (Generic Desktop)
 
-    unsigned char   coordinageIndex     = HIDDescriptorPointerCoordinateBase;
-    NSUInteger      countCoordinates    = pointerCount * 2;
+    unsigned char   coordinageIndex = HIDDescriptorPointerCoordinateBase;
+    NSUInteger      countCoordinates;
+
+    if(pointerCount > HIDDescriptorMaxPointersBase)
+        countCoordinates = HIDDescriptorMaxPointersBase * 2;
+    else
+        countCoordinates = pointerCount * 2;
 
     for(NSUInteger i = 0; i < countCoordinates; i++)
     {
-        *data = 0x09; data++; *data = coordinageIndex; data++;  // USAGE (X + coordinate_index)
+        *data = 0x09; data++; *data = coordinageIndex; data++;          // USAGE (X + coordinate_index)
         coordinageIndex++;
+    }
+
+    if(pointerCount > HIDDescriptorMaxPointersBase)
+    {
+        coordinageIndex = HIDDescriptorPointerCoordinateBase2;
+        for(NSUInteger i = 0; i < 2; i++)
+        {
+            *data = 0x09; data++; *data = coordinageIndex; data++;      // USAGE (Vx + coordinate_index)
+            coordinageIndex++;
+        }
     }
 
     *data = 0x15; data++; *data = 0x81;                         data++; //  LOGICAL_MINIMUM (-127)
@@ -74,7 +93,8 @@
 
 + (NSUInteger)maxPointerCount
 {
-    return 3;
+    return (HIDDescriptorMaxPointersBase +
+            HIDDescriptorMaxPointersBase2);
 }
 
 - (id)init
