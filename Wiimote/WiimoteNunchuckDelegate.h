@@ -27,11 +27,11 @@ FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerAnglesChangedNotificatio
 FOUNDATION_EXPORT NSString *WiimoteNunchuckButtonKey;
 FOUNDATION_EXPORT NSString *WiimoteNunchuckStickPositionKey;
 FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerEnabledStateKey;
-FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityX;
-FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityY;
-FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityZ;
-FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerPitch;
-FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerRoll;
+FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityXKey;
+FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityYKey;
+FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerGravityZKey;
+FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerPitchKey;
+FOUNDATION_EXPORT NSString *WiimoteNunchuckAccelerometerRollKey;
 
 @class Wiimote;
 @class WiimoteExtension;

@@ -12,6 +12,23 @@
 
 @implementation WiimoteDeviceReport (Private)
 
++ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
+                                        data:(const uint8_t*)data
+                                      length:(NSUInteger)length
+                                      device:(WiimoteDevice*)device
+{
+    WiimoteDeviceReport *result = [[WiimoteDeviceReport alloc] initWithDevice:device];
+
+    if(result == nil)
+        return nil;
+
+    result->m_Type          = type;
+    result->m_Data          = data;
+    result->m_DataLength    = length;
+
+    return [result autorelease];
+}
+
 - (id)init
 {
 	[[super init] release];
@@ -59,23 +76,6 @@
 - (void)setWiimote:(Wiimote*)wiimote
 {
 	m_Wiimote = wiimote;
-}
-
-+ (WiimoteDeviceReport*)deviceReportWithType:(NSUInteger)type
-                                        data:(const uint8_t*)data
-                                      length:(NSUInteger)length
-                                      device:(WiimoteDevice*)device
-{
-    WiimoteDeviceReport *result = [[WiimoteDeviceReport alloc] initWithDevice:device];
-
-    if(result == nil)
-        return nil;
-
-    result->m_Type          = type;
-    result->m_Data          = data;
-    result->m_DataLength    = length;
-
-    return [result autorelease];
 }
 
 @end
