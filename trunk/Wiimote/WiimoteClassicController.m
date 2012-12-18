@@ -173,21 +173,21 @@
         WiimoteClassicControllerButtonType              type;
         WiimoteDeviceClassicControllerReportButtonMask  mask;
     } buttonMasks[] = {
-        { WiimoteClassicControllerButtonTypeA,      WiimoteDeviceClassicControllerReportButtonMaskA },
-        { WiimoteClassicControllerButtonTypeB,      WiimoteDeviceClassicControllerReportButtonMaskB },
+        { WiimoteClassicControllerButtonTypeA,      WiimoteDeviceClassicControllerReportButtonMaskA     },
+        { WiimoteClassicControllerButtonTypeB,      WiimoteDeviceClassicControllerReportButtonMaskB     },
         { WiimoteClassicControllerButtonTypeMinus,  WiimoteDeviceClassicControllerReportButtonMaskMinus },
-        { WiimoteClassicControllerButtonTypeHome,   WiimoteDeviceClassicControllerReportButtonMaskHome },
-        { WiimoteClassicControllerButtonTypePlus,   WiimoteDeviceClassicControllerReportButtonMaskPlus },
-        { WiimoteClassicControllerButtonTypeX,      WiimoteDeviceClassicControllerReportButtonMaskX },
-        { WiimoteClassicControllerButtonTypeY,      WiimoteDeviceClassicControllerReportButtonMaskY },
-        { WiimoteClassicControllerButtonTypeUp,     WiimoteDeviceClassicControllerReportButtonMaskUp },
-        { WiimoteClassicControllerButtonTypeDown,   WiimoteDeviceClassicControllerReportButtonMaskDown },
-        { WiimoteClassicControllerButtonTypeLeft,   WiimoteDeviceClassicControllerReportButtonMaskLeft },
+        { WiimoteClassicControllerButtonTypeHome,   WiimoteDeviceClassicControllerReportButtonMaskHome  },
+        { WiimoteClassicControllerButtonTypePlus,   WiimoteDeviceClassicControllerReportButtonMaskPlus  },
+        { WiimoteClassicControllerButtonTypeX,      WiimoteDeviceClassicControllerReportButtonMaskX     },
+        { WiimoteClassicControllerButtonTypeY,      WiimoteDeviceClassicControllerReportButtonMaskY     },
+        { WiimoteClassicControllerButtonTypeUp,     WiimoteDeviceClassicControllerReportButtonMaskUp    },
+        { WiimoteClassicControllerButtonTypeDown,   WiimoteDeviceClassicControllerReportButtonMaskDown  },
+        { WiimoteClassicControllerButtonTypeLeft,   WiimoteDeviceClassicControllerReportButtonMaskLeft  },
         { WiimoteClassicControllerButtonTypeRight,  WiimoteDeviceClassicControllerReportButtonMaskRight },
-        { WiimoteClassicControllerButtonTypeL,      WiimoteDeviceClassicControllerReportButtonMaskL },
-        { WiimoteClassicControllerButtonTypeR,      WiimoteDeviceClassicControllerReportButtonMaskR },
-        { WiimoteClassicControllerButtonTypeZL,     WiimoteDeviceClassicControllerReportButtonMaskZL },
-        { WiimoteClassicControllerButtonTypeZR,     WiimoteDeviceClassicControllerReportButtonMaskZR }
+        { WiimoteClassicControllerButtonTypeL,      WiimoteDeviceClassicControllerReportButtonMaskL     },
+        { WiimoteClassicControllerButtonTypeR,      WiimoteDeviceClassicControllerReportButtonMaskR     },
+        { WiimoteClassicControllerButtonTypeZL,     WiimoteDeviceClassicControllerReportButtonMaskZL    },
+        { WiimoteClassicControllerButtonTypeZR,     WiimoteDeviceClassicControllerReportButtonMaskZR    }
     };
 
     for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)

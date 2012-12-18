@@ -36,21 +36,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216 /* UpdateChecker.framework */;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = UpdateChecker;
 		};
 		0A1F6401162EC58A004FB111 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0A1F634A162EC33D004FB111 /* UpdateTest.app */;
+			remoteGlobalIDString = 0A1F634A162EC33D004FB111;
 			remoteInfo = UpdateTest;
 		};
 		0A1F6403162EC5BA004FB111 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216 /* UpdateChecker */;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = UpdateChecker;
 		};
 		0A2206C015C2AEFC004D168E /* PBXContainerItemProxy */ = {

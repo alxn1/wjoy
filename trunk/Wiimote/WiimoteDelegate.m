@@ -31,11 +31,11 @@ NSString *WiimoteIsBatteryLevelLowKey                               = @"WiimoteI
 NSString *WiimoteIREnabledStateKey                                  = @"WiimoteIREnabledStateKey";
 NSString *WiimoteIRPointKey                                         = @"WiimoteIRPointKey";
 NSString *WiimoteAccelerometerEnabledStateKey                       = @"WiimoteAccelerometerEnabledStateKey";
-NSString *WiimoteAccelerometerGravityX                              = @"WiimoteAccelerometerGravityX";
-NSString *WiimoteAccelerometerGravityY                              = @"WiimoteAccelerometerGravityY";
-NSString *WiimoteAccelerometerGravityZ                              = @"WiimoteAccelerometerGravityZ";
-NSString *WiimoteAccelerometerPitch                                 = @"WiimoteAccelerometerPitch";
-NSString *WiimoteAccelerometerRoll                                  = @"WiimoteAccelerometerRoll";
+NSString *WiimoteAccelerometerGravityXKey                           = @"WiimoteAccelerometerGravityXKey";
+NSString *WiimoteAccelerometerGravityYKey                           = @"WiimoteAccelerometerGravityYKey";
+NSString *WiimoteAccelerometerGravityZKey                           = @"WiimoteAccelerometerGravityZKey";
+NSString *WiimoteAccelerometerPitchKey                              = @"WiimoteAccelerometerPitchKey";
+NSString *WiimoteAccelerometerRollKey                               = @"WiimoteAccelerometerRollKey";
 NSString *WiimoteExtensionKey                                       = @"WiimoteExtensionKey";
 
 @implementation NSObject (WiimoteDelegate)

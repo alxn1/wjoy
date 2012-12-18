@@ -66,11 +66,11 @@ FOUNDATION_EXPORT NSString *WiimoteIsBatteryLevelLowKey;
 FOUNDATION_EXPORT NSString *WiimoteIREnabledStateKey;
 FOUNDATION_EXPORT NSString *WiimoteIRPointKey;
 FOUNDATION_EXPORT NSString *WiimoteAccelerometerEnabledStateKey;
-FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityX;
-FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityY;
-FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityZ;
-FOUNDATION_EXPORT NSString *WiimoteAccelerometerPitch;
-FOUNDATION_EXPORT NSString *WiimoteAccelerometerRoll;
+FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityXKey;
+FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityYKey;
+FOUNDATION_EXPORT NSString *WiimoteAccelerometerGravityZKey;
+FOUNDATION_EXPORT NSString *WiimoteAccelerometerPitchKey;
+FOUNDATION_EXPORT NSString *WiimoteAccelerometerRollKey;
 FOUNDATION_EXPORT NSString *WiimoteExtensionKey;
 
 @class Wiimote;

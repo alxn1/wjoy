@@ -67,11 +67,11 @@
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithDouble:x],
-                                        WiimoteNunchuckAccelerometerGravityX,
+                                        WiimoteNunchuckAccelerometerGravityXKey,
                                     [NSNumber numberWithDouble:y],
-                                        WiimoteNunchuckAccelerometerGravityY,
+                                        WiimoteNunchuckAccelerometerGravityYKey,
                                     [NSNumber numberWithDouble:z],
-                                        WiimoteNunchuckAccelerometerGravityZ,
+                                        WiimoteNunchuckAccelerometerGravityZKey,
                                     nil];
 
         [self postNotification:WiimoteNunchuckAccelerometerGravityChangedNotification
@@ -88,9 +88,9 @@
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithDouble:roll],
-                                        WiimoteNunchuckAccelerometerRoll,
+                                        WiimoteNunchuckAccelerometerRollKey,
                                     [NSNumber numberWithDouble:pitch],
-                                        WiimoteNunchuckAccelerometerPitch,
+                                        WiimoteNunchuckAccelerometerPitchKey,
                                     nil];
 
         [self postNotification:WiimoteNunchuckAccelerometerAnglesChangedNotification
