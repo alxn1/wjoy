@@ -11,7 +11,8 @@
 #define HIDDescriptorSizeWithPadding    22
 #define HIDDescriptorSizeWithoutPadding 16
 
-static const unsigned char buttonMasks[] = {
+static const unsigned char buttonMasks[] =
+{
     1, 2, 4, 8, 16, 32, 64, 128
 };
 
