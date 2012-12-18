@@ -17,10 +17,11 @@
         return nil;
 
     m_MouseState    = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeMouse
-                                          pointerCount:1
+                                          pointerCount:6
                                            buttonCount:2
                                             isRelative:YES];
 
+    NSLog(@"%@", m_MouseState);
     m_VirtualMouse  = [[WJoyDevice alloc] initWithHIDDescriptor:[m_MouseState descriptor]
                                                   productString:@"Virtual Alxn1 Mouse"];
 
@@ -50,19 +51,19 @@
     switch(key)
     {
         case TestViewKeyUp:
-            newPosition.y += 0.05f;
+            newPosition.y += 0.025f;
             break;
 
         case TestViewKeyDown:
-            newPosition.y -= 0.05f;
+            newPosition.y -= 0.025f;
             break;
 
         case TestViewKeyLeft:
-            newPosition.x -= 0.05f;
+            newPosition.x -= 0.025f;
             break;
 
         case TestViewKeyRight:
-            newPosition.x += 0.05f;
+            newPosition.x += 0.025f;
             break;
     }
 

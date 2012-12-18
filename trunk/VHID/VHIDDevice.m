@@ -54,8 +54,7 @@
                                     [[m_Buttons state] length] +
                                     [[m_Pointers state] length]];
 
-    if(m_Buttons  == nil &&
-       m_Pointers == nil)
+    if(m_Buttons  == nil || m_Pointers == nil)
     {
         [self release];
         return nil;
