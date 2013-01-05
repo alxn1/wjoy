@@ -317,7 +317,9 @@
     m_LEDsState             = 0;
 
     [m_ReadMemQueue handleDisconnect];
-	[m_Delegate wiimoteDeviceDisconnected:self];
+	[m_Delegate performSelector:@selector(wiimoteDeviceDisconnected:)
+					 withObject:self
+					 afterDelay:0.5];
 }
 
 @end
@@ -339,7 +341,7 @@
 
 - (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel
 {
-    [self disconnect];
+	[self disconnect];
 }
 
 @end
