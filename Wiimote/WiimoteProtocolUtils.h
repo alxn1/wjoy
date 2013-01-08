@@ -24,16 +24,22 @@
 
 #define WiimoteDeviceCheckStickCalibration(stickCalibration, minValue, centerValue, maxValue) \
             { \
-                if((stickCalibration).x.center == 0) \
+				if((stickCalibration).x.min == (maxValue)) \
+                    (stickCalibration).x.min = (minValue); \
+			\
+				if((stickCalibration).y.min == (maxValue)) \
+                    (stickCalibration).y.min = (minValue); \
+			\
+                if((stickCalibration).x.center == (minValue) || (stickCalibration).x.center == (maxValue)) \
                     (stickCalibration).x.center = (centerValue); \
             \
-                if((stickCalibration).y.center == 0) \
+                if((stickCalibration).y.center == (minValue) || (stickCalibration).y.center == (maxValue)) \
                     (stickCalibration).y.center = (centerValue); \
             \
-                if((stickCalibration).x.max == 0) \
+                if((stickCalibration).x.max == (minValue)) \
                     (stickCalibration).x.max = (maxValue); \
             \
-                if((stickCalibration).y.max == 0) \
+                if((stickCalibration).y.max == (minValue)) \
                     (stickCalibration).y.max = (maxValue); \
             }
 
