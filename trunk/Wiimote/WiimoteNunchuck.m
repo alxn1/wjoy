@@ -24,15 +24,22 @@
     [WiimoteExtension registerExtensionClass:[WiimoteNunchuck class]];
 }
 
-+ (NSData*)extensionSignature
++ (NSArray*)extensionSignatures
 {
-    static const uint8_t  signature[]   = { 0x00, 0x00, 0xA4, 0x20, 0x00, 0x00 };
-    static NSData        *result        = nil;
+	static const uint8_t  signature[]	= { 0x00, 0x00, 0xA4, 0x20, 0x00, 0x00 };
+	static const uint8_t  signature2[]	= { 0xFF, 0x00, 0xA4, 0x20, 0x00, 0x00 };
 
-    if(result == nil)
-        result = [[NSData alloc] initWithBytes:signature length:sizeof(signature)];
+	static NSArray *result = nil;
 
-    return result;
+	if(result == nil)
+	{
+		result = [[NSArray alloc] initWithObjects:
+					[NSData dataWithBytes:signature  length:sizeof(signature)],
+					[NSData dataWithBytes:signature2 length:sizeof(signature2)],
+					nil];
+	}
+
+	return result;
 }
 
 + (NSRange)calibrationDataMemoryRange
