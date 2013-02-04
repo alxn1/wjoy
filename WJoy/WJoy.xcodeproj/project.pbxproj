@@ -172,6 +172,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A0A5F2516BF906100F057F5 /* WJoyLatestVersion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = WJoyLatestVersion.plist; sourceTree = "<group>"; };
 		0A1027F515C2B80A006715D7 /* StatusBarItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarItemController.h; sourceTree = "<group>"; };
 		0A1027F615C2B80A006715D7 /* StatusBarItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusBarItemController.m; sourceTree = "<group>"; };
 		0A10280A15C2BA85006715D7 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
@@ -351,6 +352,7 @@
 				0A10283615C2BE36006715D7 /* warning.icns */,
 				0A2206A115C2AE51004D168E /* wiimote.png */,
 				8D1107310486CEB800E47090 /* WJoy-Info.plist */,
+				0A0A5F2516BF906100F057F5 /* WJoyLatestVersion.plist */,
 				0A2206AD15C2AE84004D168E /* MainMenu.xib */,
 			);
 			name = Resources;
