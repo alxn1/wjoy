@@ -87,7 +87,7 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    [m_HIDState setPointer:0 position:position];
+    [m_HIDState setPointer:WiimoteClassicControllerStickCount position:position];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -109,7 +109,7 @@ static NSUInteger maxConnectedDevices = 0;
                 stick:(WiimoteClassicControllerStickType)stick
       positionChanged:(NSPoint)position
 {
-    [m_HIDState setPointer:WiimoteNunchuckStickCount + stick position:position];
+    [m_HIDState setPointer:stick position:position];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
