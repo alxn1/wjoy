@@ -1,0 +1,343 @@
+Document by TeHaxor69
+
+*****************************
+* WII U PRO CONTROLLER INFO *
+*****************************
+
+Bluetooth Device Name
+"Nintendo RVL-CNT-01-UC"
+
+All sent commands to controller will begin with 0xA2, sending 0x52 will not work.
+
+**********************************************************
+[] Out Put (0xA2)
+[] 0x11 LED Control
+[] 0x12 Data reporting
+[] 0x15 Status Information request
+[] 0x16 Write Memory (EEPROM range is unknown)
+[] 0x17 Read Memory (EEPROM range is unknown)
+[] 
+[] In Put (0xA1)
+[] 0x20 Status Information
+[] 0x22 Acknowledge output report -Same as the WiiMote
+[] 0x30-0x3F Data reports
+**********************************************************
+
+
+As with the WiiMote, setting bit 0 in the 3rd byte will activate the rumble.
+
+It appears that some memory is usable, every time I have tried to read or write to EEPROM(clearing bit 2 of byte 3) causes the controller to shut off immediately.
+
+Analog sticks range from 0x0400 - 0x0C00, 0x0800 is centered.
+
+Data reports 0x34, 0x35, 0x3D would be the best modes to use as they report all usable data, with the exception of the LED and full battery info.
+
+
+Status Information 0x20:
+Receives Bytes:
+A1 20 B1 B2 LF 00 00 CC
+B1:
+	0x10 Start button Pressed Mask
+B2:
+	0x10 Select button Pressed Mask
+	0x80 Home button Pressed Mask
+LF:
+	Bit 0 Battery Stat?
+	Bit 1 is always set, Possibly indicating that this is a classic controller merged with a WiiRemote? -No encryption is used that I know of to enable anything.
+	Upper nibble is the LED mask
+	0x10 Led 1
+	0x20 Led 2
+	0x40 Led 3
+	0x80 Led 4
+CC:
+	Current charge of the Battery, Stays at 0xFF until charge drops below a certain value (UNKOWN right now).
+	My controller dies once it gets down to 0xB2
+
+
+
+Data report 0x30: (Basic buttons) -Will not repeat report
+Receives Bytes:
+A1 30 B1 B2
+B1:
+	0x10 Start button Pressed Mask
+B2:
+	0x10 Select button Pressed Mask
+	0x80 Home button Pressed Mask
+
+
+
+Data report 0x31: (Basic buttons, Data from non present accelerometer)  -Will not repeat report
+Receives Bytes:
+A1 31 B1 B2 AA AA AA
+B1:
+	0x10 Start button Pressed Mask
+B2:
+	0x10 Select button Pressed Mask
+	0x80 Home button Pressed Mask
+
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always 0x80 0x80 0x80
+
+
+
+Data report 0x32: (Basic buttons, Analogs) -Can repeat report
+Receives Bytes:
+A1 32 B1 B2 L1 L2 R1 R2 L3 L4 R3 R4
+B1:
+	0x10 Start button Pressed Mask
+B2:
+	0x10 Select button Pressed Mask
+	0x80 Home button Pressed Mask
+
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+R3l R4h:
+	Right Analog Y axis
+
+
+
+Data report 0x33: (Basic buttons, Data from non present accelerometer, Data from non present IR camera) -Can repeat report
+Receives Bytes:
+A1 33 B1 B2 AA AA AA II II II II II II II II II II II II
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always filled with 0x80
+
+II:
+	The Wii U Pro Controller has no IR Camera, this value is always filled with 0xFF
+
+
+
+Data report 0x34: (All buttons, Analogs, USB Info, Battery Info) -Can repeat report
+Receives Bytes:
+A1 34 B1 B2 L1 L2 R1 R2 L3 L4 R3 R4 B3 B4 B5 00 00 00 00 00 00 00 00
+B1:
+	0x10 Start button
+B2:
+	0x10 Select button
+	0x80 Home button
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+R3l R4h:
+	Right Analog Y axis
+B3:
+	0x80 Right D-Pad XOR with 0xFF
+	0x40 Down D-Pad XOR with 0xFF
+	0x20 L Button XOR with 0xFF
+	0x10 Select XOR with 0xFF
+	0x08 Home XOR with 0xFF
+	0x04 Start XOR with 0xFF
+	0x02 R XOR with 0xFF
+B4:
+	0x80 ZL XOR with 0xFF
+	0x40 B XOR with 0xFF
+	0x20 Y XOR with 0xFF
+	0x10 A XOR with 0xFF
+	0x08 X XOR with 0xFF
+	0x04 ZR XOR with 0xFF
+	0x02 Left D-Pad XOR with 0xFF
+	0x01 Up D-Pad XOR with 0xFF
+B5:
+	High Nibble is the remaining charge of the battery, it is represented the same way it appears on the HOME MENU in 4 cells
+	(0x08 Very Low, 0x09 1 Cell, 0x0A, 2 Cells, 0x0B 3 Cells, 0x0C 4 Cells)
+	0x08 USB Connection XOR with 0xFF
+	0x04 Charging XOR with 0xFF
+	0x02 LH XOR with 0xFF
+	0x01 RH XOR with 0xFF
+
+
+
+Data report 0x35: (All buttons, Data from non present accelerometer, Analogs, USB Info, Battery Info) -Can repeat report
+Receives Bytes:
+A1 34 B1 B2 AA AA AA L1 L2 R1 R2 L3 L4 R3 R4 B3 B4 B5 00 00 00 00 00
+B1:
+	0x10 Start button
+B2:
+	0x10 Select button
+	0x80 Home button
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always filled with 0x80
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+R3l R4h:
+	Right Analog Y axis
+B3:
+	0x80 Right D-Pad XOR with 0xFF
+	0x40 Down D-Pad XOR with 0xFF
+	0x20 L Button XOR with 0xFF
+	0x10 Select XOR with 0xFF
+	0x08 Home XOR with 0xFF
+	0x04 Start XOR with 0xFF
+	0x02 R XOR with 0xFF
+B4:
+	0x80 ZL XOR with 0xFF
+	0x40 B XOR with 0xFF
+	0x20 Y XOR with 0xFF
+	0x10 A XOR with 0xFF
+	0x08 X XOR with 0xFF
+	0x04 ZR XOR with 0xFF
+	0x02 Left D-Pad XOR with 0xFF
+	0x01 Up D-Pad XOR with 0xFF
+B5:
+	High Nibble is the remaining charge of the battery, it is represented the same way it appears on the HOME MENU in 4 cells
+	(0x08 Very Low, 0x09 1 Cell, 0x0A, 2 Cells, 0x0B 3 Cells, 0x0C 4 Cells)
+	0x08 USB Connection XOR with 0xFF
+	0x04 Charging XOR with 0xFF
+	0x02 LH XOR with 0xFF
+	0x01 RH XOR with 0xFF
+
+
+
+Data report 0x36: (Basic Buttons +Partial set, Data from non present IR camera, Analogs) -Can repeat report
+Receives Bytes:
+A1 34 B1 B2 II II II II II II II II II II L1 L2 R1 R2 L3 L4 R3 R4 B3
+B1:
+	0x10 Start button
+B2:
+	0x10 Select button
+	0x80 Home button
+II:
+	The Wii U Pro Controller has no IR Camera, this value is always filled with 0xFF
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+R3l R4h:
+	Right Analog Y axis
+B3:
+	0x80 Right D-Pad XOR with 0xFF
+	0x40 Down D-Pad XOR with 0xFF
+	0x20 L Button XOR with 0xFF
+	0x10 Select XOR with 0xFF
+	0x08 Home XOR with 0xFF
+	0x04 Start XOR with 0xFF
+	0x02 R Mask XOR 0xFF
+
+
+
+Data report 0x37: (Basic Buttons, Data from non present accelerometer, Data from non present IR camera, Analogs -Missing Right Y Axis) -Can repeat report
+Receives Bytes:
+A1 34 B1 B2 AA AA AA II II II II II II II II II II L1 L2 R1 R2 L3 L4
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always filled with 0x80
+
+II:
+	The Wii U Pro Controller has no IR Camera, this value is always filled with 0xFF
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+
+
+
+Data report 0x38: (None)
+Receives Bytes:
+
+
+
+
+Data report 0x39: (None)
+Receives Bytes:
+
+
+
+Data report 0x3A: (None)
+Receives Bytes:
+
+
+
+Data report 0x3B: (None)
+Receives Bytes:
+
+
+
+Data report 0x3C: (None)
+Receives Bytes:
+
+
+
+Data report 0x3D: (All buttons, Analogs, USB Info, Battery Info) -Can repeat report
+Receives Bytes:
+A1 34 L1 L2 R1 R2 L3 L4 R3 R4 B1 B2 B3 00 00 00 00 00 00 00 00 00 00
+L1l L2h:
+	Left Analog X axis
+R1l R2h:
+	Right Analog X axis
+L3l L4h:
+	Left Analog Y axis
+R3l R4h:
+	Right Analog Y axis
+B1:
+	0x80 Right D-Pad XOR with 0xFF
+	0x40 Down D-Pad XOR with 0xFF
+	0x20 L Button XOR with 0xFF
+	0x10 Select XOR with 0xFF
+	0x08 Home XOR with 0xFF
+	0x04 Start XOR with 0xFF
+	0x02 R XOR with 0xFF
+B2:
+	0x80 ZL XOR with 0xFF
+	0x40 B XOR with 0xFF
+	0x20 Y XOR with 0xFF
+	0x10 A XOR with 0xFF
+	0x08 X XOR with 0xFF
+	0x04 ZR XOR with 0xFF
+	0x02 Left D-Pad XOR with 0xFF
+	0x01 Up D-Pad XOR with 0xFF
+B3:
+	High Nibble is the remaining charge of the battery, it is represented the same way it appears on the HOME MENU in 4 cells
+	(0x08 Very Low, 0x09 1 Cell, 0x0A, 2 Cells, 0x0B 3 Cells, 0x0C 4 Cells)
+	0x08 USB Connection XOR with 0xFF
+	0x04 Charging XOR with 0xFF
+	0x02 LH XOR with 0xFF
+	0x01 RH XOR with 0xFF
+
+
+
+Data report 0x3E: (Basic Buttons, Data from non present accelerometer Interleaved Mode, Data from non present IR camera Interleaved Mode) -Can repeat report
+Receives Bytes:
+A1 3E B1 B2 AA II II II II II II II II II II II II II II II II II II
+A1 3F B1 B2 AA II II II II II II II II II II II II II II II II II II
+B1:
+	0x10 Start button
+B2:
+	0x10 Select button
+	0x40 This is set on report 3E
+	0x80 Home button
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always filled with 0x80
+II:
+	The Wii U Pro Controller has no IR Camera, this value is always filled with 0xFF
+
+
+
+Data report 0x3F: (Basic Buttons, Data from non present accelerometer Interleaved Mode, Data from non present IR camera Interleaved Mode) -Can repeat report
+Receives Bytes:
+A1 3E B1 B2 AA II II II II II II II II II II II II II II II II II II
+A1 3F B1 B2 AA II II II II II II II II II II II II II II II II II II
+B1:
+	0x10 Start button
+B2:
+	0x10 Select button
+	0x40 This is set on report 3E
+	0x80 Home button
+AA:
+	The Wii U Pro Controller has no accelerometer, this value is always filled with 0x80
+II:
+	The Wii U Pro Controller has no IR Camera, this value is always filled with 0xFF
+
