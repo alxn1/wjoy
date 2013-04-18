@@ -140,12 +140,12 @@
         if([Wiimote isDiscovering])
         {
             [m_DiscoveryMenuItem setEnabled:NO];
-            [m_DiscoveryMenuItem setTitle:@"Dicovering..."];
+            [m_DiscoveryMenuItem setTitle:@"Discovering..."];
         }
         else
         {
             [m_DiscoveryMenuItem setEnabled:YES];
-            [m_DiscoveryMenuItem setTitle:@"Begin Dicovery"];
+            [m_DiscoveryMenuItem setTitle:@"Begin Discovery"];
         }
     }
     else
