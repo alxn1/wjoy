@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DefaultLanguageName</key>
+	<string>English</string>
+	<key>Languages</key>
+	<array>
+		<dict>
+			<key>Additional</key>
+			<dict>
+				<key>LicensePath</key>
+				<string>{%LICENSE_DIR%}/license_en.rtf</string>
+			</dict>
+			<key>Encoding</key>
+			<integer>0</integer>
+			<key>LanguageCode</key>
+			<integer>0</integer>
+			<key>LanguageName</key>
+			<string>English</string>
+			<key>LocalizedStrings</key>
+			<dict>
+				<key>Agree</key>
+				<string>Agree</string>
+				<key>Disagree</key>
+				<string>Disagree</string>
+				<key>Language</key>
+				<string>English</string>
+				<key>Message</key>
+				<string>Read this License Agreement carefully before clicking on the &quot;Agree&quot; button.  By clicking on the &quot;Agree&quot; button, you agree to be bound by the terms of the License Agreement.</string>
+				<key>MessageTitle</key>
+				<string>Software License Agreement</string>
+				<key>Print</key>
+				<string>Print</string>
+				<key>PrintError</key>
+				<string>Unable to print. Make sure you’ve selected a printer.</string>
+				<key>Save</key>
+				<string>Save...</string>
+				<key>SaveError</key>
+				<string>This text cannot be saved. This disk may be full or locked, or the file may be locked.</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
