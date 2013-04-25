@@ -52,28 +52,28 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E /* dmgeula */;
+			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
 			remoteInfo = dmgeula;
 		};
 		0A1613FD172979CA00F0D5B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 0A1613211729766E00F0D5B2 /* DMGEULA.framework */;
+			remoteGlobalIDString = 0A1613211729766E00F0D5B2;
 			remoteInfo = DMGEULA;
 		};
 		0A161404172979E800F0D5B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DD76F620486A84900D96B5E /* dmgeula */;
+			remoteGlobalIDString = 8DD76F620486A84900D96B5E;
 			remoteInfo = dmgeula;
 		};
 		0A16140717297A1100F0D5B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090 /* WJoy */;
+			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = WJoy;
 		};
 		0A1F63FF162EC58A004FB111 /* PBXContainerItemProxy */ = {
@@ -644,7 +644,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nDMG_PATH=\"/Volumes/WJoy\"\n\nhdiutil create _tmp.dmg -megabytes 200 -ov -volname \"WJoy\" -fs HFS+\nhdiutil attach _tmp.dmg\n\ncp -Rf \"$CONFIGURATION_BUILD_DIR/WJoy.app\" \"$DMG_PATH\"\nmkdir \"$DMG_PATH/.images\"\ncp \"$SOURCE_ROOT/dmg_background.png\" \"$DMG_PATH/.images/background.png\"\nln -s \"/Applications\" \"$DMG_PATH/Applications\"\n\n\"$SOURCE_ROOT/fix_dmg.applescript\"\n\nSetFile -a C \"$DMG_PATH\"\ncp \"$SOURCE_ROOT/install_icon.icns\" \"$DMG_PATH/.VolumeIcon.icns\"\n\nhdiutil detach \"$DMG_PATH\"\nhdiutil convert _tmp.dmg -ov -format UDZO -imagekey zlib-level=9 -o \"wjoy.dmg\"\nrm _tmp.dmg\n\n\"$CONFIGURATION_BUILD_DIR\"/dmgeula -lang_plist_path \"$SOURCE_ROOT\"/dmg_license_info.plist -licenses_dir \"$SOURCE_ROOT\" -dmg_path \"$SOURCE_ROOT\"/wjoy.dmg\n\nexit 0\n";
+			shellScript = "#!/bin/sh\n\nDMG_PATH=\"/Volumes/WJoy\"\n\nhdiutil create _tmp.dmg -megabytes 200 -ov -volname \"WJoy\" -fs HFS+\nhdiutil attach _tmp.dmg\n\ncp -Rf \"$CONFIGURATION_BUILD_DIR/WJoy.app\" \"$DMG_PATH\"\nmkdir \"$DMG_PATH/.images\"\ncp \"$SOURCE_ROOT/dmg_background.png\" \"$DMG_PATH/.images/background.png\"\nln -s \"/Applications\" \"$DMG_PATH/Applications\"\n\n\"$SOURCE_ROOT/fix_dmg.applescript\"\n\nSetFile -a C \"$DMG_PATH\"\ncp \"$SOURCE_ROOT/app.icns\" \"$DMG_PATH/.VolumeIcon.icns\"\n\nhdiutil detach \"$DMG_PATH\"\nhdiutil convert _tmp.dmg -ov -format UDZO -imagekey zlib-level=9 -o \"wjoy.dmg\"\nrm _tmp.dmg\n\n\"$SOURCE_ROOT\"/../DMGEULA/build/\"$CONFIGURATION\"/dmgeula -lang_plist_path \"$SOURCE_ROOT\"/dmg_license_info.plist -licenses_dir \"$SOURCE_ROOT\" -dmg_path \"$SOURCE_ROOT\"/wjoy.dmg\n\nexit 0\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
