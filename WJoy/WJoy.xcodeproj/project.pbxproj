@@ -6,6 +6,22 @@
 	objectVersion = 45;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		0A161401172979E300F0D5B2 /* Build DMG */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 0A16140617297A0600F0D5B2 /* Build configuration list for PBXAggregateTarget "Build DMG" */;
+			buildPhases = (
+				0A161400172979E300F0D5B2 /* Script */,
+			);
+			dependencies = (
+				0A161405172979E800F0D5B2 /* PBXTargetDependency */,
+				0A16140817297A1100F0D5B2 /* PBXTargetDependency */,
+			);
+			name = "Build DMG";
+			productName = "Build DMG";
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0A1027F715C2B80A006715D7 /* StatusBarItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1027F615C2B80A006715D7 /* StatusBarItemController.m */; };
 		0A10280C15C2BA85006715D7 /* MainController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A10280B15C2BA85006715D7 /* MainController.m */; };
@@ -32,6 +48,34 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		0A1613FB172979CA00F0D5B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E /* dmgeula */;
+			remoteInfo = dmgeula;
+		};
+		0A1613FD172979CA00F0D5B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A1613211729766E00F0D5B2 /* DMGEULA.framework */;
+			remoteInfo = DMGEULA;
+		};
+		0A161404172979E800F0D5B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DD76F620486A84900D96B5E /* dmgeula */;
+			remoteInfo = dmgeula;
+		};
+		0A16140717297A1100F0D5B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* WJoy */;
+			remoteInfo = WJoy;
+		};
 		0A1F63FF162EC58A004FB111 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
@@ -178,6 +222,11 @@
 		0A10280A15C2BA85006715D7 /* MainController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainController.h; sourceTree = "<group>"; };
 		0A10280B15C2BA85006715D7 /* MainController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainController.m; sourceTree = "<group>"; };
 		0A10283615C2BE36006715D7 /* warning.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = warning.icns; sourceTree = "<group>"; };
+		0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DMGEULA.xcodeproj; path = ../DMGEULA/DMGEULA.xcodeproj; sourceTree = SOURCE_ROOT; };
+		0A16140E17297AA300F0D5B2 /* BSD_License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = BSD_License.rtf; sourceTree = "<group>"; };
+		0A16140F17297AA300F0D5B2 /* dmg_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dmg_background.png; sourceTree = "<group>"; };
+		0A16141017297AA300F0D5B2 /* fix_dmg.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = fix_dmg.applescript; sourceTree = "<group>"; };
+		0A16141117297AD400F0D5B2 /* dmg_license_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dmg_license_info.plist; sourceTree = "<group>"; };
 		0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = UpdateChecker.xcodeproj; path = ../UpdateChecker/UpdateChecker.xcodeproj; sourceTree = SOURCE_ROOT; };
 		0A2206A015C2AE51004D168E /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
 		0A2206A115C2AE51004D168E /* wiimote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wiimote.png; sourceTree = "<group>"; };
@@ -236,6 +285,26 @@
 				0A10280B15C2BA85006715D7 /* MainController.m */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		0A1613F3172979CA00F0D5B2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A1613FC172979CA00F0D5B2 /* dmgeula */,
+				0A1613FE172979CA00F0D5B2 /* DMGEULA.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0A16140D17297A9100F0D5B2 /* DMG */ = {
+			isa = PBXGroup;
+			children = (
+				0A16140E17297AA300F0D5B2 /* BSD_License.rtf */,
+				0A16140F17297AA300F0D5B2 /* dmg_background.png */,
+				0A16141017297AA300F0D5B2 /* fix_dmg.applescript */,
+				0A16141117297AD400F0D5B2 /* dmg_license_info.plist */,
+			);
+			name = DMG;
 			sourceTree = "<group>";
 		};
 		0A1F63F7162EC58A004FB111 /* Products */ = {
@@ -328,8 +397,10 @@
 				0A2206C415C2AF03004D168E /* VHID.xcodeproj */,
 				0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */,
 				0A2206B715C2AEFC004D168E /* UserNotification.xcodeproj */,
+				0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				0A16140D17297A9100F0D5B2 /* DMG */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -413,6 +484,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 0A1613F3172979CA00F0D5B2 /* Products */;
+					ProjectRef = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
+				},
+				{
 					ProductGroup = 0A1F63F7162EC58A004FB111 /* Products */;
 					ProjectRef = 0A1F63F6162EC58A004FB111 /* UpdateChecker.xcodeproj */;
 				},
@@ -436,11 +511,26 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* WJoy */,
+				0A161401172979E300F0D5B2 /* Build DMG */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		0A1613FC172979CA00F0D5B2 /* dmgeula */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = dmgeula;
+			remoteRef = 0A1613FB172979CA00F0D5B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0A1613FE172979CA00F0D5B2 /* DMGEULA.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DMGEULA.framework;
+			remoteRef = 0A1613FD172979CA00F0D5B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		0A1F6400162EC58A004FB111 /* UpdateChecker.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -541,6 +631,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0A161400172979E300F0D5B2 /* Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Script;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nDMG_PATH=\"/Volumes/WJoy\"\n\nhdiutil create _tmp.dmg -megabytes 200 -ov -volname \"WJoy\" -fs HFS+\nhdiutil attach _tmp.dmg\n\ncp -Rf \"$CONFIGURATION_BUILD_DIR/WJoy.app\" \"$DMG_PATH\"\nmkdir \"$DMG_PATH/.images\"\ncp \"$SOURCE_ROOT/dmg_background.png\" \"$DMG_PATH/.images/background.png\"\nln -s \"/Applications\" \"$DMG_PATH/Applications\"\n\n\"$SOURCE_ROOT/fix_dmg.applescript\"\n\nSetFile -a C \"$DMG_PATH\"\ncp \"$SOURCE_ROOT/install_icon.icns\" \"$DMG_PATH/.VolumeIcon.icns\"\n\nhdiutil detach \"$DMG_PATH\"\nhdiutil convert _tmp.dmg -ov -format UDZO -imagekey zlib-level=9 -o \"wjoy.dmg\"\nrm _tmp.dmg\n\n\"$CONFIGURATION_BUILD_DIR\"/dmgeula -lang_plist_path \"$SOURCE_ROOT\"/dmg_license_info.plist -licenses_dir \"$SOURCE_ROOT\" -dmg_path \"$SOURCE_ROOT\"/wjoy.dmg\n\nexit 0\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -559,6 +666,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		0A161405172979E800F0D5B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = dmgeula;
+			targetProxy = 0A161404172979E800F0D5B2 /* PBXContainerItemProxy */;
+		};
+		0A16140817297A1100F0D5B2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* WJoy */;
+			targetProxy = 0A16140717297A1100F0D5B2 /* PBXContainerItemProxy */;
+		};
 		0A1F6404162EC5BA004FB111 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = UpdateChecker;
@@ -587,6 +704,27 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0A161402172979E300F0D5B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Build DMG";
+			};
+			name = Debug;
+		};
+		0A161403172979E300F0D5B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = "Build DMG";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -645,6 +783,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0A16140617297A0600F0D5B2 /* Build configuration list for PBXAggregateTarget "Build DMG" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A161402172979E300F0D5B2 /* Debug */,
+				0A161403172979E300F0D5B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "WJoy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
