@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A1612FA172975F300F0D5B2 /* dmgeula.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612E5172975F300F0D5B2 /* dmgeula.m */; };
+		0A1612FB172975F300F0D5B2 /* DMGEULALanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612E7172975F300F0D5B2 /* DMGEULALanguage.m */; };
+		0A1612FC172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612E9172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m */; };
+		0A1612FF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612EF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m */; };
+		0A161300172975F300F0D5B2 /* DMGEULAResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F1172975F300F0D5B2 /* DMGEULAResource.m */; };
+		0A161301172975F300F0D5B2 /* DMGEULAResource+DeepStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F3172975F300F0D5B2 /* DMGEULAResource+DeepStore.m */; };
+		0A161302172975F300F0D5B2 /* DMGEULAResource+DMG.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F5172975F300F0D5B2 /* DMGEULAResource+DMG.m */; };
+		0A161304172975F300F0D5B2 /* NSObject+DMGEULA.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F9172975F300F0D5B2 /* NSObject+DMGEULA.m */; };
+		0A16130A1729764000F0D5B2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1613091729764000F0D5B2 /* Cocoa.framework */; };
+		0A16132B1729769300F0D5B2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1613091729764000F0D5B2 /* Cocoa.framework */; };
+		0A16132E172976A800F0D5B2 /* NSObject+DMGEULA.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F9172975F300F0D5B2 /* NSObject+DMGEULA.m */; };
+		0A16132F172976A800F0D5B2 /* DMGEULAPathPreprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612EF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m */; };
+		0A161330172976A800F0D5B2 /* DMGEULALanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612E7172975F300F0D5B2 /* DMGEULALanguage.m */; };
+		0A161331172976A800F0D5B2 /* DMGEULALanguage+NSDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612E9172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m */; };
+		0A161332172976A800F0D5B2 /* DMGEULALanguage+SupportedLanguages.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612EB172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.m */; };
+		0A161333172976A800F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612ED172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.m */; };
+		0A161334172976A800F0D5B2 /* DMGEULAResource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F1172975F300F0D5B2 /* DMGEULAResource.m */; };
+		0A161335172976A800F0D5B2 /* DMGEULAResource+Store.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F7172975F300F0D5B2 /* DMGEULAResource+Store.m */; };
+		0A161336172976A800F0D5B2 /* DMGEULAResource+DeepStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F3172975F300F0D5B2 /* DMGEULAResource+DeepStore.m */; };
+		0A161337172976A800F0D5B2 /* DMGEULAResource+DMG.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A1612F5172975F300F0D5B2 /* DMGEULAResource+DMG.m */; };
+		0A1613481729770A00F0D5B2 /* NSObject+DMGEULA.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612F8172975F300F0D5B2 /* NSObject+DMGEULA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A1613491729770A00F0D5B2 /* DMGEULAPathPreprocessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612EE172975F300F0D5B2 /* DMGEULAPathPreprocessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134A1729770A00F0D5B2 /* DMGEULALanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612E6172975F300F0D5B2 /* DMGEULALanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134B1729770A00F0D5B2 /* DMGEULALanguage+NSDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612E8172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134C1729770A00F0D5B2 /* DMGEULALanguage+SupportedLanguages.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612EA172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134D1729770A00F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612EC172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134E1729770A00F0D5B2 /* DMGEULAResource.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612F0172975F300F0D5B2 /* DMGEULAResource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16134F1729770A00F0D5B2 /* DMGEULAResource+Store.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612F6172975F300F0D5B2 /* DMGEULAResource+Store.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A1613501729770A00F0D5B2 /* DMGEULAResource+DeepStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612F2172975F300F0D5B2 /* DMGEULAResource+DeepStore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A1613511729770A00F0D5B2 /* DMGEULAResource+DMG.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A1612F4172975F300F0D5B2 /* DMGEULAResource+DMG.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A16136B172977CB00F0D5B2 /* DMGEULA.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A16136A172977CB00F0D5B2 /* DMGEULA.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A1612E4172975F300F0D5B2 /* dmg_license_info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dmg_license_info.plist; sourceTree = "<group>"; };
+		0A1612E5172975F300F0D5B2 /* dmgeula.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = dmgeula.m; sourceTree = "<group>"; };
+		0A1612E6172975F300F0D5B2 /* DMGEULALanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMGEULALanguage.h; sourceTree = "<group>"; };
+		0A1612E7172975F300F0D5B2 /* DMGEULALanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMGEULALanguage.m; sourceTree = "<group>"; };
+		0A1612E8172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULALanguage+NSDictionary.h"; sourceTree = "<group>"; };
+		0A1612E9172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULALanguage+NSDictionary.m"; sourceTree = "<group>"; };
+		0A1612EA172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULALanguage+SupportedLanguages.h"; sourceTree = "<group>"; };
+		0A1612EB172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULALanguage+SupportedLanguages.m"; sourceTree = "<group>"; };
+		0A1612EC172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULALanguage+SupportedLanguagesStore.h"; sourceTree = "<group>"; };
+		0A1612ED172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULALanguage+SupportedLanguagesStore.m"; sourceTree = "<group>"; };
+		0A1612EE172975F300F0D5B2 /* DMGEULAPathPreprocessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMGEULAPathPreprocessor.h; sourceTree = "<group>"; };
+		0A1612EF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMGEULAPathPreprocessor.m; sourceTree = "<group>"; };
+		0A1612F0172975F300F0D5B2 /* DMGEULAResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMGEULAResource.h; sourceTree = "<group>"; };
+		0A1612F1172975F300F0D5B2 /* DMGEULAResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMGEULAResource.m; sourceTree = "<group>"; };
+		0A1612F2172975F300F0D5B2 /* DMGEULAResource+DeepStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULAResource+DeepStore.h"; sourceTree = "<group>"; };
+		0A1612F3172975F300F0D5B2 /* DMGEULAResource+DeepStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULAResource+DeepStore.m"; sourceTree = "<group>"; };
+		0A1612F4172975F300F0D5B2 /* DMGEULAResource+DMG.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULAResource+DMG.h"; sourceTree = "<group>"; };
+		0A1612F5172975F300F0D5B2 /* DMGEULAResource+DMG.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULAResource+DMG.m"; sourceTree = "<group>"; };
+		0A1612F6172975F300F0D5B2 /* DMGEULAResource+Store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DMGEULAResource+Store.h"; sourceTree = "<group>"; };
+		0A1612F7172975F300F0D5B2 /* DMGEULAResource+Store.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DMGEULAResource+Store.m"; sourceTree = "<group>"; };
+		0A1612F8172975F300F0D5B2 /* NSObject+DMGEULA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DMGEULA.h"; sourceTree = "<group>"; };
+		0A1612F9172975F300F0D5B2 /* NSObject+DMGEULA.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DMGEULA.m"; sourceTree = "<group>"; };
+		0A1613091729764000F0D5B2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		0A1613211729766E00F0D5B2 /* DMGEULA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DMGEULA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A1613221729766E00F0D5B2 /* DMGEULA-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DMGEULA-Info.plist"; sourceTree = "<group>"; };
+		0A16136A172977CB00F0D5B2 /* DMGEULA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMGEULA.h; sourceTree = "<group>"; };
+		8DD76F6C0486A84900D96B5E /* dmgeula */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = dmgeula; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0A16131F1729766E00F0D5B2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A16132B1729769300F0D5B2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A16130A1729764000F0D5B2 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* DMGEULA */ = {
+			isa = PBXGroup;
+			children = (
+				0A1613051729760700F0D5B2 /* example */,
+				0A1612E3172975DB00F0D5B2 /* framework */,
+				08FB7795FE84155DC02AAC07 /* utility */,
+				0A1613081729763500F0D5B2 /* Linked Frameworks */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+				0A1613221729766E00F0D5B2 /* DMGEULA-Info.plist */,
+			);
+			name = DMGEULA;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* utility */ = {
+			isa = PBXGroup;
+			children = (
+				0A1612E5172975F300F0D5B2 /* dmgeula.m */,
+			);
+			name = utility;
+			sourceTree = "<group>";
+		};
+		0A1612E3172975DB00F0D5B2 /* framework */ = {
+			isa = PBXGroup;
+			children = (
+				0A1612F8172975F300F0D5B2 /* NSObject+DMGEULA.h */,
+				0A1612F9172975F300F0D5B2 /* NSObject+DMGEULA.m */,
+				0A1612EE172975F300F0D5B2 /* DMGEULAPathPreprocessor.h */,
+				0A1612EF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m */,
+				0A1612E6172975F300F0D5B2 /* DMGEULALanguage.h */,
+				0A1612E7172975F300F0D5B2 /* DMGEULALanguage.m */,
+				0A1612E8172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.h */,
+				0A1612E9172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m */,
+				0A1612EA172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.h */,
+				0A1612EB172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguages.m */,
+				0A1612EC172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.h */,
+				0A1612ED172975F300F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.m */,
+				0A1612F0172975F300F0D5B2 /* DMGEULAResource.h */,
+				0A1612F1172975F300F0D5B2 /* DMGEULAResource.m */,
+				0A1612F6172975F300F0D5B2 /* DMGEULAResource+Store.h */,
+				0A1612F7172975F300F0D5B2 /* DMGEULAResource+Store.m */,
+				0A1612F2172975F300F0D5B2 /* DMGEULAResource+DeepStore.h */,
+				0A1612F3172975F300F0D5B2 /* DMGEULAResource+DeepStore.m */,
+				0A1612F4172975F300F0D5B2 /* DMGEULAResource+DMG.h */,
+				0A1612F5172975F300F0D5B2 /* DMGEULAResource+DMG.m */,
+				0A16136A172977CB00F0D5B2 /* DMGEULA.h */,
+			);
+			name = framework;
+			sourceTree = "<group>";
+		};
+		0A1613051729760700F0D5B2 /* example */ = {
+			isa = PBXGroup;
+			children = (
+				0A1612E4172975F300F0D5B2 /* dmg_license_info.plist */,
+			);
+			name = example;
+			sourceTree = "<group>";
+		};
+		0A1613081729763500F0D5B2 /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A1613091729764000F0D5B2 /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* dmgeula */,
+				0A1613211729766E00F0D5B2 /* DMGEULA.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0A16131C1729766E00F0D5B2 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A1613481729770A00F0D5B2 /* NSObject+DMGEULA.h in Headers */,
+				0A1613491729770A00F0D5B2 /* DMGEULAPathPreprocessor.h in Headers */,
+				0A16134A1729770A00F0D5B2 /* DMGEULALanguage.h in Headers */,
+				0A16134B1729770A00F0D5B2 /* DMGEULALanguage+NSDictionary.h in Headers */,
+				0A16134C1729770A00F0D5B2 /* DMGEULALanguage+SupportedLanguages.h in Headers */,
+				0A16134D1729770A00F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.h in Headers */,
+				0A16134E1729770A00F0D5B2 /* DMGEULAResource.h in Headers */,
+				0A16134F1729770A00F0D5B2 /* DMGEULAResource+Store.h in Headers */,
+				0A1613501729770A00F0D5B2 /* DMGEULAResource+DeepStore.h in Headers */,
+				0A1613511729770A00F0D5B2 /* DMGEULAResource+DMG.h in Headers */,
+				0A16136B172977CB00F0D5B2 /* DMGEULA.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0A1613201729766E00F0D5B2 /* DMGEULA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A1613251729766E00F0D5B2 /* Build configuration list for PBXNativeTarget "DMGEULA" */;
+			buildPhases = (
+				0A16131C1729766E00F0D5B2 /* Headers */,
+				0A16131D1729766E00F0D5B2 /* Resources */,
+				0A16131E1729766E00F0D5B2 /* Sources */,
+				0A16131F1729766E00F0D5B2 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DMGEULA;
+			productName = DMGEULA;
+			productReference = 0A1613211729766E00F0D5B2 /* DMGEULA.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8DD76F620486A84900D96B5E /* dmgeula */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "dmgeula" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dmgeula;
+			productInstallPath = "$(HOME)/bin";
+			productName = DMGEULA;
+			productReference = 8DD76F6C0486A84900D96B5E /* dmgeula */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "DMGEULA" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 08FB7794FE84155DC02AAC07 /* DMGEULA */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* dmgeula */,
+				0A1613201729766E00F0D5B2 /* DMGEULA */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A16131D1729766E00F0D5B2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0A16131E1729766E00F0D5B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A16132E172976A800F0D5B2 /* NSObject+DMGEULA.m in Sources */,
+				0A16132F172976A800F0D5B2 /* DMGEULAPathPreprocessor.m in Sources */,
+				0A161330172976A800F0D5B2 /* DMGEULALanguage.m in Sources */,
+				0A161331172976A800F0D5B2 /* DMGEULALanguage+NSDictionary.m in Sources */,
+				0A161332172976A800F0D5B2 /* DMGEULALanguage+SupportedLanguages.m in Sources */,
+				0A161333172976A800F0D5B2 /* DMGEULALanguage+SupportedLanguagesStore.m in Sources */,
+				0A161334172976A800F0D5B2 /* DMGEULAResource.m in Sources */,
+				0A161335172976A800F0D5B2 /* DMGEULAResource+Store.m in Sources */,
+				0A161336172976A800F0D5B2 /* DMGEULAResource+DeepStore.m in Sources */,
+				0A161337172976A800F0D5B2 /* DMGEULAResource+DMG.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A1612FA172975F300F0D5B2 /* dmgeula.m in Sources */,
+				0A1612FB172975F300F0D5B2 /* DMGEULALanguage.m in Sources */,
+				0A1612FC172975F300F0D5B2 /* DMGEULALanguage+NSDictionary.m in Sources */,
+				0A1612FF172975F300F0D5B2 /* DMGEULAPathPreprocessor.m in Sources */,
+				0A161300172975F300F0D5B2 /* DMGEULAResource.m in Sources */,
+				0A161301172975F300F0D5B2 /* DMGEULAResource+DeepStore.m in Sources */,
+				0A161302172975F300F0D5B2 /* DMGEULAResource+DMG.m in Sources */,
+				0A161304172975F300F0D5B2 /* NSObject+DMGEULA.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		0A1613231729766E00F0D5B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = "DMGEULA-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DMGEULA;
+			};
+			name = Debug;
+		};
+		0A1613241729766E00F0D5B2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = "DMGEULA-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = DMGEULA;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = dmgeula;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = dmgeula;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A1613251729766E00F0D5B2 /* Build configuration list for PBXNativeTarget "DMGEULA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0A1613231729766E00F0D5B2 /* Debug */,
+				0A1613241729766E00F0D5B2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "dmgeula" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "DMGEULA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
