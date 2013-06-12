@@ -141,6 +141,11 @@ IOReturn WirtualJoyDevice::newReportDescriptor(IOMemoryDescriptor **descriptor) 
 	return kIOReturnSuccess;
 }
 
+OSString *WirtualJoyDevice::newTransportString() const
+{
+	return OSString::withCString("Virtual");
+}
+
 OSString *WirtualJoyDevice::newManufacturerString() const
 {
     return OSString::withCString("Alxn1");
@@ -151,9 +156,32 @@ OSString *WirtualJoyDevice::newProductString() const
     return OSString::withString(m_ProductString);
 }
 
-OSString *WirtualJoyDevice::newTransportString() const
+OSString *WirtualJoyDevice::newSerialNumberString() const
 {
-    return OSString::withCString("Virtual");
+	return OSString::withCString("00000000");
+}
+
+OSNumber *WirtualJoyDevice::newVersionNumber() const
+{
+	return OSNumber::withNumber(1, 32);
+}
+
+OSNumber *WirtualJoyDevice::newSerialNumber() const
+{
+	uint32_t number = 0;
+	return OSNumber::withNumber(number, 32);
+}
+
+OSNumber *WirtualJoyDevice::newVendorIDNumber() const
+{
+	uint32_t number = 0;
+	return OSNumber::withNumber(number, 32);
+}
+
+OSNumber *WirtualJoyDevice::newProductIDNumber() const
+{
+	uint32_t number = 0;
+	return OSNumber::withNumber(number, 32);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsageNumber() const
@@ -169,6 +197,18 @@ OSNumber *WirtualJoyDevice::newPrimaryUsagePageNumber() const
 OSNumber *WirtualJoyDevice::newLocationIDNumber() const
 {
     return OSNumber::withNumber(m_LocationID, 32);
+}
+
+OSNumber *WirtualJoyDevice::newVendorIDSourceNumber() const
+{
+	uint32_t number = 0;
+	return OSNumber::withNumber(number, 32);
+}
+
+OSNumber *WirtualJoyDevice::newCountryCodeNumber() const
+{
+	uint32_t number = 0;
+	return OSNumber::withNumber(number, 32);
 }
 
 bool WirtualJoyDevice::updateState(const void *hidData, size_t hidDataSize)
