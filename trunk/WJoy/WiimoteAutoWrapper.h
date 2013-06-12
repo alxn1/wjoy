@@ -17,6 +17,7 @@
     @private
         Wiimote         *m_Device;
         VHIDDevice      *m_HIDState;
+		NSPoint			 m_ShiftsState;
         WJoyDevice      *m_WJoy;
 }
 
