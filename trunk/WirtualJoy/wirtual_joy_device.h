@@ -29,12 +29,25 @@ class WirtualJoyDevice : public IOHIDDevice
                         OSDictionary *dictionary = 0);
 
         virtual IOReturn newReportDescriptor(IOMemoryDescriptor **descriptor) const;
+
+		virtual OSString *newTransportString() const;
         virtual OSString *newManufacturerString() const;
         virtual OSString *newProductString() const;
-        virtual OSString *newTransportString() const;
+
+		virtual OSString *newSerialNumberString() const;
+
+		virtual OSNumber *newVersionNumber() const;
+		virtual OSNumber *newSerialNumber() const;
+
+		virtual OSNumber *newVendorIDNumber() const;
+		virtual OSNumber *newProductIDNumber() const;
+
         virtual OSNumber *newPrimaryUsageNumber() const;
         virtual OSNumber *newPrimaryUsagePageNumber() const;
         virtual OSNumber *newLocationIDNumber() const;
+
+		virtual OSNumber *newVendorIDSourceNumber() const;
+		virtual OSNumber *newCountryCodeNumber() const;
 
         bool updateState(const void *hidData, size_t hidDataSize);
 
