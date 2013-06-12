@@ -87,7 +87,7 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)wiimote:(Wiimote*)wiimote nunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position
 {
-    [m_HIDState setPointer:WiimoteClassicControllerStickCount position:position];
+    [m_HIDState setPointer:WiimoteClassicControllerStickCount + 1 position:position];
 }
 
 - (void)      wiimote:(Wiimote*)wiimote
@@ -110,6 +110,25 @@ static NSUInteger maxConnectedDevices = 0;
       positionChanged:(NSPoint)position
 {
     [m_HIDState setPointer:stick position:position];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+    classicController:(WiimoteClassicControllerExtension*)classic
+          analogShift:(WiimoteClassicControllerAnalogShiftType)shift
+      positionChanged:(float)position
+{
+	switch(shift)
+	{
+		case WiimoteClassicControllerAnalogShiftTypeLeft:
+			m_ShiftsState.x = position;
+			break;
+
+		case WiimoteClassicControllerAnalogShiftTypeRight:
+			m_ShiftsState.y = position;
+			break;
+	}
+
+	[m_HIDState setPointer:WiimoteClassicControllerStickCount position:m_ShiftsState];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
@@ -154,7 +173,7 @@ static NSUInteger maxConnectedDevices = 0;
 
     m_Device    = device;
     m_HIDState  = [[VHIDDevice alloc] initWithType:VHIDDeviceTypeJoystick
-                                      pointerCount:WiimoteNunchuckStickCount + WiimoteClassicControllerStickCount
+                                      pointerCount:WiimoteNunchuckStickCount + WiimoteClassicControllerStickCount + 1
                                        buttonCount:WiimoteButtonCount + WiimoteNunchuckButtonCount + WiimoteClassicControllerButtonCount
                                         isRelative:NO];
 
