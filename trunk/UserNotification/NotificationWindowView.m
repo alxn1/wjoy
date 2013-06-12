@@ -120,6 +120,7 @@
     [m_Icon release];
     m_Icon = [img retain];
 
+	[m_Icon setScalesWhenResized:YES];
     [m_Icon setSize:NSMakeSize(32.0f, 32.0f)];
     [self setNeedsDisplay:YES];
 }
