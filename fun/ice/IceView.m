@@ -8,6 +8,14 @@
 
 #import "IceView.h"
 
+@interface NSOpenGLView (RetinaSupport)
+
+- (void)setWantsBestResolutionOpenGLSurface:(BOOL)flag;
+
+- (NSRect)convertRectToBacking:(NSRect)rect;
+
+@end
+
 @interface IceView (PrivatePart)
 
 - (void)startTimer;
@@ -107,6 +115,9 @@
 {
     [[self openGLContext] makeCurrentContext];
 
+    if([self respondsToSelector:@selector(setWantsBestResolutionOpenGLSurface:)])
+        [self setWantsBestResolutionOpenGLSurface:YES];
+
 	GLint value = 0;
     [[self openGLContext] setValues:&value forParameter:NSOpenGLCPSwapInterval];
 
@@ -116,8 +127,12 @@
 	value = 1;
     [[self openGLContext ] setValues:&value forParameter:NSOpenGLCPSurfaceOrder];
 
-    NSRect visibleRect  = [self visibleRect];
-    NSRect bounds       = [self bounds];
+    NSRect visibleRect      = [self visibleRect];
+    NSRect bounds           = [self bounds];
+    NSRect originalBounds   = bounds;
+
+    if([self respondsToSelector:@selector(convertRectToBacking:)])
+        bounds = [self convertRectToBacking:bounds];
 
     glViewport(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -133,8 +148,8 @@
     gluPerspective(1.0f, 1.0f, 1.0f, zFar);
 
     // 114.65 и 0.075 получено эмпирическим путем - лень высчитывать все это правильно.
-    glTranslatef(-1.0f, -1.0f, -114.65f);
-    glScalef(2.0f / bounds.size.width, 2.0f / bounds.size.height, 0.075f);
+    glTranslatef(-1.0f, -1.0f, -114.6f);
+    glScalef(2.0f / originalBounds.size.width, 2.0f / originalBounds.size.height, 0.075f);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -155,8 +170,8 @@
 
 - (void)endRender
 {
-    glDisable( GL_TEXTURE_2D );
-    glDisable( GL_BLEND );
+    glDisable(GL_TEXTURE_2D);
+    glDisable(GL_BLEND);
     glFinish();
 	[[self openGLContext] flushBuffer];
 }
