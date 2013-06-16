@@ -59,13 +59,13 @@
     if(self == nil)
         return nil;
 
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             addObserver:self
                                selector:@selector(onDeviceConnected:)
                                    name:WiimoteConnectedNotification
                                  object:nil];
 
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             addObserver:self
                                selector:@selector(onDeviceDisconnected:)
                                    name:WiimoteDisconnectedNotification
@@ -76,7 +76,7 @@
 
 - (void)dealloc
 {
-    [[Wiimote notificationCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
