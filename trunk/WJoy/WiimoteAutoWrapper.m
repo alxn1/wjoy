@@ -53,7 +53,7 @@ static NSUInteger maxConnectedDevices = 0;
         return;
     }
 
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             addObserver:self
                                selector:@selector(newWiimoteDeviceNotification:)
                                    name:WiimoteConnectedNotification
