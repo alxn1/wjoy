@@ -131,6 +131,28 @@ static NSUInteger maxConnectedDevices = 0;
 	[m_HIDState setPointer:WiimoteClassicControllerStickCount position:m_ShiftsState];
 }
 
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+        buttonPressed:(WiimoteUProControllerButtonType)button
+{
+	[m_HIDState setButton:WiimoteButtonCount + WiimoteNunchuckButtonCount + button pressed:YES];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+       buttonReleased:(WiimoteUProControllerButtonType)button
+{
+	[m_HIDState setButton:WiimoteButtonCount + WiimoteNunchuckButtonCount + button pressed:NO];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+                stick:(WiimoteUProControllerStickType)stick
+      positionChanged:(NSPoint)position
+{
+	[m_HIDState setPointer:stick position:position];
+}
+
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
     [m_WJoy updateHIDState:state];
