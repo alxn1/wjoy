@@ -25,11 +25,6 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 @implementation Wiimote
 
-+ (NSNotificationCenter*)notificationCenter
-{
-    return [WiimoteEventDispatcher notificationCenter];
-}
-
 + (BOOL)isBluetoothEnabled
 {
     return [WiimoteInquiry isBluetoothEnabled];
@@ -54,7 +49,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
         return NO;
     }
 
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             postNotificationName:WiimoteBeginDiscoveryNotification
                                           object:self];
 
@@ -63,7 +58,7 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 
 + (void)discoveryFinished
 {
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             postNotificationName:WiimoteEndDiscoveryNotification
                                           object:self];
 }
@@ -81,6 +76,11 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 - (void)disconnect
 {
     [m_Device disconnect];
+}
+
+- (BOOL)isWiiUProController
+{
+	return [m_ModelName isEqualToString:WiimoteDeviceNameUPro];
 }
 
 - (NSData*)address

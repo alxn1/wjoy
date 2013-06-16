@@ -2,7 +2,7 @@
 //  WiimoteEventDispatcher+MotionPlus.m
 //  Wiimote
 //
-//  Created by Александр Серков on 29.09.12.
+//  Created by alxn1 on 29.09.12.
 //
 //
 

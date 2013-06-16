@@ -44,7 +44,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
 
 - (void)dealloc
 {
-    [[Wiimote notificationCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [m_Timer invalidate];
     [super dealloc];
 }
@@ -70,7 +70,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
         [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSEventTrackingRunLoopMode];
         [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSModalPanelRunLoopMode];
 
-        [[Wiimote notificationCenter]
+        [[NSNotificationCenter defaultCenter]
                                 addObserver:self
                                    selector:@selector(applicationWillTerminateNotification:)
                                        name:NSApplicationWillTerminateNotification
@@ -78,14 +78,14 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
     }
     else
     {
-        [[Wiimote notificationCenter] removeObserver:self];
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
         [m_Timer invalidate];
         m_Timer = nil;
     }
 
     if(m_IsPingNotificationEnabled)
     {
-        [[Wiimote notificationCenter]
+        [[NSNotificationCenter defaultCenter]
                                 postNotificationName:WiimoteWatchdogEnabledChangedNotification
                                               object:self];
     }
@@ -128,7 +128,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
         [device requestUpdateState];
     }
 
-    [[Wiimote notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                             postNotificationName:WiimoteWatchdogPingNotification
                                           object:self];
 }

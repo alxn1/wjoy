@@ -42,8 +42,6 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 		NSDictionary                *m_UserInfo;
 }
 
-+ (NSNotificationCenter*)notificationCenter;
-
 + (BOOL)isBluetoothEnabled;
 
 + (NSArray*)supportedModelNames;
@@ -55,6 +53,8 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
 - (BOOL)isConnected;
 - (void)disconnect;
+
+- (BOOL)isWiiUProController;
 
 - (NSData*)address;
 - (NSString*)addressString;

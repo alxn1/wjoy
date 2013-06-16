@@ -186,6 +186,82 @@ static NSString *classicShiftName(WiimoteClassicControllerAnalogShiftType shift)
     return result;
 }
 
+static NSString *uProButtonName(WiimoteUProControllerButtonType button)
+{
+    NSString *result = @"unknown";
+
+    switch(button)
+    {
+        case WiimoteUProControllerButtonTypeA:
+            result = @"A";
+            break;
+
+        case WiimoteUProControllerButtonTypeB:
+            result = @"B";
+            break;
+
+        case WiimoteUProControllerButtonTypeX:
+            result = @"X";
+            break;
+
+        case WiimoteUProControllerButtonTypeY:
+            result = @"Y";
+            break;
+
+        case WiimoteUProControllerButtonTypeUp:
+            result = @"Up";
+            break;
+
+        case WiimoteUProControllerButtonTypeDown:
+            result = @"Down";
+            break;
+
+        case WiimoteUProControllerButtonTypeLeft:
+            result = @"Left";
+            break;
+
+        case WiimoteUProControllerButtonTypeRight:
+            result = @"Right";
+            break;
+
+        case WiimoteUProControllerButtonTypeL:
+            result = @"L";
+            break;
+
+        case WiimoteUProControllerButtonTypeR:
+            result = @"R";
+            break;
+
+        case WiimoteUProControllerButtonTypeZL:
+            result = @"ZL";
+            break;
+
+        case WiimoteUProControllerButtonTypeZR:
+            result = @"ZR";
+            break;
+    }
+
+    return result;
+}
+
+static NSString *uProStickName(WiimoteUProControllerStickType stick)
+{
+    NSString *result = @"unknown";
+
+    switch(stick)
+    {
+        case WiimoteUProControllerStickTypeLeft:
+            result = @"left";
+            break;
+
+        case WiimoteUProControllerStickTypeRight:
+            result = @"right";
+            break;
+    }
+
+    return result;
+}
+
 @implementation NSObject (WiimoteWrapperLog)
 
 - (void)wiimoteWrapper:(WiimoteWrapper*)wrapper log:(NSString*)logLine
@@ -269,7 +345,7 @@ static NSObject *sLog = nil;
 
     if(!isInit)
     {
-        [[Wiimote notificationCenter]
+        [[NSNotificationCenter defaultCenter]
                                 addObserver:self
                                    selector:@selector(newDeviceConnected:)
                                        name:WiimoteConnectedNotification
@@ -379,6 +455,28 @@ static NSObject *sLog = nil;
       positionChanged:(float)position
 {
 	[self log:@"Classic Controller analog shift (%@) position changed: %.02f", classicShiftName(shift), position];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+        buttonPressed:(WiimoteUProControllerButtonType)button
+{
+	[self log:@"Wii U Pro Controller button pressed: %@", uProButtonName(button)];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+       buttonReleased:(WiimoteUProControllerButtonType)button
+{
+	[self log:@"Wii U Pro Controller button released: %@", uProButtonName(button)];
+}
+
+- (void)      wiimote:(Wiimote*)wiimote
+	   uProController:(WiimoteUProControllerExtension*)uPro
+                stick:(WiimoteUProControllerStickType)stick
+      positionChanged:(NSPoint)position
+{
+	[self log:@"Wii U Pro Controller stick (%@) position changed: %.02f %.02f", uProStickName(stick), position.x, position.y];
 }
 
 - (void)wiimoteDisconnected:(Wiimote*)wiimote

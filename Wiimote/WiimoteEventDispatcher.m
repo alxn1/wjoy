@@ -10,11 +10,6 @@
 
 @implementation WiimoteEventDispatcher
 
-+ (NSNotificationCenter*)notificationCenter
-{
-    return [NSNotificationCenter defaultCenter];
-}
-
 - (Wiimote*)owner
 {
     return m_Owner;
@@ -59,7 +54,7 @@
 
 - (void)postNotification:(NSString*)notification params:(NSDictionary*)params sender:(id)sender
 {
-    [[WiimoteEventDispatcher notificationCenter]
+    [[NSNotificationCenter defaultCenter]
                                 postNotificationName:notification
                                               object:sender
                                             userInfo:params];
