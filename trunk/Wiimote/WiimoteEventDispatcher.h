@@ -19,8 +19,6 @@
         id       m_Delegate;
 }
 
-+ (NSNotificationCenter*)notificationCenter;
-
 - (Wiimote*)owner;
 
 - (BOOL)isStateNotificationsEnabled;

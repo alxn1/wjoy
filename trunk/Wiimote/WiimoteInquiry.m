@@ -15,8 +15,9 @@
 
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
-NSString *WiimoteDeviceName              = @"Nintendo RVL-CNT-01";
-NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
+NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
+NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 
 @interface WiimoteInquiry (PrivatePart)
 
@@ -44,6 +45,7 @@ NSString *WiimoteDeviceNameTR            = @"Nintendo RVL-CNT-01-TR";
 {
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceName];
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameTR];
+	[WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameUPro];
 }
 
 + (BOOL)isBluetoothEnabled

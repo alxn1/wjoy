@@ -12,6 +12,7 @@
 
 FOUNDATION_EXPORT NSString *WiimoteDeviceName;
 FOUNDATION_EXPORT NSString *WiimoteDeviceNameTR;
+FOUNDATION_EXPORT NSString *WiimoteDeviceNameUPro;
 
 @interface WiimoteInquiry : NSObject
 {

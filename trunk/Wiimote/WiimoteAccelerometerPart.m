@@ -75,7 +75,8 @@
 
 - (void)connected
 {
-	[self beginReadCalibrationData];
+	if(![[self owner] isWiiUProController])
+		[self beginReadCalibrationData];
 }
 
 - (void)handleReport:(WiimoteDeviceReport*)report
