@@ -206,6 +206,9 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 						error:(IOReturn)error
 					  aborted:(BOOL)aborted
 {
+    [m_Inquiry stop];
+	[m_Inquiry setDelegate:nil];
+
     if(error == kIOReturnSuccess)
         [self connectToFindedDevices:[m_Inquiry foundDevices]];
 
