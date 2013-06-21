@@ -89,8 +89,20 @@
     return m_AnalogShiftPositions[shift];
 }
 
+- (NSPoint)normalizeStick:(WiimoteClassicControllerStickType)stick position:(NSPoint)position
+{
+    return position;
+}
+
+- (float)normalizeAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(float)position
+{
+    return position;
+}
+
 - (void)setStick:(WiimoteClassicControllerStickType)stick position:(NSPoint)newPosition
 {
+    newPosition = [self normalizeStick:stick position:newPosition];
+
     if(WiimoteDeviceIsPointEqual(m_StickPositions[stick], newPosition))
         return;
 
@@ -125,6 +137,8 @@
 
 - (void)setAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(float)newPosition
 {
+    newPosition = [self normalizeAnalogShift:shift position:newPosition];
+
     if(WiimoteDeviceIsFloatEqual(m_AnalogShiftPositions[shift], newPosition))
         return;
 

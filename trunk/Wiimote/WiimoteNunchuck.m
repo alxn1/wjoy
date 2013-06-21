@@ -102,8 +102,15 @@
     return [[m_Accelerometer retain] autorelease];
 }
 
+- (NSPoint)normalizeStickPosition:(NSPoint)position
+{
+    return position;
+}
+
 - (void)setStickPosition:(NSPoint)newPosition
 {
+    newPosition = [self normalizeStickPosition:newPosition];
+
     if(WiimoteDeviceIsPointEqual(m_StickPosition, newPosition))
         return;
 
