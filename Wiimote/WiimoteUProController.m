@@ -71,8 +71,15 @@
 	return m_ButtonState[button];
 }
 
+- (NSPoint)normalizeStick:(WiimoteUProControllerStickType)stick position:(NSPoint)position
+{
+    return position;
+}
+
 - (void)setStick:(WiimoteUProControllerStickType)stick position:(NSPoint)newPosition
 {
+    newPosition = [self normalizeStick:stick position:newPosition];
+
     if(WiimoteDeviceIsPointEqual(m_StickPositions[stick], newPosition))
         return;
 

@@ -19,6 +19,7 @@
 }
 
 - (Wiimote*)owner;
+
 - (NSString*)name;
 
 @end
