@@ -9,7 +9,6 @@
 #import "WiimoteInquiry.h"
 #import "Wiimote+Create.h"
 
-#import <Cocoa/Cocoa.h>
 #import <IOBluetooth/IOBluetooth.h>
 
 #import <dlfcn.h>
@@ -19,10 +18,6 @@
 NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
 NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
 NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
-
-#ifndef NSAppKitVersionNumber10_5
-#define NSAppKitVersionNumber10_5		949
-#endif /* NSAppKitVersionNumber10_5 */
 
 @interface WiimoteInquiry (PrivatePart)
 
@@ -172,10 +167,8 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 
     if(!isInit)
     {
-		if(floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_5)
-			ignoreHIDDeviceFn = dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
-
-        isInit = YES;
+		ignoreHIDDeviceFn	= dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
+        isInit				= YES;
     }
 
     if(ignoreHIDDeviceFn != NULL)
