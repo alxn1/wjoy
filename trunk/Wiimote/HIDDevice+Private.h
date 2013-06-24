@@ -1,0 +1,15 @@
+//
+//  HIDDevice+Private.h
+//  HID
+//
+//  Created by alxn1 on 24.06.13.
+//  Copyright 2013 alxn1. All rights reserved.
+//
+
+#import "HIDDevice.h"
+
+@interface HIDDevice (Private)
+
+- (id)initWithHIDDeviceRef:(IOHIDDeviceRef)handle;
+
+@end
