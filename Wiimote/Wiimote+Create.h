@@ -8,10 +8,10 @@
 
 #import "Wiimote.h"
 
-@class IOBluetoothDevice;
+@class HIDDevice;
 
 @interface Wiimote (Create)
 
-+ (void)connectToBluetoothDevice:(IOBluetoothDevice*)device;
++ (void)connectToHIDDevice:(HIDDevice*)device;
 
 @end

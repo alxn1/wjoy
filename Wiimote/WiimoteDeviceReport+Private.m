@@ -51,19 +51,13 @@
 
 - (BOOL)updateFromReportData:(const uint8_t*)data length:(NSUInteger)length
 {
-    const WiimoteDeviceReportHeader *header = (const WiimoteDeviceReportHeader*)data;
-
-	if(data		== NULL ||
-	   length < sizeof(WiimoteDeviceReportHeader) ||
-	   header->packetType != WiimoteDevicePacketTypeReport)
-	{
+	if(data == NULL || length < 1)
 		return NO;
-	}
 
 	m_Wiimote       = nil;
-    m_Type          = header->reportType;
-	m_Data          = data   + sizeof(WiimoteDeviceReportHeader);
-    m_DataLength    = length - sizeof(WiimoteDeviceReportHeader);
+    m_Type          = data[0];
+	m_Data          = data   + 1;
+    m_DataLength    = length - 1;
 
 	return YES;
 }

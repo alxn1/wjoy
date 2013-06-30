@@ -7,9 +7,12 @@
 //
 
 #import "WiimoteInquiry.h"
+#import "WiimoteDevicePair.h"
 #import "Wiimote+Create.h"
 
 #import <IOBluetooth/IOBluetooth.h>
+
+#import <HID/HIDManager.h>
 
 #import <dlfcn.h>
 
@@ -23,8 +26,7 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 
 - (id)initInternal;
 
-- (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device;
-- (void)connectToFindedDevices:(NSArray*)devices;
+- (void)pairWithDevices:(NSArray*)devices;
 
 @end
 
@@ -98,6 +100,7 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 - (void)dealloc
 {
     [self stop];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
@@ -146,6 +149,15 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
     return YES;
 }
 
+- (void)hidManagerDeviceConnectedNotification:(NSNotification*)notification
+{
+	HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
+	NSString	*deviceName	= [[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)];
+
+	if([WiimoteInquiry isModelSupported:deviceName])
+		[Wiimote connectToHIDDevice:device];
+}
+
 @end
 
 @implementation WiimoteInquiry (PrivatePart)
@@ -157,25 +169,30 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
         return nil;
 
     m_Inquiry = nil;
+
+	[[NSNotificationCenter defaultCenter]
+								addObserver:self
+								   selector:@selector(hidManagerDeviceConnectedNotification:)
+									   name:HIDManagerDeviceConnectedNotification
+									 object:[HIDManager manager]];
+
+	NSEnumerator	*en		= [[[HIDManager manager] connectedDevices] objectEnumerator];
+	HIDDevice		*device = [en nextObject];
+
+	while(device != nil)
+	{
+		NSString *deviceName = [[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)];
+	
+		if([WiimoteInquiry isModelSupported:deviceName])
+			[Wiimote connectToHIDDevice:device];
+
+		device = [en nextObject];
+	}
+
     return self;
 }
 
-- (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device
-{
-    static BOOL isInit                                              = NO;
-    static void (*ignoreHIDDeviceFn)(IOBluetoothDeviceRef device)   = NULL;
-
-    if(!isInit)
-    {
-		ignoreHIDDeviceFn	= dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
-        isInit				= YES;
-    }
-
-    if(ignoreHIDDeviceFn != NULL)
-        ignoreHIDDeviceFn(device);
-}
-
-- (void)connectToFindedDevices:(NSArray*)devices
+- (void)pairWithDevices:(NSArray*)devices
 {
     NSUInteger count = [devices count];
 
@@ -185,8 +202,8 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 
         if([WiimoteInquiry isModelSupported:[device getName]])
 		{
-            [self postIgnoreHintToSystem:[device getDeviceRef]];
-            [Wiimote connectToBluetoothDevice:device];
+			if(![device isPaired])
+				[WiimoteDevicePair pairWithDevice:device];
 		}
     }
 }
@@ -210,7 +227,7 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 	[m_Inquiry setDelegate:nil];
 
     if(error == kIOReturnSuccess)
-        [self connectToFindedDevices:[m_Inquiry foundDevices]];
+        [self pairWithDevices:[m_Inquiry foundDevices]];
 
     [self stop];
 

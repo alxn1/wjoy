@@ -303,11 +303,18 @@ static NSString *uProStickName(WiimoteUProControllerStickType stick)
     [self log:@"%@", [m_Device modelName]];
 	[self log:@"%@", [Wiimote connectedDevices]];
 
+	[[NSNotificationCenter defaultCenter]
+								addObserver:self
+								   selector:@selector(applicationWillTerminateNotification:)
+									   name:NSApplicationWillTerminateNotification
+									 object:[NSApplication sharedApplication]];
+
     return self;
 }
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self log:@"%@", [Wiimote connectedDevices]];
     [self log:@"Wrapper deleted"];
     [m_Device setDelegate:nil];
@@ -534,6 +541,11 @@ static NSObject *sLog = nil;
 	[self log:@"yaw: %u (%@)", report->yaw.speed, ((report->yaw.isSlowMode)?(@"slow"):(@"normal"))];
 	[self log:@"roll: %u (%@)", report->roll.speed, ((report->roll.isSlowMode)?(@"slow"):(@"normal"))];
 	[self log:@"pitch: %u (%@)", report->pitch.speed, ((report->pitch.isSlowMode)?(@"slow"):(@"normal"))];
+}
+
+- (void)applicationWillTerminateNotification:(NSNotification*)notification
+{
+	[m_Device disconnect];
 }
 
 @end

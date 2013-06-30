@@ -15,7 +15,7 @@
     if(m_Handle == NULL)
         return nil;
 
-    return [(id)IOHIDDeviceGetProperty(m_Handle, (CFStringRef)key) autorelease];
+    return ((id)IOHIDDeviceGetProperty(m_Handle, (CFStringRef)key));
 }
 
 - (NSDictionary*)makePropertiesDictionary
@@ -45,7 +45,7 @@
     };
 
     CFStringRef         *current    = keys;
-    NSMutableDictionary *result     = [NSMutableDictionary dictionary];;
+    NSMutableDictionary *result     = [NSMutableDictionary dictionary];
 
     while(*current != NULL)
     {

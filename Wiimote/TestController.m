@@ -51,6 +51,7 @@
                                          object:nil];
 
     [self updateWindowState];
+	[self discovery:self];
 }
 
 - (IBAction)discovery:(id)sender
