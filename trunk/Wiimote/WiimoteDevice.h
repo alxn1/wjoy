@@ -9,8 +9,7 @@
 #import "WiimoteProtocol.h"
 #import "WiimoteDeviceReport.h"
 
-@class IOBluetoothDevice;
-@class IOBluetoothL2CAPChannel;
+@class HIDDevice;
 
 @class WiimoteDevice;
 @class WiimoteDeviceReadMemQueue;
@@ -25,22 +24,20 @@
 @interface WiimoteDevice : NSObject
 {
 	@private
-		BOOL							 m_IsConnected;
+		BOOL						 m_IsConnected;
 
-		IOBluetoothDevice				*m_Device;
-		IOBluetoothL2CAPChannel			*m_DataChannel;
-        IOBluetoothL2CAPChannel			*m_ControlChannel;
+		HIDDevice					*m_Device;
 
-        WiimoteDeviceReport             *m_Report;
-		WiimoteDeviceReadMemQueue		*m_ReadMemQueue;
+        WiimoteDeviceReport			*m_Report;
+		WiimoteDeviceReadMemQueue	*m_ReadMemQueue;
 
-        BOOL							 m_IsVibrationEnabled;
-        uint8_t                          m_LEDsState;
+        BOOL						 m_IsVibrationEnabled;
+        uint8_t                      m_LEDsState;
 
-		id								 m_Delegate;
+		id							 m_Delegate;
 }
 
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
+- (id)initWithHIDDevice:(HIDDevice*)device;
 
 - (BOOL)isConnected;
 

@@ -54,12 +54,6 @@ typedef enum
 
 typedef struct
 {
-    uint8_t packetType;
-    uint8_t commandType;
-} WiimoteDeviceCommandHeader;
-
-typedef struct
-{
     uint32_t address;
     uint8_t  length;
     uint8_t  data[WiimoteDeviceWriteMemoryReportMaxDataSize];

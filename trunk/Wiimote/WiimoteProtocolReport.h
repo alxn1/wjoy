@@ -61,12 +61,6 @@ typedef enum
 
 typedef struct
 {
-    uint8_t packetType;
-    uint8_t reportType;
-} WiimoteDeviceReportHeader;
-
-typedef struct
-{
     WiimoteDeviceButtonState buttonState;
     uint8_t                  errorAndDataSize;
     uint16_t                 dataOffset;

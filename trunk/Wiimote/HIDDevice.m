@@ -8,6 +8,8 @@
 
 #import "HIDDevice.h"
 
+#import "HIDManager+Private.h"
+
 @implementation NSObject (HIDDeviceDelegate)
 
 - (void)hidDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
@@ -33,9 +35,12 @@ static void HIDDeviceReportCallback(
 {
     if(reportLength > 0)
     {
-        HIDDevice *device = (HIDDevice*)sender;
+        HIDDevice *device = (HIDDevice*)context;
 
-        [[device delegate] hidDevice:device reportDataReceived:report length:reportLength];
+        [[device delegate]
+					hidDevice:device
+		   reportDataReceived:report
+					   length:reportLength];
     }
 }
 
@@ -95,6 +100,8 @@ static void HIDDeviceReportCallback(
         return NO;
     }
 
+	m_IsOpened = YES;
+
     return YES;
 }
 
@@ -117,6 +124,8 @@ static void HIDDeviceReportCallback(
         CFRelease(m_Handle);
         m_Handle    = NULL;
         m_IsOpened  = NO;
+
+		[[HIDManager manager] hidDeviceDisconnected:self];
 
         if(isOpened)
             [m_Delegate hidDeviceClosed:self];
@@ -166,6 +175,11 @@ static void HIDDeviceReportCallback(
                                 @"HIDDevice (%p): %@",
                                 self,
                                 [[self properties] description]];
+}
+
+- (NSUInteger)hash
+{
+	return ((NSUInteger)m_Handle);
 }
 
 - (BOOL)isEqual:(id)object

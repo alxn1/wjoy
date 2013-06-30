@@ -22,7 +22,7 @@
 
 #import "WiimotePartSet.h"
 
-#import <IOBluetooth/IOBluetooth.h>
+#import <HID/HIDDevice.h>
 
 @interface Wiimote (WiimoteDeviceDelegate)
 
@@ -53,15 +53,15 @@
     return nil;
 }
 
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
+- (id)initWithHIDDevice:(HIDDevice*)device
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    m_Device    = [[WiimoteDevice alloc] initWithBluetoothDevice:device];
+    m_Device    = [[WiimoteDevice alloc] initWithHIDDevice:device];
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
-    m_ModelName = [[device getName] copy];
+    m_ModelName = [[[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)] copy];
 
     if(m_Device == nil || ![m_Device connect])
     {
@@ -95,9 +95,9 @@
     [super dealloc];
 }
 
-+ (void)connectToBluetoothDevice:(IOBluetoothDevice*)device
++ (void)connectToHIDDevice:(HIDDevice*)device
 {
-    [[[Wiimote alloc] initWithBluetoothDevice:device] autorelease];
+    [[[Wiimote alloc] initWithHIDDevice:device] autorelease];
 }
 
 @end

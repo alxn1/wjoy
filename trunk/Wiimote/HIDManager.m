@@ -160,17 +160,7 @@ static void HIDManagerDeviceDisconnected(
 
 - (void)deviceDisconnected:(HIDDevice*)device
 {
-    [[device retain] autorelease];
-
     [device close];
-    [m_ConnectedDevices removeObject:device];
-
-    [[NSNotificationCenter defaultCenter]
-                            postNotificationName:HIDManagerDeviceDisconnectedNotification
-                                          object:self
-                                        userInfo:[NSDictionary
-                                                        dictionaryWithObject:device
-                                                                      forKey:HIDManagerDeviceKey]];
 }
 
 @end

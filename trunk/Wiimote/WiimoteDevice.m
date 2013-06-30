@@ -11,23 +11,12 @@
 #import "WiimoteDeviceReadMemQueue.h"
 
 #import <IOBluetooth/IOBluetooth.h>
+#import <HID/HIDDevice.h>
 
 @interface WiimoteDevice (PrivatePart)
 
-- (IOBluetoothL2CAPChannel*)openChannel:(BluetoothL2CAPPSM)channelID;
-
 - (void)handleReport:(WiimoteDeviceReport*)report;
 - (void)handleDisconnect;
-
-@end
-
-@interface WiimoteDevice (IOBluetoothL2CAPChannelDelegate)
-
-- (void)l2capChannelData:(IOBluetoothL2CAPChannel*)l2capChannel
-                    data:(void*)dataPointer
-                  length:(size_t)dataLength;
-
-- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel;
 
 @end
 
@@ -39,7 +28,7 @@
 	return nil;
 }
 
-- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
+- (id)initWithHIDDevice:(HIDDevice*)device
 {
 	self = [super init];
 	if(self == nil)
@@ -52,14 +41,14 @@
 	}
 
 	m_Device				= [device retain];
-	m_DataChannel			= nil;
-	m_ControlChannel		= nil;
     m_Report                = [[WiimoteDeviceReport alloc] initWithDevice:self];
     m_ReadMemQueue			= [[WiimoteDeviceReadMemQueue alloc] initWithDevice:self];
 	m_IsConnected			= NO;
     m_IsVibrationEnabled    = NO;
     m_LEDsState             = 0;
 	m_Delegate				= nil;
+
+	[device setDelegate:self];
 
 	return self;
 }
@@ -69,8 +58,6 @@
 	[self disconnect];
     [m_Report release];
     [m_ReadMemQueue release];
-	[m_ControlChannel release];
-	[m_DataChannel release];
 	[m_Device release];
 	[super dealloc];
 }
@@ -85,12 +72,9 @@
 	if([self isConnected])
 		return YES;
 
-	m_IsConnected		= YES;
-	m_ControlChannel	= [[self openChannel:kBluetoothL2CAPPSMHIDControl] retain];
-	m_DataChannel		= [[self openChannel:kBluetoothL2CAPPSMHIDInterrupt] retain];
+	m_IsConnected = YES;
 
-	if(m_ControlChannel == nil ||
-       m_DataChannel    == nil)
+	if(![m_Device openWithOptions:kIOHIDOptionsTypeSeizeDevice])
     {
 		[self disconnect];
 		m_IsConnected = NO;
@@ -105,29 +89,36 @@
 	if(![self isConnected])
 		return;
 
-	[m_ControlChannel setDelegate:nil];
-	[m_DataChannel setDelegate:nil];
-
-	[m_ControlChannel closeChannel];
-	[m_DataChannel closeChannel];
-	[m_Device closeConnection];
+	NSString *address = [self addressString];
 
 	m_IsConnected = NO;
+    [[IOBluetoothDevice deviceWithAddressString:address] closeConnection];
+	[m_Device setDelegate:nil];
+	[m_Device close];
 
 	[self handleDisconnect];
 }
 
 - (NSData*)address
 {
-	if(![self isConnected])
+	NSString	*address		= [self addressString];
+	NSArray		*components		= nil;
+	uint8_t		 bytes[6]		= { 0 };
+	unsigned int value			= 0;
+
+	components = [address componentsSeparatedByString:@"-"];
+	if([components count] != sizeof(bytes))
 		return nil;
 
-	const BluetoothDeviceAddress *address = [m_Device getAddress];
-    if(address == NULL)
-        return nil;
+	for(int i = 0; i < sizeof(bytes); i++)
+	{
+		NSScanner *scanner = [[NSScanner alloc] initWithString:[components objectAtIndex:i]];
+		[scanner scanHexInt:&value];
+		[scanner release];
+		bytes[i] = (uint8_t)value;
+	}
 
-    return [NSData dataWithBytes:address->data
-                          length:sizeof(address->data)];
+	return [NSData dataWithBytes:bytes length:sizeof(bytes)];
 }
 
 - (NSString*)addressString
@@ -135,7 +126,9 @@
 	if(![self isConnected])
 		return nil;
 
-	return [m_Device getAddressString];
+	return [[m_Device properties]
+						objectForKey:
+							(NSString*)CFSTR(kIOHIDSerialNumberKey)];
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
@@ -149,27 +142,17 @@
 		return NO;
     }
 
-	uint8_t                     buffer[sizeof(WiimoteDeviceCommandHeader) + length];
-    WiimoteDeviceCommandHeader *header = (WiimoteDeviceCommandHeader*)buffer;
+	uint8_t buffer[length + 1];
 
-    header->packetType  = WiimoteDevicePacketTypeCommand;
-    header->commandType = command;
-    memcpy(buffer + sizeof(WiimoteDeviceCommandHeader), data, length);
+    buffer[0] = command;
+    memcpy(buffer + 1, data, length);
 
     if(m_IsVibrationEnabled)
-    {
-        buffer[sizeof(WiimoteDeviceCommandHeader)] |=
-                        WiimoteDeviceCommandFlagVibrationEnabled;
-    }
+        buffer[1] |= WiimoteDeviceCommandFlagVibrationEnabled;
     else
-    {
-        buffer[sizeof(WiimoteDeviceCommandHeader)] &=
-                        (~WiimoteDeviceCommandFlagVibrationEnabled);
-    }
+        buffer[1] &= (~WiimoteDeviceCommandFlagVibrationEnabled);
 
-    return ([m_DataChannel
-                    writeSync:buffer
-                       length:sizeof(buffer)] == kIOReturnSuccess);
+	return [m_Device postBytes:buffer length:sizeof(buffer)];
 }
 
 - (BOOL)writeMemory:(NSUInteger)address
@@ -291,20 +274,6 @@
 
 @implementation WiimoteDevice (PrivatePart)
 
-- (IOBluetoothL2CAPChannel*)openChannel:(BluetoothL2CAPPSM)channelID
-{
-	IOBluetoothL2CAPChannel *result = nil;
-
-	if([m_Device openL2CAPChannelSync:&result
-                              withPSM:channelID
-                             delegate:self] != kIOReturnSuccess)
-    {
-		return nil;
-    }
-
-	return result;
-}
-
 - (void)handleReport:(WiimoteDeviceReport*)report
 {
     [m_ReadMemQueue handleReport:report];
@@ -326,12 +295,10 @@
 
 @implementation WiimoteDevice (IOBluetoothL2CAPChannelDelegate)
 
-- (void)l2capChannelData:(IOBluetoothL2CAPChannel*)l2capChannel
-                    data:(void*)dataPointer
-                  length:(size_t)dataLength
+- (void)hidDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
 {
-    if(![m_Report updateFromReportData:(const uint8_t*)dataPointer
-                                length:dataLength])
+	if(![m_Report updateFromReportData:(const uint8_t*)bytes
+                                length:length])
     {
         return;
     }
@@ -339,7 +306,7 @@
 	[self handleReport:m_Report];
 }
 
-- (void)l2capChannelClosed:(IOBluetoothL2CAPChannel*)l2capChannel
+- (void)hidDeviceClosed:(HIDDevice*)device
 {
 	[self disconnect];
 }
