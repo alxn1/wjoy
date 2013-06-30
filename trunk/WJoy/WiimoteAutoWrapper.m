@@ -159,6 +159,9 @@ static NSUInteger maxConnectedDevices = 0;
 
 	for(NSUInteger i = 0; i <= WiimoteClassicControllerStickCount; i++)
 		[m_HIDState setPointer:0 position:NSZeroPoint];
+
+	for(NSUInteger i = 0; i < WiimoteClassicControllerButtonCount; i++)
+		[m_HIDState setButton:WiimoteButtonCount + i pressed:NO];
 }
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
