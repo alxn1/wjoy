@@ -119,7 +119,7 @@ static void HIDManagerDeviceDisconnected(
     static HIDManager *result = nil;
 
     if(result == nil)
-        result = [[HIDManager alloc] init];
+        result = [[HIDManager alloc] initInternal];
 
     return result;
 }
