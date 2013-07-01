@@ -61,7 +61,7 @@
 
     m_Device    = [[WiimoteDevice alloc] initWithHIDDevice:device];
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
-    m_ModelName = [[[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)] copy];
+    m_ModelName = [[device name] copy];
 
     if(m_Device == nil || ![m_Device connect])
     {

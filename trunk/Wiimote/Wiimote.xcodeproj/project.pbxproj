@@ -564,8 +564,7 @@
 		0A48911B15C7FC9800207478 /* inquiry */ = {
 			isa = PBXGroup;
 			children = (
-				0A87DCBA1780B1AA00BB1BD8 /* WiimoteDevicePair.h */,
-				0A87DCBB1780B1AB00BB1BD8 /* WiimoteDevicePair.m */,
+				0A7DBBFD17817D00008D97D8 /* utils */,
 				0A4890AE15C7FA4500207478 /* WiimoteInquiry.h */,
 				0A4890AF15C7FA4500207478 /* WiimoteInquiry.m */,
 			);
@@ -779,6 +778,15 @@
 				0A66C8A115CC0F0200096DDA /* internal */,
 			);
 			name = unknown;
+			sourceTree = "<group>";
+		};
+		0A7DBBFD17817D00008D97D8 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				0A87DCBA1780B1AA00BB1BD8 /* WiimoteDevicePair.h */,
+				0A87DCBB1780B1AB00BB1BD8 /* WiimoteDevicePair.m */,
+			);
+			name = utils;
 			sourceTree = "<group>";
 		};
 		0A8A2D8B1602254B00940B66 /* motion plus */ = {

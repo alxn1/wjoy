@@ -89,10 +89,14 @@
 	if(![self isConnected])
 		return;
 
-	NSString *address = [self addressString];
+    BluetoothDeviceAddress address = { 0 };
+
+    [[self address]
+                getBytes:address.data
+                  length:sizeof(address.data)];
 
 	m_IsConnected = NO;
-    [[IOBluetoothDevice deviceWithAddressString:address] closeConnection];
+    [[IOBluetoothDevice withAddress:&address] closeConnection];
 	[m_Device setDelegate:nil];
 	[m_Device close];
 
@@ -126,9 +130,7 @@
 	if(![self isConnected])
 		return nil;
 
-	return [[m_Device properties]
-						objectForKey:
-							(NSString*)CFSTR(kIOHIDSerialNumberKey)];
+    return [m_Device address];
 }
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
@@ -197,6 +199,7 @@
 - (BOOL)requestStateReport
 {
     uint8_t param = 0;
+
     return [self postCommand:WiimoteDeviceCommandTypeGetState
                         data:&param
                       length:sizeof(param)];

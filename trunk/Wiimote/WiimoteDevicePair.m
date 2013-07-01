@@ -28,6 +28,18 @@
 
 @end
 
+@protocol IOBluetoothHostController_Methods
+
+- (NSString*)addressAsString;
+
+@end
+
+@protocol IOBluetoothHostController_ClassMethods
+
+- (id<IOBluetoothHostController_Methods>)defaultController;
+
+@end
+
 @interface WiimoteDevicePair (PrivatePart)
 
 - (void)runWithDevice:(IOBluetoothDevice*)device;
@@ -74,13 +86,20 @@
 
 - (NSData*)makePINCodeForDevice:(IOBluetoothDevice*)device
 {
-	NSString	*address		= [[IOBluetoothHostController defaultController] addressAsString];
+	NSString	*address		= nil;
 	NSArray		*components		= nil;
 	uint8_t		 bytes[6]		= { 0 };
 	unsigned int value			= 0;
 
-	if(!m_IsFirstAttempt)
-		address = [device addressString];
+	if(m_IsFirstAttempt)
+    {
+        address = [[(id<IOBluetoothHostController_ClassMethods>)
+                        NSClassFromString(@"IOBluetoothHostController")
+                                                            defaultController]
+                                                                    addressAsString];
+    }
+    else
+		address = [device getAddressString];
 
 	components = [address componentsSeparatedByString:@"-"];
 	if([components count] != 6)

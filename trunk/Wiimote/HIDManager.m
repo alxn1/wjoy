@@ -49,17 +49,13 @@ static void HIDManagerDeviceDisconnected(
     [manager rawDeviceDisconnected:device];
 }
 
-+ (HIDManager*)manager
+- (id)init
 {
-    static HIDManager *result = nil;
-
-    if(result == nil)
-        result = [[HIDManager alloc] init];
-
-    return result;
+    [[super init] release];
+    return nil;
 }
 
-- (id)init
+- (id)initInternal
 {
     self = [super init];
 
@@ -116,6 +112,16 @@ static void HIDManagerDeviceDisconnected(
 
     [m_ConnectedDevices release];
     [super dealloc];
+}
+
++ (HIDManager*)manager
+{
+    static HIDManager *result = nil;
+
+    if(result == nil)
+        result = [[HIDManager alloc] init];
+
+    return result;
 }
 
 - (NSSet*)connectedDevices

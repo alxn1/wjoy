@@ -194,3 +194,17 @@ static void HIDDeviceReportCallback(
 }
 
 @end
+
+@implementation HIDDevice (Properties)
+
+- (NSString*)name
+{
+    return [[self properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)];
+}
+
+- (NSString*)address
+{
+    return [[self properties] objectForKey:(NSString*)CFSTR(kIOHIDSerialNumberKey)];
+}
+
+@end
