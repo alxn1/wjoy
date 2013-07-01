@@ -169,6 +169,11 @@ static NSUInteger maxConnectedDevices = 0;
     [m_WJoy updateHIDState:state];
 }
 
+- (void)applicationWillTerminateNotification:(NSNotification*)notification
+{
+    [m_Device disconnect];
+}
+
 @end
 
 @implementation WiimoteAutoWrapper (PrivatePart)
@@ -224,11 +229,19 @@ static NSUInteger maxConnectedDevices = 0;
     [m_Device setDelegate:self];
     [m_HIDState setDelegate:self];
 
+    [[NSNotificationCenter defaultCenter]
+                                    addObserver:self
+                                       selector:@selector(applicationWillTerminateNotification:)
+                                           name:NSApplicationWillTerminateNotification
+                                         object:[NSApplication sharedApplication]];
+
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     [m_HIDState release];
     [m_WJoy release];
     [super dealloc];
