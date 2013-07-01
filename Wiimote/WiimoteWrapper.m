@@ -343,7 +343,10 @@ static NSObject *sLog = nil;
 
 + (void)newDeviceConnected:(NSNotification*)notification
 {
-    [[WiimoteWrapper alloc] initWithDevice:[notification object]];
+    if([[Wiimote connectedDevices] count] == 0)
+        [[WiimoteWrapper alloc] initWithDevice:[notification object]];
+    else
+        [[notification object] disconnect];
 }
 
 + (void)discoveryNew

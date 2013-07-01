@@ -152,7 +152,7 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 - (void)hidManagerDeviceConnectedNotification:(NSNotification*)notification
 {
 	HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
-	NSString	*deviceName	= [[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)];
+	NSString	*deviceName	= [device name];
 
 	if([WiimoteInquiry isModelSupported:deviceName])
 		[Wiimote connectToHIDDevice:device];
@@ -181,9 +181,7 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 
 	while(device != nil)
 	{
-		NSString *deviceName = [[device properties] objectForKey:(NSString*)CFSTR(kIOHIDProductKey)];
-	
-		if([WiimoteInquiry isModelSupported:deviceName])
+		if([WiimoteInquiry isModelSupported:[device name]])
 			[Wiimote connectToHIDDevice:device];
 
 		device = [en nextObject];

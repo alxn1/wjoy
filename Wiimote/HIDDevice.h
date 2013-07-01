@@ -43,3 +43,10 @@
 - (void)setDelegate:(id)delegate;
 
 @end
+
+@interface HIDDevice (Properties)
+
+- (NSString*)name;
+- (NSString*)address;
+
+@end
