@@ -163,6 +163,11 @@
         removeDeliveredNotification:(id<NSUserNotificationFutureProtocol>)notification];
 }
 
+- (BOOL)userNotificationCenter:(id)center shouldPresentNotification:(id)notification
+{
+    return YES;
+}
+
 - (void)applicationWillTerminateNotification:(NSNotification*)notification
 {
     [(id<NSUserNotificationCenterFutureProtocol>)
