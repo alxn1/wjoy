@@ -142,8 +142,8 @@
     Class notificationClass         = NSClassFromString(NSUserNotificationClassName);
     Class notificationCenterClass   = NSClassFromString(NSUserNotificationCenterClassName);
 
-    if(notificationCenterClass == nil ||
-       notificationClass == nil)
+    if(notificationCenterClass  == nil ||
+       notificationClass        == nil)
     {
         return NO;
     }
