@@ -139,6 +139,7 @@ static void HIDManagerDeviceDisconnected(
         return;
 
     HIDDevice *d = [[HIDDevice alloc] initWithHIDDeviceRef:device];
+	IOHIDDeviceClose(device, 0);
 
     [self deviceConnected:d];
     [d release];
