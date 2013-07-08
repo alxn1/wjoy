@@ -133,8 +133,17 @@
         { WiimoteUProControllerButtonTypeZR,	WiimoteDeviceUProControllerReportButtonMaskZR		}
     };
 
-    for(NSUInteger i = 0; i < WiimoteUProControllerButtonCount; i++)
+    for(NSUInteger i = 0; i < WiimoteUProControllerButtonCount - 2; i++)
         [self setButton:buttonMasks[i].type pressed:((state & buttonMasks[i].mask) == 0)];
+}
+
+- (void)handleAdditionalState:(uint8_t)state
+{
+	[self setButton:WiimoteUProControllerButtonTypeStickL
+			pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickL) == 0)];
+
+	[self setButton:WiimoteUProControllerButtonTypeStickR
+			pressed:((state & WiimoteDeviceUProControllerReportButtonMaskStrickR) == 0)];
 }
 
 - (void)handleReport:(const uint8_t*)extensionData length:(NSUInteger)length
@@ -156,6 +165,7 @@
 						(((float)report->rightStrickY) / 2048.0) - 1.0f)];
 
 	[self handleButtonState:report->buttonState];
+	[self handleAdditionalState:report->additionalButtonState];
 }
 
 @end

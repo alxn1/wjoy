@@ -19,7 +19,10 @@ typedef enum
     WiimoteDeviceUProControllerReportButtonMaskR		= 0x0002,
     WiimoteDeviceUProControllerReportButtonMaskL		= 0x0020,
     WiimoteDeviceUProControllerReportButtonMaskDown		= 0x0040,
-    WiimoteDeviceUProControllerReportButtonMaskRight	= 0x0080
+    WiimoteDeviceUProControllerReportButtonMaskRight	= 0x0080,
+
+	WiimoteDeviceUProControllerReportButtonMaskStrickL	= 0x02,
+	WiimoteDeviceUProControllerReportButtonMaskStrickR	= 0x01
 } WiimoteDeviceUProControllerReportButtonMask;
 
 typedef struct
@@ -29,4 +32,5 @@ typedef struct
 	uint16_t leftStrickY;
 	uint16_t rightStrickY;
 	uint16_t buttonState;
+	uint8_t	 additionalButtonState;
 } WiimoteDeviceUProControllerReport;

@@ -138,9 +138,11 @@ static void HIDManagerDeviceDisconnected(
     if([m_ConnectedDevices containsObject:(id)device])
         return;
 
+	// Close device. HIDDevice open it later with some other flags :)
+	IOHIDDeviceClose(device, 0);
+
     HIDDevice *d = [[HIDDevice alloc] initWithHIDDeviceRef:device];
 
-    IOHIDDeviceClose(device, 0);
     [self deviceConnected:d];
     [d release];
 }

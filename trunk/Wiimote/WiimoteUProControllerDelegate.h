@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define WiimoteUProControllerButtonCount			   12
+#define WiimoteUProControllerButtonCount			   14
 #define WiimoteUProControllerStickCount					2
 
 typedef enum
@@ -24,7 +24,9 @@ typedef enum
     WiimoteUProControllerButtonTypeL				=  8,
     WiimoteUProControllerButtonTypeR				=  9,
     WiimoteUProControllerButtonTypeZL				= 10,
-    WiimoteUProControllerButtonTypeZR				= 11
+    WiimoteUProControllerButtonTypeZR				= 11,
+	WiimoteUProControllerButtonTypeStickL			= 12,
+	WiimoteUProControllerButtonTypeStickR			= 13
 } WiimoteUProControllerButtonType;
 
 typedef enum
