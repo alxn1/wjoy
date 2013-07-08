@@ -239,6 +239,14 @@ static NSString *uProButtonName(WiimoteUProControllerButtonType button)
         case WiimoteUProControllerButtonTypeZR:
             result = @"ZR";
             break;
+
+		case WiimoteUProControllerButtonTypeStickL:
+			result = @"StickL";
+			break;
+
+		case WiimoteUProControllerButtonTypeStickR:
+			result = @"StickR";
+			break;
     }
 
     return result;
