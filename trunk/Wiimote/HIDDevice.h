@@ -11,33 +11,42 @@
 #import <IOKit/hid/IOHIDLib.h>
 
 @class HIDDevice;
+@class HIDManager;
 
 @interface NSObject (HIDDeviceDelegate)
 
-- (void)hidDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
-- (void)hidDeviceClosed:(HIDDevice*)device;
+- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length;
+- (void)HIDDeviceDisconnected:(HIDDevice*)device;
 
 @end
 
 @interface HIDDevice : NSObject
 {
     @private
+        HIDManager      *m_Owner;
+
+        BOOL             m_IsValid;
         IOHIDDeviceRef   m_Handle;
+        IOOptionBits     m_Options;
         NSDictionary    *m_Properties;
+
         NSMutableData   *m_ReportBuffer;
-        BOOL             m_IsOpened;
+
         id               m_Delegate;
 }
 
-- (BOOL)isOpened;
+- (HIDManager*)owner;
 
-- (BOOL)open;
-- (BOOL)openWithOptions:(IOHIDOptionsType)options;
-- (void)close;
+- (BOOL)isValid;
+- (void)invalidate;
 
-- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
+// only kIOHIDOptionsTypeNone or kIOHIDOptionsTypeSeizeDevice
+- (IOOptionBits)options;
+- (BOOL)setOptions:(IOOptionBits)options;
 
 - (NSDictionary*)properties;
+
+- (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length;
 
 - (id)delegate;
 - (void)setDelegate:(id)delegate;

@@ -12,11 +12,11 @@
 
 @implementation NSObject (HIDDeviceDelegate)
 
-- (void)hidDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
+- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
 {
 }
 
-- (void)hidDeviceClosed:(HIDDevice*)device
+- (void)HIDDeviceDisconnected:(HIDDevice*)device
 {
 }
 
@@ -24,25 +24,7 @@
 
 @implementation HIDDevice
 
-static void HIDDeviceReportCallback(
-                                void            *context, 
-                                IOReturn         result, 
-                                void            *sender, 
-                                IOHIDReportType  type, 
-                                uint32_t         reportID,
-                                uint8_t         *report, 
-                                CFIndex          reportLength)
-{
-    if(reportLength > 0)
-    {
-        HIDDevice *device = (HIDDevice*)context;
 
-        [[device delegate]
-					hidDevice:device
-		   reportDataReceived:report
-					   length:reportLength];
-    }
-}
 
 - (id)init
 {
@@ -52,100 +34,88 @@ static void HIDDeviceReportCallback(
 
 - (void)dealloc
 {
-    [self close];
+    if(m_Handle != NULL)
+    {
+        IOHIDDeviceUnscheduleFromRunLoop(
+                                    m_Handle,
+                                    [[NSRunLoop currentRunLoop] getCFRunLoop],
+                                    (CFStringRef)NSRunLoopCommonModes);
+
+        CFRelease(m_Handle);
+    }
+
     [m_Properties release];
     [m_ReportBuffer release];
     [super dealloc];
 }
 
-- (BOOL)isOpened
+- (HIDManager*)owner
 {
-    return m_IsOpened;
+    return m_Owner;
 }
 
-- (BOOL)open
+- (BOOL)isValid
 {
-    return [self openWithOptions:kIOHIDOptionsTypeNone];
+    return m_IsValid;
 }
 
-- (BOOL)openWithOptions:(IOHIDOptionsType)options
+- (void)invalidate
 {
-    if(m_IsOpened || m_Handle == NULL)
+    if([self isValid])
+    {
+        m_IsValid   = NO;
+        m_Options   = kIOHIDOptionsTypeNone;
+
+        IOHIDDeviceClose(m_Handle, 0);
+
+        [m_Delegate HIDDeviceDisconnected:self];
+		[[HIDManager manager] HIDDeviceDisconnected:self];
+    }
+}
+
+- (IOOptionBits)options
+{
+    return m_Options;
+}
+
+- (BOOL)setOptions:(IOOptionBits)options
+{
+    if(![self isValid])
         return NO;
 
-    IOHIDDeviceScheduleWithRunLoop(
-                                m_Handle,
-                                [[NSRunLoop currentRunLoop] getCFRunLoop],
-                                (CFStringRef)NSRunLoopCommonModes);
+    if(m_Options == options)
+        return YES;
 
-    NSUInteger maxReportSize = [[[self properties]
-                                            objectForKey:(id)CFSTR(kIOHIDMaxInputReportSizeKey)]
-                                        unsignedIntegerValue];
-
-    if(maxReportSize == 0)
-        maxReportSize = 128;
-
-    [m_ReportBuffer setLength:maxReportSize];
-
-    IOHIDDeviceRegisterInputReportCallback( 
-                                m_Handle, 
-                                [m_ReportBuffer mutableBytes], 
-                                [m_ReportBuffer length],
-                                HIDDeviceReportCallback, 
-                                self);
+    m_IsValid = NO;
+    IOHIDDeviceClose(m_Handle, 0);
+    m_IsValid = YES;
 
     if(IOHIDDeviceOpen(m_Handle, options) != kIOReturnSuccess)
     {
-        [self close];
+        if(IOHIDDeviceOpen(m_Handle, m_Options) != kIOReturnSuccess)
+            [self invalidate];
+
         return NO;
     }
 
-	m_IsOpened = YES;
-
+    m_Options = options;
     return YES;
-}
-
-- (void)close
-{
-    if(m_Handle != NULL)
-    {
-        BOOL isOpened = m_IsOpened;
-
-        if(isOpened)
-        {
-            IOHIDDeviceUnscheduleFromRunLoop(
-                                m_Handle,
-                                [[NSRunLoop currentRunLoop] getCFRunLoop],
-                                (CFStringRef)NSRunLoopCommonModes);
-
-            IOHIDDeviceClose(m_Handle, 0);
-        }
-
-        CFRelease(m_Handle);
-        m_Handle    = NULL;
-        m_IsOpened  = NO;
-
-		[[HIDManager manager] hidDeviceDisconnected:self];
-
-        if(isOpened)
-            [m_Delegate hidDeviceClosed:self];
-    }
 }
 
 - (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
 {
     BOOL result = NO;
 
-    if([self isOpened])
+    if([self isValid])
     {
         if(length > 0)
         {
             result = (IOHIDDeviceSetReport(
-                                m_Handle,
-                                kIOHIDReportTypeOutput,
-                                0,
-                                bytes,
-                                length) == kIOReturnSuccess);
+                                        m_Handle,
+                                        kIOHIDReportTypeOutput,
+                                        0,
+                                        bytes,
+                                        length) == kIOReturnSuccess);
         }
         else
             result = YES;

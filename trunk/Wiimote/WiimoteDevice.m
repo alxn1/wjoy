@@ -74,7 +74,7 @@
 
 	m_IsConnected = YES;
 
-	if(![m_Device openWithOptions:kIOHIDOptionsTypeSeizeDevice])
+	if(![m_Device setOptions:kIOHIDOptionsTypeSeizeDevice])
     {
 		[self disconnect];
 		m_IsConnected = NO;
@@ -98,7 +98,7 @@
 	m_IsConnected = NO;
     [[IOBluetoothDevice withAddress:&address] closeConnection];
 	[m_Device setDelegate:nil];
-	[m_Device close];
+	[m_Device invalidate];
 
 	[self handleDisconnect];
 }
@@ -298,7 +298,7 @@
 
 @implementation WiimoteDevice (IOBluetoothL2CAPChannelDelegate)
 
-- (void)hidDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
+- (void)HIDDevice:(HIDDevice*)device reportDataReceived:(const uint8_t*)bytes length:(NSUInteger)length
 {
 	if(![m_Report updateFromReportData:(const uint8_t*)bytes
                                 length:length])
@@ -309,7 +309,7 @@
 	[self handleReport:m_Report];
 }
 
-- (void)hidDeviceClosed:(HIDDevice*)device
+- (void)HIDDeviceDisconnected:(HIDDevice*)device
 {
 	[self disconnect];
 }
