@@ -14,4 +14,7 @@
           deviceRef:(IOHIDDeviceRef)handle
             options:(IOOptionBits)options;
 
+- (BOOL)openDevice;
+- (void)closeDevice;
+
 @end
