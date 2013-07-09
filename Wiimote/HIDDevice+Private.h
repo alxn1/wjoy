@@ -10,6 +10,8 @@
 
 @interface HIDDevice (Private)
 
-- (id)initWithHIDDeviceRef:(IOHIDDeviceRef)handle;
+- (id)initWithOwner:(HIDManager*)manager
+          deviceRef:(IOHIDDeviceRef)handle
+            options:(IOOptionBits)options;
 
 @end

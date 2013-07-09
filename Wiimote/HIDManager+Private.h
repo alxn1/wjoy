@@ -10,6 +10,6 @@
 
 @interface HIDManager (Private)
 
-- (void)hidDeviceDisconnected:(HIDDevice*)device;
+- (void)HIDDeviceDisconnected:(HIDDevice*)device;
 
 @end

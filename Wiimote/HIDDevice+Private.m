@@ -8,13 +8,38 @@
 
 #import "HIDDevice+Private.h"
 
+static void HIDDeviceReportCallback(
+                                void            *context, 
+                                IOReturn         result, 
+                                void            *sender, 
+                                IOHIDReportType  type, 
+                                uint32_t         reportID,
+                                uint8_t         *report, 
+                                CFIndex          reportLength)
+{
+    if(reportLength > 0)
+    {
+        HIDDevice *device = (HIDDevice*)context;
+
+        [[device delegate]
+					HIDDevice:device
+		   reportDataReceived:report
+					   length:reportLength];
+    }
+}
+
+static void HIDDeviceDisconnectCallback(
+                                    void        *context, 
+                                    IOReturn     result, 
+                                    void        *sender)
+{
+    [(HIDDevice*)context invalidate];
+}
+
 @implementation HIDDevice (Private)
 
 - (id)propertyForKey:(NSString*)key
 {
-    if(m_Handle == NULL)
-        return nil;
-
     return ((id)IOHIDDeviceGetProperty(m_Handle, (CFStringRef)key));
 }
 
@@ -61,7 +86,21 @@
     return result;
 }
 
-- (id)initWithHIDDeviceRef:(IOHIDDeviceRef)handle
+- (NSUInteger)maxInputReportSize
+{
+    NSUInteger result = [[[self properties]
+                                    objectForKey:(id)CFSTR(kIOHIDMaxInputReportSizeKey)]
+                                unsignedIntegerValue];
+
+    if(result == 0)
+        result = 128;
+
+    return result;
+}
+
+- (id)initWithOwner:(HIDManager*)manager
+          deviceRef:(IOHIDDeviceRef)handle
+            options:(IOOptionBits)options
 {
     self = [super init];
 
@@ -74,13 +113,32 @@
         return nil;
     }
 
+    m_Owner         = manager;
+    m_IsValid       = YES;
     m_Handle        = handle;
+    m_Options       = options;
     m_Properties    = [[self makePropertiesDictionary] retain];
-    m_ReportBuffer  = [[NSMutableData alloc] init];
-    m_IsOpened      = NO;
+    m_ReportBuffer  = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
     m_Delegate      = nil;
 
     CFRetain(m_Handle);
+
+    IOHIDDeviceScheduleWithRunLoop(
+                                m_Handle,
+                                [[NSRunLoop currentRunLoop] getCFRunLoop],
+                                (CFStringRef)NSRunLoopCommonModes);
+
+    IOHIDDeviceRegisterInputReportCallback( 
+                                m_Handle, 
+                                [m_ReportBuffer mutableBytes], 
+                                [m_ReportBuffer length],
+                                HIDDeviceReportCallback, 
+                                self);
+
+    IOHIDDeviceRegisterRemovalCallback( 
+                                m_Handle, 
+                                HIDDeviceDisconnectCallback, 
+                                self);
 
     return self;
 }

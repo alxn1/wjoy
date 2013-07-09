@@ -18,10 +18,7 @@ NSString *HIDManagerDeviceKey                       = @"HIDManagerDeviceKey";
 @interface HIDManager (PrivatePart)
 
 - (void)rawDeviceConnected:(IOHIDDeviceRef)device;
-- (void)rawDeviceDisconnected:(IOHIDDeviceRef)device;
-
 - (void)deviceConnected:(HIDDevice*)device;
-- (void)deviceDisconnected:(HIDDevice*)device;
 
 @end
 
@@ -36,17 +33,6 @@ static void HIDManagerDeviceConnected(
     HIDManager *manager = (HIDManager*)context;
 
     [manager rawDeviceConnected:device];
-}
-
-static void HIDManagerDeviceDisconnected(
-                                    void            *context,
-                                    IOReturn         result,
-                                    void            *sender,
-                                    IOHIDDeviceRef   device)
-{
-    HIDManager *manager = (HIDManager*)context;
-
-    [manager rawDeviceDisconnected:device];
 }
 
 - (id)init
@@ -73,7 +59,6 @@ static void HIDManagerDeviceDisconnected(
 
     IOHIDManagerSetDeviceMatching(m_Handle, (CFDictionaryRef)[NSDictionary dictionary]);
     IOHIDManagerRegisterDeviceMatchingCallback(m_Handle, HIDManagerDeviceConnected, self);
-    IOHIDManagerRegisterDeviceRemovalCallback(m_Handle, HIDManagerDeviceDisconnected, self);
     IOHIDManagerScheduleWithRunLoop(
                                 m_Handle,
                                 [[NSRunLoop currentRunLoop] getCFRunLoop],
@@ -101,14 +86,8 @@ static void HIDManagerDeviceDisconnected(
         CFRelease(m_Handle);
     }
 
-    NSEnumerator *en        = [m_ConnectedDevices objectEnumerator];
-    HIDDevice    *device    = [en nextObject];
-
-    while(device != nil)
-    {
-        [self deviceDisconnected:device];
-        device = [en nextObject];
-    }
+    while([m_ConnectedDevices count] != 0)
+        [[m_ConnectedDevices anyObject] invalidate];
 
     [m_ConnectedDevices release];
     [super dealloc];
@@ -138,21 +117,13 @@ static void HIDManagerDeviceDisconnected(
     if([m_ConnectedDevices containsObject:(id)device])
         return;
 
-	// Close device. HIDDevice open it later with some other flags :)
-	IOHIDDeviceClose(device, 0);
-
-    HIDDevice *d = [[HIDDevice alloc] initWithHIDDeviceRef:device];
+    HIDDevice *d = [[HIDDevice alloc]
+                            initWithOwner:self
+                                deviceRef:device
+                                  options:kIOHIDOptionsTypeNone];
 
     [self deviceConnected:d];
     [d release];
-}
-
-- (void)rawDeviceDisconnected:(IOHIDDeviceRef)device
-{
-    HIDDevice *d = [m_ConnectedDevices member:(id)device];
-
-    if(d != nil)
-        [self deviceDisconnected:d];
 }
 
 - (void)deviceConnected:(HIDDevice*)device
@@ -165,11 +136,6 @@ static void HIDManagerDeviceDisconnected(
                                         userInfo:[NSDictionary
                                                         dictionaryWithObject:device
                                                                       forKey:HIDManagerDeviceKey]];
-}
-
-- (void)deviceDisconnected:(HIDDevice*)device
-{
-    [device close];
 }
 
 @end
