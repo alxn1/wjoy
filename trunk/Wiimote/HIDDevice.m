@@ -9,6 +9,7 @@
 #import "HIDDevice.h"
 
 #import "HIDManager+Private.h"
+#import "HIDDevice+Private.h"
 
 @implementation NSObject (HIDDeviceDelegate)
 
@@ -35,14 +36,7 @@
 - (void)dealloc
 {
     if(m_Handle != NULL)
-    {
-        IOHIDDeviceUnscheduleFromRunLoop(
-                                    m_Handle,
-                                    [[NSRunLoop currentRunLoop] getCFRunLoop],
-                                    (CFStringRef)NSRunLoopCommonModes);
-
         CFRelease(m_Handle);
-    }
 
     [m_Properties release];
     [m_ReportBuffer release];
@@ -66,7 +60,7 @@
         m_IsValid   = NO;
         m_Options   = kIOHIDOptionsTypeNone;
 
-        IOHIDDeviceClose(m_Handle, 0);
+        [self closeDevice];
 
         [m_Delegate HIDDeviceDisconnected:self];
 		[[HIDManager manager] HIDDeviceDisconnected:self];
@@ -86,13 +80,17 @@
     if(m_Options == options)
         return YES;
 
-    m_IsValid = NO;
-    IOHIDDeviceClose(m_Handle, 0);
-    m_IsValid = YES;
+	[self closeDevice];
 
-    if(IOHIDDeviceOpen(m_Handle, options) != kIOReturnSuccess)
+	IOOptionBits oldOptions = m_Options;
+
+	m_Options = options;
+
+    if(![self openDevice])
     {
-        if(IOHIDDeviceOpen(m_Handle, m_Options) != kIOReturnSuccess)
+		m_Options = oldOptions;
+
+        if(![self openDevice])
             [self invalidate];
 
         return NO;

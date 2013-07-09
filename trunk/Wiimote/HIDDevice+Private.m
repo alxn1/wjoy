@@ -29,9 +29,9 @@ static void HIDDeviceReportCallback(
 }
 
 static void HIDDeviceDisconnectCallback(
-                                    void        *context, 
-                                    IOReturn     result, 
-                                    void        *sender)
+								void			*context, 
+								IOReturn		 result, 
+								void			*sender)
 {
     [(HIDDevice*)context invalidate];
 }
@@ -123,7 +123,14 @@ static void HIDDeviceDisconnectCallback(
 
     CFRetain(m_Handle);
 
-    IOHIDDeviceScheduleWithRunLoop(
+    [self openDevice];
+
+    return self;
+}
+
+- (BOOL)openDevice
+{
+	IOHIDDeviceScheduleWithRunLoop(
                                 m_Handle,
                                 [[NSRunLoop currentRunLoop] getCFRunLoop],
                                 (CFStringRef)NSRunLoopCommonModes);
@@ -140,7 +147,17 @@ static void HIDDeviceDisconnectCallback(
                                 HIDDeviceDisconnectCallback, 
                                 self);
 
-    return self;
+	return (IOHIDDeviceOpen(m_Handle, m_Options) == kIOReturnSuccess);
+}
+
+- (void)closeDevice
+{
+	IOHIDDeviceClose(m_Handle, 0);
+
+	IOHIDDeviceUnscheduleFromRunLoop(
+								m_Handle,
+								[[NSRunLoop currentRunLoop] getCFRunLoop],
+								(CFStringRef)NSRunLoopCommonModes);
 }
 
 @end
