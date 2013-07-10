@@ -20,8 +20,12 @@
 #import "WiimoteAccelerometerPart.h"
 #import "WiimoteExtensionPart.h"
 
-NSString *WiimoteBeginDiscoveryNotification     = @"WiimoteBeginDiscoveryNotification";
-NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotification";
+NSString *WiimoteBeginDiscoveryNotification                     = @"WiimoteBeginDiscoveryNotification";
+NSString *WiimoteEndDiscoveryNotification                       = @"WiimoteEndDiscoveryNotification";
+
+NSString *WiimoteUseOneButtonClickConnectionChangedNotification = @"WiimoteUseOneButtonClickConnectionChangedNotification";
+
+NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOneButtonClickConnectionKey";
 
 @implementation Wiimote
 
@@ -33,6 +37,28 @@ NSString *WiimoteEndDiscoveryNotification       = @"WiimoteEndDiscoveryNotificat
 + (NSArray*)supportedModelNames
 {
     return [WiimoteInquiry supportedModelNames];
+}
+
++ (BOOL)isUseOneButtonClickConnection
+{
+    return [[WiimoteInquiry sharedInquiry] isUseOneButtonClickConnection];
+}
+
++ (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
+{
+    if([Wiimote isUseOneButtonClickConnection] == useOneButtonClickConnection)
+        return;
+
+    NSDictionary *userInfo = [NSDictionary
+                                    dictionaryWithObject:[NSNumber numberWithBool:useOneButtonClickConnection]
+                                                  forKey:WiimoteUseOneButtonClickConnectionKey];
+
+    [[WiimoteInquiry sharedInquiry] setUseOneButtonClickConnection:useOneButtonClickConnection];
+
+    [[NSNotificationCenter defaultCenter]
+                            postNotificationName:WiimoteUseOneButtonClickConnectionChangedNotification
+                                          object:nil
+                                        userInfo:userInfo];
 }
 
 + (BOOL)isDiscovering

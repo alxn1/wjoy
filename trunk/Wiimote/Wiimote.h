@@ -14,6 +14,10 @@
 FOUNDATION_EXPORT NSString *WiimoteBeginDiscoveryNotification;
 FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 
+FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionChangedNotification;
+
+FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
+
 @class WiimoteDevice;
 @class WiimotePartSet;
 @class WiimoteIRPart;
@@ -45,6 +49,9 @@ FOUNDATION_EXPORT NSString *WiimoteEndDiscoveryNotification;
 + (BOOL)isBluetoothEnabled;
 
 + (NSArray*)supportedModelNames;
+
++ (BOOL)isUseOneButtonClickConnection;
++ (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection;
 
 + (BOOL)isDiscovering;
 + (BOOL)beginDiscovery;

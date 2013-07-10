@@ -67,8 +67,7 @@ NSString *WiimoteWatchdogPingNotification            = @"WiimoteWatchdogPingNoti
                                                  userInfo:nil
                                                   repeats:YES];
 
-        [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSEventTrackingRunLoopMode];
-        [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSModalPanelRunLoopMode];
+        [[NSRunLoop currentRunLoop] addTimer:m_Timer forMode:NSRunLoopCommonModes];
 
         [[NSNotificationCenter defaultCenter]
                                 addObserver:self

@@ -6,7 +6,7 @@
 //  Copyright 2013 alxn1. All rights reserved.
 //
 
-#import "HIDDevice.h"
+#import <HID/HIDDevice.h>
 
 FOUNDATION_EXPORT NSString *HIDManagerDeviceConnectedNotification;
 FOUNDATION_EXPORT NSString *HIDManagerDeviceDisconnectedNotification;

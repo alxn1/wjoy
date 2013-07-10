@@ -54,6 +54,11 @@
 	[self discovery:self];
 }
 
+- (IBAction)toggleUseOneButtonClickConnection:(id)sender
+{
+    [Wiimote setUseOneButtonClickConnection:[sender state] == NSOnState];
+}
+
 - (IBAction)discovery:(id)sender
 {
     [WiimoteWrapper discoveryNew];

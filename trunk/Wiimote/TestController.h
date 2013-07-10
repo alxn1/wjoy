@@ -20,6 +20,7 @@
         BOOL                     m_IsDiscovering;
 }
 
+- (IBAction)toggleUseOneButtonClickConnection:(id)sender;
 - (IBAction)discovery:(id)sender;
 - (IBAction)clearLog:(id)sender;
 
