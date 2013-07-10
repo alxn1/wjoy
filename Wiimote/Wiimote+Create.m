@@ -22,8 +22,6 @@
 
 #import "WiimotePartSet.h"
 
-#import <HID/HIDDevice.h>
-
 @interface Wiimote (WiimoteDeviceDelegate)
 
 - (void)wiimoteDevice:(WiimoteDevice*)device handleReport:(WiimoteDeviceReport*)report;
@@ -53,13 +51,13 @@
     return nil;
 }
 
-- (id)initWithHIDDevice:(HIDDevice*)device
+- (id)initWithWiimoteDevice:(WiimoteDevice*)device
 {
     self = [super init];
     if(self == nil)
         return nil;
 
-    m_Device    = [[WiimoteDevice alloc] initWithHIDDevice:device];
+    m_Device    = [device retain];
     m_PartSet   = [[WiimotePartSet alloc] initWithOwner:self device:m_Device];
     m_ModelName = [[device name] copy];
 
@@ -85,6 +83,22 @@
     return self;
 }
 
+- (id)initWithHIDDevice:(HIDDevice*)device
+{
+    return [self initWithWiimoteDevice:
+                        [[[WiimoteDevice alloc]
+                                    initWithHIDDevice:device]
+                            autorelease]];
+}
+
+- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device
+{
+    return [self initWithWiimoteDevice:
+                        [[[WiimoteDevice alloc]
+                                    initWithBluetoothDevice:device]
+                            autorelease]];
+}
+
 - (void)dealloc
 {
     [m_Device disconnect];
@@ -98,6 +112,16 @@
 + (void)connectToHIDDevice:(HIDDevice*)device
 {
     [[[Wiimote alloc] initWithHIDDevice:device] autorelease];
+}
+
++ (void)connectToBluetoothDevice:(IOBluetoothDevice*)device
+{
+    [[[Wiimote alloc] initWithBluetoothDevice:device] autorelease];
+}
+
+- (id)lowLevelDevice
+{
+    return [m_Device lowLevelDevice];
 }
 
 @end

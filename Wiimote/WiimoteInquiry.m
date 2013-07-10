@@ -18,15 +18,15 @@
 
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
-NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
-NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
-NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
+NSString *WiimoteDeviceName     = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceNameTR   = @"Nintendo RVL-CNT-01-TR";
+NSString *WiimoteDeviceNameUPro = @"Nintendo RVL-CNT-01-UC";
 
 @interface WiimoteInquiry (PrivatePart)
 
 - (id)initInternal;
 
-- (void)pairWithDevices:(NSArray*)devices;
+- (void)connectToPairedDevices;
 
 @end
 
@@ -149,8 +149,27 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
     return YES;
 }
 
+- (BOOL)isUseOneButtonClickConnection
+{
+    return m_IsUseOneButtonClickConnection;
+}
+
+- (void)setUseOneButtonClickConnection:(BOOL)useOneButtonClickConnection
+{
+    if(m_IsUseOneButtonClickConnection == useOneButtonClickConnection)
+        return;
+
+    m_IsUseOneButtonClickConnection = useOneButtonClickConnection;
+
+    if(m_IsUseOneButtonClickConnection)
+        [self connectToPairedDevices];
+}
+
 - (void)hidManagerDeviceConnectedNotification:(NSNotification*)notification
 {
+    if(![self isUseOneButtonClickConnection])
+        return;
+
 	HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
 	NSString	*deviceName	= [device name];
 
@@ -168,7 +187,8 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
     if(self == nil)
         return nil;
 
-    m_Inquiry = nil;
+    m_Inquiry                       = nil;
+    m_IsUseOneButtonClickConnection = NO;
 
 	[[NSNotificationCenter defaultCenter]
 								addObserver:self
@@ -176,18 +196,38 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 									   name:HIDManagerDeviceConnectedNotification
 									 object:[HIDManager manager]];
 
-	NSEnumerator	*en		= [[[HIDManager manager] connectedDevices] objectEnumerator];
-	HIDDevice		*device = [en nextObject];
-
-	while(device != nil)
-	{
-		if([WiimoteInquiry isModelSupported:[device name]])
-			[Wiimote connectToHIDDevice:device];
-
-		device = [en nextObject];
-	}
-
     return self;
+}
+
+- (void)postIgnoreHintToSystem:(IOBluetoothDeviceRef)device
+{
+    static BOOL isInit                                              = NO;
+    static void (*ignoreHIDDeviceFn)(IOBluetoothDeviceRef device)   = NULL;
+
+    if(!isInit)
+    {
+		ignoreHIDDeviceFn	= dlsym(RTLD_DEFAULT, "IOBluetoothIgnoreHIDDevice");
+        isInit				= YES;
+    }
+
+    if(ignoreHIDDeviceFn != NULL)
+        ignoreHIDDeviceFn(device);
+}
+
+- (void)connectToDevices:(NSArray*)devices
+{
+    NSUInteger count = [devices count];
+
+    for(NSUInteger i = 0; i < count; i++)
+    {
+        IOBluetoothDevice *device = [devices objectAtIndex:i];
+
+        if([WiimoteInquiry isModelSupported:[device getName]])
+		{
+            [self postIgnoreHintToSystem:[device getDeviceRef]];
+            [Wiimote connectToBluetoothDevice:device];
+		}
+    }
 }
 
 - (void)pairWithDevices:(NSArray*)devices
@@ -203,6 +243,37 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 			if(![device isPaired])
 				[WiimoteDevicePair pairWithDevice:device];
 		}
+    }
+}
+
+- (BOOL)isHIDDeviceAlreadyConnected:(HIDDevice*)device wiimotes:(NSArray*)wiimotes
+{
+    NSUInteger count = [wiimotes count];
+
+    for(NSUInteger i = 0; i < count; i++)
+    {
+        if([[wiimotes objectAtIndex:i] lowLevelDevice] == device)
+            return YES;
+    }
+
+    return NO;
+}
+
+- (void)connectToPairedDevices
+{
+    NSEnumerator	*en         = [[[HIDManager manager] connectedDevices] objectEnumerator];
+    HIDDevice		*device     = [en nextObject];
+    NSArray         *wiimotes   = [Wiimote connectedDevices];
+
+    while(device != nil)
+    {
+        if([WiimoteInquiry isModelSupported:[device name]] &&
+          ![self isHIDDeviceAlreadyConnected:device wiimotes:wiimotes])
+        {
+            [Wiimote connectToHIDDevice:device];
+        }
+
+        device = [en nextObject];
     }
 }
 
@@ -225,7 +296,12 @@ NSString *WiimoteDeviceNameUPro			= @"Nintendo RVL-CNT-01-UC";
 	[m_Inquiry setDelegate:nil];
 
     if(error == kIOReturnSuccess)
-        [self pairWithDevices:[m_Inquiry foundDevices]];
+    {
+        if([self isUseOneButtonClickConnection])
+            [self pairWithDevices:[m_Inquiry foundDevices]];
+        else
+            [self connectToDevices:[m_Inquiry foundDevices]];
+    }
 
     [self stop];
 

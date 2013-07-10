@@ -10,9 +10,12 @@
 #import "WiimoteDeviceReport.h"
 
 @class HIDDevice;
+@class IOBluetoothDevice;
 
 @class WiimoteDevice;
 @class WiimoteDeviceReadMemQueue;
+
+@class WiimoteDeviceTransport;
 
 @interface NSObject (WiimoteDeviceDelegate)
 
@@ -26,7 +29,7 @@
 	@private
 		BOOL						 m_IsConnected;
 
-		HIDDevice					*m_Device;
+		WiimoteDeviceTransport      *m_Transport;
 
         WiimoteDeviceReport			*m_Report;
 		WiimoteDeviceReadMemQueue	*m_ReadMemQueue;
@@ -38,14 +41,18 @@
 }
 
 - (id)initWithHIDDevice:(HIDDevice*)device;
+- (id)initWithBluetoothDevice:(IOBluetoothDevice*)device;
 
 - (BOOL)isConnected;
 
 - (BOOL)connect;
 - (void)disconnect;
 
+- (NSString*)name;
 - (NSData*)address;
 - (NSString*)addressString;
+
+- (id)lowLevelDevice;
 
 - (BOOL)postCommand:(WiimoteDeviceCommandType)command
                data:(const uint8_t*)data
