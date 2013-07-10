@@ -253,7 +253,7 @@
 
 - (BOOL)postBytes:(const uint8_t*)bytes length:(NSUInteger)length
 {
-    if(![self isOpen] || bytes == NULL || length > WiimoteDeviceWriteMemoryReportMaxDataSize)
+    if(![self isOpen] || bytes == NULL)
 		return NO;
 
     if(length == 0)
