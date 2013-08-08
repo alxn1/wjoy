@@ -93,6 +93,12 @@
     [pool release];
 }
 
+- (void)delayInit
+{
+    // Fix for 10.9 DP4/5
+    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:m_GrowlDelegate];
+}
+
 - (id)init
 {
     self = [super init];
@@ -100,7 +106,11 @@
         return nil;
 
     m_GrowlDelegate = [[GrowlUserNotificationCenterGrowlDelegate alloc] initWithOwner:self];
-    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:m_GrowlDelegate];
+
+    [self performSelector:@selector(delayInit)
+               withObject:nil
+               afterDelay:0.0
+                  inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
 
     return self;
 }
