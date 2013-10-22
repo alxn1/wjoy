@@ -71,7 +71,7 @@
     {
         if([string rangeOfString:[self wrapVariableName:key]].length != 0)
         {
-            result = [string mutableCopy];
+            result = [[string mutableCopy] autorelease];
             break;
         }
 
