@@ -90,6 +90,9 @@
                                        name:UAppUpdateCheckerDidFinishNotification
                                      object:nil];
 
+    [Wiimote setUseOneButtonClickConnection:
+                [[NSUserDefaults standardUserDefaults] boolForKey:@"OneButtonClickConnection"]];
+
     return self;
 }
 
@@ -111,6 +114,16 @@
         [[LoginItemsList userItemsList] removeItemWithPath:appPath];
     else
         [[LoginItemsList userItemsList] addItemWithPath:appPath];
+}
+
+- (void)toggleOneButtonClickConnection
+{
+    [Wiimote setUseOneButtonClickConnection:
+                    ![Wiimote isUseOneButtonClickConnection]];
+
+    [[NSUserDefaults standardUserDefaults]
+                                        setBool:[Wiimote isUseOneButtonClickConnection]
+                                         forKey:@"OneButtonClickConnection"];
 }
 
 - (void)checkForUpdate
@@ -191,7 +204,14 @@
         [item release];
     }
 
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Autostart" action:@selector(toggleAutostart) keyEquivalent:@""];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"One-Button-Click-Connection" action:@selector(toggleOneButtonClickConnection) keyEquivalent:@""];
+    [item setTarget:self];
+    [item setState:([Wiimote isUseOneButtonClickConnection])?(NSOnState):(NSOffState)];
+    [m_Menu addItem:[NSMenuItem separatorItem]];
+    [m_Menu addItem:item];
+    [item release];
+
+    item = [[NSMenuItem alloc] initWithTitle:@"Autostart" action:@selector(toggleAutostart) keyEquivalent:@""];
     [item setTarget:self];
 
     NSUInteger state = ([[LoginItemsList userItemsList]
@@ -201,9 +221,8 @@
                         (NSOffState);
 
     [item setState:state];
-
-    [m_Menu addItem:[NSMenuItem separatorItem]];
     [m_Menu addItem:item];
+    [item release];
 
     item = [[NSMenuItem alloc] initWithTitle:@"About" action:@selector(orderFrontStandardAboutPanel:) keyEquivalent:@""];
     [item setTarget:[NSApplication sharedApplication]];
