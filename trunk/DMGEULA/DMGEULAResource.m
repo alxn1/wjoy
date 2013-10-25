@@ -129,13 +129,13 @@
         defaultLangCode = [m_DefaultLanguage code];
 
     [result appendString:@"data 'LPic' (5000) {\n"];
-    [result appendFormat:@"\t$\"%04X\"\n", defaultLangCode];
-    [result appendFormat:@"\t$\"%04X\"\n", [langs count]];
+    [result appendFormat:@"\t$\"%04X\"\n", (unsigned int)defaultLangCode];
+    [result appendFormat:@"\t$\"%04X\"\n", (unsigned int)[langs count]];
 
     for(DMGEULALanguage *lang in langs)
     {
-        [result appendFormat:@"\n\t$\"%04X\"\n", [lang code]];
-        [result appendFormat:@"\t$\"%04X\"\n", index];
+        [result appendFormat:@"\n\t$\"%04X\"\n", (unsigned int)[lang code]];
+        [result appendFormat:@"\t$\"%04X\"\n", (unsigned int)index];
         [result appendString:@"\t$\"0000\"\n"];
         index++;
     }
@@ -180,7 +180,7 @@
     [result appendFormat:
                 @"data '%@' (%04X, \"%@\") {\n",
                     type,
-                    0x5000 + index,
+                    (unsigned int)(0x5000 + index),
                     [language name]];
 
     [self formatData:data toMutableString:result];

@@ -96,7 +96,7 @@
 - (void)delayInit
 {
     // Fix for 10.9 DP4/5
-    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:m_GrowlDelegate];
+    [[GrowlUserNotificationCenter growlBridgeClass] setGrowlDelegate:(id)m_GrowlDelegate];
 }
 
 - (id)init

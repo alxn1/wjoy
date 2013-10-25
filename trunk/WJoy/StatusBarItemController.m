@@ -57,7 +57,7 @@
     [m_DiscoveryMenuItem setEnabled:![Wiimote isDiscovering]];
     [m_Menu addItem:m_DiscoveryMenuItem];
     [m_Menu setAutoenablesItems:NO];
-    [m_Menu setDelegate:self];
+    [m_Menu setDelegate:(id)self];
     [m_DiscoveryMenuItem release];
 
     m_CheckUpdateMenuItem = [[NSMenuItem alloc]

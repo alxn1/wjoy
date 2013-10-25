@@ -323,6 +323,8 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB91DD08733DB10010E9CD /* Build configuration list for PBXProject "WirtualJoy" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -603,7 +605,6 @@
 				MODULE_NAME = com.alxn1.driver.wjoy;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_NAME = wjoy;
-				"SDKROOT[arch=x86_64]" = macosx10.6;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Debug;
@@ -620,7 +621,6 @@
 				MODULE_NAME = com.alxn1.driver.wjoy;
 				MODULE_VERSION = 1.0.0d1;
 				PRODUCT_NAME = wjoy;
-				"SDKROOT[arch=x86_64]" = macosx10.6;
 				WRAPPER_EXTENSION = kext;
 			};
 			name = Release;
@@ -633,10 +633,11 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DDEBUG";
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -647,8 +648,9 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

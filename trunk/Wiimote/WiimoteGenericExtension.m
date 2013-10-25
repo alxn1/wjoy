@@ -24,7 +24,7 @@
         merit = [NSNumber numberWithInteger:
                     [WiimoteExtension nextFreedomMeritInClass:[self meritClass]]];
 
-        [results setObject:merit forKey:[self class]];
+        [results setObject:merit forKey:(id)[self class]];
     }
 
     return [merit integerValue];

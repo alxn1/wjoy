@@ -61,7 +61,7 @@ int main(int argC, char *argV[])
 
         if(data == nil)
         {
-            printf("Can't create .r file, abort\n", [plistPath UTF8String]);
+            printf("Can't create .r file, abort\n");
             [pool drain];
             return 1;
         }

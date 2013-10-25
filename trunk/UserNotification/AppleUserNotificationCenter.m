@@ -122,7 +122,7 @@
         return;
     }
 
-    id<NSUserNotificationCenterFutureProtocol>  center  = [m_NotificationCenterClass defaultUserNotificationCenter];
+    id<NSUserNotificationCenterFutureProtocol>  center  = (id)[m_NotificationCenterClass defaultUserNotificationCenter];
     id<NSUserNotificationFutureProtocol>        n       = [[[m_NotificationClass alloc] init] autorelease];
 
     [n setInformativeText:[notification text]];
