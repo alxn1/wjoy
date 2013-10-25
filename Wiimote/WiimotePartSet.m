@@ -56,7 +56,7 @@
                                                    eventDispatcher:m_EventDispatcher
                                                          ioManager:m_IOManager];
 
-        [m_PartDictionary setObject:part forKey:partClass];
+        [m_PartDictionary setObject:part forKey:(id)partClass];
         [m_PartArray addObject:part];
         [part release];
     }

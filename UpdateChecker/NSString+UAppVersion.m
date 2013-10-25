@@ -18,10 +18,12 @@
 - (id)initWithAppVersion:(const UAppVersion*)version
 {
     if(version == NULL)
+    {
+        [self release];
         return nil;
+    }
 
-    return [[NSString alloc]
-                    initWithFormat:@"%i.%i.%i.%i",
+    return [self initWithFormat:@"%i.%i.%i.%i",
                                     version->major,
                                     version->minor,
                                     version->patch,

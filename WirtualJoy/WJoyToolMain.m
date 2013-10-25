@@ -128,6 +128,9 @@ int main(int argC, char *argV[])
         case WorkModeUnloadDriver:
             result = unloadDriver(argV[2]);
             break;
+
+        default:
+            break;
     }
 
     [pool release];
