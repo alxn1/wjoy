@@ -54,7 +54,9 @@
 - (id)initWithOwner:(Wiimote*)owner
     eventDispatcher:(WiimoteEventDispatcher*)dispatcher
 {
-    self = [super init];
+    self = [super initWithOwner:owner
+                eventDispatcher:dispatcher];
+
     if(self == nil)
         return nil;
 
