@@ -18,11 +18,16 @@
 + (void)refreshDock
 {
     NSString *script    = [[NSBundle bundleForClass:[self class]] pathForResource:@"refreshDock" ofType:@"scpt"];
-    NSTask   *task      = [[[NSTask alloc] init] autorelease];
+    NSTask   *task      = [[NSTask alloc] init];
 
     [task setLaunchPath:@"/usr/bin/osascript"];
     [task setArguments:[NSArray arrayWithObject:script]];
     [task launch];
+
+    [task setTerminationHandler:^(NSTask *task)
+    {
+        [task autorelease];
+    }];
 }
 
 + (void)load

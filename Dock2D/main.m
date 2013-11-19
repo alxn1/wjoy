@@ -1,7 +1,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "mach_inject/mach_inject_bundle/mach_inject_bundle.h"
-#import "LoginItemsList.h"
 
 @interface Dock2D : NSObject
 
@@ -59,7 +58,6 @@
 
 - (void)run
 {
-    [[LoginItemsList userItemsList] addItemWithPath:[[[NSBundle mainBundle] bundleURL] path]];
     [[NSRunLoop currentRunLoop] run];
 }
 
