@@ -13,7 +13,6 @@
 		0A6DCE351823BC0000467E01 /* mach_inject_bundle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0AC50618226B3F00975074 /* mach_inject_bundle.framework */; };
 		0A6DCE361823BC0C00467E01 /* D2D.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0A07FB5D1822672500DECED5 /* D2D.bundle */; };
 		0A6DCE381823BC4900467E01 /* mach_inject_bundle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0AC50618226B3F00975074 /* mach_inject_bundle.framework */; };
-		0A6DCE3B1823BD4700467E01 /* LoginItemsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6DCE3A1823BD4700467E01 /* LoginItemsList.m */; };
 		0A6DCE3D1823BDDF00467E01 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0A6DCE3C1823BDDF00467E01 /* app.icns */; };
 		0A9BF4C218227DCA0085DA6C /* NSObject+ObjCRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A9BF4C118227DCA0085DA6C /* NSObject+ObjCRuntime.m */; };
 		0A9BF4C61822AC890085DA6C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A9BF4C51822AC890085DA6C /* QuartzCore.framework */; };
@@ -78,8 +77,6 @@
 		0A6DCDF61823BB2800467E01 /* Dock2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dock2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A6DCE2B1823BB9000467E01 /* Dock2D-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Dock2D-Info.plist"; sourceTree = "<group>"; };
 		0A6DCE2F1823BBEC00467E01 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		0A6DCE391823BD4700467E01 /* LoginItemsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemsList.h; sourceTree = "<group>"; };
-		0A6DCE3A1823BD4700467E01 /* LoginItemsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItemsList.m; sourceTree = "<group>"; };
 		0A6DCE3C1823BDDF00467E01 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = app.icns; sourceTree = "<group>"; };
 		0A6DCE411823BEB900467E01 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		0A849A6818226B810005AF02 /* mach_inject_bundle_stub.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = mach_inject_bundle_stub.xcodeproj; path = mach_inject/mach_inject_bundle_stub/mach_inject_bundle_stub.xcodeproj; sourceTree = "<group>"; };
@@ -133,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				0A6DCE3C1823BDDF00467E01 /* app.icns */,
-				0A6DCE391823BD4700467E01 /* LoginItemsList.h */,
-				0A6DCE3A1823BD4700467E01 /* LoginItemsList.m */,
 				0A6DCE2B1823BB9000467E01 /* Dock2D-Info.plist */,
 				08FB7796FE84155DC02AAC07 /* main.m */,
 			);
@@ -324,7 +319,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A6DCE3B1823BD4700467E01 /* LoginItemsList.m in Sources */,
 				0A6DCE2A1823BB5D00467E01 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
