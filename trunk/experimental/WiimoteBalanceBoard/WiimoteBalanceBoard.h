@@ -28,6 +28,9 @@ typedef struct
 
 #pragma pack(pop)
 
+#define WiimoteBalanceBoardCalibrationDataAddress 0x04A40024
+#define WiimoteBalanceBoardCalibrationDataSize    24
+
 @interface WiimoteBalanceBoard : WiimoteGenericExtension<
                                                 WiimoteBalanceBoardProtocol>
 {
