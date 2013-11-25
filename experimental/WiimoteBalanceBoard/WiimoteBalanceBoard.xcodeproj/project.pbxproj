@@ -37,6 +37,13 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = Wiimote;
 		};
+		0AC65C8F184330E70059B097 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A90D53D15D53A5C00250091 /* Wiimote.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A35C63C177879EE00E43A07 /* HID.framework */;
+			remoteInfo = HID;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +132,7 @@
 		0A90D53E15D53A5C00250091 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				0AC65C90184330E70059B097 /* HID.framework */,
 				0A90D54715D53A5C00250091 /* Wiimote.framework */,
 				0A90D54915D53A5C00250091 /* test.app */,
 			);
@@ -217,6 +225,13 @@
 			fileType = wrapper.application;
 			path = test.app;
 			remoteRef = 0A90D54815D53A5C00250091 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0AC65C90184330E70059B097 /* HID.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = HID.framework;
+			remoteRef = 0AC65C8F184330E70059B097 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
