@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "WiimoteWrapper.h"
 
 @interface TestController : NSObject
 {

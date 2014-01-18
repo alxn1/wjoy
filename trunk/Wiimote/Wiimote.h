@@ -79,7 +79,7 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 - (BOOL)isButtonPressed:(WiimoteButtonType)button;
 
 // 0.0 - 100.0 %, or -1 if undefined
-- (double)batteryLevel;
+- (CGFloat)batteryLevel;
 - (BOOL)isBatteryLevelLow;
 
 - (BOOL)isIREnabled;

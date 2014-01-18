@@ -56,7 +56,7 @@ NSString *WiimoteExtensionKey                                       = @"WiimoteE
 {
 }
 
-- (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(double)batteryLevel isLow:(BOOL)isLow
+- (void)wiimote:(Wiimote*)wiimote batteryLevelUpdated:(CGFloat)batteryLevel isLow:(BOOL)isLow
 {
 }
 
@@ -72,11 +72,11 @@ NSString *WiimoteExtensionKey                                       = @"WiimoteE
 {
 }
 
-- (void)wiimote:(Wiimote*)wiimote accelerometerChangedGravityX:(double)x y:(double)y z:(double)z
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
 }
 
-- (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(double)pitch roll:(double)roll
+- (void)wiimote:(Wiimote*)wiimote accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
 }
 

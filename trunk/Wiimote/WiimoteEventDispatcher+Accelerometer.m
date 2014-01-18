@@ -20,7 +20,7 @@
                        key:WiimoteAccelerometerEnabledStateKey];
 }
 
-- (void)postAccelerometerGravityChangedNotificationX:(double)x y:(double)y z:(double)z
+- (void)postAccelerometerGravityChangedNotificationX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
     [[self delegate] wiimote:[self owner] accelerometerChangedGravityX:x y:y z:z];
 
@@ -40,7 +40,7 @@
     }
 }
 
-- (void)postAccelerometerAnglesChangedNotificationPitch:(double)pitch roll:(double)roll
+- (void)postAccelerometerAnglesChangedNotificationPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
     [[self delegate] wiimote:[self owner] accelerometerChangedPitch:pitch roll:roll];
 

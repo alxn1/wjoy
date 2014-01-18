@@ -8,6 +8,8 @@
 
 #import "TestController.h"
 
+#import <Wiimote/WiimoteEventSystem.h>
+
 @implementation TestController
 
 - (void)updateWindowState
@@ -24,8 +26,6 @@
 
 - (void)awakeFromNib
 {
-    [WiimoteWrapper setLog:self];
-
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(discoveryBegin)
@@ -39,16 +39,13 @@
                                          object:nil];
 
     [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(wiimoteConnected)
-                                           name:WiimoteConnectedNotification
-                                         object:nil];
+								addObserver:self
+								   selector:@selector(applicationWillTerminateNotification:)
+									   name:NSApplicationWillTerminateNotification
+									 object:[NSApplication sharedApplication]];
 
-    [[NSNotificationCenter defaultCenter]
-                                    addObserver:self
-                                       selector:@selector(wiimoteDisconnected)
-                                           name:WiimoteDisconnectedNotification
-                                         object:nil];
+    [[WiimoteEventSystem defaultEventSystem] addObserver:self];
+    [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
 
     [self updateWindowState];
 	[self discovery:self];
@@ -61,7 +58,7 @@
 
 - (IBAction)discovery:(id)sender
 {
-    [WiimoteWrapper discoveryNew];
+    [Wiimote beginDiscovery];
 }
 
 - (IBAction)clearLog:(id)sender
@@ -69,7 +66,7 @@
     [m_Log setString:@""];
 }
 
-- (void)wiimoteWrapper:(WiimoteWrapper*)wrapper log:(NSString*)logLine
+- (void)log:(NSString*)logLine
 {
     NSAttributedString *tmp = [[NSAttributedString alloc]
                                     initWithString:[NSString stringWithFormat:@"%@\n", logLine]];
@@ -82,14 +79,14 @@
 {
     m_IsDiscovering = YES;
     [self updateWindowState];
-    [self wiimoteWrapper:nil log:@"Begin discovery..."];
+    [self log:@"Begin discovery..."];
 }
 
 - (void)discoveryEnd
 {
     m_IsDiscovering = NO;
     [self updateWindowState];
-    [self wiimoteWrapper:nil log:@"End discovery"];
+    [self log:@"End discovery"];
 }
 
 - (void)wiimoteConnected
@@ -102,6 +99,35 @@
 {
     m_ConnectedWiimotes--;
     [self updateWindowState];
+}
+
+- (void)wiimoteEvent:(WiimoteEvent*)event
+{
+    if([[event path] isEqualToString:@"Connect"])
+    {
+        [[event wiimote] setHighlightedLEDMask:WiimoteLEDFlagOne];
+        [[event wiimote] playConnectEffect];
+        [self wiimoteConnected];
+    }
+
+    if([[event path] isEqualToString:@"Disconnect"])
+        [self wiimoteDisconnected];
+
+    [self log:
+        [NSString stringWithFormat:@"%@ (%@): %@: %lf",
+                                        [[event wiimote] modelName],
+                                        [[event wiimote] addressString],
+                                        [event path],
+                                        [event value]]];
+}
+
+- (void)applicationWillTerminateNotification:(NSNotification*)notification
+{
+    NSArray     *devices = [Wiimote connectedDevices];
+	NSUInteger   count   = [devices count];
+
+    for(NSUInteger i = 0; i < count; i++)
+        [[devices objectAtIndex:i] disconnect];
 }
 
 @end

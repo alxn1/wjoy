@@ -17,13 +17,13 @@
          enabledStateChanged:(BOOL)enabled;
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-             gravityChangedX:(double)x
-                           y:(double)y
-                           z:(double)z;
+             gravityChangedX:(CGFloat)x
+                           y:(CGFloat)y
+                           z:(CGFloat)z;
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-                pitchChanged:(double)pitch
-                        roll:(double)roll;
+                pitchChanged:(CGFloat)pitch
+                        roll:(CGFloat)roll;
 
 @end
 
