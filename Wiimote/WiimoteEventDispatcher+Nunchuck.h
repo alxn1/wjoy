@@ -15,7 +15,7 @@
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck buttonReleased:(WiimoteNunchuckButtonType)button;
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck stickPositionChanged:(NSPoint)position;
 - (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerEnabledStateChanged:(BOOL)enabled;
-- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(double)x y:(double)y z:(double)z;
-- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(double)pitch roll:(double)roll;
+- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
+- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll;
 
 @end

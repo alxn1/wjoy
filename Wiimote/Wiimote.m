@@ -156,7 +156,7 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
     return [m_ButtonPart isButtonPressed:button];
 }
 
-- (double)batteryLevel
+- (CGFloat)batteryLevel
 {
     return [m_BatteryPart batteryLevel];
 }

@@ -10,8 +10,8 @@
 
 @interface WiimoteAccelerometer (PrivatePart)
 
-- (void)setGravityX:(double)x y:(double)y z:(double)z;
-- (void)setPitch:(double)pitch roll:(double)roll;
+- (void)setGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
+- (void)setPitch:(CGFloat)pitch roll:(CGFloat)roll;
 
 @end
 
@@ -19,9 +19,9 @@
 
 - (void)setHardwareValueX:(uint16_t)x y:(uint16_t)y z:(uint16_t)z
 {
-    double newX = (((double)x) - ((double)m_ZeroX)) / (((double)m_1gX) - ((double)m_ZeroX));
-    double newY = (((double)y) - ((double)m_ZeroY)) / (((double)m_1gY) - ((double)m_ZeroY));
-    double newZ = (((double)z) - ((double)m_ZeroZ)) / (((double)m_1gZ) - ((double)m_ZeroZ));
+    CGFloat newX = (((CGFloat)x) - ((CGFloat)m_ZeroX)) / (((CGFloat)m_1gX) - ((CGFloat)m_ZeroX));
+    CGFloat newY = (((CGFloat)y) - ((CGFloat)m_ZeroY)) / (((CGFloat)m_1gY) - ((CGFloat)m_ZeroY));
+    CGFloat newZ = (((CGFloat)z) - ((CGFloat)m_ZeroZ)) / (((CGFloat)m_1gZ) - ((CGFloat)m_ZeroZ));
 
     [self setGravityX:newX y:newY z:newZ];
 
@@ -34,8 +34,8 @@
     if(newZ < -1.0) newZ = 1.0; else
     if(newZ >  1.0) newZ = 1.0;
 
-    double newPitch = m_Pitch;
-    double newRoll  = m_Roll;
+    CGFloat newPitch = m_Pitch;
+    CGFloat newRoll  = m_Roll;
 
     if(abs(x - m_ZeroX) <= (m_1gX - m_ZeroX))
         newRoll  = (atan2(newX, newZ) * 180.0) / M_PI;
@@ -114,11 +114,11 @@
 
 @implementation WiimoteAccelerometer (PrivatePart)
 
-- (void)setGravityX:(double)x y:(double)y z:(double)z
+- (void)setGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
-    x = (((double)((long long)(x / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
-    y = (((double)((long long)(y / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
-    z = (((double)((long long)(z / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
+    x = (((CGFloat)((long long)(x / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
+    y = (((CGFloat)((long long)(y / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
+    z = (((CGFloat)((long long)(z / m_GravitySmoothQuant))) * m_GravitySmoothQuant);
 
     if(WiimoteDeviceIsFloatEqualEx(m_GravityX, x, m_GravitySmoothQuant) &&
        WiimoteDeviceIsFloatEqualEx(m_GravityY, y, m_GravitySmoothQuant) &&
@@ -134,10 +134,10 @@
     [m_Delegate wiimoteAccelerometer:self gravityChangedX:x y:y z:z];
 }
 
-- (void)setPitch:(double)pitch roll:(double)roll
+- (void)setPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
-    pitch = (((double)((long long)(pitch / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
-    roll  = (((double)((long long)(roll  / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
+    pitch = (((CGFloat)((long long)(pitch / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
+    roll  = (((CGFloat)((long long)(roll  / m_AnglesSmoothQuant))) * m_AnglesSmoothQuant);
 
     if(WiimoteDeviceIsFloatEqualEx(m_Pitch, pitch, m_AnglesSmoothQuant) &&
        WiimoteDeviceIsFloatEqualEx(m_Roll,	roll,  m_AnglesSmoothQuant))
@@ -161,15 +161,15 @@
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-             gravityChangedX:(double)x
-                           y:(double)y
-                           z:(double)z
+             gravityChangedX:(CGFloat)x
+                           y:(CGFloat)y
+                           z:(CGFloat)z
 {
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-                pitchChanged:(double)pitch
-                        roll:(double)roll
+                pitchChanged:(CGFloat)pitch
+                        roll:(CGFloat)roll
 {
 }
 

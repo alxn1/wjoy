@@ -30,7 +30,7 @@
     return self;
 }
 
-- (double)batteryLevel
+- (CGFloat)batteryLevel
 {
     return m_Level;
 }
@@ -51,7 +51,7 @@
     const WiimoteDeviceStateReport *state =
                 (const WiimoteDeviceStateReport*)[report data];
 
-    double  batteryLevel        = (((double)state->batteryLevel) / ((double)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
+    CGFloat batteryLevel        = (((CGFloat)state->batteryLevel) / ((CGFloat)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
     BOOL    isBatteryLevelLow   = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);
 
     if(batteryLevel         != m_Level ||

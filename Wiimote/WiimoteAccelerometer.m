@@ -42,47 +42,47 @@
     [m_Delegate wiimoteAccelerometer:self enabledStateChanged:enabled];
 }
 
-- (double)gravityX
+- (CGFloat)gravityX
 {
     return m_GravityX;
 }
 
-- (double)gravityY
+- (CGFloat)gravityY
 {
     return m_GravityY;
 }
 
-- (double)gravityZ
+- (CGFloat)gravityZ
 {
     return m_GravityZ;
 }
 
-- (double)pitch
+- (CGFloat)pitch
 {
     return m_Pitch;
 }
 
-- (double)roll
+- (CGFloat)roll
 {
     return m_Roll;
 }
 
-- (double)gravitySmoothQuant
+- (CGFloat)gravitySmoothQuant
 {
     return m_GravitySmoothQuant;
 }
 
-- (void)setGravitySmoothQuant:(double)quant
+- (void)setGravitySmoothQuant:(CGFloat)quant
 {
     m_GravitySmoothQuant = quant;
 }
 
-- (double)anglesSmoothQuant
+- (CGFloat)anglesSmoothQuant
 {
     return m_AnglesSmoothQuant;
 }
 
-- (void)setAnglesSmoothQuant:(double)quant
+- (void)setAnglesSmoothQuant:(CGFloat)quant
 {
     m_AnglesSmoothQuant = quant;
 }

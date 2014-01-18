@@ -13,15 +13,15 @@
     @private
         BOOL        m_IsEnabled;
 
-        double      m_GravityX;
-        double      m_GravityY;
-        double      m_GravityZ;
+        CGFloat     m_GravityX;
+        CGFloat     m_GravityY;
+        CGFloat     m_GravityZ;
 
-        double      m_Pitch;
-        double      m_Roll;
+        CGFloat     m_Pitch;
+        CGFloat     m_Roll;
 
-        double      m_GravitySmoothQuant;
-        double      m_AnglesSmoothQuant;
+        CGFloat     m_GravitySmoothQuant;
+        CGFloat     m_AnglesSmoothQuant;
 
         uint16_t    m_ZeroX;
         uint16_t    m_ZeroY;
@@ -37,17 +37,17 @@
 - (BOOL)isEnabled;
 - (void)setEnabled:(BOOL)enabled;
 
-- (double)gravityX;
-- (double)gravityY;
-- (double)gravityZ;
+- (CGFloat)gravityX;
+- (CGFloat)gravityY;
+- (CGFloat)gravityZ;
 
-- (double)pitch;
-- (double)roll;
+- (CGFloat)pitch;
+- (CGFloat)roll;
 
-- (double)gravitySmoothQuant;
-- (void)setGravitySmoothQuant:(double)quant;
+- (CGFloat)gravitySmoothQuant;
+- (void)setGravitySmoothQuant:(CGFloat)quant;
 
-- (double)anglesSmoothQuant;
-- (void)setAnglesSmoothQuant:(double)quant;
+- (CGFloat)anglesSmoothQuant;
+- (void)setAnglesSmoothQuant:(CGFloat)quant;
 
 @end

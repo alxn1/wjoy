@@ -22,7 +22,6 @@
 		0A35C7AE17787A9400E43A07 /* HIDManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A35C7A817787A9400E43A07 /* HIDManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A35C7AF17787A9400E43A07 /* HIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A35C7A917787A9400E43A07 /* HIDManager.m */; };
 		0A362EDD1623EE1F00B14E58 /* test.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A362EDC1623EE1F00B14E58 /* test.xib */; };
-		0A362EE51623F06F00B14E58 /* WiimoteWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A362EE41623F06F00B14E58 /* WiimoteWrapper.m */; };
 		0A362F1E1623F4FC00B14E58 /* TestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A362F1D1623F4FC00B14E58 /* TestController.m */; };
 		0A4883091616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A4883071616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.m */; };
 		0A4890C315C7FA4500207478 /* Wiimote.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A48907615C7FA4500207478 /* Wiimote.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -88,6 +87,12 @@
 		0A51E168176DEA7D004393FF /* WiimoteUProControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A51E166176DEA7D004393FF /* WiimoteUProControllerDelegate.m */; };
 		0A51E16D176DEF67004393FF /* WiimoteProtocolUProController.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A51E16A176DEF26004393FF /* WiimoteProtocolUProController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A5284BC178D78D800C41F8E /* WiimoteDeviceTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5284BA178D78D800C41F8E /* WiimoteDeviceTransport.m */; };
+		0A579028188AA6190066520E /* WiimoteEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A579026188AA6190066520E /* WiimoteEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A579029188AA6190066520E /* WiimoteEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A579027188AA6190066520E /* WiimoteEvent.m */; };
+		0A57902C188AADC70066520E /* WiimoteEventSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A57902A188AADC70066520E /* WiimoteEventSystem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A57902D188AADC70066520E /* WiimoteEventSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A57902B188AADC70066520E /* WiimoteEventSystem.m */; };
+		0A579030188ABA780066520E /* WiimoteEventSystem+PlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A57902E188ABA780066520E /* WiimoteEventSystem+PlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A579031188ABA780066520E /* WiimoteEventSystem+PlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A57902F188ABA780066520E /* WiimoteEventSystem+PlugIn.m */; };
 		0A5C520715CF9E9600940D89 /* WiimoteAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A5C520515CF9E9600940D89 /* WiimoteAccelerometer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0A5C520815CF9E9600940D89 /* WiimoteAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A5C520615CF9E9600940D89 /* WiimoteAccelerometer.m */; };
 		0A5C525715CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A5C525515CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -175,8 +180,6 @@
 		0A35C7A817787A9400E43A07 /* HIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HIDManager.h; sourceTree = "<group>"; };
 		0A35C7A917787A9400E43A07 /* HIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HIDManager.m; sourceTree = "<group>"; };
 		0A362EDC1623EE1F00B14E58 /* test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = test.xib; sourceTree = "<group>"; };
-		0A362EE31623F06F00B14E58 /* WiimoteWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteWrapper.h; sourceTree = "<group>"; };
-		0A362EE41623F06F00B14E58 /* WiimoteWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteWrapper.m; sourceTree = "<group>"; };
 		0A362F1C1623F4FC00B14E58 /* TestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestController.h; sourceTree = "<group>"; };
 		0A362F1D1623F4FC00B14E58 /* TestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestController.m; sourceTree = "<group>"; };
 		0A4883061616FF89006D6C27 /* WiimoteEventDispatcher+MotionPlus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventDispatcher+MotionPlus.h"; sourceTree = "<group>"; };
@@ -274,6 +277,12 @@
 		0A51E16A176DEF26004393FF /* WiimoteProtocolUProController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteProtocolUProController.h; sourceTree = "<group>"; };
 		0A5284B9178D78D800C41F8E /* WiimoteDeviceTransport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteDeviceTransport.h; sourceTree = "<group>"; };
 		0A5284BA178D78D800C41F8E /* WiimoteDeviceTransport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteDeviceTransport.m; sourceTree = "<group>"; };
+		0A579026188AA6190066520E /* WiimoteEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteEvent.h; sourceTree = "<group>"; };
+		0A579027188AA6190066520E /* WiimoteEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteEvent.m; sourceTree = "<group>"; };
+		0A57902A188AADC70066520E /* WiimoteEventSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteEventSystem.h; sourceTree = "<group>"; };
+		0A57902B188AADC70066520E /* WiimoteEventSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteEventSystem.m; sourceTree = "<group>"; };
+		0A57902E188ABA780066520E /* WiimoteEventSystem+PlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventSystem+PlugIn.h"; sourceTree = "<group>"; };
+		0A57902F188ABA780066520E /* WiimoteEventSystem+PlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventSystem+PlugIn.m"; sourceTree = "<group>"; };
 		0A5C520515CF9E9600940D89 /* WiimoteAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteAccelerometer.h; sourceTree = "<group>"; };
 		0A5C520615CF9E9600940D89 /* WiimoteAccelerometer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteAccelerometer.m; sourceTree = "<group>"; };
 		0A5C525515CFAFD700940D89 /* WiimoteAccelerometer+PlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteAccelerometer+PlugIn.h"; sourceTree = "<group>"; };
@@ -407,6 +416,7 @@
 				0A4890C215C7FA4500207478 /* WiimoteWatchdog.m */,
 				0A48907615C7FA4500207478 /* Wiimote.h */,
 				0A48907715C7FA4500207478 /* Wiimote.m */,
+				0A579025188AA5F00066520E /* event system */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 			);
 			name = framework;
@@ -417,8 +427,6 @@
 			children = (
 				0A22060C15C2A84C004D168E /* test-Info.plist */,
 				0A362EDC1623EE1F00B14E58 /* test.xib */,
-				0A362EE31623F06F00B14E58 /* WiimoteWrapper.h */,
-				0A362EE41623F06F00B14E58 /* WiimoteWrapper.m */,
 				0A362F1C1623F4FC00B14E58 /* TestController.h */,
 				0A362F1D1623F4FC00B14E58 /* TestController.m */,
 				0A2205F915C2A7B2004D168E /* test.m */,
@@ -684,6 +692,19 @@
 			name = transport;
 			sourceTree = "<group>";
 		};
+		0A579025188AA5F00066520E /* event system */ = {
+			isa = PBXGroup;
+			children = (
+				0A579026188AA6190066520E /* WiimoteEvent.h */,
+				0A579027188AA6190066520E /* WiimoteEvent.m */,
+				0A57902A188AADC70066520E /* WiimoteEventSystem.h */,
+				0A57902B188AADC70066520E /* WiimoteEventSystem.m */,
+				0A57902E188ABA780066520E /* WiimoteEventSystem+PlugIn.h */,
+				0A57902F188ABA780066520E /* WiimoteEventSystem+PlugIn.m */,
+			);
+			name = "event system";
+			sourceTree = "<group>";
+		};
 		0A5C588F15CFF7C700940D89 /* protocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,6 +891,9 @@
 				0A48910E15C7FA4500207478 /* WiimoteWatchdog.h in Headers */,
 				0A4890C315C7FA4500207478 /* Wiimote.h in Headers */,
 				0A66C87E15CC0C5000096DDA /* Wiimote+PlugIn.h in Headers */,
+				0A579028188AA6190066520E /* WiimoteEvent.h in Headers */,
+				0A57902C188AADC70066520E /* WiimoteEventSystem.h in Headers */,
+				0A579030188ABA780066520E /* WiimoteEventSystem+PlugIn.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -940,6 +964,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Wiimote" */;
 			compatibilityVersion = "Xcode 3.1";
@@ -993,7 +1018,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A362EE51623F06F00B14E58 /* WiimoteWrapper.m in Sources */,
 				0A362F1E1623F4FC00B14E58 /* TestController.m in Sources */,
 				0A22061215C2A861004D168E /* test.m in Sources */,
 			);
@@ -1072,6 +1096,9 @@
 				0A51E168176DEA7D004393FF /* WiimoteUProControllerDelegate.m in Sources */,
 				0A8396C71774B9F400DC64EC /* WiimoteAnalogNormalizer.m in Sources */,
 				0A5284BC178D78D800C41F8E /* WiimoteDeviceTransport.m in Sources */,
+				0A579029188AA6190066520E /* WiimoteEvent.m in Sources */,
+				0A57902D188AADC70066520E /* WiimoteEventSystem.m in Sources */,
+				0A579031188ABA780066520E /* WiimoteEventSystem+PlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -256,16 +256,16 @@
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-             gravityChangedX:(double)x
-                           y:(double)y
-                           z:(double)z
+             gravityChangedX:(CGFloat)x
+                           y:(CGFloat)y
+                           z:(CGFloat)z
 {
     [[self eventDispatcher] postNunchuck:self accelerometerChangedGravityX:x y:y z:z];
 }
 
 - (void)wiimoteAccelerometer:(WiimoteAccelerometer*)accelerometer
-                pitchChanged:(double)pitch
-                        roll:(double)roll
+                pitchChanged:(CGFloat)pitch
+                        roll:(CGFloat)roll
 {
     [[self eventDispatcher] postNunchuck:self accelerometerChangedPitch:pitch roll:roll];
 }

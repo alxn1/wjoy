@@ -59,7 +59,7 @@
                     sender:nunchuck];
 }
 
-- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(double)x y:(double)y z:(double)z
+- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedGravityX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z
 {
     [[self delegate] wiimote:[self owner] nunchuck:nunchuck accelerometerChangedGravityX:x y:y z:z];
 
@@ -80,7 +80,7 @@
     }
 }
 
-- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(double)pitch roll:(double)roll
+- (void)postNunchuck:(WiimoteNunchuckExtension*)nunchuck accelerometerChangedPitch:(CGFloat)pitch roll:(CGFloat)roll
 {
     [[self delegate] wiimote:[self owner] nunchuck:nunchuck accelerometerChangedPitch:pitch roll:roll];
 
