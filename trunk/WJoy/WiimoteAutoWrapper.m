@@ -115,7 +115,7 @@ static NSUInteger maxConnectedDevices = 0;
 - (void)      wiimote:(Wiimote*)wiimote
     classicController:(WiimoteClassicControllerExtension*)classic
           analogShift:(WiimoteClassicControllerAnalogShiftType)shift
-      positionChanged:(float)position
+      positionChanged:(CGFloat)position
 {
 	switch(shift)
 	{
