@@ -23,6 +23,6 @@
 
 - (void)postClassicController:(WiimoteClassicControllerExtension*)classic
                   analogShift:(WiimoteClassicControllerAnalogShiftType)shift
-              positionChanged:(float)position;
+              positionChanged:(CGFloat)position;
 
 @end

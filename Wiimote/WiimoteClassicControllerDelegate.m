@@ -43,7 +43,7 @@ NSString *WiimoteClassicControllerAnalogShiftPositionKey                    = @"
 - (void)      wiimote:(Wiimote*)wiimote
     classicController:(WiimoteClassicControllerExtension*)classic
           analogShift:(WiimoteClassicControllerAnalogShiftType)shift
-      positionChanged:(float)position
+      positionChanged:(CGFloat)position
 {
 }
 

@@ -45,17 +45,17 @@
 
 #define WiimoteDeviceNormalizeStickCoordinateEx(value, min, center, max, result) \
             { \
-                float wiimote_device_norm_value_; \
+                CGFloat wiimote_device_norm_value_; \
             \
                 if((value) <= (center)) \
                 { \
-                    wiimote_device_norm_value_ = ((float)(value) - (float)(min)) / \
-                                                 ((float)(center) - (float)(min)) - 1.0f; \
+                    wiimote_device_norm_value_ = ((CGFloat)(value) - (CGFloat)(min)) / \
+                                                 ((CGFloat)(center) - (CGFloat)(min)) - 1.0f; \
                 } \
                 else \
                 { \
-                    wiimote_device_norm_value_ = ((float)(value) - (float)(center)) / \
-                                                 ((float)(max) - (float)(center)); \
+                    wiimote_device_norm_value_ = ((CGFloat)(value) - (CGFloat)(center)) / \
+                                                 ((CGFloat)(max) - (CGFloat)(center)); \
                 } \
             \
                 if(wiimote_device_norm_value_ < -1.0f) \

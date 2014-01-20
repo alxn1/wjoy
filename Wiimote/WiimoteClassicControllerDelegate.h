@@ -61,7 +61,7 @@ FOUNDATION_EXPORT NSString *WiimoteClassicControllerAnalogShiftPositionKey;
 
 - (NSPoint)stickPosition:(WiimoteClassicControllerStickType)stick;
 - (BOOL)isButtonPressed:(WiimoteClassicControllerButtonType)button;
-- (float)analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift;
+- (CGFloat)analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift;
 
 @end
 
@@ -85,6 +85,6 @@ typedef WiimoteExtension<WiimoteClassicControllerProtocol> WiimoteClassicControl
 - (void)      wiimote:(Wiimote*)wiimote
     classicController:(WiimoteClassicControllerExtension*)classic
           analogShift:(WiimoteClassicControllerAnalogShiftType)shift
-      positionChanged:(float)position;
+      positionChanged:(CGFloat)position;
 
 @end

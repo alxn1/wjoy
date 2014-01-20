@@ -242,7 +242,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
     }
 
     if([report length] < (extensionBytesOffset + extensionBytesSize))
-        return nil;
+        return NULL;
 
     if(length != NULL)
         *length = extensionBytesSize;
