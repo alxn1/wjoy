@@ -22,8 +22,8 @@ NSString *WiimoteDeviceName     = @"Nintendo RVL-CNT-01";
 NSString *WiimoteDeviceNameTR   = @"Nintendo RVL-CNT-01-TR";
 NSString *WiimoteDeviceNameUPro = @"Nintendo RVL-CNT-01-UC";
 
-extern BOOL IOBluetoothLocalDeviceAvailable(void);
-extern void IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
+extern Boolean IOBluetoothLocalDeviceAvailable(void);
+extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
 
 @interface WiimoteInquiry (PrivatePart)
 
@@ -57,11 +57,12 @@ extern void IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
 {
     BOOL result = NO;
 
-    if(IOBluetoothLocalDeviceAvailable()) {
+    if(IOBluetoothLocalDeviceAvailable())
+    {
         BluetoothHCIPowerState powerState = kBluetoothHCIPowerStateOFF;
 
-        IOBluetoothLocalDeviceGetPowerState(&powerState);
-        result = (powerState == kBluetoothHCIPowerStateON);
+        if(IOBluetoothLocalDeviceGetPowerState(&powerState) == kIOReturnSuccess)
+            result = (powerState == kBluetoothHCIPowerStateON);
     }
 
     return result;

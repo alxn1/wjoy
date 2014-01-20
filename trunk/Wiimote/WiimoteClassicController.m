@@ -84,7 +84,7 @@
     return m_ButtonState[button];
 }
 
-- (float)analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift
+- (CGFloat)analogShiftPosition:(WiimoteClassicControllerAnalogShiftType)shift
 {
     return m_AnalogShiftPositions[shift];
 }
@@ -94,7 +94,7 @@
     return position;
 }
 
-- (float)normalizeAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(float)position
+- (CGFloat)normalizeAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(CGFloat)position
 {
     return position;
 }
@@ -135,7 +135,7 @@
     }
 }
 
-- (void)setAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(float)newPosition
+- (void)setAnalogShift:(WiimoteClassicControllerAnalogShiftType)shift position:(CGFloat)newPosition
 {
     newPosition = [self normalizeAnalogShift:shift position:newPosition];
 
@@ -226,7 +226,7 @@
 						  ((analogData[2] & 0x60) >> 2);
 
     NSPoint stickPosition;
-    float   analogShiftPosition;
+    CGFloat analogShiftPosition;
 
     WiimoteDeviceNormalizeStick(leftStickX, leftStickY, m_CalibrationData.leftStick, stickPosition);
     [self setStick:WiimoteClassicControllerStickTypeLeft position:stickPosition];

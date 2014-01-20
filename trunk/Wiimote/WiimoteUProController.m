@@ -156,13 +156,13 @@
 
 	[self setStick:WiimoteUProControllerStickTypeLeft
 		  position:NSMakePoint(
-						(((float)report->leftStrickX) / 2048.0) - 1.0f,
-						(((float)report->leftStrickY) / 2048.0) - 1.0f)];
+						(((CGFloat)report->leftStrickX) / 2048.0) - 1.0f,
+						(((CGFloat)report->leftStrickY) / 2048.0) - 1.0f)];
 
 	[self setStick:WiimoteUProControllerStickTypeRight
 		  position:NSMakePoint(
-						(((float)report->rightStrickX) / 2048.0) - 1.0f,
-						(((float)report->rightStrickY) / 2048.0) - 1.0f)];
+						(((CGFloat)report->rightStrickX) / 2048.0) - 1.0f,
+						(((CGFloat)report->rightStrickY) / 2048.0) - 1.0f)];
 
 	[self handleButtonState:report->buttonState];
 	[self handleAdditionalState:report->additionalButtonState];
