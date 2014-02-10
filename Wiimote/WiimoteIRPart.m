@@ -45,6 +45,7 @@
     m_IsHardwareEnabled = NO;
     m_IRReportMode      = -1;
     m_ReportType        = -1;
+    m_ReportCounter     = 0;
     m_Points            = [[NSArray alloc] initWithObjects:
                                     [WiimoteIRPoint pointWithOwner:owner index:0],
                                     [WiimoteIRPoint pointWithOwner:owner index:1],
@@ -142,7 +143,8 @@
     if(m_ReportType != reportType)
     {
         [self enableHardware:[self irModeFromReportType:reportType]];
-        m_ReportType = reportType;
+        m_ReportType    = reportType;
+        m_ReportCounter = 0;
         return;
     }
 
@@ -279,21 +281,27 @@
 
     for(NSUInteger i = 0; i < 2; i++)
     {
-        uint16_t x = (((uint16_t)data[0]) << 2) | ((data[2] >> 4) & 0x3);
-        uint16_t y = (((uint16_t)data[1]) << 2) | ((data[2] >> 6) & 0x3);
+        uint16_t x = data[0];
+        uint16_t y = data[1];
+
+        x |= (((uint16_t)data[2]) << 4) & 0x300;
+        y |= (((uint16_t)data[2]) << 2) & 0x300;
 
         if(x >= 0x3FF && y >= 0x3FF)
             [self setPointOutOfView:index];
         else
-            [self setPoint:index position:NSMakePoint(x + 1, y + 1)];
+            [self setPoint:index position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
 
-        x = (((uint16_t)data[3]) << 2) | ((data[2] >> 0) & 0x3);
-        y = (((uint16_t)data[4]) << 2) | ((data[2] >> 2) & 0x3);
+        x = data[3];
+        y = data[4];
+
+        x |= (((uint16_t)data[2]) << 8) & 0x300;
+        y |= (((uint16_t)data[2]) << 6) & 0x300;
 
         if(y >= 0x3FF)
             [self setPointOutOfView:index + 1];
         else
-            [self setPoint:index + 1 position:NSMakePoint(x + 1, y + 1)];
+            [self setPoint:index + 1 position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
 
         index   += 2;
         data    += 5;
@@ -302,16 +310,29 @@
 
 - (void)handle12ByteIRData:(const uint8_t*)data
 {
-    for(NSUInteger i = 0; i < WiimoteIRPointCount; i++)
+    NSUInteger index = 0;
+
+    if((m_ReportCounter % 2) == 1)
+        index += 2;
+
+    for(NSUInteger i = 0; i < 2; i++)
     {
-        uint16_t x = (((uint16_t)data[i + 0]) << 2) | ((data[i + 2] >> 4) & 0x3);
-        uint16_t y = (((uint16_t)data[i + 1]) << 2) | ((data[i + 2] >> 6) & 0x3);
+        uint16_t x = data[0];
+        uint16_t y = data[1];
+
+        x |= (((uint16_t)data[2]) << 4) & 0x300;
+        y |= (((uint16_t)data[2]) << 2) & 0x300;
 
         if(y >= 0x3FF)
-            [self setPointOutOfView:i];
+            [self setPointOutOfView:index];
         else
-            [self setPoint:i position:NSMakePoint(x + 1, y + 1)];
+            [self setPoint:index position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
+
+        index += 1;
+        data  += 9;
     }
+
+    m_ReportCounter++;
 }
 
 - (void)handleIRData:(const uint8_t*)data length:(NSUInteger)length

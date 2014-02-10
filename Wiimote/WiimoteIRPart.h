@@ -17,6 +17,7 @@
         BOOL         m_IsHardwareEnabled;
         NSInteger    m_IRReportMode;
         NSInteger    m_ReportType;
+        NSInteger    m_ReportCounter;
 
         NSArray     *m_Points;
 }
