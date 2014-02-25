@@ -6,7 +6,7 @@
 //  Copyright 2012 alxn1. All rights reserved.
 //
 
-#define WiimoteDeviceFloatEpsilon 0.075f
+#define WiimoteDeviceFloatEpsilon 0.025f
 
 #define WiimoteDeviceIsFloatEqual(a, b) \
 			(fabs(((a) - (b))) <= WiimoteDeviceFloatEpsilon)
