@@ -54,6 +54,12 @@
     CGFloat batteryLevel        = (((CGFloat)state->batteryLevel) / ((CGFloat)WiimoteDeviceMaxBatteryLevel)) * 100.0f;
     BOOL    isBatteryLevelLow   = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);
 
+    if(batteryLevel < 0.0f)
+        batteryLevel = 0.0f
+
+    if(batteryLevel > 100.0f)
+        batteryLevel = 100.0f;
+
     if(batteryLevel         != m_Level ||
        isBatteryLevelLow    != m_IsLow)
     {
