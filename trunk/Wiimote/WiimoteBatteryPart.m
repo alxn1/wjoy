@@ -55,7 +55,7 @@
     BOOL    isBatteryLevelLow   = ((state->flagsAndLEDState & WiimoteDeviceStateReportFlagBatteryIsLow) != 0);
 
     if(batteryLevel < 0.0f)
-        batteryLevel = 0.0f
+        batteryLevel = 0.0f;
 
     if(batteryLevel > 100.0f)
         batteryLevel = 100.0f;
