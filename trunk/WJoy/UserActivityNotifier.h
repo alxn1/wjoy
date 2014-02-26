@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 
 #import <IOKit/pwr_mgt/IOPMLib.h>
-#import <dlfcn.h>
 
 @interface UserActivityNotifier : NSObject
 {
     @private
-        IOPMAssertionID m_AssertionID;
+        IOPMAssertionID  m_AssertionID;
+        NSDate          *m_LastNotifyTime;
 }
 
 + (UserActivityNotifier*)sharedNotifier;
