@@ -7,6 +7,7 @@
 //
 
 #import "WiimoteAutoWrapper.h"
+#import "UserActivityNotifier.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -166,6 +167,7 @@ static NSUInteger maxConnectedDevices = 0;
 
 - (void)VHIDDevice:(VHIDDevice*)device stateChanged:(NSData*)state
 {
+    [[UserActivityNotifier sharedNotifier] notify];
     [m_WJoy updateHIDState:state];
 }
 
