@@ -43,6 +43,8 @@
 		0A98970215C2C2D800989D9D /* LoginItemsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98970115C2C2D800989D9D /* LoginItemsList.m */; };
 		0A98991C15C2C45A00989D9D /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98991B15C2C45A00989D9D /* NotificationCenter.m */; };
 		0A98995A15C2C8AC00989D9D /* WiimoteLEDsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98995915C2C8AC00989D9D /* WiimoteLEDsController.m */; };
+		0AC903B018BE3AEA005A6254 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AC903AF18BE3AEA005A6254 /* IOKit.framework */; };
+		0AC903BC18BE3B12005A6254 /* UserActivityNotifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AC903BB18BE3B12005A6254 /* UserActivityNotifier.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -250,6 +252,9 @@
 		0A98991B15C2C45A00989D9D /* NotificationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationCenter.m; sourceTree = "<group>"; };
 		0A98995815C2C8AC00989D9D /* WiimoteLEDsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteLEDsController.h; sourceTree = "<group>"; };
 		0A98995915C2C8AC00989D9D /* WiimoteLEDsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteLEDsController.m; sourceTree = "<group>"; };
+		0AC903AF18BE3AEA005A6254 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		0AC903BA18BE3B12005A6254 /* UserActivityNotifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserActivityNotifier.h; sourceTree = "<group>"; };
+		0AC903BB18BE3B12005A6254 /* UserActivityNotifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserActivityNotifier.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -264,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AC903B018BE3AEA005A6254 /* IOKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				0A2206FB15C2AF51004D168E /* WirtualJoy.framework in Frameworks */,
 				0A2206FC15C2AF57004D168E /* VHID.framework in Frameworks */,
@@ -280,6 +286,8 @@
 			isa = PBXGroup;
 			children = (
 				0A98997315C2C9F000989D9D /* utils */,
+				0AC903BA18BE3B12005A6254 /* UserActivityNotifier.h */,
+				0AC903BB18BE3B12005A6254 /* UserActivityNotifier.m */,
 				0A22070E15C2AFB8004D168E /* WiimoteAutoWrapper.h */,
 				0A22070F15C2AFB8004D168E /* WiimoteAutoWrapper.m */,
 				0A1027F515C2B80A006715D7 /* StatusBarItemController.h */,
@@ -375,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				0AC903AF18BE3AEA005A6254 /* IOKit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -478,6 +487,8 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WJoy" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -673,6 +684,7 @@
 				0A1027F715C2B80A006715D7 /* StatusBarItemController.m in Sources */,
 				0A10280C15C2BA85006715D7 /* MainController.m in Sources */,
 				0A98970215C2C2D800989D9D /* LoginItemsList.m in Sources */,
+				0AC903BC18BE3B12005A6254 /* UserActivityNotifier.m in Sources */,
 				0A98991C15C2C45A00989D9D /* NotificationCenter.m in Sources */,
 				0A98995A15C2C8AC00989D9D /* WiimoteLEDsController.m in Sources */,
 			);
