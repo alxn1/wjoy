@@ -25,8 +25,6 @@
 
 @implementation HIDDevice
 
-
-
 - (id)init
 {
     [[self init] release];
