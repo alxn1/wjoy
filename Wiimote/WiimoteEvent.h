@@ -33,6 +33,7 @@
 - (Wiimote*)wiimote;
 
 // path example: @"Connect"
+// path example: @"Accelerometer.Pitch"
 // path example: @"Classic Controller.Disconnect"
 // path example: @"Classic Controller.Button.A"
 // path example: @"Classic Controller.Left.Stick.X"
