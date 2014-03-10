@@ -11,6 +11,8 @@
 #import "WiimoteDeviceReadMemQueue.h"
 #import "WiimoteDeviceTransport.h"
 
+#import <OCLog/OCLog.h>
+
 @interface WiimoteDevice (PrivatePart)
 
 - (void)handleReport:(WiimoteDeviceReport*)report;
@@ -84,6 +86,7 @@
 
 	if(![m_Transport open])
     {
+        OCL_ERROR(@"can't open device");
 		[self disconnect];
 		m_IsConnected = NO;
         return NO;
@@ -145,7 +148,13 @@
     else
         buffer[1] &= (~WiimoteDeviceCommandFlagVibrationEnabled);
 
-	return [m_Transport postBytes:buffer length:sizeof(buffer)];
+	if(![m_Transport postBytes:buffer length:sizeof(buffer)])
+    {
+        OCL_ERROR(@"can't post data to device");
+        return NO;
+    }
+
+    return YES;
 }
 
 - (BOOL)writeMemory:(NSUInteger)address
@@ -276,6 +285,8 @@
 
 - (void)handleDisconnect
 {
+    OCL_DEBUG(@"device disconnected");
+
     m_IsVibrationEnabled    = NO;
     m_LEDsState             = 0;
 
@@ -296,6 +307,7 @@
 	if(![m_Report updateFromReportData:(const uint8_t*)bytes
                                 length:length])
     {
+        OCL_DEBUG(@"invalid report");
         return;
     }
 

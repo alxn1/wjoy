@@ -11,6 +11,8 @@
 #import "Wiimote.h"
 #import "WiimoteExtensionPart.h"
 
+#import <OCLog/OCLog.h>
+
 @implementation WiimoteExtension (PlugIn)
 
 + (void)registerExtensionClass:(Class)cls
@@ -104,6 +106,8 @@
                        target:self
                        action:@selector(ioManagerCalibrationDataReaded:)])
     {
+        OCL_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
+
         [self release];
         return NO;
     }

@@ -120,6 +120,9 @@
 		0A95C82718CDE6A000C66818 /* WiimoteEventSystem+Nunchunk.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A95C82518CDE6A000C66818 /* WiimoteEventSystem+Nunchunk.m */; };
 		0A95C82B18CDE6B100C66818 /* WiimoteEventSystem+ClassicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A95C82918CDE6B100C66818 /* WiimoteEventSystem+ClassicController.m */; };
 		0A95C82F18CDE6C200C66818 /* WiimoteEventSystem+UProController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A95C82D18CDE6C200C66818 /* WiimoteEventSystem+UProController.m */; };
+		0A95C83D18CDF13C00C66818 /* OCLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
+		0A95C83E18CDF15400C66818 /* OCLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
+		0A95C83F18CDF15700C66818 /* OCLog.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
 		0ACC5D3015CAF63B001F1B06 /* WiimoteDeviceReadMemQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC5D2E15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.m */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -139,6 +142,27 @@
 			remoteGlobalIDString = 0A35C63B177879EE00E43A07;
 			remoteInfo = HID;
 		};
+		0A59AF9018CE0BB200F10DA0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C83418CDF12000C66818 /* OCLog.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = OCLog;
+		};
+		0A95C83918CDF12000C66818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C83418CDF12000C66818 /* OCLog.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = OCLog;
+		};
+		0A95C83B18CDF12000C66818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C83418CDF12000C66818 /* OCLog.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A0CA1E418B6108800F5462E;
+			remoteInfo = test;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -148,6 +172,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0A95C83F18CDF15700C66818 /* OCLog.framework in Copy Frameworks */,
 				0A22061F15C2A87F004D168E /* Wiimote.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
@@ -323,6 +348,7 @@
 		0A95C82918CDE6B100C66818 /* WiimoteEventSystem+ClassicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventSystem+ClassicController.m"; sourceTree = "<group>"; };
 		0A95C82C18CDE6C200C66818 /* WiimoteEventSystem+UProController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventSystem+UProController.h"; sourceTree = "<group>"; };
 		0A95C82D18CDE6C200C66818 /* WiimoteEventSystem+UProController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventSystem+UProController.m"; sourceTree = "<group>"; };
+		0A95C83418CDF12000C66818 /* OCLog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCLog.xcodeproj; path = ../OCLog/OCLog.xcodeproj; sourceTree = "<group>"; };
 		0ACC5D2D15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteDeviceReadMemQueue.h; sourceTree = "<group>"; };
 		0ACC5D2E15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteDeviceReadMemQueue.m; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -335,6 +361,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A95C83E18CDF15400C66818 /* OCLog.framework in Frameworks */,
 				0A22061315C2A868004D168E /* Cocoa.framework in Frameworks */,
 				0A22061815C2A86D004D168E /* Wiimote.framework in Frameworks */,
 			);
@@ -353,6 +380,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A95C83D18CDF13C00C66818 /* OCLog.framework in Frameworks */,
 				0A35C79417787A2000E43A07 /* HID.framework in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				0A2205EF15C2A72D004D168E /* IOBluetooth.framework in Frameworks */,
@@ -375,6 +403,7 @@
 		0867D691FE84028FC02AAC07 /* Wiimote */ = {
 			isa = PBXGroup;
 			children = (
+				0A95C83418CDF12000C66818 /* OCLog.xcodeproj */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
@@ -858,6 +887,15 @@
 			name = internal;
 			sourceTree = "<group>";
 		};
+		0A95C83518CDF12000C66818 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A95C83A18CDF12000C66818 /* OCLog.framework */,
+				0A95C83C18CDF12000C66818 /* test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -964,6 +1002,7 @@
 			);
 			dependencies = (
 				0A35C643177879FA00E43A07 /* PBXTargetDependency */,
+				0A59AF9118CE0BB200F10DA0 /* PBXTargetDependency */,
 			);
 			name = Wiimote;
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -992,6 +1031,12 @@
 			mainGroup = 0867D691FE84028FC02AAC07 /* Wiimote */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0A95C83518CDF12000C66818 /* Products */;
+					ProjectRef = 0A95C83418CDF12000C66818 /* OCLog.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				0A35C63B177879EE00E43A07 /* HID */,
@@ -1000,6 +1045,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0A95C83A18CDF12000C66818 /* OCLog.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OCLog.framework;
+			remoteRef = 0A95C83918CDF12000C66818 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0A95C83C18CDF12000C66818 /* test.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = test.app;
+			remoteRef = 0A95C83B18CDF12000C66818 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0A22060615C2A84C004D168E /* Resources */ = {
@@ -1130,6 +1192,11 @@
 			isa = PBXTargetDependency;
 			target = 0A35C63B177879EE00E43A07 /* HID */;
 			targetProxy = 0A35C642177879FA00E43A07 /* PBXContainerItemProxy */;
+		};
+		0A59AF9118CE0BB200F10DA0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OCLog;
+			targetProxy = 0A59AF9018CE0BB200F10DA0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

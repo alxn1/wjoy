@@ -10,6 +10,8 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
+#import <OCLog/OCLog.h>
+
 @protocol IOBluetoothDevicePair_Methods
 
 - (IOReturn)start;
@@ -81,7 +83,10 @@
 	[pair setDelegate:self];
 
 	if([pair start] != kIOReturnSuccess)
+    {
+        OCL_ERROR(@"[IOBluetoothDevicePair start] failed");
 		[self release];
+    }
 }
 
 - (NSData*)makePINCodeForDevice:(IOBluetoothDevice*)device
@@ -135,6 +140,8 @@
 			[self runWithDevice:[sender device]];
 			return;
 		}
+
+        OCL_ERROR_F(@"failed with error: %i", error);
 	}
 
 	[self release];

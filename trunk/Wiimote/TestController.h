@@ -8,18 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface TestController : NSObject
+#import <OCLog/OCLog.h>
+
+@interface TestController : NSObject< OCLogHandler >
 {
     @private
         IBOutlet NSTextView     *m_Log;
         IBOutlet NSButton       *m_DiscoveryButton;
         IBOutlet NSTextField    *m_ConnectedTextField;
+        IBOutlet NSButton       *m_DebugCheckBox;
 
         NSUInteger               m_ConnectedWiimotes;
         BOOL                     m_IsDiscovering;
 }
 
 - (IBAction)toggleUseOneButtonClickConnection:(id)sender;
+- (IBAction)toggleDebugOutput:(id)sender;
 - (IBAction)discovery:(id)sender;
 - (IBAction)clearLog:(id)sender;
 
