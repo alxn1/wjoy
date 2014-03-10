@@ -54,6 +54,13 @@
 
         object = [en nextObject];
     }
+
+    [[NSNotificationCenter defaultCenter]
+                            postNotificationName:WiimoteEventSystemNotification
+                                          object:self
+                                        userInfo:[NSDictionary
+                                                        dictionaryWithObject:event
+                                                                      forKey:WiimoteEventKey]];
 }
 
 @end

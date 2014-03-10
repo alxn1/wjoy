@@ -7,6 +7,10 @@
 
 #import <Wiimote/WiimoteEvent.h>
 
+FOUNDATION_EXPORT NSString *WiimoteEventSystemNotification;
+
+FOUNDATION_EXPORT NSString *WiimoteEventKey;
+
 @interface NSObject (WiimoteEventSystemObserver)
 
 - (void)wiimoteEvent:(WiimoteEvent*)event;
