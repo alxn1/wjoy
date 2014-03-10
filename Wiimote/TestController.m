@@ -26,6 +26,9 @@
 
 - (void)awakeFromNib
 {
+    [[OCLog sharedLog] setHandler:self];
+    [[OCLog sharedLog] setLevel:OCLogLevelDebug];
+
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
                                        selector:@selector(discoveryBegin)
@@ -54,6 +57,14 @@
 - (IBAction)toggleUseOneButtonClickConnection:(id)sender
 {
     [Wiimote setUseOneButtonClickConnection:[sender state] == NSOnState];
+}
+
+- (IBAction)toggleDebugOutput:(id)sender
+{
+    [[OCLog sharedLog] setLevel:
+                            (([m_DebugCheckBox state] == NSOnState)?
+                                (OCLogLevelDebug):
+                                (OCLogLevelError))];
 }
 
 - (IBAction)discovery:(id)sender
@@ -119,6 +130,22 @@
                                         [[event wiimote] addressString],
                                         [event path],
                                         [event value]]];
+}
+
+- (void)  log:(OCLog*)log
+        level:(OCLogLevel)level
+   sourceFile:(const char*)sourceFile
+         line:(NSUInteger)line
+ functionName:(const char*)functionName
+      message:(NSString*)message
+{
+    [self log:
+        [NSString stringWithFormat:
+                            @"[%s (%llu)]:[%s]: %@",
+                                                sourceFile,
+                                                (unsigned long long)line,
+                                                functionName,
+                                                message]];
 }
 
 - (void)applicationWillTerminateNotification:(NSNotification*)notification

@@ -40,6 +40,8 @@
 		0A22070215C2AF7E004D168E /* Wiimote.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2206E115C2AF0C004D168E /* Wiimote.framework */; };
 		0A22070315C2AF84004D168E /* UserNotification.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2206C115C2AEFC004D168E /* UserNotification.framework */; };
 		0A22071015C2AFB8004D168E /* WiimoteAutoWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A22070F15C2AFB8004D168E /* WiimoteAutoWrapper.m */; };
+		0A95C85A18CE0AAF00C66818 /* OCLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C84F18CE0A9D00C66818 /* OCLog.framework */; };
+		0A95C85B18CE0ABF00C66818 /* OCLog.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C84F18CE0A9D00C66818 /* OCLog.framework */; };
 		0A98970215C2C2D800989D9D /* LoginItemsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98970115C2C2D800989D9D /* LoginItemsList.m */; };
 		0A98991C15C2C45A00989D9D /* NotificationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98991B15C2C45A00989D9D /* NotificationCenter.m */; };
 		0A98995A15C2C8AC00989D9D /* WiimoteLEDsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A98995915C2C8AC00989D9D /* WiimoteLEDsController.m */; };
@@ -197,6 +199,27 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = UserNotification;
 		};
+		0A95C84E18CE0A9D00C66818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = OCLog;
+		};
+		0A95C85018CE0A9D00C66818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A0CA1E418B6108800F5462E;
+			remoteInfo = test;
+		};
+		0A95C85C18CE0AD000C66818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = OCLog;
+		};
 		0AAE23FA1780776900718591 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */;
@@ -213,6 +236,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				0A95C85B18CE0ABF00C66818 /* OCLog.framework in Copy Frameworks */,
 				0A22070015C2AF76004D168E /* WirtualJoy.framework in Copy Frameworks */,
 				0A22070115C2AF7A004D168E /* VHID.framework in Copy Frameworks */,
 				0A22070215C2AF7E004D168E /* Wiimote.framework in Copy Frameworks */,
@@ -246,6 +270,7 @@
 		0A2206E415C2AF12004D168E /* WirtualJoy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WirtualJoy.xcodeproj; path = ../WirtualJoy/WirtualJoy.xcodeproj; sourceTree = SOURCE_ROOT; };
 		0A22070E15C2AFB8004D168E /* WiimoteAutoWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteAutoWrapper.h; sourceTree = "<group>"; };
 		0A22070F15C2AFB8004D168E /* WiimoteAutoWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteAutoWrapper.m; sourceTree = "<group>"; };
+		0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCLog.xcodeproj; path = ../OCLog/OCLog.xcodeproj; sourceTree = "<group>"; };
 		0A98970015C2C2D800989D9D /* LoginItemsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemsList.h; sourceTree = "<group>"; };
 		0A98970115C2C2D800989D9D /* LoginItemsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginItemsList.m; sourceTree = "<group>"; };
 		0A98991A15C2C45A00989D9D /* NotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationCenter.h; sourceTree = "<group>"; };
@@ -276,6 +301,7 @@
 				0A2206FD15C2AF59004D168E /* Wiimote.framework in Frameworks */,
 				0A2206FE15C2AF60004D168E /* UserNotification.framework in Frameworks */,
 				0A1F6405162EC5CD004FB111 /* UpdateChecker.framework in Frameworks */,
+				0A95C85A18CE0AAF00C66818 /* OCLog.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +396,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		0A95C84918CE0A9D00C66818 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0A95C84F18CE0A9D00C66818 /* OCLog.framework */,
+				0A95C85118CE0A9D00C66818 /* test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		0A98997315C2C9F000989D9D /* utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -414,6 +449,7 @@
 				0A2206C415C2AF03004D168E /* VHID.xcodeproj */,
 				0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */,
 				0A2206B715C2AEFC004D168E /* UserNotification.xcodeproj */,
+				0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */,
 				0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -475,6 +511,7 @@
 				0A2206F415C2AF2A004D168E /* PBXTargetDependency */,
 				0A2206FA15C2AF33004D168E /* PBXTargetDependency */,
 				0A1F6404162EC5BA004FB111 /* PBXTargetDependency */,
+				0A95C85D18CE0AD000C66818 /* PBXTargetDependency */,
 			);
 			name = WJoy;
 			productInstallPath = "$(HOME)/Applications";
@@ -505,6 +542,10 @@
 				{
 					ProductGroup = 0A1613F3172979CA00F0D5B2 /* Products */;
 					ProjectRef = 0A1613F2172979CA00F0D5B2 /* DMGEULA.xcodeproj */;
+				},
+				{
+					ProductGroup = 0A95C84918CE0A9D00C66818 /* Products */;
+					ProjectRef = 0A95C84818CE0A9D00C66818 /* OCLog.xcodeproj */;
 				},
 				{
 					ProductGroup = 0A1F63F7162EC58A004FB111 /* Products */;
@@ -634,6 +675,20 @@
 			remoteRef = 0A2206F115C2AF12004D168E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		0A95C84F18CE0A9D00C66818 /* OCLog.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OCLog.framework;
+			remoteRef = 0A95C84E18CE0A9D00C66818 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0A95C85118CE0A9D00C66818 /* test.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = test.app;
+			remoteRef = 0A95C85018CE0A9D00C66818 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		0AAE23FB1780776900718591 /* HID.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -727,6 +782,11 @@
 			isa = PBXTargetDependency;
 			name = UserNotification;
 			targetProxy = 0A2206F915C2AF33004D168E /* PBXContainerItemProxy */;
+		};
+		0A95C85D18CE0AD000C66818 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OCLog;
+			targetProxy = 0A95C85C18CE0AD000C66818 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

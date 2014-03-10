@@ -23,7 +23,8 @@ typedef enum {
 #define OCL_ERROR_F(msg ...)    OCL_MESSAGE(OCLogLevelError, msg)
 
 #define OCL_MESSAGE(lvl, msg ...)                                               \
-            do {                                                                \
+            do                                                                  \
+            {                                                                   \
                 if(lvl <= [[OCLog sharedLog] level])                            \
                 {                                                               \
                     [[OCLog sharedLog]                                          \
