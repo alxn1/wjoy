@@ -18,7 +18,7 @@ OSDefineMetaClassAndStructors(WirtualJoyDevice, super)
 
 bool WirtualJoyDevice::parseHidDescriptor(
                                 const void *hidDescriptorData,
-                                size_t hidDescriptorDataSize)
+                                size_t      hidDescriptorDataSize)
 {
     HIDPreparsedDataRef preparsedDataRef = 0;
 
@@ -37,14 +37,17 @@ bool WirtualJoyDevice::parseHidDescriptor(
 
 WirtualJoyDevice *WirtualJoyDevice::withHidDescriptor(
                                 const void *hidDescriptorData,
-                                size_t hidDescriptorDataSize,
-                                OSString *productString)
+                                size_t      hidDescriptorDataSize,
+                                OSString   *productString,
+                                OSString   *serialNumberString,
+                                uint32_t    vendorID,
+                                uint32_t    productID)
 {
     WirtualJoyDevice *result = new WirtualJoyDevice();
 
     if(result != 0)
     {
-        if(!result->init(hidDescriptorData, hidDescriptorDataSize, productString))
+        if(!result->init(hidDescriptorData, hidDescriptorDataSize, productString, serialNumberString, vendorID, productID))
         {
             result->release();
             result = 0;
@@ -55,12 +58,18 @@ WirtualJoyDevice *WirtualJoyDevice::withHidDescriptor(
 }
 
 bool WirtualJoyDevice::init(
-                const void *hidDescriptorData,
-                size_t hidDescriptorDataSize,
-                OSString *productString,
-                OSDictionary *dictionary)
+                const void      *hidDescriptorData,
+                size_t           hidDescriptorDataSize,
+                OSString        *productString,
+                OSString        *serialNumberString,
+                uint32_t         vendorID,
+                uint32_t         productID,
+                OSDictionary    *dictionary)
 {
     m_ProductString         = 0;
+    m_SerialNumberString    = 0;
+    m_VendorID              = vendorID;
+    m_ProductID             = productID;
     m_HIDReportDescriptor   = 0;
     m_StateBuffer           = 0;
 
@@ -79,27 +88,34 @@ bool WirtualJoyDevice::init(
     if(m_Capabilities.inputReportByteLength > kMaxHIDReportSize)
         return false;
 
-    if(m_Capabilities.usagePage == kHIDPage_GenericDesktop &&
-       m_Capabilities.usage     == kHIDUsage_GD_Mouse)
+    if(m_Capabilities.usagePage == kHIDPage_GenericDesktop)
     {
-        // hack for Apple HID subsystem
-        OSString *str = OSString::withCString("Mouse");
-        if(str == NULL)
-            return false;
-
-        if(!setProperty("HIDDefaultBehavior", str))
+       if(m_Capabilities.usage == kHIDUsage_GD_Mouse ||
+          m_Capabilities.usage == kHIDUsage_GD_Keyboard)
         {
-            str->release();
-            return false;
-        }
+            // hack for Apple HID subsystem
+            OSString *str = OSString::withCString(
+                                        (m_Capabilities.usage == kHIDUsage_GD_Mouse)?
+                                            ("Mouse"):
+                                            ("Keyboard"));
 
-        str->release();
+            if(str == NULL)
+                return false;
+
+            if(!setProperty("HIDDefaultBehavior", str))
+            {
+                str->release();
+                return false;
+            }
+
+            str->release();
+        }
     }
 
     m_HIDReportDescriptor = IOBufferMemoryDescriptor::withBytes(
-                                                hidDescriptorData,
-                                                hidDescriptorDataSize,
-                                                kIODirectionInOut);
+                                                        hidDescriptorData,
+                                                        hidDescriptorDataSize,
+                                                        kIODirectionInOut);
 
     if(m_HIDReportDescriptor == 0)
         return false;
@@ -120,7 +136,10 @@ bool WirtualJoyDevice::init(
         m_LocationID = lastId;
     }
 
-    m_ProductString = productString;
+    m_ProductString         = productString;
+    m_SerialNumberString    = serialNumberString;
+
+    m_SerialNumberString->retain();
     m_ProductString->retain();
 
     dmsg("init");
@@ -148,7 +167,7 @@ OSString *WirtualJoyDevice::newTransportString() const
 
 OSString *WirtualJoyDevice::newManufacturerString() const
 {
-    return OSString::withCString("Alxn1");
+    return OSString::withCString("alxn1");
 }
 
 OSString *WirtualJoyDevice::newProductString() const
@@ -158,7 +177,7 @@ OSString *WirtualJoyDevice::newProductString() const
 
 OSString *WirtualJoyDevice::newSerialNumberString() const
 {
-	return OSString::withCString("00000000");
+	return OSString::withString(m_SerialNumberString);
 }
 
 OSNumber *WirtualJoyDevice::newVersionNumber() const
@@ -174,14 +193,12 @@ OSNumber *WirtualJoyDevice::newSerialNumber() const
 
 OSNumber *WirtualJoyDevice::newVendorIDNumber() const
 {
-	uint32_t number = 0;
-	return OSNumber::withNumber(number, 32);
+	return OSNumber::withNumber(m_VendorID, 32);
 }
 
 OSNumber *WirtualJoyDevice::newProductIDNumber() const
 {
-	uint32_t number = 0;
-	return OSNumber::withNumber(number, 32);
+	return OSNumber::withNumber(m_ProductID, 32);
 }
 
 OSNumber *WirtualJoyDevice::newPrimaryUsageNumber() const
@@ -224,6 +241,9 @@ void WirtualJoyDevice::free()
 {
     if(m_ProductString != 0)
         m_ProductString->release();
+
+    if(m_SerialNumberString != 0)
+        m_SerialNumberString->release();
 
     if(m_HIDReportDescriptor != 0)
         m_HIDReportDescriptor->release();

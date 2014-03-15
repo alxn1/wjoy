@@ -33,27 +33,32 @@ class WirtualJoyUserClient : public IOUserClient
         virtual bool didTerminate(IOService *provider, IOOptionBits options, bool *defer);
 
         virtual IOReturn externalMethod(
-                                    uint32_t selector,
-                                    IOExternalMethodArguments *arguments,
-									IOExternalMethodDispatch *dispatch,
-                                    OSObject *target,
-                                    void *reference);
+                                    uint32_t                     selector,
+                                    IOExternalMethodArguments   *arguments,
+									IOExternalMethodDispatch    *dispatch,
+                                    OSObject                    *target,
+                                    void                        *reference);
 
     protected:
         virtual void free();
 
     private:
-        static const size_t                     externalMethodCount = 4;
+        static const size_t                     externalMethodCount = 6;
         static const IOExternalMethodDispatch   externalMethodDispatchTable[externalMethodCount];
 
-        WirtualJoy *m_Owner;
-        WirtualJoyDevice *m_Device;
-        OSString *m_DeviceProductString;
+        WirtualJoy          *m_Owner;
+        WirtualJoyDevice    *m_Device;
+        OSString            *m_DeviceProductString;
+        OSString            *m_DeviceSerialNumberString;
+        uint32_t             m_DeviceVendorID;
+        uint32_t             m_DeviceProductID;
 
         static IOReturn _enableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _disableDevice(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _updateDeviceState(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
         static IOReturn _setDeviceProductString(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
+        static IOReturn _setDeviceSerialNumberString(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
+        static IOReturn _setDeviceVendorAndProductID(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args);
 
         bool openOwner(WirtualJoy *owner);
         bool closeOwner();
@@ -62,6 +67,8 @@ class WirtualJoyUserClient : public IOUserClient
         IOReturn disableDevice();
         IOReturn updateDeviceState(const void *hidData, uint32_t hidDataSize);
         IOReturn setDeviceProductString(const void *productString, uint32_t productStringSize);
+        IOReturn setDeviceSerialNumberString(const void *serialNumberString, uint32_t serialNumberStringSize);
+        IOReturn setDeviceVendorAndProductID(uint32_t vendorID, uint32_t productID);
 };
 
 #endif /* WIRTUAL_JOY_USER_CLIENT_H */

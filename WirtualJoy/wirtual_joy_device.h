@@ -19,14 +19,20 @@ class WirtualJoyDevice : public IOHIDDevice
     public:
         static WirtualJoyDevice *withHidDescriptor(
                                         const void *hidDescriptorData,
-                                        size_t hidDescriptorDataSize,
-                                        OSString *productString);
+                                        size_t      hidDescriptorDataSize,
+                                        OSString   *productString,
+                                        OSString   *serialNumberString,
+                                        uint32_t    vendorID,
+                                        uint32_t    productID);
 
         virtual bool init(
-                        const void *hidDescriptorData,
-                        size_t hidDescriptorDataSize,
-                        OSString *productString,
-                        OSDictionary *dictionary = 0);
+                        const void      *hidDescriptorData,
+                        size_t           hidDescriptorDataSize,
+                        OSString        *productString,
+                        OSString        *serialNumberString,
+                        uint32_t         vendorID   = 0,
+                        uint32_t         productID  = 0,
+                        OSDictionary    *dictionary = 0);
 
         virtual IOReturn newReportDescriptor(IOMemoryDescriptor **descriptor) const;
 
@@ -57,15 +63,18 @@ class WirtualJoyDevice : public IOHIDDevice
     private:
         static const uint32_t locationIdBase = 0xFAFAFAFA;
 
-        OSString *m_ProductString;
-        HIDCapabilities m_Capabilities;
+        OSString                 *m_ProductString;
+        OSString                 *m_SerialNumberString;
+        uint32_t                  m_VendorID;
+        uint32_t                  m_ProductID;
+        HIDCapabilities           m_Capabilities;
         IOBufferMemoryDescriptor *m_HIDReportDescriptor;
         IOBufferMemoryDescriptor *m_StateBuffer;
-        uint32_t m_LocationID;
+        uint32_t                  m_LocationID;
 
         bool parseHidDescriptor(
                         const void *hidDescriptorData,
-                        size_t hidDescriptorDataSize);
+                        size_t      hidDescriptorDataSize);
 };
 
 #endif /* WIRTUAL_JOY_DEVICE_H */
