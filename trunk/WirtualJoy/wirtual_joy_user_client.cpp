@@ -36,6 +36,16 @@ const IOExternalMethodDispatch WirtualJoyUserClient::externalMethodDispatchTable
     {
         (IOExternalMethodAction) WirtualJoyUserClient::_setDeviceProductString,
         0, kIOUCVariableStructureSize, 0, 0
+    },
+
+    {
+        (IOExternalMethodAction) WirtualJoyUserClient::_setDeviceSerialNumberString,
+        0, kIOUCVariableStructureSize, 0, 0
+    },
+
+    {
+        (IOExternalMethodAction) WirtualJoyUserClient::_setDeviceVendorAndProductID,
+        0, kIOUCVariableStructureSize, 0, 0
     }
 };
 
@@ -73,6 +83,28 @@ IOReturn WirtualJoyUserClient::_setDeviceProductString(WirtualJoyUserClient *tar
     return target->setDeviceProductString(args->structureInput, args->structureInputSize);
 }
 
+IOReturn WirtualJoyUserClient::_setDeviceSerialNumberString(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args)
+{
+    return target->setDeviceSerialNumberString(args->structureInput, args->structureInputSize);
+}
+
+IOReturn WirtualJoyUserClient::_setDeviceVendorAndProductID(WirtualJoyUserClient *target, void *reference, IOExternalMethodArguments *args)
+{
+    const char *data        = static_cast< const char* >(args->structureInput);
+    size_t      dataSize    = args->structureInputSize;
+
+    if(data == 0 || dataSize < (sizeof(uint32_t) * 2))
+        return kIOReturnBadArgument;
+
+    uint32_t vendorID   = 0;
+    uint32_t productID  = 0;
+
+    memcpy(&vendorID, data, sizeof(int32_t));
+    memcpy(&productID, data + sizeof(uint32_t), sizeof(uint32_t));
+
+    return target->setDeviceVendorAndProductID(vendorID, productID);
+}
+
 bool WirtualJoyUserClient::openOwner(WirtualJoy *owner)
 {
     if(owner == 0 || isInactive())
@@ -108,9 +140,12 @@ bool WirtualJoyUserClient::initWithTask(
     if(!super::initWithTask(owningTask, securityToken, type, properties))
         return false;
 
-    m_Owner = 0;
-    m_Device = 0;
-    m_DeviceProductString = OSString::withCString("WJoy Virtual HID Device");
+    m_Owner                     = 0;
+    m_Device                    = 0;
+    m_DeviceProductString       = OSString::withCString("WJoy Virtual HID Device");
+    m_DeviceSerialNumberString  = OSString::withCString("000000000000");
+    m_DeviceVendorID            = 0;
+    m_DeviceProductID           = 0;
 
     dmsg("initWithTask");
     return true;
@@ -120,6 +155,9 @@ void WirtualJoyUserClient::free()
 {
     if(m_DeviceProductString != 0)
         m_DeviceProductString->release();
+
+    if(m_DeviceSerialNumberString != 0)
+        m_DeviceSerialNumberString->release();
 
     dmsg("free");
     super::free();
@@ -168,11 +206,11 @@ bool WirtualJoyUserClient::didTerminate(IOService *provider, IOOptionBits option
 }
 
 IOReturn WirtualJoyUserClient::externalMethod(
-                                    uint32_t selector,
-                                    IOExternalMethodArguments *arguments,
-									IOExternalMethodDispatch *dispatch,
-                                    OSObject *target,
-                                    void *reference)
+                                    uint32_t                     selector,
+                                    IOExternalMethodArguments   *arguments,
+									IOExternalMethodDispatch    *dispatch,
+                                    OSObject                    *target,
+                                    void                        *reference)
 {
     dmsg("externalMehtod");
 
@@ -200,7 +238,10 @@ IOReturn WirtualJoyUserClient::enableDevice(const void *hidDescriptorData, uint3
     m_Device = WirtualJoyDevice::withHidDescriptor(
                                             hidDescriptorData,
                                             hidDescriptorDataSize,
-                                            m_DeviceProductString);
+                                            m_DeviceProductString,
+                                            m_DeviceSerialNumberString,
+                                            m_DeviceVendorID,
+                                            m_DeviceProductID);
 
     if(m_Device == 0)
         return kIOReturnDeviceError;
@@ -239,7 +280,7 @@ IOReturn WirtualJoyUserClient::disableDevice()
 
 IOReturn WirtualJoyUserClient::updateDeviceState(const void *hidData, uint32_t hidDataSize)
 {
-    dmsgf("updateDeviceState, param size = %d", hidDataSize);
+    // dmsgf("updateDeviceState, param size = %d", hidDataSize);
 
     if(m_Device == 0)
         return kIOReturnNoDevice;
@@ -270,5 +311,41 @@ IOReturn WirtualJoyUserClient::setDeviceProductString(const void *productString,
     m_DeviceProductString = newStr;
 
     dmsgf("newProductString = %s", newStr->getCStringNoCopy());
+    return kIOReturnSuccess;
+}
+
+IOReturn WirtualJoyUserClient::setDeviceSerialNumberString(const void *serialNumberString, uint32_t serialNumberStringSize)
+{
+    dmsgf("setDeviceSerialNumberString, serialNumberString size = %d", serialNumberStringSize);
+
+    if(m_Device != 0)
+        return kIOReturnBusy;
+
+    if(!checkString(static_cast< const char* >(serialNumberString), serialNumberStringSize))
+        return kIOReturnInvalid;
+
+    OSString *newStr = OSString::withCString(static_cast< const char* >(serialNumberString));
+    if(newStr == 0)
+        return kIOReturnNoMemory;
+
+    if(m_DeviceSerialNumberString != 0)
+        m_DeviceSerialNumberString->release();
+
+    m_DeviceSerialNumberString = newStr;
+
+    dmsgf("newSerialNumberString = %s", newStr->getCStringNoCopy());
+    return kIOReturnSuccess;
+}
+
+IOReturn WirtualJoyUserClient::setDeviceVendorAndProductID(uint32_t vendorID, uint32_t productID)
+{
+    dmsgf("setDeviceVendorAndProductID, vendorID = %d, productID = %d", vendorID, productID);
+
+    if(m_Device != 0)
+        return kIOReturnBusy;
+
+    m_DeviceVendorID    = vendorID;
+    m_DeviceProductID   = productID;
+
     return kIOReturnSuccess;
 }

@@ -19,7 +19,19 @@
 + (BOOL)prepare;
 
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor;
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString;
+
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
+              productString:(NSString*)productString;
+
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
+              productString:(NSString*)productString
+  productSerialNumberString:(NSString*)productSerialNumberString;
+
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
+                   vendorID:(uint32_t)vendorID
+                  productID:(uint32_t)productID
+              productString:(NSString*)productString
+  productSerialNumberString:(NSString*)productSerialNumberString;
 
 - (BOOL)updateHIDState:(NSData*)HIDState;
 
