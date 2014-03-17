@@ -10,28 +10,25 @@
 
 @class WJoyDeviceImpl;
 
+FOUNDATION_EXTERN NSString *WJoyDeviceVendorIDKey;           // NSNumber (NSUInteger as uint32_t)
+FOUNDATION_EXTERN NSString *WJoyDeviceProductIDKey;          // NSNumber (NSUInteger as uint32_t)
+FOUNDATION_EXTERN NSString *WJoyDeviceProductStringKey;      // NSString
+FOUNDATION_EXTERN NSString *WJoyDeviceSerialNumberStringKey; // NSString
+
 @interface WJoyDevice : NSObject
 {
     @private
         WJoyDeviceImpl *m_Impl;
+        NSDictionary   *m_Properties;
 }
 
 + (BOOL)prepare;
 
 - (id)initWithHIDDescriptor:(NSData*)HIDDescriptor;
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor productString:(NSString*)productString;
+- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor properties:(NSDictionary*)properties;
 
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
-              productString:(NSString*)productString;
-
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
-              productString:(NSString*)productString
-  productSerialNumberString:(NSString*)productSerialNumberString;
-
-- (id)initWithHIDDescriptor:(NSData*)HIDDescriptor
-                   vendorID:(uint32_t)vendorID
-                  productID:(uint32_t)productID
-              productString:(NSString*)productString
-  productSerialNumberString:(NSString*)productSerialNumberString;
+- (NSDictionary*)properties;
 
 - (BOOL)updateHIDState:(NSData*)HIDState;
 
