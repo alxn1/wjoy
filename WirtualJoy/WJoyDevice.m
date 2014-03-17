@@ -93,7 +93,7 @@ NSString *WJoyDeviceSerialNumberStringKey   = @"WJoyDeviceSerialNumberStringKey"
 
 - (BOOL)updateHIDState:(NSData*)HIDState
 {
-    return [m_Impl call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
+    return [m_Impl updateState:HIDState];
 }
 
 @end
