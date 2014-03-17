@@ -42,6 +42,6 @@ typedef enum
 - (BOOL)enable:(NSData*)HIDDescriptor;
 - (BOOL)disable;
 
-- (BOOL)updateState:(NSData*)state;
+- (BOOL)updateState:(NSData*)HIDState;
 
 @end

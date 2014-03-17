@@ -128,9 +128,9 @@
     return [self call:WJoyDeviceMethodSelectorDisable];
 }
 
-- (BOOL)updateState:(NSData*)state
+- (BOOL)updateState:(NSData*)HIDState
 {
-    return [self call:WJoyDeviceMethodSelectorUpdateState data:state];
+    return [self call:WJoyDeviceMethodSelectorUpdateState data:HIDState];
 }
 
 @end
