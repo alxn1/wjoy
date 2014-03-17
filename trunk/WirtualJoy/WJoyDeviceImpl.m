@@ -85,6 +85,54 @@
                             NULL) == KERN_SUCCESS);
 }
 
+- (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString*)string
+{
+    const char *data = [string UTF8String];
+    size_t      size = strlen(data) + 1; // zero-terminator
+
+    return [self call:selector data:[NSData dataWithBytes:data length:size]];
+}
+
+@end
+
+@implementation WJoyDeviceImpl (Methods)
+
+- (BOOL)setDeviceProductString:(NSString*)string
+{
+    return [self call:WJoyDeviceMethodSelectorSetDeviceProductString string:string];
+}
+
+- (BOOL)setDeviceSerialNumberString:(NSString*)string
+{
+    return [self call:WJoyDeviceMethodSelectorSetDeviceSerialNumberString string:string];
+}
+
+- (BOOL)setDeviceVendorID:(uint32_t)vendorID productID:(uint32_t)productID
+{
+    char data[sizeof(uint32_t) * 2] = { 0 };
+
+    memcpy(data, vendorID, sizeof(uint32_t));
+    memcpy(data + sizeof(uint32_t), productID, sizeof(uint32_t));
+
+    return [self call:WJoyDeviceMethodSelectorSetDeviceVendorAndProductID
+                 data:[NSData dataWithBytes:data length:sizeof(data)]];
+}
+
+- (BOOL)enable:(NSData*)HIDDescriptor
+{
+    return [self call:WJoyDeviceMethodSelectorEnable data:HIDDescriptor];
+}
+
+- (BOOL)disable
+{
+    return [self call:WJoyDeviceMethodSelectorDisable];
+}
+
+- (BOOL)updateState:(NSData*)state
+{
+    return [self call:WJoyDeviceMethodSelectorUpdateState data:state];
+}
+
 @end
 
 @implementation WJoyDeviceImpl (PrivatePart)

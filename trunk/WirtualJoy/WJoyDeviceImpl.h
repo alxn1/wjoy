@@ -29,5 +29,19 @@ typedef enum
 
 - (BOOL)call:(WJoyDeviceMethodSelector)selector;
 - (BOOL)call:(WJoyDeviceMethodSelector)selector data:(NSData*)data;
+- (BOOL)call:(WJoyDeviceMethodSelector)selector string:(NSString*)string;
+
+@end
+
+@interface WJoyDeviceImpl (Methods)
+
+- (BOOL)setDeviceProductString:(NSString*)string;
+- (BOOL)setDeviceSerialNumberString:(NSString*)string;
+- (BOOL)setDeviceVendorID:(uint32_t)vendorID productID:(uint32_t)productID;
+
+- (BOOL)enable:(NSData*)HIDDescriptor;
+- (BOOL)disable;
+
+- (BOOL)updateState:(NSData*)state;
 
 @end
