@@ -11,7 +11,7 @@
 #import "WiimoteProtocol.h"
 #import "WiimoteDevice.h"
 
-#import <OCLog/OCLog.h>
+#import "WiimoteLog.h"
 
 @interface WiimoteDeviceReadMemQueue (PrivatePart)
 
@@ -169,7 +169,7 @@
         return YES;
     }
 
-    OCL_ERROR(@"[WiimoteDevice postCommand: data: length:] failed");
+    W_ERROR(@"[WiimoteDevice postCommand: data: length:] failed");
     [handler errorOccured];
     return NO;
 }

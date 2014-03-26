@@ -10,7 +10,7 @@
 
 #import <IOBluetooth/IOBluetooth.h>
 
-#import <OCLog/OCLog.h>
+#import "WiimoteLog.h"
 
 @protocol IOBluetoothDevicePair_Methods
 
@@ -84,7 +84,7 @@
 
 	if([pair start] != kIOReturnSuccess)
     {
-        OCL_ERROR(@"[IOBluetoothDevicePair start] failed");
+        W_ERROR(@"[IOBluetoothDevicePair start] failed");
 		[self release];
     }
 }
@@ -141,7 +141,7 @@
 			return;
 		}
 
-        OCL_ERROR_F(@"failed with error: %i", error);
+        W_ERROR_F(@"failed with error: %i", error);
 	}
 
 	[self release];

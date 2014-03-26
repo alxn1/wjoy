@@ -9,7 +9,7 @@
 #import "WiimoteExtensionProbeHandler.h"
 #import "WiimoteExtension+PlugIn.h"
 
-#import <OCLog/OCLog.h>
+#import "WiimoteLog.h"
 
 @interface WiimoteExtensionRoutineProbeHandler : WiimoteExtensionProbeHandler
 {
@@ -53,7 +53,7 @@
                      target:self
                      action:@selector(ioManagerDataReaded:)])
     {
-        OCL_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
+        W_ERROR(@"[WiimoteIOManager readMemory: target: action:] failed");
         [self probeFinished:NO];
         [self release];
         return nil;
@@ -78,7 +78,7 @@
 
     if([data length] < [[m_Signatures objectAtIndex:0] length])
     {
-        OCL_ERROR(@"readed data chunk too small");
+        W_ERROR(@"readed data chunk too small");
         [self probeFinished:NO];
         [self release];
         return;
@@ -96,7 +96,7 @@
 		}
 	}
 
-    OCL_DEBUG_F(@"probe finished (%@): %@", data, ((isOk)?(@"Ok"):(@"Not Ok")));
+    W_DEBUG_F(@"probe finished (%@): %@", data, ((isOk)?(@"Ok"):(@"Not Ok")));
     [self probeFinished:isOk];
     [self release];
 }
