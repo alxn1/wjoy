@@ -14,7 +14,7 @@
 
 #import <HID/HIDManager.h>
 
-#import <OCLog/OCLog.h>
+#import "WiimoteLog.h"
 
 #import <dlfcn.h>
 
@@ -142,7 +142,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
 	if([m_Inquiry start] != kIOReturnSuccess)
     {
-        OCL_ERROR(@"[IOBluetoothDeviceInquiry start] failed");
+        W_ERROR(@"[IOBluetoothDeviceInquiry start] failed");
 		[self stop];
 		return NO;
 	}
@@ -189,14 +189,14 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 	HIDDevice	*device		= [[notification userInfo] objectForKey:HIDManagerDeviceKey];
 	NSString	*deviceName	= [device name];
 
-    OCL_DEBUG_F(@"hid device connected: %@", deviceName);
+    W_DEBUG_F(@"hid device connected: %@", deviceName);
 	if([WiimoteInquiry isModelSupported:deviceName])
     {
-        OCL_DEBUG(@"connecting...");
+        W_DEBUG(@"connecting...");
 		[Wiimote connectToHIDDevice:device];
     }
     else
-        OCL_DEBUG(@"not supported");
+        W_DEBUG(@"not supported");
 }
 
 @end
@@ -244,15 +244,15 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     {
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
-        OCL_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
+        W_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
         if([WiimoteInquiry isModelSupported:[device getName]])
 		{
-            OCL_DEBUG(@"connecting...");
+            W_DEBUG(@"connecting...");
             [self postIgnoreHintToSystem:[device getDeviceRef]];
             [Wiimote connectToBluetoothDevice:device];
 		}
         else
-            OCL_DEBUG(@"not supported");
+            W_DEBUG(@"not supported");
     }
 }
 
@@ -264,19 +264,19 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     {
         IOBluetoothDevice *device = [devices objectAtIndex:i];
 
-        OCL_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
+        W_DEBUG_F(@"bluetooth device connected: %@", [device getName]);
         if([WiimoteInquiry isModelSupported:[device getName]])
 		{
 			if(![device isPaired])
             {
-                OCL_DEBUG(@"pairing...");
+                W_DEBUG(@"pairing...");
 				[WiimoteDevicePair pairWithDevice:device];
             }
             else
-                OCL_DEBUG(@"already paired");
+                W_DEBUG(@"already paired");
 		}
         else
-            OCL_DEBUG(@"not supported");
+            W_DEBUG(@"not supported");
     }
 }
 
@@ -301,19 +301,19 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
 
     while(device != nil)
     {
-        OCL_DEBUG_F(@"hid device connected: %@", [device name]);
+        W_DEBUG_F(@"hid device connected: %@", [device name]);
         if(![self isHIDDeviceAlreadyConnected:device wiimotes:wiimotes])
         {
             if([WiimoteInquiry isModelSupported:[device name]])
             {
-                OCL_DEBUG(@"connecting...");
+                W_DEBUG(@"connecting...");
                 [Wiimote connectToHIDDevice:device];
             }
             else
-                OCL_DEBUG(@"not supported");
+                W_DEBUG(@"not supported");
         }
         else
-            OCL_DEBUG(@"already connected");
+            W_DEBUG(@"already connected");
 
         device = [en nextObject];
     }
@@ -345,7 +345,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
             [self connectToDevices:[m_Inquiry foundDevices]];
     }
     else
-        OCL_ERROR(@"inquiry failed");
+        W_ERROR(@"inquiry failed");
 
     [self stop];
 

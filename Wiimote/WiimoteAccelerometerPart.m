@@ -87,7 +87,7 @@
     if([report length] < sizeof(WiimoteDeviceButtonAndAccelerometerStateReport))
         return;
 
-    WiimoteDeviceReportType reportType = [report type];
+    WiimoteDeviceReportType reportType = (WiimoteDeviceReportType)[report type];
 
     switch(reportType)
     {

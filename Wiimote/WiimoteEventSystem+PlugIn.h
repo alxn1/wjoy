@@ -2,7 +2,7 @@
 //  WiimoteEventSystem+PlugIn.h
 //  Wiimote
 //
-//  Created by Alxn1 on 18.01.14.
+//  Created by alxn1 on 18.01.14.
 //
 
 #import <Wiimote/WiimoteEventSystem.h>

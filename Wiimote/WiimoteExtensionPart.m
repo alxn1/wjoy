@@ -206,7 +206,7 @@ static NSInteger sortExtensionClassesByMeritFn(Class cls1, Class cls2, void *con
 
 - (const uint8_t*)extractExtensionReportPart:(WiimoteDeviceReport*)report length:(NSUInteger*)length;
 {
-    WiimoteDeviceReportType reportType              = [report type];
+    WiimoteDeviceReportType reportType              = (WiimoteDeviceReportType)[report type];
     NSUInteger              extensionBytesOffset    = 0;
     NSUInteger              extensionBytesSize      = 0;
 

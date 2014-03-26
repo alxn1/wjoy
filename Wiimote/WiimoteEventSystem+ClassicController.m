@@ -2,7 +2,7 @@
 //  WiimoteEventSystem+ClassicController.m
 //  Wiimote
 //
-//  Created by Alxn1 on 10.03.14.
+//  Created by alxn1 on 10.03.14.
 //
 //
 
