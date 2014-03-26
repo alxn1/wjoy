@@ -115,7 +115,7 @@
     if(![self isEnabled])
         return;
 
-    WiimoteDeviceReportType reportType      = [report type];
+    WiimoteDeviceReportType reportType      = (WiimoteDeviceReportType)[report type];
     NSUInteger              irDataOffset    = 0;
     NSUInteger              irDataSize      = 0;
 
