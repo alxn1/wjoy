@@ -16,6 +16,7 @@ int main(int argC, char *argV[])
     wmc_set_log_level(wmc_log_level_debug);
     wmc_set_one_button_click_connection_enabled(1);
 
+    wmc_begin_discovery();
     while(wmc_get_count_connected() == 0) {}
 
     wmc_w_play_connect_effect(0);
