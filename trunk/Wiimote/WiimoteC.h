@@ -14,9 +14,9 @@
 #endif
 
 typedef enum {
-    wmc_log_level_error             = 0,
-    wmc_log_level_warning           = 1,
-    wmc_log_level_debug             = 2
+    wmc_log_level_error             =  0,
+    wmc_log_level_warning           =  1,
+    wmc_log_level_debug             =  2
 } wmc_log_level;
 
 typedef enum
@@ -44,8 +44,8 @@ typedef enum
 
 typedef enum
 {
-	wmc_nunchuck_button_c           = 0,
-	wmc_nunchuck_button_z           = 1
+	wmc_nunchuck_button_c           =  0,
+	wmc_nunchuck_button_z           =  1
 } wmc_nunchuck_button;
 
 typedef enum {
@@ -67,13 +67,13 @@ typedef enum {
 } wmc_ccontroller_button;
 
 typedef enum {
-    wmc_ccontroller_stick_left      = 1,
-    wmc_ccontroller_stick_right     = 2
+    wmc_ccontroller_stick_left      =  1,
+    wmc_ccontroller_stick_right     =  2
 } wmc_ccontroller_stick;
 
 typedef enum {
-    wmc_ccontroller_shift_left      = 1,
-    wmc_ccontroller_shift_right     = 2
+    wmc_ccontroller_shift_left      =  1,
+    wmc_ccontroller_shift_right     =  2
 } wmc_ccontroller_shift;
 
 typedef enum {
@@ -94,8 +94,8 @@ typedef enum {
 } wmc_upro_button;
 
 typedef enum {
-    wmc_upro_stick_left             = 1,
-    wmc_upro_stick_right            = 2
+    wmc_upro_stick_left             =  1,
+    wmc_upro_stick_right            =  2
 } wmc_upro_stick;
 
 //------------------------------------------------------------------------------
