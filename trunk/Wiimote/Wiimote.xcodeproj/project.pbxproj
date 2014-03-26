@@ -185,6 +185,9 @@
 		0A95C83D18CDF13C00C66818 /* OCLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
 		0A95C83E18CDF15400C66818 /* OCLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
 		0A95C83F18CDF15700C66818 /* OCLog.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 0A95C83A18CDF12000C66818 /* OCLog.framework */; };
+		0ABEEC7E18E34BA9001F03D3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ABEEC7D18E34BA9001F03D3 /* Foundation.framework */; };
+		0ABEEC8C18E34C0B001F03D3 /* wc_main.c in Sources */ = {isa = PBXBuildFile; fileRef = 0ABEEC8B18E34C0B001F03D3 /* wc_main.c */; };
+		0ABEEC8D18E34C3C001F03D3 /* libWiimoteC.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D7EC818E1805A00E46316 /* libWiimoteC.dylib */; };
 		0ACC5D3015CAF63B001F1B06 /* WiimoteDeviceReadMemQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC5D2E15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.m */; };
 		0AF0E74118E183D300CB6662 /* WiimoteLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 0AF0E73F18E183D300CB6662 /* WiimoteLog.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0AF0E74318E183D300CB6662 /* WiimoteLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AF0E74018E183D300CB6662 /* WiimoteLog.m */; };
@@ -228,6 +231,13 @@
 			remoteGlobalIDString = 0A0CA1E418B6108800F5462E;
 			remoteInfo = test;
 		};
+		0ABEEC8E18E34C49001F03D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0A7D7EC718E1805A00E46316;
+			remoteInfo = WiimoteC;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -253,6 +263,15 @@
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0ABEEC7918E34BA9001F03D3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -417,6 +436,9 @@
 		0A95C82C18CDE6C200C66818 /* WiimoteEventSystem+UProController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WiimoteEventSystem+UProController.h"; sourceTree = "<group>"; };
 		0A95C82D18CDE6C200C66818 /* WiimoteEventSystem+UProController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WiimoteEventSystem+UProController.m"; sourceTree = "<group>"; };
 		0A95C83418CDF12000C66818 /* OCLog.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OCLog.xcodeproj; path = ../OCLog/OCLog.xcodeproj; sourceTree = "<group>"; };
+		0ABEEC7B18E34BA9001F03D3 /* wc_test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = wc_test; sourceTree = BUILT_PRODUCTS_DIR; };
+		0ABEEC7D18E34BA9001F03D3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0ABEEC8B18E34C0B001F03D3 /* wc_main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = wc_main.c; sourceTree = "<group>"; };
 		0ACC5D2D15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteDeviceReadMemQueue.h; sourceTree = "<group>"; };
 		0ACC5D2E15CAF63A001F1B06 /* WiimoteDeviceReadMemQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WiimoteDeviceReadMemQueue.m; sourceTree = "<group>"; };
 		0AF0E73F18E183D300CB6662 /* WiimoteLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WiimoteLog.h; sourceTree = "<group>"; };
@@ -453,6 +475,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0ABEEC7818E34BA9001F03D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ABEEC8D18E34C3C001F03D3 /* libWiimoteC.dylib in Frameworks */,
+				0ABEEC7E18E34BA9001F03D3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF560486A6940098B216 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -474,6 +505,7 @@
 				0A22060A15C2A84C004D168E /* test.app */,
 				0A35C63C177879EE00E43A07 /* HID.framework */,
 				0A7D7EC818E1805A00E46316 /* libWiimoteC.dylib */,
+				0ABEEC7B18E34BA9001F03D3 /* wc_test */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -484,6 +516,7 @@
 				0A95C83418CDF12000C66818 /* OCLog.xcodeproj */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				0ABEEC7C18E34BA9001F03D3 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
 			name = Wiimote;
@@ -943,6 +976,7 @@
 			children = (
 				0A359C8A18E2D34D0037E661 /* WiimoteC.h */,
 				0A359C8818E2D3430037E661 /* WiimoteC.m */,
+				0ABEEC8A18E34BF6001F03D3 /* test */,
 			);
 			name = "c api";
 			sourceTree = "<group>";
@@ -984,6 +1018,22 @@
 				0A95C83C18CDF12000C66818 /* test.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0ABEEC7C18E34BA9001F03D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0ABEEC7D18E34BA9001F03D3 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0ABEEC8A18E34BF6001F03D3 /* test */ = {
+			isa = PBXGroup;
+			children = (
+				0ABEEC8B18E34C0B001F03D3 /* wc_main.c */,
+			);
+			name = test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1103,6 +1153,24 @@
 			productReference = 0A7D7EC818E1805A00E46316 /* libWiimoteC.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
+		0ABEEC7A18E34BA9001F03D3 /* wc_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0ABEEC8918E34BA9001F03D3 /* Build configuration list for PBXNativeTarget "wc_test" */;
+			buildPhases = (
+				0ABEEC7718E34BA9001F03D3 /* Sources */,
+				0ABEEC7818E34BA9001F03D3 /* Frameworks */,
+				0ABEEC7918E34BA9001F03D3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0ABEEC8F18E34C49001F03D3 /* PBXTargetDependency */,
+			);
+			name = wc_test;
+			productName = wc_test;
+			productReference = 0ABEEC7B18E34BA9001F03D3 /* wc_test */;
+			productType = "com.apple.product-type.tool";
+		};
 		8DC2EF4F0486A6940098B216 /* Wiimote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Wiimote" */;
@@ -1158,6 +1226,7 @@
 				8DC2EF4F0486A6940098B216 /* Wiimote */,
 				0A7D7EC718E1805A00E46316 /* WiimoteC */,
 				0A22060915C2A84C004D168E /* test */,
+				0ABEEC7A18E34BA9001F03D3 /* wc_test */,
 			);
 		};
 /* End PBXProject section */
@@ -1295,6 +1364,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0ABEEC7718E34BA9001F03D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0ABEEC8C18E34C0B001F03D3 /* wc_main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1384,6 +1461,11 @@
 			isa = PBXTargetDependency;
 			name = OCLog;
 			targetProxy = 0A59AF9018CE0BB200F10DA0 /* PBXContainerItemProxy */;
+		};
+		0ABEEC8F18E34C49001F03D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0A7D7EC718E1805A00E46316 /* WiimoteC */;
+			targetProxy = 0ABEEC8E18E34C49001F03D3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1552,6 +1634,74 @@
 			};
 			name = Release;
 		};
+		0ABEEC8618E34BA9001F03D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0ABEEC8718E34BA9001F03D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1640,6 +1790,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		0ABEEC8918E34BA9001F03D3 /* Build configuration list for PBXNativeTarget "wc_test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0ABEEC8618E34BA9001F03D3 /* Debug */,
+				0ABEEC8718E34BA9001F03D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "Wiimote" */ = {
 			isa = XCConfigurationList;
