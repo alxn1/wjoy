@@ -56,7 +56,7 @@
 
 - (NSString*)firstPathComponent
 {
-    return [m_PathComponents firstObject];
+    return [m_PathComponents objectAtIndex:0];
 }
 
 - (NSString*)lastPathComponent
