@@ -73,7 +73,7 @@
 - (void)wiimoteDisconnected:(Wiimote*)wiimote
 {
     // debug message
-    NSLog(@"Wiimote disconnected: %@", [wiimote modelName], [wiimote addressString]);
+    NSLog(@"Wiimote disconnected: %@ (%@)", [wiimote modelName], [wiimote addressString]);
 }
 
 @end
