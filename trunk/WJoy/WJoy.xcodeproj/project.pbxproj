@@ -227,6 +227,20 @@
 			remoteGlobalIDString = 0A35C63C177879EE00E43A07;
 			remoteInfo = HID;
 		};
+		0AB30836190156A600D30327 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0A7D7EC818E1805A00E46316;
+			remoteInfo = WiimoteC;
+		};
+		0AB30838190156A600D30327 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A2206D715C2AF0C004D168E /* Wiimote.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0ABEEC7B18E34BA9001F03D3;
+			remoteInfo = wc_test;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -380,7 +394,9 @@
 			children = (
 				0AAE23FB1780776900718591 /* HID.framework */,
 				0A2206E115C2AF0C004D168E /* Wiimote.framework */,
+				0AB30837190156A600D30327 /* libWiimoteC.dylib */,
 				0A2206E315C2AF0C004D168E /* test.app */,
+				0AB30839190156A600D30327 /* wc_test */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -524,8 +540,6 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "WJoy" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -694,6 +708,20 @@
 			fileType = wrapper.framework;
 			path = HID.framework;
 			remoteRef = 0AAE23FA1780776900718591 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0AB30837190156A600D30327 /* libWiimoteC.dylib */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.dylib";
+			path = libWiimoteC.dylib;
+			remoteRef = 0AB30836190156A600D30327 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0AB30839190156A600D30327 /* wc_test */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = wc_test;
+			remoteRef = 0AB30838190156A600D30327 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
