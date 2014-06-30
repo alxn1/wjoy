@@ -32,18 +32,23 @@
 
 + (void)load
 {
-    NSAutoreleasePool *pool             = [[NSAutoreleasePool alloc] init];
-    Class              dockGlassClass   = NSClassFromString(@"DOCKGlassFloorLayer");
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
-    [dockGlassClass
-            addMethod:[self getMethod:@selector(updateFrame: iconOffset:)]
-                 name:@selector(interceptedUpdateFrame: iconOffset:)];
+    dispatch_async(dispatch_get_main_queue(), ^()
+    {
+        Class dockGlassClass = NSClassFromString(@"DOCKGlassFloorLayer");
 
-    [dockGlassClass
-        swizzleMethod:@selector(updateFrame: iconOffset:)
-           withMethod:@selector(interceptedUpdateFrame: iconOffset:)];
+        [dockGlassClass
+                addMethod:[self getMethod:@selector(updateFrame: iconOffset:)]
+                     name:@selector(interceptedUpdateFrame: iconOffset:)];
 
-    [self refreshDock];
+        [dockGlassClass
+            swizzleMethod:@selector(updateFrame: iconOffset:)
+               withMethod:@selector(interceptedUpdateFrame: iconOffset:)];
+
+        [self refreshDock];
+    });
+
     [pool release];
 }
 
