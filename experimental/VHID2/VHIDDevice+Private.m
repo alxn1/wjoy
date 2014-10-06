@@ -27,6 +27,11 @@
     return ((unsigned char*)[m_State mutableBytes]);
 }
 
+- (void)resetState
+{
+    memset([m_State mutableBytes], 0, [m_State length]);
+}
+
 - (void)notifyAboutStateChanged
 {
     [m_Delegate VHIDDevice:self stateChanted:m_State];
