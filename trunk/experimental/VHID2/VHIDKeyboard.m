@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDKeyboard.h"
+#import <VHID/VHIDKeyboard.h>
 
 #import "VHIDDevice+Private.h"
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDDevice.h"
+#import "VHIDDevice+Private.h"
 
 @implementation VHIDDevice
 
@@ -29,7 +29,8 @@
 
 - (void)reset
 {
-    memset([m_State mutableBytes], 0, [m_State length]);
+    [self resetState];
+    [self notifyAboutStateChanged];
 }
 
 - (id<VHIDDeviceDelegate>)delegate

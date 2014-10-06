@@ -14,6 +14,7 @@
 
 - (unsigned char*)mutableStateBytes;
 
+- (void)resetState;
 - (void)notifyAboutStateChanged;
 
 @end

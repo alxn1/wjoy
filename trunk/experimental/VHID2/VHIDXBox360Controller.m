@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDXBox360Controller.h"
+#import <VHID/VHIDXBox360Controller.h>
 
 #import "VHIDGameController+Private.h"
 
@@ -309,11 +309,11 @@ static const unsigned char buttonMasks[] =
     [self notifyAboutStateChanged];
 }
 
-- (void)reset
+- (void)resetState
 {
     uint8_t *state = [self mutableStateBytes];
 
-    [super reset];
+    [super resetState];
     state[1] = VHID_XBOX360_STATE_SIZE;
 }
 

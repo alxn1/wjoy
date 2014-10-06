@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDGameController.h"
+#import <VHID/VHIDGameController.h>
 
 typedef enum VHIDXbox360ButtonType {
     VHIDXbox360ButtonTypeUp             = 0,

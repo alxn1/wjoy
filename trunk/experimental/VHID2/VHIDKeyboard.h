@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDDevice.h"
+#import <VHID/VHIDDevice.h>
 
 /*
 	0x00	Reserved (no event indicated)

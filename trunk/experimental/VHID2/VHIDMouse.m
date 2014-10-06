@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 alxn1. All rights reserved.
 //
 
-#import "VHIDMouse.h"
+#import <VHID/VHIDMouse.h>
 
 #import "VHIDDevice+Private.h"
 
