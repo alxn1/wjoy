@@ -41,7 +41,7 @@
 
 + (WiimoteExtensionMeritClass)meritClass
 {
-    return WiimoteExtensionMeritClassUser;
+    return WiimoteExtensionMeritClassSystem;
 }
 
 + (NSUInteger)minReportDataSize
