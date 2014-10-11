@@ -20,9 +20,10 @@
 
 #define WIIMOTE_INQUIRY_TIME_IN_SECONDS 10
 
-NSString *WiimoteDeviceName     = @"Nintendo RVL-CNT-01";
-NSString *WiimoteDeviceNameTR   = @"Nintendo RVL-CNT-01-TR";
-NSString *WiimoteDeviceNameUPro = @"Nintendo RVL-CNT-01-UC";
+NSString *WiimoteDeviceName             = @"Nintendo RVL-CNT-01";
+NSString *WiimoteDeviceNameTR           = @"Nintendo RVL-CNT-01-TR";
+NSString *WiimoteDeviceNameUPro         = @"Nintendo RVL-CNT-01-UC";
+NSString *WiimoteDeviceNameBalanceBoard = @"Nintendo RVL-WBC-01";
 
 extern Boolean IOBluetoothLocalDeviceAvailable(void);
 extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *state);
@@ -53,6 +54,7 @@ extern IOReturn IOBluetoothLocalDeviceGetPowerState(BluetoothHCIPowerState *stat
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceName];
     [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameTR];
 	[WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameUPro];
+    [WiimoteInquiry registerSupportedModelName:WiimoteDeviceNameBalanceBoard];
 }
 
 + (BOOL)isBluetoothEnabled

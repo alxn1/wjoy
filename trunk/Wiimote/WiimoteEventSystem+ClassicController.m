@@ -57,16 +57,16 @@
 
 - (void)wiimoteClassicControllerButtonPressedNotification:(NSNotification*)notification
 {
-    [self postEventForWiimoteExceptions:[notification object]
-                                   path:[self pathForClassicControllerButton:[notification userInfo]]
-                                  value:WIIMOTE_EVENT_VALUE_PRESS];
+    [self postEventForWiimoteExtension:[notification object]
+                                  path:[self pathForClassicControllerButton:[notification userInfo]]
+                                 value:WIIMOTE_EVENT_VALUE_PRESS];
 }
 
 - (void)wiimoteClassicControllerButtonReleasedNotification:(NSNotification*)notification
 {
-    [self postEventForWiimoteExceptions:[notification object]
-                                   path:[self pathForClassicControllerButton:[notification userInfo]]
-                                  value:WIIMOTE_EVENT_VALUE_RELEASE];
+    [self postEventForWiimoteExtension:[notification object]
+                                  path:[self pathForClassicControllerButton:[notification userInfo]]
+                                 value:WIIMOTE_EVENT_VALUE_RELEASE];
 }
 
 - (void)wiimoteClassicControllerStickPositionChangedNotification:(NSNotification*)notification
@@ -76,24 +76,24 @@
 
     switch(type) {
         case WiimoteClassicControllerStickTypeLeft: {
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Left.Stick.X"
-                                          value:position.x];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Left.Stick.X"
+                                         value:position.x];
 
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Left.Stick.Y"
-                                          value:position.y];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Left.Stick.Y"
+                                         value:position.y];
             break;
         }
 
         case WiimoteClassicControllerStickTypeRight: {
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Right.Stick.X"
-                                          value:position.x];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Right.Stick.X"
+                                         value:position.x];
 
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Right.Stick.Y"
-                                          value:position.y];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Right.Stick.Y"
+                                         value:position.y];
             break;
         }
     }
@@ -106,16 +106,16 @@
 
     switch(type) {
         case WiimoteClassicControllerStickTypeLeft: {
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Left.Shift"
-                                          value:position];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Left.Shift"
+                                         value:position];
             break;
         }
 
         case WiimoteClassicControllerStickTypeRight: {
-            [self postEventForWiimoteExceptions:[notification object]
-                                           path:@"Right.Shift"
-                                          value:position];
+            [self postEventForWiimoteExtension:[notification object]
+                                          path:@"Right.Shift"
+                                         value:position];
             break;
         }
     }

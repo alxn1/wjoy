@@ -98,6 +98,13 @@ typedef enum {
     wmc_upro_stick_right            =  2
 } wmc_upro_stick;
 
+typedef enum {
+    wmc_bboard_point_left_top       = 1,
+    wmc_bboard_point_left_bottom    = 2,
+    wmc_bboard_point_right_top      = 3,
+    wmc_bboard_point_right_bottom   = 4
+} wmc_bboard_point;
+
 //------------------------------------------------------------------------------
 // main API
 //------------------------------------------------------------------------------
@@ -202,6 +209,13 @@ int wmc_w_is_upro_button_pressed(int index, int button);        // wmc_upro_butt
 
 float wmc_w_get_upro_stick_x(int index, int stick);             // wmc_upro_stick
 float wmc_w_get_upro_stick_y(int index, int stick);             // wmc_upro_stick
+
+//------------------------------------------------------------------------------
+// balance boars API (yes, like extension)
+//------------------------------------------------------------------------------
+
+int wmc_w_is_bboard_connected(int index);
+float wmc_w_get_bboard_press(int index, int point);             // wmc_bboard_point
 
 #ifdef __cplusplus
     } /* extern "C" */

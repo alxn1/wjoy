@@ -7,7 +7,6 @@
 //
 
 #import "WiimoteBalanceBoard.h"
-#import "WiimoteEventDispatcher+BalanceBoard.h"
 
 @interface WiimoteBalanceBoard (PrivatePart)
 
@@ -20,7 +19,6 @@
 + (void)load
 {
     [WiimoteExtension registerExtensionClass:[WiimoteBalanceBoard class]];
-    [Wiimote registerSupportedModelName:@"Nintendo RVL-WBC-01"];
 }
 
 + (NSData*)extensionSignature
@@ -68,6 +66,11 @@
     m_BottomRightPress          = 0.0;
 
     return self;
+}
+
+- (NSString*)name
+{
+    return @"Balance Board";
 }
 
 - (double)topLeftPress

@@ -144,6 +144,16 @@ static WiimoteUProControllerExtension *upro_at_index(int index)
     return nil;
 }
 
+static WiimoteBalanceBoardExtension *bboard_at_index(int index)
+{
+    WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
+
+    if([[e name] isEqualToString:@"Balance Board"])
+        return (WiimoteBalanceBoardExtension*)e;
+
+    return nil;
+}
+
 static int wiimote_get_id(Wiimote *wiimote)
 {
     return [[[wiimote userInfo] objectForKey:WiimoteIDKey] intValue];
@@ -877,6 +887,41 @@ float wmc_w_get_upro_stick_y(int index, int stick)
     [[WiimoteThread thread] invoke:^
     {
         result = [upro_at_index(index) stickPosition:(WiimoteUProControllerStickType)stick].y;
+    }];
+
+    return result;
+}
+
+//------------------------------------------------------------------------------
+// balance boars API (yes, like extension)
+//------------------------------------------------------------------------------
+
+int wmc_w_is_bboard_connected(int index)
+{
+    __block int result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = (bboard_at_index(index) != nil);
+    }];
+
+    return result;
+}
+
+float wmc_w_get_bboard_press(int index, int point)
+{
+    __block float result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        WiimoteBalanceBoardExtension *bboard = bboard_at_index(index);
+
+        switch(point) {
+            case wmc_bboard_point_left_top:     result = [bboard topLeftPress];     break;
+            case wmc_bboard_point_left_bottom:  result = [bboard bottomLeftPress];  break;
+            case wmc_bboard_point_right_top:    result = [bboard topRightPress];    break;
+            case wmc_bboard_point_right_bottom: result = [bboard bottomRightPress]; break;
+        }
     }];
 
     return result;
