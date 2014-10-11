@@ -154,6 +154,16 @@ static WiimoteBalanceBoardExtension *bboard_at_index(int index)
     return nil;
 }
 
+static WiimoteUDrawExtension *udraw_at_index(int index)
+{
+    WiimoteExtension *e = [wiimote_at_index(index) connectedExtension];
+
+    if([[e name] isEqualToString:@"uDraw"])
+        return (WiimoteUDrawExtension*)e;
+
+    return nil;
+}
+
 static int wiimote_get_id(Wiimote *wiimote)
 {
     return [[[wiimote userInfo] objectForKey:WiimoteIDKey] intValue];
@@ -922,6 +932,70 @@ float wmc_w_get_bboard_press(int index, int point)
             case wmc_bboard_point_right_top:    result = [bboard topRightPress];    break;
             case wmc_bboard_point_right_bottom: result = [bboard bottomRightPress]; break;
         }
+    }];
+
+    return result;
+}
+
+//------------------------------------------------------------------------------
+// uDraw API (yes, like extension)
+//------------------------------------------------------------------------------
+
+int wmc_w_is_udraw_connected(int index)
+{
+    __block int result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = (udraw_at_index(index) != nil);
+    }];
+
+    return result;
+}
+
+int wmc_w_is_pen_touching(int index)
+{
+    __block int result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = [udraw_at_index(index) isPenTouching];
+    }];
+
+    return result;
+}
+
+float wmc_w_get_pen_x(int index)
+{
+    __block float result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = [udraw_at_index(index) penPosition].x;
+    }];
+
+    return result;
+}
+
+float wmc_w_get_pen_y(int index)
+{
+    __block float result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = [udraw_at_index(index) penPosition].y;
+    }];
+
+    return result;
+}
+
+int wmc_w_is_pen_button_pressed(int index)
+{
+    __block int result = 0;
+
+    [[WiimoteThread thread] invoke:^
+    {
+        result = [udraw_at_index(index) isPenButtonPressed];
     }];
 
     return result;

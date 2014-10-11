@@ -211,11 +211,21 @@ float wmc_w_get_upro_stick_x(int index, int stick);             // wmc_upro_stic
 float wmc_w_get_upro_stick_y(int index, int stick);             // wmc_upro_stick
 
 //------------------------------------------------------------------------------
-// balance boars API (yes, like extension)
+// balance board API (yes, like extension)
 //------------------------------------------------------------------------------
 
 int wmc_w_is_bboard_connected(int index);
 float wmc_w_get_bboard_press(int index, int point);             // wmc_bboard_point
+
+//------------------------------------------------------------------------------
+// uDraw API (yes, like extension)
+//------------------------------------------------------------------------------
+
+int wmc_w_is_udraw_connected(int index);
+int wmc_w_is_pen_touching(int index);
+float wmc_w_get_pen_x(int index);
+float wmc_w_get_pen_y(int index);
+int wmc_w_is_pen_button_pressed(int index);
 
 #ifdef __cplusplus
     } /* extern "C" */
