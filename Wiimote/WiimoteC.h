@@ -67,13 +67,13 @@ typedef enum {
 } wmc_ccontroller_button;
 
 typedef enum {
-    wmc_ccontroller_stick_left      =  1,
-    wmc_ccontroller_stick_right     =  2
+    wmc_ccontroller_stick_left      =  0,
+    wmc_ccontroller_stick_right     =  1
 } wmc_ccontroller_stick;
 
 typedef enum {
-    wmc_ccontroller_shift_left      =  1,
-    wmc_ccontroller_shift_right     =  2
+    wmc_ccontroller_shift_left      =  0,
+    wmc_ccontroller_shift_right     =  1
 } wmc_ccontroller_shift;
 
 typedef enum {
@@ -94,15 +94,15 @@ typedef enum {
 } wmc_upro_button;
 
 typedef enum {
-    wmc_upro_stick_left             =  1,
-    wmc_upro_stick_right            =  2
+    wmc_upro_stick_left             =  0,
+    wmc_upro_stick_right            =  1
 } wmc_upro_stick;
 
 typedef enum {
-    wmc_bboard_point_left_top       = 1,
-    wmc_bboard_point_left_bottom    = 2,
-    wmc_bboard_point_right_top      = 3,
-    wmc_bboard_point_right_bottom   = 4
+    wmc_bboard_point_left_top       =  0,
+    wmc_bboard_point_left_bottom    =  1,
+    wmc_bboard_point_right_top      =  2,
+    wmc_bboard_point_right_bottom   =  3
 } wmc_bboard_point;
 
 //------------------------------------------------------------------------------
