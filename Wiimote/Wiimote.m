@@ -109,6 +109,11 @@ NSString *WiimoteUseOneButtonClickConnectionKey                 = @"WiimoteUseOn
 	return [m_ModelName isEqualToString:WiimoteDeviceNameUPro];
 }
 
+- (BOOL)isBalanceBoard
+{
+    return [m_ModelName isEqualToString:WiimoteDeviceNameBalanceBoard];
+}
+
 - (NSData*)address
 {
     return [m_Device address];

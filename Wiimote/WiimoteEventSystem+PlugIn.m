@@ -31,7 +31,7 @@
                                        forKey:name];
 }
 
-- (void)postEventForWiimoteExceptions:(WiimoteExtension*)extension path:(NSString*)path value:(CGFloat)value
+- (void)postEventForWiimoteExtension:(WiimoteExtension*)extension path:(NSString*)path value:(CGFloat)value
 {
     path = [NSString stringWithFormat:@"%@.%@", [extension name], path];
 

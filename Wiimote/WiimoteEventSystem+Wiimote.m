@@ -74,18 +74,18 @@
 {
     WiimoteExtension *extension = [[notification userInfo] objectForKey:WiimoteExtensionKey];
 
-    [self postEventForWiimoteExceptions:extension
-                                   path:@"Connect"
-                                  value:WIIMOTE_EVENT_VALUE_CONNECT];
+    [self postEventForWiimoteExtension:extension
+                                  path:@"Connect"
+                                 value:WIIMOTE_EVENT_VALUE_CONNECT];
 }
 
 - (void)wiimoteExtensionDisconnectedNotification:(NSNotification*)notification
 {
     WiimoteExtension *extension = [[notification userInfo] objectForKey:WiimoteExtensionKey];
 
-    [self postEventForWiimoteExceptions:extension
-                                   path:@"Disconnect"
-                                  value:WIIMOTE_EVENT_VALUE_DISCONNECT];
+    [self postEventForWiimoteExtension:extension
+                                  path:@"Disconnect"
+                                 value:WIIMOTE_EVENT_VALUE_DISCONNECT];
 }
 
 - (void)wiimoteDisconnectedNotification:(NSNotification*)notification

@@ -62,6 +62,7 @@ FOUNDATION_EXPORT NSString *WiimoteUseOneButtonClickConnectionKey;
 - (void)disconnect;
 
 - (BOOL)isWiiUProController;
+- (BOOL)isBalanceBoard;
 
 - (NSData*)address;
 - (NSString*)addressString;
