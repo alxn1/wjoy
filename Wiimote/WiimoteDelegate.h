@@ -11,6 +11,7 @@
 #import <Wiimote/WiimoteClassicControllerDelegate.h>
 #import <Wiimote/WiimoteUProControllerDelegate.h>
 #import <Wiimote/WiimoteBalanceBoardDelegate.h>
+#import <Wiimote/WiimoteUDrawDelegate.h>
 #import <Wiimote/WiimoteMotionPlusDelegate.h>
 
 #define WiimoteButtonCount         11

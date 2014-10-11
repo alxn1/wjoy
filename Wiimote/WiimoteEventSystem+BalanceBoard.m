@@ -4,7 +4,6 @@
 //
 //  Created by Alxn1 on 11.10.14.
 //
-//
 
 #import "WiimoteEventSystem+BalanceBoard.h"
 

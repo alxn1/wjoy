@@ -23,6 +23,7 @@
 #import <Wiimote/WiimoteProtocolClassicController.h>
 #import <Wiimote/WiimoteProtocolUProController.h>
 #import <Wiimote/WiimoteProtocolBalanceBoard.h>
+#import <Wiimote/WiimoteProtocolUDraw.h>
 #import <Wiimote/WiimoteProtocolMotionPlus.h>
 #import <Wiimote/WiimoteProtocolUtils.h>
 
