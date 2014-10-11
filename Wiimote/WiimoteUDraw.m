@@ -106,7 +106,7 @@
 
     BOOL    isPenButtonPressed = ((report->buttonState & 0x02) == 0);
     BOOL    isPenTouching      = ((report->gridIndex   & 0x0F) != 0x0F);
-    CGFloat penPressure        = (((CGFloat)report->pressure) - 8.0) / 236.0;
+    CGFloat penPressure        = (((CGFloat)report->pressure) - 8.0) / 236.0; // 0xF4 - 0x08 = 236 in dec
     NSPoint penPosition        = NSMakePoint(
                                     ((report->gridIndex >> 0) & 0x0F) * 256 + report->xOffset,
                                     ((report->gridIndex >> 4) & 0x0F) * 256 + report->yOffset);
@@ -117,8 +117,8 @@
     BOOL isStateChanged = NO;
 
     if(m_IsPenTouching != isPenTouching) isStateChanged = YES;
-    if(WiimoteDeviceIsFloatEqual(m_PenPressure, penPressure)) isStateChanged = YES;
-    if(isPenTouching && WiimoteDeviceIsPointEqual(m_PenPosition, penPosition))
+    if(!WiimoteDeviceIsFloatEqual(m_PenPressure, penPressure)) isStateChanged = YES;
+    if(isPenTouching && !WiimoteDeviceIsPointEqual(m_PenPosition, penPosition))
         isStateChanged = YES;
 
     if(isStateChanged)
@@ -139,6 +139,7 @@
     if(m_IsPenButtonPressed != isPenButtonPressed)
     {
         m_IsPenButtonPressed = isPenButtonPressed;
+
         if(m_IsPenButtonPressed)
             [[self eventDispatcher] postUDrawButtonPressed:self];
         else
