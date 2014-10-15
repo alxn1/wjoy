@@ -12,8 +12,16 @@
 + (void)load
 {
     [WiimoteEventSystem
-            registerNotification:WiimoteUDrawPenStateChangedNotification
-                        selector:@selector(wiimoteUDrawPenStateChangedNotification:)];
+            registerNotification:WiimoteUDrawPenPressedNotification
+                        selector:@selector(wiimoteUDrawPenPressedNotification:)];
+
+    [WiimoteEventSystem
+            registerNotification:WiimoteUDrawPenReleasedNotification
+                        selector:@selector(wiimoteUDrawPenReleasedNotification:)];
+
+    [WiimoteEventSystem
+            registerNotification:WiimoteUDrawPenPositionChangedNotification
+                        selector:@selector(wiimoteUDrawPenPositionChangedNotification:)];
 
     [WiimoteEventSystem
             registerNotification:WiimoteUDrawPenButtonPressedNotification
@@ -24,15 +32,25 @@
                         selector:@selector(wiimoteUDrawPenButtonReleasedNotification:)];
 }
 
-- (void)wiimoteUDrawPenStateChangedNotification:(NSNotification*)notification
+- (void)WiimoteUDrawPenPressedNotification:(NSNotification*)notification
 {
-    BOOL    touching = [[[notification userInfo] objectForKey:WiimoteUDrawPenTouchingKey] boolValue];
+    [self postEventForWiimoteExtension:[notification object]
+                                  path:@"Pen"
+                                 value:WIIMOTE_EVENT_VALUE_PRESS];
+}
+
+- (void)WiimoteUDrawPenReleasedNotification:(NSNotification*)notification
+{
+    [self postEventForWiimoteExtension:[notification object]
+                                  path:@"Pen"
+                                 value:WIIMOTE_EVENT_VALUE_RELEASE];
+}
+
+- (void)WiimoteUDrawPenPositionChangedNotification:(NSNotification*)notification
+{
     NSPoint position = [[[notification userInfo] objectForKey:WiimoteUDrawPenPositionKey] pointValue];
     CGFloat pressure = [[[notification userInfo] objectForKey:WiimoteUDrawPenPressureKey] doubleValue];
-    CGFloat touchingValue = ((touching)?
-                (WIIMOTE_EVENT_VALUE_PRESS):(WIIMOTE_EVENT_VALUE_RELEASE));
 
-    [self postEventForWiimoteExtension:[notification object] path:@"Pen.Touching"   value:touchingValue];
     [self postEventForWiimoteExtension:[notification object] path:@"Pen.Position.X" value:position.x];
     [self postEventForWiimoteExtension:[notification object] path:@"Pen.Position.Y" value:position.y];
     [self postEventForWiimoteExtension:[notification object] path:@"Pen.Pressure"   value:pressure];

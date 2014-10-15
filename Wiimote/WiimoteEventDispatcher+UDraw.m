@@ -9,41 +9,55 @@
 
 @implementation WiimoteEventDispatcher (UDraw)
 
-- (void)postUDrawStateChanged:(WiimoteUDrawExtension*)uDraw
-                  penTouching:(BOOL)touching
-                  penPosition:(NSPoint)position
-                  penPressure:(CGFloat)pressure
+- (void)postUDrawPenPressed:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner]
-           uDrawStateChanged:uDraw
-                 penTouching:touching
-                 penPosition:position
-                 penPressure:pressure];
+    [[self delegate] wiimote:[self owner] uDrawPenPressed:uDraw];
+
+    if([self isStateNotificationsEnabled])
+        [self postNotification:WiimoteUDrawPenPressedNotification];
+}
+
+- (void)postUDrawPenReleased:(WiimoteUDrawExtension*)uDraw
+{
+    [[self delegate] wiimote:[self owner] uDrawPenReleased:uDraw];
+
+    if([self isStateNotificationsEnabled])
+        [self postNotification:WiimoteUDrawPenReleasedNotification];
+}
+
+-   (void)postUDraw:(WiimoteUDrawExtension*)uDraw
+ penPositionChanged:(NSPoint)position
+           pressure:(CGFloat)pressure
+{
+    [[self delegate]
+                wiimote:[self owner]
+                  uDraw:uDraw
+     penPositionChanged:position
+               pressure:pressure];
 
     if([self isStateNotificationsEnabled])
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                                     [NSValue valueWithPoint:position],      WiimoteUDrawPenPositionKey,
-                                    [NSNumber numberWithBool:touching],     WiimoteUDrawPenTouchingKey,
                                     [NSNumber numberWithDouble:pressure],   WiimoteUDrawPenPressureKey,
                                     nil];
 
-        [self postNotification:WiimoteUDrawPenStateChangedNotification
+        [self postNotification:WiimoteUDrawPenPositionChangedNotification
                         params:params];
     }
 }
 
-- (void)postUDrawButtonPressed:(WiimoteUDrawExtension*)uDraw
+- (void)postUDrawPenButtonPressed:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawButtonPressed:uDraw];
+    [[self delegate] wiimote:[self owner] uDrawPenButtonPressed:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenButtonPressedNotification];
 }
 
-- (void)postUDrawButtonReleased:(WiimoteUDrawExtension*)uDraw
+- (void)postUDrawPenButtonReleased:(WiimoteUDrawExtension*)uDraw
 {
-    [[self delegate] wiimote:[self owner] uDrawButtonReleased:uDraw];
+    [[self delegate] wiimote:[self owner] uDrawPenButtonReleased:uDraw];
 
     if([self isStateNotificationsEnabled])
         [self postNotification:WiimoteUDrawPenButtonReleasedNotification];

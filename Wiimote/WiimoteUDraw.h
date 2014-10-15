@@ -12,7 +12,7 @@
                                             WiimoteUDrawProtocol>
 {
     @private
-        BOOL    m_IsPenTouching;
+        BOOL    m_IsPenPressed;
         NSPoint m_PenPosition;
         CGFloat m_PenPressure;
         BOOL    m_IsPenButtonPressed;
