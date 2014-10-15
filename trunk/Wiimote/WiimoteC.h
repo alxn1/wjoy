@@ -222,7 +222,7 @@ float wmc_w_get_bboard_press(int index, int point);             // wmc_bboard_po
 //------------------------------------------------------------------------------
 
 int wmc_w_is_udraw_connected(int index);
-int wmc_w_is_pen_touching(int index);
+int wmc_w_is_pen_pressed(int index);
 float wmc_w_get_pen_x(int index);
 float wmc_w_get_pen_y(int index);
 int wmc_w_is_pen_button_pressed(int index);

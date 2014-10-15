@@ -953,13 +953,13 @@ int wmc_w_is_udraw_connected(int index)
     return result;
 }
 
-int wmc_w_is_pen_touching(int index)
+int wmc_w_is_pen_pressed(int index)
 {
     __block int result = 0;
 
     [[WiimoteThread thread] invoke:^
     {
-        result = [udraw_at_index(index) isPenTouching];
+        result = [udraw_at_index(index) isPenPressed];
     }];
 
     return result;

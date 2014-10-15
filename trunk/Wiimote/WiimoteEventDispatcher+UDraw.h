@@ -10,12 +10,14 @@
 
 @interface WiimoteEventDispatcher (UDraw)
 
-- (void)postUDrawStateChanged:(WiimoteUDrawExtension*)uDraw
-                  penTouching:(BOOL)touching
-                  penPosition:(NSPoint)position
-                  penPressure:(CGFloat)pressure;
+- (void)postUDrawPenPressed:(WiimoteUDrawExtension*)uDraw;
+- (void)postUDrawPenReleased:(WiimoteUDrawExtension*)uDraw;
 
-- (void)postUDrawButtonPressed:(WiimoteUDrawExtension*)uDraw;
-- (void)postUDrawButtonReleased:(WiimoteUDrawExtension*)uDraw;
+-   (void)postUDraw:(WiimoteUDrawExtension*)uDraw
+ penPositionChanged:(NSPoint)position
+           pressure:(CGFloat)pressure;
+
+- (void)postUDrawPenButtonPressed:(WiimoteUDrawExtension*)uDraw;
+- (void)postUDrawPenButtonReleased:(WiimoteUDrawExtension*)uDraw;
 
 @end
