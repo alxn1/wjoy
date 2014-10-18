@@ -17,4 +17,7 @@
 - (BOOL)openDevice;
 - (void)closeDevice;
 
+- (void)handleReport:(uint8_t*)report length:(CFIndex)length;
+- (void)disconnected;
+
 @end

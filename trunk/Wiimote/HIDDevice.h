@@ -26,6 +26,7 @@
         HIDManager      *m_Owner;
 
         BOOL             m_IsValid;
+        BOOL             m_IsDisconnected;
         IOHIDDeviceRef   m_Handle;
         IOOptionBits     m_Options;
         NSDictionary    *m_Properties;

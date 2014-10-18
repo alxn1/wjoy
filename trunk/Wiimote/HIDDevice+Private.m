@@ -19,12 +19,9 @@ static void HIDDeviceReportCallback(
 {
     if(reportLength > 0)
     {
-        HIDDevice *device = (HIDDevice*)context;
-
-        [[device delegate]
-					HIDDevice:device
-		   reportDataReceived:report
-					   length:reportLength];
+        [(HIDDevice*)context
+                    handleReport:report
+                          length:reportLength];
     }
 }
 
@@ -33,7 +30,7 @@ static void HIDDeviceDisconnectCallback(
 								IOReturn		 result, 
 								void			*sender)
 {
-    [(HIDDevice*)context invalidate];
+    [(HIDDevice*)context disconnected];
 }
 
 @implementation HIDDevice (Private)
@@ -113,13 +110,14 @@ static void HIDDeviceDisconnectCallback(
         return nil;
     }
 
-    m_Owner         = manager;
-    m_IsValid       = YES;
-    m_Handle        = handle;
-    m_Options       = options;
-    m_Properties    = [[self makePropertiesDictionary] retain];
-    m_ReportBuffer  = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
-    m_Delegate      = nil;
+    m_Owner             = manager;
+    m_IsValid           = YES;
+    m_IsDisconnected    = NO;
+    m_Handle            = handle;
+    m_Options           = options;
+    m_Properties        = [[self makePropertiesDictionary] retain];
+    m_ReportBuffer      = [[NSMutableData alloc] initWithLength:[self maxInputReportSize]];
+    m_Delegate          = nil;
 
     CFRetain(m_Handle);
 
@@ -152,12 +150,29 @@ static void HIDDeviceDisconnectCallback(
 
 - (void)closeDevice
 {
-	IOHIDDeviceClose(m_Handle, 0);
+    if(!m_IsDisconnected)
+    {
+        IOHIDDeviceClose(m_Handle, 0);
 
-	IOHIDDeviceUnscheduleFromRunLoop(
-								m_Handle,
-								[[NSRunLoop currentRunLoop] getCFRunLoop],
-								(CFStringRef)NSRunLoopCommonModes);
+        IOHIDDeviceUnscheduleFromRunLoop(
+                                    m_Handle,
+                                    [[NSRunLoop currentRunLoop] getCFRunLoop],
+                                    (CFStringRef)NSRunLoopCommonModes);
+    }
+}
+
+- (void)handleReport:(uint8_t*)report length:(CFIndex)length
+{
+    [[self delegate]
+                HIDDevice:self
+       reportDataReceived:report
+                   length:length];
+}
+
+- (void)disconnected
+{
+    m_IsDisconnected = YES;
+    [self invalidate];
 }
 
 @end
