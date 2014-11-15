@@ -9,6 +9,7 @@
 #import "TestController.h"
 
 #import <Wiimote/WiimoteEventSystem.h>
+#import <Wiimote/WiimoteWatchdog.h>
 
 @implementation TestController
 
@@ -28,6 +29,7 @@
 {
     [[OCLog sharedLog] setHandler:self];
     [[OCLog sharedLog] setLevel:OCLogLevelDebug];
+    [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
 
     [[NSNotificationCenter defaultCenter]
                                     addObserver:self
@@ -40,12 +42,6 @@
                                        selector:@selector(discoveryEnd)
                                            name:WiimoteEndDiscoveryNotification
                                          object:nil];
-
-    [[NSNotificationCenter defaultCenter]
-								addObserver:self
-								   selector:@selector(applicationWillTerminateNotification:)
-									   name:NSApplicationWillTerminateNotification
-									 object:[NSApplication sharedApplication]];
 
     [[WiimoteEventSystem defaultEventSystem] addObserver:self];
     [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
@@ -146,15 +142,6 @@
                                                 (unsigned long long)line,
                                                 functionName,
                                                 message]];
-}
-
-- (void)applicationWillTerminateNotification:(NSNotification*)notification
-{
-    NSArray     *devices = [Wiimote connectedDevices];
-	NSUInteger   count   = [devices count];
-
-    for(NSUInteger i = 0; i < count; i++)
-        [[devices objectAtIndex:i] disconnect];
 }
 
 @end
