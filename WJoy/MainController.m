@@ -26,7 +26,6 @@
 
     [[UAppUpdateChecker sharedInstance] run];
 
-    [[WiimoteWatchdog sharedWatchdog] setEnabled:YES];
     [Wiimote beginDiscovery];
 }
 

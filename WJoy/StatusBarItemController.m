@@ -143,6 +143,10 @@
 
 - (void)menuNeedsUpdate:(NSMenu*)menu
 {
+    for(Wiimote *wiimote in [Wiimote connectedDevices]) {
+        [wiimote requestUpdateState];
+    }
+
     while([m_Menu numberOfItems] > 1)
         [m_Menu removeItemAtIndex:1];
 
