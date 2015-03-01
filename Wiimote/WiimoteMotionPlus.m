@@ -33,6 +33,7 @@
 	static const uint8_t  signature1[]   = { 0x00, 0x00, 0xA4, 0x20, 0x04, 0x05 };
 	static const uint8_t  signature2[]   = { 0x00, 0x00, 0xA4, 0x20, 0x05, 0x05 };
 	static const uint8_t  signature3[]   = { 0x00, 0x00, 0xA4, 0x20, 0x07, 0x05 };
+    static const uint8_t  signature4[]   = { 0x01, 0x00, 0xA4, 0x20, 0x07, 0x05 };
 
     static NSArray       *result         = nil;
 
@@ -42,6 +43,7 @@
 					[NSData dataWithBytes:signature1 length:sizeof(signature1)],
 					[NSData dataWithBytes:signature2 length:sizeof(signature2)],
 					[NSData dataWithBytes:signature3 length:sizeof(signature3)],
+                    [NSData dataWithBytes:signature4 length:sizeof(signature4)],
 					nil];
 	}
 

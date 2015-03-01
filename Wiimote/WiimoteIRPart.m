@@ -284,24 +284,24 @@
         uint16_t x = data[0];
         uint16_t y = data[1];
 
-        x |= (((uint16_t)data[2]) << 4) & 0x300;
-        y |= (((uint16_t)data[2]) << 2) & 0x300;
+        x |= ((((uint16_t)data[2]) << 4) & 0x300);
+        y |= ((((uint16_t)data[2]) << 2) & 0x300);
 
-        if(x >= 0x3FF && y >= 0x3FF)
+        if(x > 0x3FF || y > 0x3FF)
             [self setPointOutOfView:index];
         else
-            [self setPoint:index position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
+            [self setPoint:index position:NSMakePoint(x, y)];
 
         x = data[3];
         y = data[4];
 
-        x |= (((uint16_t)data[2]) << 8) & 0x300;
-        y |= (((uint16_t)data[2]) << 6) & 0x300;
+        x |= ((((uint16_t)data[2]) << 8) & 0x300);
+        y |= ((((uint16_t)data[2]) << 6) & 0x300);
 
-        if(y >= 0x3FF)
+        if(x > 0x3FF || y > 0x3FF)
             [self setPointOutOfView:index + 1];
         else
-            [self setPoint:index + 1 position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
+            [self setPoint:index + 1 position:NSMakePoint(x, y)];
 
         index   += 2;
         data    += 5;
@@ -320,13 +320,13 @@
         uint16_t x = data[0];
         uint16_t y = data[1];
 
-        x |= (((uint16_t)data[2]) << 4) & 0x300;
-        y |= (((uint16_t)data[2]) << 2) & 0x300;
+        x |= ((((uint16_t)data[2]) << 4) & 0x300);
+        y |= ((((uint16_t)data[2]) << 2) & 0x300);
 
-        if(y >= 0x3FF)
+        if(x > 0x3FF || y > 0x3FF)
             [self setPointOutOfView:index];
         else
-            [self setPoint:index position:NSMakePoint(WiimoteIRMaxX - x, y + 1.0)];
+            [self setPoint:index position:NSMakePoint(x, y)];
 
         index += 1;
         data  += 9;

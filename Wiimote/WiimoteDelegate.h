@@ -18,10 +18,10 @@
 
 #define WiimoteIRPointCount        4
 
-#define WiimoteIRMinX              1.0
-#define WiimoteIRMinY              1.0
-#define WiimoteIRMaxX              1024.0
-#define WiimoteIRMaxY              768.0
+#define WiimoteIRMinX              0.0
+#define WiimoteIRMinY              0.0
+#define WiimoteIRMaxX              1023.0
+#define WiimoteIRMaxY              767.0
 
 typedef enum
 {
