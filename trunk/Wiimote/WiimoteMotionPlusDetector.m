@@ -8,6 +8,8 @@
 
 #import "WiimoteMotionPlusDetector.h"
 
+#import "WiimoteLog.h"
+
 #define WiimoteDeviceMotionPlusDetectTriesCount      4
 #define WiimoteDeviceMotionPlusLastTryDelay          8.0
 
@@ -28,6 +30,8 @@
 	static const uint8_t  signature2[]   = { 0x00, 0x00, 0xA6, 0x20, 0x04, 0x05 };
 	static const uint8_t  signature3[]   = { 0x00, 0x00, 0xA6, 0x20, 0x05, 0x05 };
 	static const uint8_t  signature4[]   = { 0x00, 0x00, 0xA6, 0x20, 0x07, 0x05 };
+    static const uint8_t  signature5[]   = { 0x00, 0x00, 0xA4, 0x20, 0x00, 0x05 };
+    static const uint8_t  signature6[]   = { 0x01, 0x00, 0xA4, 0x20, 0x00, 0x05 };
 
     static NSArray       *result         = nil;
 
@@ -38,6 +42,8 @@
 					[NSData dataWithBytes:signature2 length:sizeof(signature2)],
 					[NSData dataWithBytes:signature3 length:sizeof(signature3)],
 					[NSData dataWithBytes:signature4 length:sizeof(signature4)],
+                    [NSData dataWithBytes:signature5 length:sizeof(signature5)],
+                    [NSData dataWithBytes:signature6 length:sizeof(signature6)],
 					nil];
 	}
 
@@ -160,6 +166,8 @@
 
 - (void)signatureReaded:(NSData*)data
 {
+    W_DEBUG_F(@"Possible wiimote ID: %@", data);
+
     [self autorelease];
 
     if(m_CancelCount > 0)

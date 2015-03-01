@@ -26,5 +26,7 @@
 - (IBAction)toggleDebugOutput:(id)sender;
 - (IBAction)discovery:(id)sender;
 - (IBAction)clearLog:(id)sender;
+- (IBAction)detectMotionPlus:(id)sender;
+- (IBAction)toggleVibration:(id)sender;
 
 @end

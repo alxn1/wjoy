@@ -73,6 +73,18 @@
     [m_Log setString:@""];
 }
 
+- (IBAction)detectMotionPlus:(id)sender
+{
+    for(Wiimote *wiimote in [Wiimote connectedDevices])
+        [wiimote detectMotionPlus];
+}
+
+- (IBAction)toggleVibration:(id)sender
+{
+    for(Wiimote *wiimote in [Wiimote connectedDevices])
+        [wiimote setVibrationEnabled:![wiimote isVibrationEnabled]];
+}
+
 - (void)log:(NSString*)logLine
 {
     NSAttributedString *tmp = [[NSAttributedString alloc]
