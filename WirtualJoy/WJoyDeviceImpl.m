@@ -111,8 +111,8 @@
 {
     char data[sizeof(uint32_t) * 2] = { 0 };
 
-    memcpy(data, vendorID, sizeof(uint32_t));
-    memcpy(data + sizeof(uint32_t), productID, sizeof(uint32_t));
+    memcpy(data, &vendorID, sizeof(uint32_t));
+    memcpy(data + sizeof(uint32_t), &productID, sizeof(uint32_t));
 
     return [self call:WJoyDeviceMethodSelectorSetDeviceVendorAndProductID
                  data:[NSData dataWithBytes:data length:sizeof(data)]];
