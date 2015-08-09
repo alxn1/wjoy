@@ -6,4 +6,4 @@ But! In not distant future, i hope, i can continue to work on WJoy.
 
 Really sorry.
 
-In any way, after closing google.kode project code will not be lost.
+In any way, after closing google.code project code will not be lost.
